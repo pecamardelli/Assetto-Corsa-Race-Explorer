@@ -25,9 +25,26 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+## Collecting Race Data
+
+### Assetto Corsa Python App
+
+The `scripts/racestats.py` file is a custom Assetto Corsa app that automatically collects race data during gameplay.
+
+**Installation:**
+1. Copy `racestats.py` to: `Documents\Assetto Corsa\apps\python\racestats\racestats.py`
+2. Enable in Assetto Corsa: Settings > General > UI Modules > Check "Race Statistics"
+
+**Usage:**
+1. Run Assetto Corsa and start a race session
+2. App runs in background tracking all driver statistics
+3. On session end, JSON file auto-saves to: `Documents\Assetto Corsa\out\race_statistics\`
+
+The app tracks: lap times, overtakes, crashes (with G-force detection), distance covered, speeds, and calculates performance scores.
+
 ## Adding Race Data
 
-Race data files should be placed in the `app/data` directory in JSON format.
+Race data files collected by the Assetto Corsa app should be placed in the `app/data` directory.
 
 ### Quick Race Results
 
