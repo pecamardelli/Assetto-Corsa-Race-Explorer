@@ -1,4 +1,112 @@
-import { Championship, DriverStanding, ChampionshipOpponent } from '../types/race';
+import { Championship, DriverStanding, ChampionshipOpponent, RaceSession } from '../types/race';
+import { safeNumber } from './format-utils';
+
+export interface AllTimeDriverStats {
+  name: string;
+  firstPlaces: number;
+  secondPlaces: number;
+  thirdPlaces: number;
+  abandons: number;
+  fastestLaps: number;
+  totalCrashes: number;
+  championshipsWon: number;
+  totalRaces: number;
+  totalPoints: number;
+  podiums: number;
+}
+
+export function calculateAllTimeStats(
+  sessions: RaceSession[],
+  championships: Championship[]
+): AllTimeDriverStats[] {
+  const statsMap = new Map<string, AllTimeDriverStats>();
+
+  // Process all race sessions
+  sessions.forEach((session) => {
+    const drivers = session.data.driver_statistics;
+    const sessionInfo = session.data.session_info;
+
+    // Find the fastest lap in this session
+    let fastestLapTime = Infinity;
+    let fastestDriverName = '';
+
+    Object.entries(drivers).forEach(([driverName, stats]) => {
+      const bestLap = safeNumber(stats.best_lap);
+      if (bestLap > 0 && bestLap < fastestLapTime) {
+        fastestLapTime = bestLap;
+        fastestDriverName = driverName;
+      }
+    });
+
+    Object.entries(drivers).forEach(([driverName, stats]) => {
+      if (!statsMap.has(driverName)) {
+        statsMap.set(driverName, {
+          name: driverName,
+          firstPlaces: 0,
+          secondPlaces: 0,
+          thirdPlaces: 0,
+          abandons: 0,
+          fastestLaps: 0,
+          totalCrashes: 0,
+          championshipsWon: 0,
+          totalRaces: 0,
+          totalPoints: 0,
+          podiums: 0,
+        });
+      }
+
+      const driverStats = statsMap.get(driverName)!;
+      const position = safeNumber(stats.position, 999);
+      const lapsCompleted = safeNumber(stats.laps_completed, 0);
+      const raceLaps = safeNumber(sessionInfo.race_laps, 0);
+      const crashes = safeNumber(stats.crashes?.total_crashes, 0);
+
+      // Track positions
+      if (position === 1) driverStats.firstPlaces++;
+      if (position === 2) driverStats.secondPlaces++;
+      if (position === 3) driverStats.thirdPlaces++;
+      if (position <= 3) driverStats.podiums++;
+
+      // Track abandons (didn't complete the race)
+      if (raceLaps > 0 && lapsCompleted < raceLaps && position > 3) {
+        driverStats.abandons++;
+      }
+
+      // Track fastest laps
+      if (driverName === fastestDriverName) {
+        driverStats.fastestLaps++;
+      }
+
+      // Track crashes
+      driverStats.totalCrashes += crashes;
+
+      driverStats.totalRaces++;
+    });
+  });
+
+  // Count championship wins
+  championships.forEach((championship) => {
+    if (championship.sessions.length === 0) return;
+
+    const standings = calculateStandings(championship);
+    if (standings.length > 0) {
+      const winner = standings[0];
+      const driverStats = statsMap.get(winner.name);
+      if (driverStats) {
+        driverStats.championshipsWon++;
+      }
+    }
+  });
+
+  // Convert to array and sort by first places, then second places, then third places
+  return Array.from(statsMap.values()).sort((a, b) => {
+    if (b.firstPlaces !== a.firstPlaces) return b.firstPlaces - a.firstPlaces;
+    if (b.secondPlaces !== a.secondPlaces) return b.secondPlaces - a.secondPlaces;
+    if (b.thirdPlaces !== a.thirdPlaces) return b.thirdPlaces - a.thirdPlaces;
+    if (b.podiums !== a.podiums) return b.podiums - a.podiums;
+    return a.name.localeCompare(b.name);
+  });
+}
 
 export function calculateStandings(championship: Championship): DriverStanding[] {
   const { data, sessions } = championship;

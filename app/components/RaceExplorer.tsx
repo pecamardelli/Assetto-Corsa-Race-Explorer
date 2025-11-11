@@ -28,7 +28,7 @@ export default function RaceExplorer({ quickRaces, championships }: RaceExplorer
         </div>
 
         {/* Toggle Buttons */}
-        <div className="mb-8 flex gap-4">
+        <div className="mb-8 flex flex-wrap gap-4">
           <button
             onClick={() => setViewMode('quick_race')}
             className={`px-6 py-3 rounded-lg font-semibold transition-all ${
@@ -49,6 +49,12 @@ export default function RaceExplorer({ quickRaces, championships }: RaceExplorer
           >
             Championship
           </button>
+          <Link
+            href="/drivers"
+            className="px-6 py-3 rounded-lg font-semibold transition-all bg-zinc-800 text-zinc-400 hover:bg-blue-600 hover:text-white hover:shadow-lg hover:shadow-blue-500/30"
+          >
+            All-Time Standings
+          </Link>
         </div>
 
         {/* Quick Race View */}

@@ -3,7 +3,9 @@
     "allow": [
       "Bash(npm run dev:*)",
       "Bash(tree:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(node scripts/multiply-scores.js:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

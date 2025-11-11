@@ -139,22 +139,6 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
             </table>
           </div>
         </div>
-
-        {/* Points Legend */}
-        <div className="mt-6 bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-          <h3 className="text-white font-semibold mb-3">Points System</h3>
-          <div className="flex flex-wrap gap-2">
-            {data.rules.points.map((points, index) => (
-              <div
-                key={index}
-                className="bg-zinc-900/50 rounded px-3 py-1 text-sm"
-              >
-                <span className="text-zinc-500">P{index + 1}:</span>{' '}
-                <span className="text-amber-400 font-semibold">{points}</span>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );
