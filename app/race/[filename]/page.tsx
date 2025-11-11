@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getRaceSession } from '../../lib/race-data';
 import { formatTrackName, formatLapTime, formatCarName, getSortedDrivers, safeNumber } from '../../lib/format-utils';
+import BackButton from '../../components/BackButton';
 
 export default async function RacePage({ params }: { params: Promise<{ filename: string }> }) {
   const { filename } = await params;
@@ -20,15 +21,7 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <Link
-            href="/"
-            className="inline-flex items-center text-zinc-400 hover:text-white transition-colors mb-4"
-          >
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to sessions
-          </Link>
+          <BackButton fallbackUrl="/">Back</BackButton>
 
           <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
             <div className="flex items-center gap-2 mb-3">

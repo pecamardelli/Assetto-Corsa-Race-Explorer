@@ -83,8 +83,9 @@ export async function getChampionships(): Promise<Championship[]> {
       const champData: ChampionshipData = JSON.parse(cleanedContents);
 
       // Read the championship folder to get race sessions
+      // The folder name is the UUID (same as the .champ filename without extension)
       const champId = champFile.replace('.champ', '');
-      const folderName = champData.name;
+      const folderName = champId; // Use UUID as folder name
       const folderPath = path.join(championshipDirectory, folderName);
 
       let sessions: RaceSession[] = [];
@@ -101,7 +102,7 @@ export async function getChampionships(): Promise<Championship[]> {
             filename: `championship/${folderName}/${sessionFile}`,
             data: sessionData,
             raceType: 'championship',
-            championship: folderName,
+            championship: champData.name,
           });
         }
 
@@ -139,7 +140,8 @@ export async function getChampionship(champId: string): Promise<Championship | n
     const cleanedContents = fileContents.replace(/^\uFEFF/, '');
     const champData: ChampionshipData = JSON.parse(cleanedContents);
 
-    const folderName = champData.name;
+    // The folder name is the UUID (same as champId)
+    const folderName = champId;
     const folderPath = path.join(championshipDirectory, folderName);
 
     let sessions: RaceSession[] = [];
@@ -156,7 +158,7 @@ export async function getChampionship(champId: string): Promise<Championship | n
           filename: `championship/${folderName}/${sessionFile}`,
           data: sessionData,
           raceType: 'championship',
-          championship: folderName,
+          championship: champData.name,
         });
       }
 

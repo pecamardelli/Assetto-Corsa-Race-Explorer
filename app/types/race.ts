@@ -108,3 +108,13 @@ export interface Championship {
   folderName: string;
   sessions: RaceSession[];
 }
+
+export interface DriverStanding {
+  name: string;
+  points: number;
+  wins: number;
+  podiums: number;
+  racesCompleted: number;
+  car: string;
+  nation: string;
+}
