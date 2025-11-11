@@ -93,12 +93,6 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                     <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider hidden sm:table-cell">
                       Car
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
-                      Score
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
-                      Best Lap
-                    </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
                       Laps
                     </th>
@@ -107,6 +101,15 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
                       Crashes
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                      Best Lap
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider hidden xl:table-cell">
+                      Total Time
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                      Score
                     </th>
                   </tr>
                 </thead>
@@ -148,19 +151,6 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                         <td className="px-4 py-4 text-zinc-400 text-sm hidden sm:table-cell">
                           {formatCarName(driver.car_name)}
                         </td>
-                        <td className="px-4 py-4">
-                          <div className="text-white font-mono font-medium">
-                            {safeNumber(driver.total_score, 0).toLocaleString()}
-                          </div>
-                        </td>
-                        <td className="px-4 py-4">
-                          <div className="text-white font-mono">
-                            {formatLapTime(driver.best_lap)}
-                          </div>
-                          <div className="text-xs text-zinc-500 mt-1">
-                            Avg: {formatLapTime(driver.average_lap)}
-                          </div>
-                        </td>
                         <td className="px-4 py-4 text-center text-white hidden md:table-cell">
                           {safeNumber(driver.laps_completed, 0)}
                         </td>
@@ -181,6 +171,22 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                               {worstCrashG.toFixed(0)}G max
                             </div>
                           )}
+                        </td>
+                        <td className="px-4 py-4">
+                          <div className="text-white font-mono">
+                            {formatLapTime(driver.best_lap)}
+                          </div>
+                          <div className="text-xs text-zinc-500 mt-1">
+                            Avg: {formatLapTime(driver.average_lap)}
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 text-white font-mono hidden xl:table-cell">
+                          {driver.total_time_formatted || '-'}
+                        </td>
+                        <td className="px-4 py-4">
+                          <div className="text-white font-mono font-medium">
+                            {safeNumber(driver.total_score, 0).toLocaleString()}
+                          </div>
                         </td>
                       </tr>
                     );
