@@ -18,15 +18,6 @@ export default function RaceExplorer({ quickRaces, championships }: RaceExplorer
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="mb-12">
-          <h1 className="text-5xl font-bold text-white mb-3 tracking-tight">
-            Race Explorer
-          </h1>
-          <p className="text-zinc-400 text-lg">
-            Assetto Corsa race results and statistics
-          </p>
-        </div>
-
         {/* Toggle Buttons */}
         <div className="mb-8 flex flex-wrap gap-4">
           <button
