@@ -14,7 +14,23 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
   }
 
   const { session_info, driver_statistics } = session.data;
-  const drivers = getSortedDrivers(driver_statistics);
+  const sessionType = session_info.session_type || 'race';
+  const isPracticeOrQualifying = sessionType === 'practice' || sessionType === 'qualifying';
+
+  // Sort drivers: by lap time for practice/qualifying, by position for race
+  const drivers = isPracticeOrQualifying
+    ? Object.entries(driver_statistics)
+        .map(([name, stats]) => ({ name, ...stats }))
+        .sort((a, b) => {
+          const lapA = safeNumber(a.best_lap);
+          const lapB = safeNumber(b.best_lap);
+          // Drivers with no lap time go to the end
+          if (lapA === 0 && lapB === 0) return 0;
+          if (lapA === 0) return 1;
+          if (lapB === 0) return -1;
+          return lapA - lapB;
+        })
+    : getSortedDrivers(driver_statistics);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
@@ -25,8 +41,12 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
 
           <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-semibold px-2 py-1 rounded bg-red-500/20 text-red-400 uppercase">
-                {session.raceType?.replace('_', ' ')}
+              <span className={`text-xs font-semibold px-2 py-1 rounded uppercase ${
+                sessionType === 'practice' ? 'bg-blue-500/20 text-blue-400' :
+                sessionType === 'qualifying' ? 'bg-yellow-500/20 text-yellow-400' :
+                'bg-red-500/20 text-red-400'
+              }`}>
+                {sessionType}
               </span>
               {session.championship && (
                 <span className="text-xs font-semibold px-2 py-1 rounded bg-amber-500/20 text-amber-400">
@@ -93,23 +113,27 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                     <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider hidden sm:table-cell">
                       Car
                     </th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
-                      Laps
+                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                      {isPracticeOrQualifying ? 'Total Laps' : 'Laps'}
                     </th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
-                      Overtakes
-                    </th>
+                    {!isPracticeOrQualifying && (
+                      <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
+                        Overtakes
+                      </th>
+                    )}
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
                       Crashes
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                       Best Lap
                     </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider hidden xl:table-cell">
-                      Total Time
-                    </th>
+                    {!isPracticeOrQualifying && (
+                      <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider hidden xl:table-cell">
+                        Total Time
+                      </th>
+                    )}
                     <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
-                      Score
+                      {isPracticeOrQualifying ? 'Gap' : 'Score'}
                     </th>
                   </tr>
                 </thead>
@@ -120,6 +144,11 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                     const netPositions = safeNumber(driver.net_positions_gained, 0);
                     const totalCrashes = safeNumber(driver.crashes?.total_crashes, 0);
                     const worstCrashG = safeNumber(driver.crashes?.worst_crash_g, 0);
+
+                    // Calculate time difference for practice/qualifying
+                    const fastestLap = drivers[0]?.best_lap || 0;
+                    const driverLap = safeNumber(driver.best_lap);
+                    const timeDiff = driverLap > 0 && fastestLap > 0 ? driverLap - fastestLap : 0;
 
                     return (
                       <tr
@@ -140,7 +169,7 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                         </td>
                         <td className="px-4 py-4">
                           <div className="text-white font-medium">{driver.name || 'Unknown'}</div>
-                          {netPositions !== 0 && (
+                          {!isPracticeOrQualifying && netPositions !== 0 && (
                             <div className={`text-xs mt-1 ${
                               netPositions > 0 ? 'text-green-400' : 'text-red-400'
                             }`}>
@@ -151,13 +180,15 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                         <td className="px-4 py-4 text-zinc-400 text-sm hidden sm:table-cell">
                           {formatCarName(driver.car_name)}
                         </td>
-                        <td className="px-4 py-4 text-center text-white hidden md:table-cell">
+                        <td className="px-4 py-4 text-center text-white">
                           {safeNumber(driver.laps_completed, 0)}
                         </td>
-                        <td className="px-4 py-4 text-center hidden lg:table-cell">
-                          <div className="text-green-400 font-medium">+{safeNumber(driver.overtakes_made, 0)}</div>
-                          <div className="text-red-400 text-xs">-{safeNumber(driver.times_overtaken, 0)}</div>
-                        </td>
+                        {!isPracticeOrQualifying && (
+                          <td className="px-4 py-4 text-center hidden lg:table-cell">
+                            <div className="text-green-400 font-medium">+{safeNumber(driver.overtakes_made, 0)}</div>
+                            <div className="text-red-400 text-xs">-{safeNumber(driver.times_overtaken, 0)}</div>
+                          </td>
+                        )}
                         <td className="px-4 py-4 text-center hidden lg:table-cell">
                           <div className={`font-medium ${
                             totalCrashes === 0 ? 'text-green-400' :
@@ -180,13 +211,21 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                             Avg: {formatLapTime(driver.average_lap)}
                           </div>
                         </td>
-                        <td className="px-4 py-4 text-white font-mono hidden xl:table-cell">
-                          {driver.total_time_formatted || '-'}
-                        </td>
+                        {!isPracticeOrQualifying && (
+                          <td className="px-4 py-4 text-white font-mono hidden xl:table-cell">
+                            {driver.total_time_formatted || '-'}
+                          </td>
+                        )}
                         <td className="px-4 py-4">
-                          <div className="text-white font-mono font-medium">
-                            {safeNumber(driver.total_score, 0).toLocaleString()}
-                          </div>
+                          {isPracticeOrQualifying ? (
+                            <div className="text-zinc-400 font-mono font-medium">
+                              {index === 0 ? '-' : `+${timeDiff.toFixed(3)}`}
+                            </div>
+                          ) : (
+                            <div className="text-white font-mono font-medium">
+                              {safeNumber(driver.total_score, 0).toLocaleString()}
+                            </div>
+                          )}
                         </td>
                       </tr>
                     );
@@ -197,8 +236,8 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
           </div>
         )}
 
-        {/* Stats Summary */}
-        {drivers.length > 0 && (() => {
+        {/* Stats Summary - Only show for race sessions */}
+        {!isPracticeOrQualifying && drivers.length > 0 && (() => {
           const validLaps = drivers
             .map(d => safeNumber(d.best_lap))
             .filter(lap => lap > 0);

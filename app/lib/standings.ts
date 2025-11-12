@@ -119,36 +119,87 @@ export function calculateStandings(championship: Championship): DriverStanding[]
     standingsMap.set(opponent.name, {
       name: opponent.name,
       points: 0,
+      customPoints: 0,
       wins: 0,
       podiums: 0,
+      poles: 0,
+      fastestLaps: 0,
       racesCompleted: 0,
       car: opponent.car,
       nation: opponent.nation,
     });
   });
 
-  // Process each completed session
-  sessions.forEach((session) => {
-    const drivers = session.data.driver_statistics;
+  // Process qualifying sessions for pole positions
+  sessions
+    .filter((session) => session.data.session_info.session_type === 'qualifying')
+    .forEach((session) => {
+      const drivers = session.data.driver_statistics;
 
-    Object.entries(drivers).forEach(([driverName, stats]) => {
-      const standing = standingsMap.get(driverName);
-      if (!standing) return; // Driver not in championship
+      // Find the driver with the fastest lap (pole position)
+      let fastestLap = Infinity;
+      let poleDriver = '';
 
-      const position = stats.position ?? 999;
+      Object.entries(drivers).forEach(([driverName, stats]) => {
+        const bestLap = safeNumber(stats.best_lap);
+        if (bestLap > 0 && bestLap < fastestLap) {
+          fastestLap = bestLap;
+          poleDriver = driverName;
+        }
+      });
 
-      // Award points based on position
-      if (position <= pointsTable.length) {
-        standing.points += pointsTable[position - 1];
+      // Award pole position
+      if (poleDriver) {
+        const standing = standingsMap.get(poleDriver);
+        if (standing) standing.poles++;
+      }
+    });
+
+  // Process race sessions for points, wins, podiums, and fastest laps
+  sessions
+    .filter((session) => session.data.session_info.session_type === 'race')
+    .forEach((session) => {
+      const drivers = session.data.driver_statistics;
+
+      // Find the driver with the fastest lap
+      let fastestLap = Infinity;
+      let fastestLapDriver = '';
+
+      Object.entries(drivers).forEach(([driverName, stats]) => {
+        const bestLap = safeNumber(stats.best_lap);
+        if (bestLap > 0 && bestLap < fastestLap) {
+          fastestLap = bestLap;
+          fastestLapDriver = driverName;
+        }
+      });
+
+      // Award fastest lap
+      if (fastestLapDriver) {
+        const standing = standingsMap.get(fastestLapDriver);
+        if (standing) standing.fastestLaps++;
       }
 
-      // Track wins and podiums
-      if (position === 1) standing.wins++;
-      if (position <= 3) standing.podiums++;
+      Object.entries(drivers).forEach(([driverName, stats]) => {
+        const standing = standingsMap.get(driverName);
+        if (!standing) return; // Driver not in championship
 
-      standing.racesCompleted++;
+        const position = stats.position ?? 999;
+
+        // Award points based on position
+        if (position <= pointsTable.length) {
+          standing.points += pointsTable[position - 1];
+        }
+
+        // Add custom points (total_score from the session)
+        standing.customPoints += safeNumber(stats.total_score, 0);
+
+        // Track wins and podiums
+        if (position === 1) standing.wins++;
+        if (position <= 3) standing.podiums++;
+
+        standing.racesCompleted++;
+      });
     });
-  });
 
   // Convert map to array and sort by points (desc), then wins (desc), then podiums (desc)
   return Array.from(standingsMap.values()).sort((a, b) => {

@@ -55,6 +55,7 @@ export interface SessionInfo {
   track_length_meters?: number;
   session_duration_formatted?: string;
   scoring_formula?: string;
+  session_type?: 'practice' | 'qualifying' | 'race';
 }
 
 export interface RaceData {
@@ -112,8 +113,11 @@ export interface Championship {
 export interface DriverStanding {
   name: string;
   points: number;
+  customPoints: number;
   wins: number;
   podiums: number;
+  poles: number;
+  fastestLaps: number;
   racesCompleted: number;
   car: string;
   nation: string;

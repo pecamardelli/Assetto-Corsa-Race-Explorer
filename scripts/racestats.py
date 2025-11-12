@@ -32,6 +32,10 @@ total_cars = 0
 session_active = False
 session_total_time = 0.0
 
+# Multi-session tracking for race weekends
+current_session_number = 0
+previous_session_time = 0.0
+
 # Crash detection threshold (G-force)
 CRASH_G_FORCE_THRESHOLD = 4.0
 
@@ -158,6 +162,105 @@ def format_time(seconds):
     else:
         return "{0:02d}:{1:02d}.{2:03d}".format(minutes, secs, milliseconds)
 
+def save_current_session():
+    """Save current session data to individual JSON file"""
+    global car_stats, session_total_time, current_session_number
+
+    if not car_stats:
+        return
+
+    try:
+        # Get track length
+        track_length_m = ac.getTrackLength(0)
+
+        # Find the maximum laps completed
+        race_laps = max([len(stats.lap_times) for stats in car_stats.values()]) if car_stats else 1
+
+        # Calculate best total time
+        best_total_time = 0.0
+        for stats in car_stats.values():
+            if len(stats.lap_times) > 0:
+                total_time = sum(stats.lap_times) / 1000.0
+                if best_total_time == 0.0 or total_time < best_total_time:
+                    best_total_time = total_time
+
+        # Determine session type
+        session_types = ["practice", "qualifying", "race"]
+        session_type = session_types[min(current_session_number, 2)]
+        session_type_label = session_type.capitalize()
+
+        # Prepare session data
+        session_data = {
+            'session_info': {
+                'session_type': session_type,
+                'date': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                'track': ac.getTrackName(0),
+                'track_config': ac.getTrackConfiguration(0),
+                'track_length_meters': round(track_length_m, 2),
+                'track_length_km': round(track_length_m / 1000, 3),
+                'track_length_miles': round(track_length_m / 1609.34, 3),
+                'total_cars': len(car_stats),
+                'race_laps': race_laps,
+                'session_duration_seconds': round(session_total_time, 2),
+                'session_duration_formatted': format_time(session_total_time),
+                'scoring_formula': 'score = base_score × position_factor × speed_factor × crash_factor',
+                'best_total_time_seconds': round(best_total_time, 3),
+                'crash_penalty_config': {
+                    'penalty_percent_per_g': CRASH_PENALTY_PERCENT_PER_G,
+                    'max_penalty_per_crash_g': MAX_CRASH_PENALTY_PER_CRASH
+                }
+            },
+            'driver_statistics': {}
+        }
+
+        # Capture final positions
+        for car_id, stats in car_stats.items():
+            try:
+                stats.final_position = ac.getCarLeaderboardPosition(car_id)
+            except:
+                stats.final_position = 999
+
+        # Sort drivers by position
+        sorted_drivers = sorted(car_stats.items(), key=lambda x: x[1].final_position)
+
+        # Add statistics for each driver
+        total_cars_count = len(car_stats)
+        for car_id, stats in sorted_drivers:
+            session_data['driver_statistics'][stats.driver_name] = stats.to_dict(
+                stats.final_position, total_cars_count, track_length_m, race_laps, best_total_time)
+
+        # Determine output directory
+        documents_path = os.path.expanduser("~\\Documents")
+        base_dir = os.path.join(documents_path, "Assetto Corsa", "out", "race_statistics")
+
+        # Create directory if it doesn't exist
+        if not os.path.exists(base_dir):
+            os.makedirs(base_dir)
+
+        # Create timestamp and track name
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        track_name = ac.getTrackName(0).replace('/', '_').replace('\\', '_')
+        track_config = ac.getTrackConfiguration(0)
+        if track_config:
+            track_full = "{0}-{1}".format(track_name, track_config)
+        else:
+            track_full = track_name
+
+        # Filename: stats_{track}_session_{session_type}_{timestamp}.json
+        filename = "stats_{0}_session_{1}_{2}.json".format(track_full, session_type, timestamp)
+        filepath = os.path.join(base_dir, filename)
+
+        # Save to JSON file
+        with open(filepath, 'w') as f:
+            json.dump(session_data, f, indent=2)
+
+        ac.log("Race Stats: {0} session data saved to {1}".format(session_type_label, filename))
+        ac.console("Race Stats: {0} session saved".format(session_type_label))
+
+    except Exception as e:
+        ac.log("Race Stats ERROR in save_current_session: " + str(e))
+        ac.log("Race Stats TRACEBACK: " + traceback.format_exc())
+
 def acMain(ac_version):
     global appWindow
     try:
@@ -183,8 +286,45 @@ def acMain(ac_version):
 def acUpdate(deltaT):
     """Called every frame - track all statistics"""
     global car_stats, prev_positions, prev_lap_counts, total_cars, session_active, session_start_time, prev_g_forces, session_total_time
+    global current_session_number, previous_session_time
 
     try:
+        # Detect session change by monitoring if lap counts reset or session time goes backwards
+        session_changed = False
+        if session_active and total_cars > 0:
+            # Check if session time has reset (new session started)
+            # If session time is significantly less than previous check, a new session started
+            if session_total_time > 10.0 and previous_session_time > 10.0:
+                # Also check if any car's lap count reset to 0 while previously having laps
+                lap_count_reset = False
+                for car_id in range(total_cars):
+                    current_lap = ac.getCarState(car_id, acsys.CS.LapCount)
+                    if car_id in prev_lap_counts and prev_lap_counts[car_id] > 0 and current_lap == 0:
+                        lap_count_reset = True
+                        break
+
+                if lap_count_reset:
+                    session_changed = True
+                    ac.log("Race Stats: SESSION CHANGE DETECTED (lap counts reset)")
+
+        # If session changed, save current session and reset
+        if session_changed:
+            ac.log("Race Stats: Saving current session before reset...")
+            save_current_session()
+
+            # Reset for new session
+            current_session_number += 1
+            session_total_time = 0.0
+            car_stats = {}
+            prev_positions = {}
+            prev_lap_counts = {}
+            prev_g_forces = {}
+            session_active = False
+
+            session_type = ["Practice", "Qualifying", "Race"][min(current_session_number, 2)]
+            ac.log("Race Stats: Starting NEW SESSION {0} ({1})".format(current_session_number + 1, session_type))
+            ac.console("Race Stats: Now tracking {0}".format(session_type))
+
         # Initialize on first update
         if not session_active:
             session_active = True
@@ -199,7 +339,8 @@ def acUpdate(deltaT):
                 prev_lap_counts[i] = 0
                 prev_g_forces[i] = [0.0, 0.0, 0.0]
 
-            ac.log("Race Stats: Tracking {0} cars".format(total_cars))
+            session_type = ["Practice", "Qualifying", "Race"][min(current_session_number, 2)]
+            ac.log("Race Stats: Tracking {0} cars in {1}".format(total_cars, session_type))
             ac.console("Race Stats: Tracking {0} cars".format(total_cars))
 
         # Update statistics for each car
@@ -299,133 +440,24 @@ def acUpdate(deltaT):
 
         # Track total session time
         session_total_time += deltaT
+        previous_session_time = session_total_time
 
     except Exception as e:
         ac.log("Race Stats ERROR in acUpdate: " + str(e))
         ac.log("Race Stats TRACEBACK: " + traceback.format_exc())
 
 def acShutdown():
-    """Called when session ends - save all statistics"""
-    global car_stats, session_total_time
+    """Called when session ends - save final session statistics"""
+    global car_stats
 
-    ac.log("Race Stats: Session ending, saving statistics...")
+    ac.log("Race Stats: Shutting down, saving final session...")
 
     try:
-        # Get track length (actual length from game data)
-        track_length_m = ac.getTrackLength(0)
-
-        # Find the maximum laps completed (this is the race lap count)
-        race_laps = max([len(stats.lap_times) for stats in car_stats.values()]) if car_stats else 1
-
-        # Calculate best total time (fastest driver who completed laps)
-        best_total_time = 0.0
-        for stats in car_stats.values():
-            if len(stats.lap_times) > 0:
-                total_time = sum(stats.lap_times) / 1000.0
-                if best_total_time == 0.0 or total_time < best_total_time:
-                    best_total_time = total_time
-
-        # Prepare data for export
-        session_data = {
-            'session_info': {
-                'date': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                'track': ac.getTrackName(0),
-                'track_config': ac.getTrackConfiguration(0),
-                'track_length_meters': round(track_length_m, 2),
-                'track_length_km': round(track_length_m / 1000, 3),
-                'track_length_miles': round(track_length_m / 1609.34, 3),
-                'total_cars': len(car_stats),
-                'race_laps': race_laps,
-                'session_duration_seconds': round(session_total_time, 2),
-                'session_duration_formatted': format_time(session_total_time),
-                'scoring_formula': 'score = base_score × position_factor × speed_factor × crash_factor',
-                'best_total_time_seconds': round(best_total_time, 3),
-                'crash_penalty_config': {
-                    'penalty_percent_per_g': CRASH_PENALTY_PERCENT_PER_G,
-                    'max_penalty_per_crash_g': MAX_CRASH_PENALTY_PER_CRASH
-                }
-            },
-            'driver_statistics': {}
-        }
-
-        # Capture final race position for each driver
-        for car_id, stats in car_stats.items():
-            try:
-                stats.final_position = ac.getCarLeaderboardPosition(car_id)
-            except:
-                stats.final_position = 999  # DNF or position unavailable
-
-        # Sort drivers by final race position (ascending - 1st place first)
-        sorted_drivers = sorted(car_stats.items(), key=lambda x: x[1].final_position)
-
-        # Add statistics for each driver in sorted order using their actual race position
-        total_cars_count = len(car_stats)
-        for car_id, stats in sorted_drivers:
-            session_data['driver_statistics'][stats.driver_name] = stats.to_dict(stats.final_position, total_cars_count, track_length_m, race_laps, best_total_time)
-
-        # Determine output directory
-        documents_path = os.path.expanduser("~\\Documents")
-        base_dir = os.path.join(documents_path, "Assetto Corsa", "out", "race_statistics")
-
-        # Create directory if it doesn't exist
-        if not os.path.exists(base_dir):
-            os.makedirs(base_dir)
-
-        # Create timestamp and track name
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        track_name = ac.getTrackName(0).replace('/', '_').replace('\\', '_')
-        track_config = ac.getTrackConfiguration(0)
-        if track_config:
-            track_full = "{0}-{1}".format(track_name, track_config)
+        # Save the current/final session
+        if car_stats:
+            save_current_session()
         else:
-            track_full = track_name
-
-        # Filename: stats_{track}_{timestamp}.json
-        filename = "stats_{0}_{1}.json".format(track_full, timestamp)
-        filepath = os.path.join(base_dir, filename)
-
-        ac.console("Race Stats: Saving statistics")
-        ac.log("Race Stats: Saving session statistics")
-
-        # Save to JSON file
-        with open(filepath, 'w') as f:
-            json.dump(session_data, f, indent=2)
-
-        ac.console("Race Stats: Saved to {0}".format(filename))
-        ac.log("Race Stats: Statistics saved to {0}".format(filepath))
-
-        # Log summary to console
-        ac.log("=" * 50)
-        ac.log("RACE STATISTICS SUMMARY")
-        ac.log("=" * 50)
-        ac.log("Track: {0} ({1} km)".format(
-            session_data['session_info']['track'],
-            session_data['session_info']['track_length_km']))
-        ac.log("Session Duration: {0}".format(session_data['session_info']['session_duration_formatted']))
-        ac.log("Best Total Time: {0}".format(format_time(session_data['session_info']['best_total_time_seconds'])))
-        ac.log("=" * 50)
-        for driver_name, driver_stats in session_data['driver_statistics'].items():
-            ac.log("\nP{0} - {1}:".format(driver_stats['position'], driver_name))
-            ac.log("  SCORE: {0:.2f} points".format(driver_stats['total_score']))
-            ac.log("    Base: {0:.2f} × Position: {1:.3f} × Speed: {2:.3f} × Crash: {3:.3f}".format(
-                driver_stats['score_breakdown']['base_score'],
-                driver_stats['score_breakdown']['position_factor'],
-                driver_stats['score_breakdown']['speed_factor'],
-                driver_stats['score_breakdown']['crash_factor']))
-            ac.log("    (Crash penalty: -{0:.2f}%)".format(driver_stats['score_breakdown']['crash_penalty_percent']))
-            ac.log("  Total Time: {0}".format(driver_stats['total_time_formatted']))
-            ac.log("  Laps Completed: {0} + {1:.1%} partial".format(
-                driver_stats['laps_completed'],
-                driver_stats['partial_lap_completion']))
-            ac.log("  Distance: {0} km".format(driver_stats['distance_covered_km']))
-            ac.log("  Avg Speed: {0} km/h".format(driver_stats['average_speed_kmh']))
-            ac.log("  Best Lap: {0}s".format(driver_stats['best_lap']))
-            ac.log("  Overtakes: {0}".format(driver_stats['overtakes_made']))
-            ac.log("  Overtaken: {0}".format(driver_stats['times_overtaken']))
-            ac.log("  Crashes: {0} (Worst: {1}g, Total Intensity: {2}g)".format(
-                driver_stats['crashes']['total_crashes'],
-                driver_stats['crashes']['worst_crash_g'],
-                driver_stats['crashes']['total_crash_intensity']))
+            ac.log("Race Stats: No session data to save")
 
     except Exception as e:
         ac.console("Race Stats ERROR: {0}".format(str(e)))

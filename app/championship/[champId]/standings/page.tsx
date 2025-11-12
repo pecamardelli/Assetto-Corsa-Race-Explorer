@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getChampionship } from '../../../lib/race-data';
 import { calculateStandings } from '../../../lib/standings';
 import BackButton from '../../../components/BackButton';
+import FlagIcon from '../../../components/FlagIcon';
 
 export default async function StandingsPage({ params }: { params: Promise<{ champId: string }> }) {
   const { champId } = await params;
@@ -59,20 +60,23 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
                   <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                     Driver
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider hidden sm:table-cell">
+                  <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden sm:table-cell">
                     Nation
-                  </th>
-                  <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
-                    Points
                   </th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
                     Wins
+                  </th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
+                    Poles
                   </th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
                     Podiums
                   </th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
-                    Races
+                    Fast Laps
+                  </th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                    Points
                   </th>
                 </tr>
               </thead>
@@ -105,19 +109,19 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
                           {driver.car.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
                         </div>
                       </td>
-                      <td className="px-4 py-4 text-zinc-400 text-sm hidden sm:table-cell">
-                        <span className="font-mono uppercase">{driver.nation}</span>
-                      </td>
-                      <td className="px-4 py-4 text-center">
-                        <div className={`font-bold text-lg ${
-                          isLeader ? 'text-amber-400' : 'text-white'
-                        }`}>
-                          {driver.points}
-                        </div>
+                      <td className="px-4 py-4 text-center hidden sm:table-cell">
+                        <FlagIcon nation={driver.nation} />
                       </td>
                       <td className="px-4 py-4 text-center text-white hidden md:table-cell">
                         {driver.wins > 0 ? (
                           <span className="text-amber-400 font-semibold">{driver.wins}</span>
+                        ) : (
+                          <span className="text-zinc-600">0</span>
+                        )}
+                      </td>
+                      <td className="px-4 py-4 text-center text-white hidden md:table-cell">
+                        {driver.poles > 0 ? (
+                          <span className="text-purple-400 font-semibold">{driver.poles}</span>
                         ) : (
                           <span className="text-zinc-600">0</span>
                         )}
@@ -129,8 +133,19 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
                           <span className="text-zinc-600">0</span>
                         )}
                       </td>
-                      <td className="px-4 py-4 text-center text-zinc-400 hidden lg:table-cell">
-                        {driver.racesCompleted}
+                      <td className="px-4 py-4 text-center text-white hidden lg:table-cell">
+                        {driver.fastestLaps > 0 ? (
+                          <span className="text-green-400 font-semibold">{driver.fastestLaps}</span>
+                        ) : (
+                          <span className="text-zinc-600">0</span>
+                        )}
+                      </td>
+                      <td className="px-4 py-4 text-center">
+                        <div className={`font-bold text-lg font-mono ${
+                          isLeader ? 'text-amber-400' : 'text-white'
+                        }`}>
+                          {driver.customPoints.toLocaleString()}
+                        </div>
                       </td>
                     </tr>
                   );
