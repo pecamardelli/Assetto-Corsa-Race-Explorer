@@ -138,7 +138,7 @@ export function calculateStandings(championship: Championship): DriverStanding[]
           fastestLaps: 0,
           racesCompleted: 0,
           car: stats.car_name || opponentData?.car || 'unknown',
-          nation: opponentData?.nation || 'UN',
+          nation: opponentData?.nation || 'ARG', // Default to Argentina for player
         });
       }
     });
