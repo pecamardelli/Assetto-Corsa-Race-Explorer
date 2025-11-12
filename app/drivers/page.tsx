@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getRaceSessions, getChampionships } from '../lib/race-data';
 import { calculateAllTimeStats } from '../lib/standings';
 import BackButton from '../components/BackButton';
+import FlagIcon from '../components/FlagIcon';
 
 export default async function DriversPage() {
   const [sessions, championships] = await Promise.all([
@@ -78,8 +79,14 @@ export default async function DriversPage() {
                     <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                       Rank
                     </th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
+                      {/* Nation - no title */}
+                    </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                       Driver
+                    </th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden sm:table-cell">
+                      Races
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
                       <span className="text-amber-400">1st</span>
@@ -91,6 +98,9 @@ export default async function DriversPage() {
                       <span className="text-amber-600">3rd</span>
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
+                      Poles
+                    </th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
                       Abandons
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
@@ -100,10 +110,7 @@ export default async function DriversPage() {
                       Crashes
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
-                      Championships
-                    </th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden xl:table-cell">
-                      Total Races
+                      Titles
                     </th>
                   </tr>
                 </thead>
@@ -129,11 +136,17 @@ export default async function DriversPage() {
                             {index + 1}
                           </span>
                         </td>
+                        <td className="px-4 py-4 text-center hidden md:table-cell">
+                          <FlagIcon nation={driver.nation} />
+                        </td>
                         <td className="px-4 py-4">
                           <div className="text-white font-medium">{driver.name}</div>
                           <div className="text-xs text-zinc-500 mt-1">
                             {driver.podiums} podium{driver.podiums !== 1 ? 's' : ''}
                           </div>
+                        </td>
+                        <td className="px-4 py-4 text-center text-zinc-400 hidden sm:table-cell">
+                          {driver.totalRaces}
                         </td>
                         <td className="px-4 py-4 text-center">
                           <div className={`font-bold text-lg ${
@@ -154,6 +167,13 @@ export default async function DriversPage() {
                             driver.thirdPlaces > 0 ? 'text-amber-600' : 'text-zinc-600'
                           }`}>
                             {driver.thirdPlaces}
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 text-center hidden md:table-cell">
+                          <div className={`font-medium ${
+                            driver.poles > 0 ? 'text-purple-400' : 'text-zinc-600'
+                          }`}>
+                            {driver.poles}
                           </div>
                         </td>
                         <td className="px-4 py-4 text-center hidden md:table-cell">
@@ -189,9 +209,6 @@ export default async function DriversPage() {
                           ) : (
                             <span className="text-zinc-600">-</span>
                           )}
-                        </td>
-                        <td className="px-4 py-4 text-center text-zinc-400 hidden xl:table-cell">
-                          {driver.totalRaces}
                         </td>
                       </tr>
                     );

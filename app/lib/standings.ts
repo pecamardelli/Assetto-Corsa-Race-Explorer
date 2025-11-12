@@ -3,9 +3,11 @@ import { safeNumber } from './format-utils';
 
 export interface AllTimeDriverStats {
   name: string;
+  nation: string;
   firstPlaces: number;
   secondPlaces: number;
   thirdPlaces: number;
+  poles: number;
   abandons: number;
   fastestLaps: number;
   totalCrashes: number;
@@ -21,10 +23,21 @@ export function calculateAllTimeStats(
 ): AllTimeDriverStats[] {
   const statsMap = new Map<string, AllTimeDriverStats>();
 
+  // Create a map of opponent data from all championships
+  const opponentMap = new Map<string, ChampionshipOpponent>();
+  championships.forEach((championship) => {
+    championship.data.opponents.forEach((opponent) => {
+      if (!opponentMap.has(opponent.name)) {
+        opponentMap.set(opponent.name, opponent);
+      }
+    });
+  });
+
   // Process all race sessions
   sessions.forEach((session) => {
     const drivers = session.data.driver_statistics;
     const sessionInfo = session.data.session_info;
+    const sessionType = sessionInfo.session_type;
 
     // Find the fastest lap in this session
     let fastestLapTime = Infinity;
@@ -38,13 +51,25 @@ export function calculateAllTimeStats(
       }
     });
 
+    // Award pole position for qualifying sessions
+    if (sessionType === 'qualifying' && fastestDriverName) {
+      const driverStats = statsMap.get(fastestDriverName);
+      if (driverStats) {
+        driverStats.poles++;
+      }
+    }
+
     Object.entries(drivers).forEach(([driverName, stats]) => {
       if (!statsMap.has(driverName)) {
+        // Get nation from opponent data, default to Argentina for player
+        const opponentData = opponentMap.get(driverName);
         statsMap.set(driverName, {
           name: driverName,
+          nation: opponentData?.nation || 'ARG',
           firstPlaces: 0,
           secondPlaces: 0,
           thirdPlaces: 0,
+          poles: 0,
           abandons: 0,
           fastestLaps: 0,
           totalCrashes: 0,
@@ -72,8 +97,9 @@ export function calculateAllTimeStats(
         driverStats.abandons++;
       }
 
-      // Track fastest laps
-      if (driverName === fastestDriverName) {
+      // Track fastest laps (for race sessions and quick races)
+      // Quick races don't have session_type, or it's not 'practice' or 'qualifying'
+      if (driverName === fastestDriverName && sessionType !== 'practice' && sessionType !== 'qualifying') {
         driverStats.fastestLaps++;
       }
 
