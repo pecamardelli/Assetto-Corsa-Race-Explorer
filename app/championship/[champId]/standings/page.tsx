@@ -34,7 +34,9 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
             </h1>
 
             <div className="flex flex-wrap gap-4 text-sm text-zinc-400">
-              <span>{championship.sessions.length} of {data.rounds.length} rounds completed</span>
+              <span>
+                {championship.sessions.filter(s => s.data.session_info.session_type === 'race').length} of {data.rounds.length} rounds completed
+              </span>
               <span>•</span>
               <span>{data.opponents.length} drivers</span>
             </div>

@@ -112,21 +112,35 @@ export function calculateStandings(championship: Championship): DriverStanding[]
   const { data, sessions } = championship;
   const pointsTable = data.rules.points;
 
-  // Initialize standings for all opponents
+  // Initialize standings map - we'll populate it from session data
   const standingsMap = new Map<string, DriverStanding>();
 
+  // Create a map of opponent data for quick lookup
+  const opponentMap = new Map<string, ChampionshipOpponent>();
   data.opponents.forEach((opponent: ChampionshipOpponent) => {
-    standingsMap.set(opponent.name, {
-      name: opponent.name,
-      points: 0,
-      customPoints: 0,
-      wins: 0,
-      podiums: 0,
-      poles: 0,
-      fastestLaps: 0,
-      racesCompleted: 0,
-      car: opponent.car,
-      nation: opponent.nation,
+    opponentMap.set(opponent.name, opponent);
+  });
+
+  // Initialize standings by finding all drivers that appear in any session
+  sessions.forEach((session) => {
+    const drivers = session.data.driver_statistics;
+    Object.entries(drivers).forEach(([driverName, stats]) => {
+      if (!standingsMap.has(driverName)) {
+        // Get opponent data if available, otherwise use defaults
+        const opponentData = opponentMap.get(driverName);
+        standingsMap.set(driverName, {
+          name: driverName,
+          points: 0,
+          customPoints: 0,
+          wins: 0,
+          podiums: 0,
+          poles: 0,
+          fastestLaps: 0,
+          racesCompleted: 0,
+          car: stats.car_name || opponentData?.car || 'unknown',
+          nation: opponentData?.nation || 'UN',
+        });
+      }
     });
   });
 
@@ -201,9 +215,9 @@ export function calculateStandings(championship: Championship): DriverStanding[]
       });
     });
 
-  // Convert map to array and sort by points (desc), then wins (desc), then podiums (desc)
+  // Convert map to array and sort by custom points (desc), then wins (desc), then podiums (desc)
   return Array.from(standingsMap.values()).sort((a, b) => {
-    if (b.points !== a.points) return b.points - a.points;
+    if (b.customPoints !== a.customPoints) return b.customPoints - a.customPoints;
     if (b.wins !== a.wins) return b.wins - a.wins;
     if (b.podiums !== a.podiums) return b.podiums - a.podiums;
     return a.name.localeCompare(b.name);

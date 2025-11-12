@@ -6,7 +6,8 @@
       "Bash(curl:*)",
       "Bash(node scripts/multiply-scores.js:*)",
       "Bash(cat:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "WebFetch(domain:www.npmjs.com)"
     ],
     "deny": [],
     "ask": []
