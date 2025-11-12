@@ -117,13 +117,15 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                       {isPracticeOrQualifying ? 'Total Laps' : 'Laps'}
                     </th>
                     {!isPracticeOrQualifying && (
-                      <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
-                        Overtakes
-                      </th>
+                      <>
+                        <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
+                          Overtakes
+                        </th>
+                        <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
+                          Crashes
+                        </th>
+                      </>
                     )}
-                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
-                      Crashes
-                    </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                       Best Lap
                     </th>
@@ -184,25 +186,27 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                           {safeNumber(driver.laps_completed, 0)}
                         </td>
                         {!isPracticeOrQualifying && (
-                          <td className="px-4 py-4 text-center hidden lg:table-cell">
-                            <div className="text-green-400 font-medium">+{safeNumber(driver.overtakes_made, 0)}</div>
-                            <div className="text-red-400 text-xs">-{safeNumber(driver.times_overtaken, 0)}</div>
-                          </td>
+                          <>
+                            <td className="px-4 py-4 text-center hidden lg:table-cell">
+                              <div className="text-green-400 font-medium">+{safeNumber(driver.overtakes_made, 0)}</div>
+                              <div className="text-red-400 text-xs">-{safeNumber(driver.times_overtaken, 0)}</div>
+                            </td>
+                            <td className="px-4 py-4 text-center hidden lg:table-cell">
+                              <div className={`font-medium ${
+                                totalCrashes === 0 ? 'text-green-400' :
+                                totalCrashes > 5 ? 'text-red-400' :
+                                'text-amber-400'
+                              }`}>
+                                {totalCrashes}
+                              </div>
+                              {worstCrashG > 0 && (
+                                <div className="text-xs text-zinc-500">
+                                  {worstCrashG.toFixed(0)}G max
+                                </div>
+                              )}
+                            </td>
+                          </>
                         )}
-                        <td className="px-4 py-4 text-center hidden lg:table-cell">
-                          <div className={`font-medium ${
-                            totalCrashes === 0 ? 'text-green-400' :
-                            totalCrashes > 5 ? 'text-red-400' :
-                            'text-amber-400'
-                          }`}>
-                            {totalCrashes}
-                          </div>
-                          {worstCrashG > 0 && (
-                            <div className="text-xs text-zinc-500">
-                              {worstCrashG.toFixed(0)}G max
-                            </div>
-                          )}
-                        </td>
                         <td className="px-4 py-4">
                           <div className="text-white font-mono">
                             {formatLapTime(driver.best_lap)}
