@@ -184,15 +184,10 @@ def save_current_session():
                 if best_total_time == 0.0 or total_time < best_total_time:
                     best_total_time = total_time
 
-        # Determine session type
-        session_types = ["practice", "qualifying", "race"]
-        session_type = session_types[min(current_session_number, 2)]
-        session_type_label = session_type.capitalize()
-
         # Prepare session data
         session_data = {
             'session_info': {
-                'session_type': session_type,
+                'session_type': '',
                 'date': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 'track': ac.getTrackName(0),
                 'track_config': ac.getTrackConfiguration(0),
@@ -246,16 +241,16 @@ def save_current_session():
         else:
             track_full = track_name
 
-        # Filename: stats_{track}_session_{session_type}_{timestamp}.json
-        filename = "stats_{0}_session_{1}_{2}.json".format(track_full, session_type, timestamp)
+        # Filename: stats_{track}_{timestamp}.json
+        filename = "stats_{0}_{1}.json".format(track_full, timestamp)
         filepath = os.path.join(base_dir, filename)
 
         # Save to JSON file
         with open(filepath, 'w') as f:
             json.dump(session_data, f, indent=2)
 
-        ac.log("Race Stats: {0} session data saved to {1}".format(session_type_label, filename))
-        ac.console("Race Stats: {0} session saved".format(session_type_label))
+        ac.log("Race Stats: Session data saved to {0}".format(filename))
+        ac.console("Race Stats: Session saved")
 
     except Exception as e:
         ac.log("Race Stats ERROR in save_current_session: " + str(e))
@@ -321,9 +316,8 @@ def acUpdate(deltaT):
             prev_g_forces = {}
             session_active = False
 
-            session_type = ["Practice", "Qualifying", "Race"][min(current_session_number, 2)]
-            ac.log("Race Stats: Starting NEW SESSION {0} ({1})".format(current_session_number + 1, session_type))
-            ac.console("Race Stats: Now tracking {0}".format(session_type))
+            ac.log("Race Stats: Starting NEW SESSION {0}".format(current_session_number + 1))
+            ac.console("Race Stats: Now tracking new session")
 
         # Initialize on first update
         if not session_active:
@@ -339,8 +333,7 @@ def acUpdate(deltaT):
                 prev_lap_counts[i] = 0
                 prev_g_forces[i] = [0.0, 0.0, 0.0]
 
-            session_type = ["Practice", "Qualifying", "Race"][min(current_session_number, 2)]
-            ac.log("Race Stats: Tracking {0} cars in {1}".format(total_cars, session_type))
+            ac.log("Race Stats: Tracking {0} cars".format(total_cars))
             ac.console("Race Stats: Tracking {0} cars".format(total_cars))
 
         # Update statistics for each car
