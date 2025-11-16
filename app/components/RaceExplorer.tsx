@@ -130,24 +130,31 @@ export default function RaceExplorer({ quickRaces, championships }: RaceExplorer
                 <p className="text-zinc-400 text-lg">No championships found</p>
               </div>
             ) : (
-              championships.map((championship) => (
-                <Link
-                  key={championship.id}
-                  href={`/championship/${championship.id}`}
-                  className="group block bg-zinc-800/50 border border-zinc-700 rounded-lg p-6 transition-all hover:bg-zinc-800 hover:border-amber-600 hover:shadow-lg hover:shadow-amber-500/10"
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <h2 className="text-3xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
-                        {championship.data.name}
-                      </h2>
-                      <div className="flex flex-wrap gap-4 text-sm text-zinc-400">
-                        <span>{championship.data.rounds.length} rounds</span>
-                        <span>•</span>
-                        <span>{championship.data.opponents.length} drivers</span>
-                        <span>•</span>
-                        <span>{championship.sessions.length} completed</span>
-                      </div>
+              championships.map((championship) => {
+                // Count only race sessions (not practice or qualifying)
+                const completedRaces = championship.sessions.filter(session => {
+                  const filename = session.filename.split('/').pop() || '';
+                  return filename.includes('session_race');
+                }).length;
+
+                return (
+                  <Link
+                    key={championship.id}
+                    href={`/championship/${championship.id}`}
+                    className="group block bg-zinc-800/50 border border-zinc-700 rounded-lg p-6 transition-all hover:bg-zinc-800 hover:border-amber-600 hover:shadow-lg hover:shadow-amber-500/10"
+                  >
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex-1">
+                        <h2 className="text-3xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
+                          {championship.data.name}
+                        </h2>
+                        <div className="flex flex-wrap gap-4 text-sm text-zinc-400">
+                          <span>{championship.data.rounds.length} rounds</span>
+                          <span>•</span>
+                          <span>{championship.data.opponents.length} drivers</span>
+                          <span>•</span>
+                          <span>{completedRaces} completed</span>
+                        </div>
                     </div>
                     <div className="text-zinc-500 group-hover:text-amber-400 transition-colors">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -176,7 +183,8 @@ export default function RaceExplorer({ quickRaces, championships }: RaceExplorer
                     </div>
                   </div>
                 </Link>
-              ))
+                );
+              })
             )}
           </div>
         )}

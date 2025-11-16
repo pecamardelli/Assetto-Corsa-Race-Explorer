@@ -14,6 +14,12 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ c
 
   const { data, sessions } = championship;
 
+  // Count only race sessions (not practice or qualifying)
+  const completedRaces = sessions.filter(session => {
+    const filename = session.filename.split('/').pop() || '';
+    return filename.includes('session_race');
+  }).length;
+
   // Match rounds with sessions based on track name and session type
   const roundsWithSessions = data.rounds.map((round, index) => {
     // Match by track name (the full round.track includes config, e.g., "ks_brands_hatch-indy")
@@ -85,7 +91,7 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ c
               </div>
               <div>
                 <span className="text-zinc-500 block mb-1">Completed</span>
-                <span className="text-white font-medium">{sessions.length}/{data.rounds.length}</span>
+                <span className="text-white font-medium">{completedRaces}/{data.rounds.length}</span>
               </div>
               <div>
                 <span className="text-zinc-500 block mb-1">Qualifying</span>
