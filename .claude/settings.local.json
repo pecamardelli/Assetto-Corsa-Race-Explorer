@@ -7,7 +7,9 @@
       "Bash(node scripts/multiply-scores.js:*)",
       "Bash(cat:*)",
       "Bash(python:*)",
-      "WebFetch(domain:www.npmjs.com)"
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(node scripts/update-scores.js:*)",
+      "Bash(del scriptsupdate-scores.js)"
     ],
     "deny": [],
     "ask": []
