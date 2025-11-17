@@ -121,6 +121,12 @@ export function calculateAllTimeStats(
       // Track crashes
       driverStats.totalCrashes += crashes;
 
+      // Add custom points only for race sessions
+      if (sessionType === 'race') {
+        const totalScore = safeNumber(stats.total_score, 0);
+        driverStats.totalPoints += totalScore;
+      }
+
       driverStats.totalRaces++;
     });
   });
@@ -139,8 +145,9 @@ export function calculateAllTimeStats(
     }
   });
 
-  // Convert to array and sort by first places, then second places, then third places
+  // Convert to array and sort by total points first, then wins, then podium finishes
   return Array.from(statsMap.values()).sort((a, b) => {
+    if (b.totalPoints !== a.totalPoints) return b.totalPoints - a.totalPoints;
     if (b.firstPlaces !== a.firstPlaces) return b.firstPlaces - a.firstPlaces;
     if (b.secondPlaces !== a.secondPlaces) return b.secondPlaces - a.secondPlaces;
     if (b.thirdPlaces !== a.thirdPlaces) return b.thirdPlaces - a.thirdPlaces;

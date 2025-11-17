@@ -112,6 +112,9 @@ export default async function DriversPage() {
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
                       Titles
                     </th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                      Points
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-700">
@@ -209,6 +212,11 @@ export default async function DriversPage() {
                           ) : (
                             <span className="text-zinc-600">-</span>
                           )}
+                        </td>
+                        <td className="px-4 py-4 text-center">
+                          <div className="font-bold text-lg text-blue-400">
+                            {driver.totalPoints}
+                          </div>
                         </td>
                       </tr>
                     );
