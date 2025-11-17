@@ -27,6 +27,14 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ c
     // Match by track name (the full round.track includes config, e.g., "ks_brands_hatch-indy")
     const trackWithConfig = round.track; // e.g., "ks_brands_hatch-indy"
 
+    // Parse track name and config for getTrackDetails
+    const parts = trackWithConfig.split('-');
+    const trackConfig = parts.length > 1 ? parts[parts.length - 1] : undefined;
+    const baseTrackName = parts.length > 1 ? parts.slice(0, -1).join('-') : trackWithConfig;
+
+    // Get track details
+    const trackDetails = getTrackDetails(baseTrackName, trackConfig);
+
     // Find practice, qualifying, and race sessions for this round
     // Filenames are like: stats_ks_brands_hatch-indy_session_practice_20251112_022523.json
     const practiceSessions = sessions.filter(session => {
@@ -47,6 +55,7 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ c
     return {
       round,
       roundNumber: index + 1,
+      trackDetails,
       practice: practiceSessions.length > 0 ? practiceSessions[0] : null,
       qualifying: qualifyingSessions.length > 0 ? qualifyingSessions[0] : null,
       race: raceSessions.length > 0 ? raceSessions[0] : null,
@@ -121,35 +130,45 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ c
           </div>
 
           <div className="divide-y divide-zinc-700">
-            {roundsWithSessions.map(({ round, roundNumber, practice, qualifying, race, hasAnySessions }) => {
-              const trackName = formatTrackName(round.track);
-              const trackConfig = round.track.split('-').pop() || '';
-
+            {roundsWithSessions.map(({ round, roundNumber, trackDetails, practice, qualifying, race, hasAnySessions }) => {
               return (
                 <div key={roundNumber} className="p-6">
                   <div className="flex items-start gap-4">
-                    {/* Round Number */}
-                    <div className="flex-shrink-0">
-                      <div className={`rounded-lg px-4 py-2 text-sm font-bold min-w-[80px] text-center ${
-                        hasAnySessions
-                          ? 'bg-amber-500/20 text-amber-400'
-                          : 'bg-zinc-700/50 text-zinc-500'
-                      }`}>
-                        Round {roundNumber}
-                      </div>
-                    </div>
-
                     {/* Track Info and Sessions */}
                     <div className="flex-1">
-                      <div className={`font-semibold text-lg mb-2 ${
-                        hasAnySessions ? 'text-white' : 'text-zinc-400'
-                      }`}>
-                        {trackName}
+                      <div className="flex items-start gap-3 mb-2">
+                        {/* Round Number Badge */}
+                        <div className={`rounded px-3 py-1 text-xs font-bold ${
+                          hasAnySessions
+                            ? 'bg-amber-500/20 text-amber-400'
+                            : 'bg-zinc-700/50 text-zinc-500'
+                        }`}>
+                          R{roundNumber}
+                        </div>
+
+                        {/* Track Name */}
+                        <div className={`font-semibold text-lg flex-1 ${
+                          hasAnySessions ? 'text-white' : 'text-zinc-400'
+                        }`}>
+                          {trackDetails.name}
+                        </div>
                       </div>
+
                       <div className={`flex items-center gap-3 mb-3 text-sm ${
                         hasAnySessions ? 'text-zinc-400' : 'text-zinc-500'
                       }`}>
-                        <span className="font-mono">{trackConfig}</span>
+                        {trackDetails.country && (
+                          <div className="flex items-center gap-2">
+                            <FlagIcon nation={trackDetails.country} />
+                            <span>{trackDetails.city || trackDetails.country}</span>
+                          </div>
+                        )}
+                        {trackDetails.length && (
+                          <>
+                            <span>•</span>
+                            <span>{trackDetails.length}</span>
+                          </>
+                        )}
                         <span>•</span>
                         <span>{round.laps} {round.laps === 1 ? 'lap' : 'laps'}</span>
                       </div>
@@ -199,6 +218,18 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ c
                           <span className="font-medium">Not Started</span>
                         </div>
                       )}
+                    </div>
+
+                    {/* Track Preview Image */}
+                    <div className="flex-shrink-0">
+                      <Image
+                        src={`/track-previews/${trackDetails.identifier}.png`}
+                        alt={trackDetails.name}
+                        width={200}
+                        height={112}
+                        className="rounded-lg object-cover"
+                        unoptimized
+                      />
                     </div>
                   </div>
                 </div>

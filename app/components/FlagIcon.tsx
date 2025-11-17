@@ -7,8 +7,9 @@ interface FlagIconProps {
   nation: string;
 }
 
-// Mapping from 3-letter codes (ISO 3166-1 alpha-3) to 2-letter codes (ISO 3166-1 alpha-2)
+// Mapping from 3-letter codes (ISO 3166-1 alpha-3) and country names to 2-letter codes (ISO 3166-1 alpha-2)
 const countryCodeMap: Record<string, string> = {
+  // 3-letter codes
   'ARG': 'AR', // Argentina
   'BRA': 'BR', // Brazil
   'ITA': 'IT', // Italy
@@ -24,6 +25,15 @@ const countryCodeMap: Record<string, string> = {
   'SWE': 'SE', // Sweden
   'IRA': 'IR', // Iran
   'UN': 'UN',  // Unknown
+  // Full country names
+  'ITALY': 'IT',
+  'FRANCE': 'FR',
+  'GERMANY': 'DE',
+  'BELGIUM': 'BE',
+  'NEW ZEALAND': 'NZ',
+  'UNITED STATES': 'US',
+  'UNITED KINGDOM': 'GB',
+  'SPAIN': 'ES',
 };
 
 export default function FlagIcon({ nation }: FlagIconProps) {

@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getRaceSession } from '../../lib/race-data';
-import { formatTrackName, formatLapTime, getSortedDrivers, safeNumber } from '../../lib/format-utils';
+import { formatLapTime, getSortedDrivers, safeNumber } from '../../lib/format-utils';
 import { getCarName } from '../../lib/car-data';
+import { getTrackDetails } from '../../lib/track-data';
 import BackButton from '../../components/BackButton';
 
 export default async function RacePage({ params }: { params: Promise<{ filename: string }> }) {
@@ -15,6 +16,7 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
   }
 
   const { session_info, driver_statistics } = session.data;
+  const trackDetails = getTrackDetails(session_info.track, session_info.track_config);
   const sessionType = session_info.session_type || 'race';
   const isPracticeOrQualifying = sessionType === 'practice' || sessionType === 'qualifying';
 
@@ -61,8 +63,14 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
               )}
             </div>
             <h1 className="text-4xl font-bold text-white mb-4">
-              {formatTrackName(session_info.track)}
+              {trackDetails.name}
             </h1>
+            {trackDetails.city && trackDetails.country && (
+              <p className="text-zinc-400 mb-4">
+                {trackDetails.city}, {trackDetails.country}
+                {trackDetails.length && <> • {trackDetails.length}</>}
+              </p>
+            )}
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               {session_info.track_config && (

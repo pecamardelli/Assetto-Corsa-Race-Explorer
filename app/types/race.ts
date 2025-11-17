@@ -77,6 +77,13 @@ export interface RaceSession {
   data: RaceData;
   raceType?: string;
   championship?: string;
+  trackDetails?: {
+    identifier: string;
+    name: string;
+    country: string;
+    city: string;
+    length: string;
+  };
 }
 
 export interface ChampionshipRules {

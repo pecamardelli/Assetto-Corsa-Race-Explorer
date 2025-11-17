@@ -8,7 +8,7 @@ const tracksDestDir = path.join(__dirname, '..', 'app', 'data', 'tracks');
 const trackPreviewsDir = path.join(__dirname, '..', 'public', 'track-previews');
 
 // Get championship files to find which tracks are used
-const championshipDir = path.join(__dirname, '..', 'app', 'data', 'championship', 'e3dabc14-e97d-4951-b132-761ffad3608d');
+const championshipBaseDir = path.join(__dirname, '..', 'app', 'data', 'championship');
 
 // Create destination directories if they don't exist
 if (!fs.existsSync(tracksDestDir)) {
@@ -25,25 +25,57 @@ if (!fs.existsSync(trackPreviewsDir)) {
 // Track identifier includes both track name and config (e.g., "ks_monza66-wsc")
 const trackConfigs = new Set();
 
-const files = fs.readdirSync(championshipDir)
-  .filter(file => file.endsWith('.json'));
+// First, scan .champ files for all rounds (including unraced tracks)
+const champFiles = fs.readdirSync(championshipBaseDir)
+  .filter(file => file.endsWith('.champ'));
 
-console.log(`Scanning ${files.length} championship files for tracks...`);
+console.log(`Scanning ${champFiles.length} .champ files for tracks...`);
 
-files.forEach(file => {
-  const filePath = path.join(championshipDir, file);
-  const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+champFiles.forEach(file => {
+  const filePath = path.join(championshipBaseDir, file);
+  const content = fs.readFileSync(filePath, 'utf8').replace(/^\uFEFF/, ''); // Remove BOM
+  const data = JSON.parse(content);
 
-  if (data.session_info) {
-    const trackName = data.session_info.track;
-    const trackConfig = data.session_info.track_config;
+  if (data.rounds && Array.isArray(data.rounds)) {
+    data.rounds.forEach(round => {
+      const trackName = round.track;
+      // Split track identifier to separate name and config
+      // e.g., "rj_lemans_1967-54" -> trackName: "rj_lemans_1967", config: "54"
+      const parts = trackName.split('-');
+      const trackConfig = parts.length > 1 ? parts[parts.length - 1] : undefined;
+      const baseTrackName = parts.length > 1 ? parts.slice(0, -1).join('-') : trackName;
 
-    if (trackName) {
-      // Create identifier: trackName-config or just trackName if no config
-      const identifier = trackConfig ? `${trackName}-${trackConfig}` : trackName;
-      trackConfigs.add(JSON.stringify({ trackName, trackConfig, identifier }));
-    }
+      const identifier = trackName; // Use the full identifier as-is
+      trackConfigs.add(JSON.stringify({ trackName: baseTrackName, trackConfig, identifier }));
+    });
   }
+});
+
+// Also scan result JSON files for any additional tracks
+const champDirs = fs.readdirSync(championshipBaseDir, { withFileTypes: true })
+  .filter(dirent => dirent.isDirectory())
+  .map(dirent => dirent.name);
+
+champDirs.forEach(dir => {
+  const dirPath = path.join(championshipBaseDir, dir);
+  const files = fs.readdirSync(dirPath)
+    .filter(file => file.endsWith('.json'));
+
+  files.forEach(file => {
+    const filePath = path.join(dirPath, file);
+    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+
+    if (data.session_info) {
+      const trackName = data.session_info.track;
+      const trackConfig = data.session_info.track_config;
+
+      if (trackName) {
+        // Create identifier: trackName-config or just trackName if no config
+        const identifier = trackConfig ? `${trackName}-${trackConfig}` : trackName;
+        trackConfigs.add(JSON.stringify({ trackName, trackConfig, identifier }));
+      }
+    }
+  });
 });
 
 // Parse the unique track configs

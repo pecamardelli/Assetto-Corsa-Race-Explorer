@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { RaceSession, Championship } from '../types/race';
-import { formatTrackName } from '../lib/format-utils';
 
 interface RaceExplorerProps {
   quickRaces: RaceSession[];
@@ -69,24 +68,22 @@ export default function RaceExplorer({ quickRaces, championships }: RaceExplorer
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                       <div className="flex-1">
                         <h2 className="text-2xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors">
-                          {formatTrackName(session_info.track)}
+                          {session.trackDetails?.name || session_info.track}
                         </h2>
                         <div className="flex flex-wrap gap-4 text-sm text-zinc-400">
-                          {session_info.track_config && (
+                          {session.trackDetails?.city && session.trackDetails?.country && (
                             <>
-                              <span className="flex items-center gap-1">
-                                <span className="font-mono">{session_info.track_config}</span>
-                              </span>
+                              <span>{session.trackDetails.city}, {session.trackDetails.country}</span>
+                              <span>•</span>
+                            </>
+                          )}
+                          {session.trackDetails?.length && (
+                            <>
+                              <span>{session.trackDetails.length}</span>
                               <span>•</span>
                             </>
                           )}
                           <span>{driverCount} {driverCount === 1 ? 'driver' : 'drivers'}</span>
-                          {session_info.track_length_km && (
-                            <>
-                              <span>•</span>
-                              <span>{session_info.track_length_km.toFixed(2)} km</span>
-                            </>
-                          )}
                           {session_info.race_laps && (
                             <>
                               <span>•</span>
