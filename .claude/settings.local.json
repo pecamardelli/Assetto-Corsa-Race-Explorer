@@ -16,7 +16,10 @@
       "Bash(npm install:*)",
       "Bash(npm audit:*)",
       "Bash(node:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(del:*)",
+      "Bash(identify:*)",
+      "Bash(sort:*)"
     ],
     "deny": [],
     "ask": []

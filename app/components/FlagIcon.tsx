@@ -12,18 +12,29 @@ const countryCodeMap: Record<string, string> = {
   // 3-letter codes
   'ARG': 'AR', // Argentina
   'BRA': 'BR', // Brazil
-  'ITA': 'IT', // Italy
-  'UAE': 'AE', // United Arab Emirates
+  'CHN': 'CN', // China
+  'CRO': 'HR', // Croatia
+  'CZE': 'CZ', // Czech Republic
+  'DEU': 'DE', // Germany
+  'DNK': 'DK', // Denmark
   'ESP': 'ES', // Spain
-  'RUS': 'RU', // Russia
-  'UKR': 'UA', // Ukraine
-  'ROU': 'RO', // Romania
-  'USA': 'US', // United States
-  'POL': 'PL', // Poland
-  'JPN': 'JP', // Japan
-  'TUR': 'TR', // Turkey
-  'SWE': 'SE', // Sweden
+  'FRA': 'FR', // France
+  'GBR': 'GB', // Great Britain
   'IRA': 'IR', // Iran
+  'IRL': 'IE', // Ireland
+  'ITA': 'IT', // Italy
+  'JPN': 'JP', // Japan
+  'KEN': 'KE', // Kenya
+  'MEX': 'MX', // Mexico
+  'POL': 'PL', // Poland
+  'ROU': 'RO', // Romania
+  'RUS': 'RU', // Russia
+  'SCO': 'GB', // Scotland (use GB flag)
+  'SWE': 'SE', // Sweden
+  'TUR': 'TR', // Turkey
+  'UAE': 'AE', // United Arab Emirates
+  'UKR': 'UA', // Ukraine
+  'USA': 'US', // United States
   'UN': 'UN',  // Unknown
   // Full country names
   'ITALY': 'IT',
