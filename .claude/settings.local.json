@@ -14,7 +14,8 @@
       "Bash(node scripts/copy-badges.js:*)",
       "Bash(npm outdated:*)",
       "Bash(npm install:*)",
-      "Bash(npm audit:*)"
+      "Bash(npm audit:*)",
+      "Bash(node:*)"
     ],
     "deny": [],
     "ask": []

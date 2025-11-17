@@ -1,0 +1,140 @@
+const fs = require('fs');
+const path = require('path');
+
+// Path to Assetto Corsa installation
+const AC_PATH = 'C:\\GAMES\\Assetto Corsa';
+const tracksSourceDir = path.join(AC_PATH, 'content', 'tracks');
+const tracksDestDir = path.join(__dirname, '..', 'app', 'data', 'tracks');
+const trackPreviewsDir = path.join(__dirname, '..', 'public', 'track-previews');
+
+// Get championship files to find which tracks are used
+const championshipDir = path.join(__dirname, '..', 'app', 'data', 'championship', 'e3dabc14-e97d-4951-b132-761ffad3608d');
+
+// Create destination directories if they don't exist
+if (!fs.existsSync(tracksDestDir)) {
+  fs.mkdirSync(tracksDestDir, { recursive: true });
+  console.log(`Created directory: ${tracksDestDir}`);
+}
+
+if (!fs.existsSync(trackPreviewsDir)) {
+  fs.mkdirSync(trackPreviewsDir, { recursive: true });
+  console.log(`Created directory: ${trackPreviewsDir}`);
+}
+
+// Collect unique track names from championship files
+// Track identifier includes both track name and config (e.g., "ks_monza66-wsc")
+const trackConfigs = new Set();
+
+const files = fs.readdirSync(championshipDir)
+  .filter(file => file.endsWith('.json'));
+
+console.log(`Scanning ${files.length} championship files for tracks...`);
+
+files.forEach(file => {
+  const filePath = path.join(championshipDir, file);
+  const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+
+  if (data.session_info) {
+    const trackName = data.session_info.track;
+    const trackConfig = data.session_info.track_config;
+
+    if (trackName) {
+      // Create identifier: trackName-config or just trackName if no config
+      const identifier = trackConfig ? `${trackName}-${trackConfig}` : trackName;
+      trackConfigs.add(JSON.stringify({ trackName, trackConfig, identifier }));
+    }
+  }
+});
+
+// Parse the unique track configs
+const tracks = Array.from(trackConfigs).map(item => JSON.parse(item));
+
+console.log(`\nFound ${tracks.length} unique track configurations`);
+console.log('\nCopying track data and previews...');
+
+let trackDataCopied = 0;
+let trackDataSkipped = 0;
+let trackDataNotFound = 0;
+let previewsCopied = 0;
+let previewsSkipped = 0;
+let previewsNotFound = 0;
+
+tracks.forEach(({ trackName, trackConfig, identifier }) => {
+  // Determine source paths
+  const trackDir = path.join(tracksSourceDir, trackName);
+
+  // ui_track.json can be in track root or in ui subfolder of config
+  let uiTrackJsonPath;
+  if (trackConfig) {
+    // Try config-specific ui folder first
+    uiTrackJsonPath = path.join(trackDir, 'ui', trackConfig, 'ui_track.json');
+    if (!fs.existsSync(uiTrackJsonPath)) {
+      // Fall back to root ui folder
+      uiTrackJsonPath = path.join(trackDir, 'ui', 'ui_track.json');
+    }
+  } else {
+    uiTrackJsonPath = path.join(trackDir, 'ui', 'ui_track.json');
+  }
+
+  // preview.png can be in track root or in ui subfolder of config
+  let previewPath;
+  if (trackConfig) {
+    // Try config-specific ui folder first
+    previewPath = path.join(trackDir, 'ui', trackConfig, 'preview.png');
+    if (!fs.existsSync(previewPath)) {
+      // Fall back to root ui folder
+      previewPath = path.join(trackDir, 'ui', 'preview.png');
+    }
+  } else {
+    previewPath = path.join(trackDir, 'ui', 'preview.png');
+  }
+
+  const trackDataDestPath = path.join(tracksDestDir, `${identifier}.json`);
+  const previewDestPath = path.join(trackPreviewsDir, `${identifier}.png`);
+
+  // Copy track data
+  if (fs.existsSync(trackDataDestPath)) {
+    console.log(`⊘ Track data skipped (already exists): ${identifier}.json`);
+    trackDataSkipped++;
+  } else if (fs.existsSync(uiTrackJsonPath)) {
+    try {
+      // Read the ui_track.json file
+      const trackData = JSON.parse(fs.readFileSync(uiTrackJsonPath, 'utf8'));
+
+      // Write to destination
+      fs.writeFileSync(trackDataDestPath, JSON.stringify(trackData, null, 2), 'utf8');
+      console.log(`✓ Track data copied: ${identifier}.json`);
+      trackDataCopied++;
+    } catch (error) {
+      console.log(`✗ Error copying track data ${identifier}: ${error.message}`);
+      trackDataNotFound++;
+    }
+  } else {
+    console.log(`✗ ui_track.json not found: ${identifier}`);
+    trackDataNotFound++;
+  }
+
+  // Copy preview
+  if (fs.existsSync(previewDestPath)) {
+    console.log(`⊘ Preview skipped (already exists): ${identifier}.png`);
+    previewsSkipped++;
+  } else if (fs.existsSync(previewPath)) {
+    fs.copyFileSync(previewPath, previewDestPath);
+    console.log(`✓ Preview copied: ${identifier}.png`);
+    previewsCopied++;
+  } else {
+    console.log(`✗ Preview not found: ${identifier}`);
+    previewsNotFound++;
+  }
+});
+
+console.log(`\n✅ Done!`);
+console.log(`\nTrack Data:`);
+console.log(`  Copied: ${trackDataCopied}`);
+console.log(`  Skipped: ${trackDataSkipped}`);
+console.log(`  Not found/Error: ${trackDataNotFound}`);
+console.log(`\nPreviews:`);
+console.log(`  Copied: ${previewsCopied}`);
+console.log(`  Skipped: ${previewsSkipped}`);
+console.log(`  Not found: ${previewsNotFound}`);
+console.log(`\nTotal track configurations processed: ${tracks.length}`);

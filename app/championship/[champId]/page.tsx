@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getChampionship } from '../../lib/race-data';
-import { formatTrackName } from '../../lib/format-utils';
+import { getTrackDetails } from '../../lib/track-data';
 import BackButton from '../../components/BackButton';
+import FlagIcon from '../../components/FlagIcon';
 
 export default async function ChampionshipPage({ params }: { params: Promise<{ champId: string }> }) {
   const { champId } = await params;
