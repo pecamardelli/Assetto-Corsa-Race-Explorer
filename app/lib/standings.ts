@@ -2,9 +2,12 @@ import { Championship, DriverStanding, ChampionshipOpponent, RaceSession } from 
 import { safeNumber } from './format-utils';
 
 export interface ConstructorStanding {
+  carName: string;
   name: string;
   brand: string;
   model: string;
+  year: string;
+  driverCount: number;
   customPoints: number;
   wins: number;
   podiums: number;
@@ -267,14 +270,18 @@ export function calculateConstructorStandings(championship: Championship): Const
   // Map to store constructor standings
   const constructorsMap = new Map<string, ConstructorStanding>();
 
+  // Map to track unique drivers per constructor
+  const constructorDriversMap = new Map<string, Set<string>>();
+
   // Helper function to get car data from cars object
-  const getCarData = (carName: string): { name: string; brand: string; model: string } => {
+  const getCarData = (carName: string): { name: string; brand: string; model: string; year: string } => {
     // Try to get from any session's cars object
     for (const session of sessions) {
       if (session.data.cars?.[carName]) {
         const carData = session.data.cars[carName];
         const fullName = carData.name || carName.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
         const brand = carData.brand || 'Unknown';
+        const year = carData.year?.toString() || '';
 
         // Remove brand from model name if it starts with the brand
         let model = fullName;
@@ -282,10 +289,20 @@ export function calculateConstructorStandings(championship: Championship): Const
           model = fullName.substring(brand.length).trim();
         }
 
+        // Remove year from model name if present (check for 4-digit year)
+        if (year) {
+          // Try to remove year as a standalone word or at the end
+          const yearPattern = new RegExp(`\\b${year}\\b`, 'g');
+          model = model.replace(yearPattern, '').trim();
+          // Clean up extra spaces
+          model = model.replace(/\s+/g, ' ').trim();
+        }
+
         return {
           name: fullName,
           brand: brand,
-          model: model || fullName
+          model: model || fullName,
+          year: year
         };
       }
     }
@@ -294,7 +311,8 @@ export function calculateConstructorStandings(championship: Championship): Const
     return {
       name: formattedName,
       brand: 'Unknown',
-      model: formattedName
+      model: formattedName,
+      year: ''
     };
   };
 
@@ -324,18 +342,25 @@ export function calculateConstructorStandings(championship: Championship): Const
           if (!constructorsMap.has(carName)) {
             const carData = getCarData(carName);
             constructorsMap.set(carName, {
+              carName: carName,
               name: carData.name,
               brand: carData.brand,
               model: carData.model,
+              year: carData.year,
+              driverCount: 0,
               customPoints: 0,
               wins: 0,
               podiums: 0,
               fastestLaps: 0,
               poles: 0,
             });
+            constructorDriversMap.set(carName, new Set());
           }
           const constructor = constructorsMap.get(carName)!;
           constructor.poles++;
+
+          // Track unique driver
+          constructorDriversMap.get(carName)!.add(poleDriver);
         }
       }
     });
@@ -366,18 +391,25 @@ export function calculateConstructorStandings(championship: Championship): Const
           if (!constructorsMap.has(carName)) {
             const carData = getCarData(carName);
             constructorsMap.set(carName, {
+              carName: carName,
               name: carData.name,
               brand: carData.brand,
               model: carData.model,
+              year: carData.year,
+              driverCount: 0,
               customPoints: 0,
               wins: 0,
               podiums: 0,
               fastestLaps: 0,
               poles: 0,
             });
+            constructorDriversMap.set(carName, new Set());
           }
           const constructor = constructorsMap.get(carName)!;
           constructor.fastestLaps++;
+
+          // Track unique driver
+          constructorDriversMap.get(carName)!.add(fastestLapDriver);
         }
       }
 
@@ -390,19 +422,26 @@ export function calculateConstructorStandings(championship: Championship): Const
         if (!constructorsMap.has(carName)) {
           const carData = getCarData(carName);
           constructorsMap.set(carName, {
+            carName: carName,
             name: carData.name,
             brand: carData.brand,
             model: carData.model,
+            year: carData.year,
+            driverCount: 0,
             customPoints: 0,
             wins: 0,
             podiums: 0,
             fastestLaps: 0,
             poles: 0,
           });
+          constructorDriversMap.set(carName, new Set());
         }
 
         const constructor = constructorsMap.get(carName)!;
         const position = stats.position ?? 999;
+
+        // Track unique driver
+        constructorDriversMap.get(carName)!.add(driverName);
 
         // Add custom points (total_score from the session)
         constructor.customPoints += safeNumber(stats.total_score, 0);
@@ -412,6 +451,11 @@ export function calculateConstructorStandings(championship: Championship): Const
         if (position <= 3) constructor.podiums++;
       });
     });
+
+  // Update driver counts
+  constructorsMap.forEach((constructor, carName) => {
+    constructor.driverCount = constructorDriversMap.get(carName)?.size || 0;
+  });
 
   // Convert map to array and sort by custom points (desc), then wins (desc), then podiums (desc)
   return Array.from(constructorsMap.values()).sort((a, b) => {

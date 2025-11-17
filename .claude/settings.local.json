@@ -10,7 +10,8 @@
       "WebFetch(domain:www.npmjs.com)",
       "Bash(node scripts/update-scores.js:*)",
       "Bash(del scriptsupdate-scores.js)",
-      "Bash(node scripts/add-car-data.js:*)"
+      "Bash(node scripts/add-car-data.js:*)",
+      "Bash(node scripts/copy-badges.js:*)"
     ],
     "deny": [],
     "ask": []

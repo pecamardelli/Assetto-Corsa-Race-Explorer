@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getChampionship } from '../../../lib/race-data';
 import { calculateConstructorStandings } from '../../../lib/standings';
@@ -64,11 +65,19 @@ export default async function ConstructorsPage({ params }: { params: Promise<{ c
                   <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                     Pos
                   </th>
+                  <th className="px-2 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                  </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                     Brand
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                     Model
+                  </th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                    Year
+                  </th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                    Drivers
                   </th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
                     Wins
@@ -110,11 +119,28 @@ export default async function ConstructorsPage({ params }: { params: Promise<{ c
                           {position}
                         </span>
                       </td>
+                      <td className="px-2 py-4">
+                        <div className="flex items-center justify-center">
+                          <Image
+                            src={`/badges/${constructor.carName}.png`}
+                            alt={constructor.brand}
+                            width={32}
+                            height={32}
+                            className="object-contain"
+                          />
+                        </div>
+                      </td>
                       <td className="px-4 py-4">
                         <div className="text-white font-medium">{constructor.brand}</div>
                       </td>
                       <td className="px-4 py-4">
                         <div className="text-zinc-300">{constructor.model}</div>
+                      </td>
+                      <td className="px-4 py-4 text-center text-zinc-400">
+                        {constructor.year || '-'}
+                      </td>
+                      <td className="px-4 py-4 text-center text-white">
+                        {constructor.driverCount}
                       </td>
                       <td className="px-4 py-4 text-center text-white hidden md:table-cell">
                         {constructor.wins > 0 ? (
