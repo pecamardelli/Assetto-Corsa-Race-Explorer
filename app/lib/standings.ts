@@ -1,5 +1,6 @@
 import { Championship, DriverStanding, ChampionshipOpponent, RaceSession } from '../types/race';
 import { safeNumber } from './format-utils';
+import { getCarDetails } from './car-data';
 
 export interface ConstructorStanding {
   carName: string;
@@ -273,49 +274,6 @@ export function calculateConstructorStandings(championship: Championship): Const
   // Map to track unique drivers per constructor
   const constructorDriversMap = new Map<string, Set<string>>();
 
-  // Helper function to get car data from cars object
-  const getCarData = (carName: string): { name: string; brand: string; model: string; year: string } => {
-    // Try to get from any session's cars object
-    for (const session of sessions) {
-      if (session.data.cars?.[carName]) {
-        const carData = session.data.cars[carName];
-        const fullName = carData.name || carName.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-        const brand = carData.brand || 'Unknown';
-        const year = carData.year?.toString() || '';
-
-        // Remove brand from model name if it starts with the brand
-        let model = fullName;
-        if (brand !== 'Unknown' && fullName.toLowerCase().startsWith(brand.toLowerCase())) {
-          model = fullName.substring(brand.length).trim();
-        }
-
-        // Remove year from model name if present (check for 4-digit year)
-        if (year) {
-          // Try to remove year as a standalone word or at the end
-          const yearPattern = new RegExp(`\\b${year}\\b`, 'g');
-          model = model.replace(yearPattern, '').trim();
-          // Clean up extra spaces
-          model = model.replace(/\s+/g, ' ').trim();
-        }
-
-        return {
-          name: fullName,
-          brand: brand,
-          model: model || fullName,
-          year: year
-        };
-      }
-    }
-    // Fallback to formatted car_name
-    const formattedName = carName.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-    return {
-      name: formattedName,
-      brand: 'Unknown',
-      model: formattedName,
-      year: ''
-    };
-  };
-
   // Process qualifying sessions for pole positions
   sessions
     .filter((session) => session.data.session_info.session_type === 'qualifying')
@@ -340,13 +298,13 @@ export function calculateConstructorStandings(championship: Championship): Const
         const carName = poleDriverStats.car_name;
         if (carName) {
           if (!constructorsMap.has(carName)) {
-            const carData = getCarData(carName);
+            const carDetails = getCarDetails(carName);
             constructorsMap.set(carName, {
               carName: carName,
-              name: carData.name,
-              brand: carData.brand,
-              model: carData.model,
-              year: carData.year,
+              name: carDetails.name,
+              brand: carDetails.brand,
+              model: carDetails.model,
+              year: carDetails.year,
               driverCount: 0,
               customPoints: 0,
               wins: 0,
@@ -389,13 +347,13 @@ export function calculateConstructorStandings(championship: Championship): Const
         const carName = fastestDriverStats.car_name;
         if (carName) {
           if (!constructorsMap.has(carName)) {
-            const carData = getCarData(carName);
+            const carDetails = getCarDetails(carName);
             constructorsMap.set(carName, {
               carName: carName,
-              name: carData.name,
-              brand: carData.brand,
-              model: carData.model,
-              year: carData.year,
+              name: carDetails.name,
+              brand: carDetails.brand,
+              model: carDetails.model,
+              year: carDetails.year,
               driverCount: 0,
               customPoints: 0,
               wins: 0,
@@ -420,13 +378,13 @@ export function calculateConstructorStandings(championship: Championship): Const
 
         // Initialize constructor if not exists
         if (!constructorsMap.has(carName)) {
-          const carData = getCarData(carName);
+          const carDetails = getCarDetails(carName);
           constructorsMap.set(carName, {
             carName: carName,
-            name: carData.name,
-            brand: carData.brand,
-            model: carData.model,
-            year: carData.year,
+            name: carDetails.name,
+            brand: carDetails.brand,
+            model: carDetails.model,
+            year: carDetails.year,
             driverCount: 0,
             customPoints: 0,
             wins: 0,

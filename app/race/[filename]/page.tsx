@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getRaceSession } from '../../lib/race-data';
 import { formatTrackName, formatLapTime, getSortedDrivers, safeNumber } from '../../lib/format-utils';
+import { getCarName } from '../../lib/car-data';
 import BackButton from '../../components/BackButton';
 
 export default async function RacePage({ params }: { params: Promise<{ filename: string }> }) {
@@ -13,15 +14,9 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
     notFound();
   }
 
-  const { session_info, driver_statistics, cars } = session.data;
+  const { session_info, driver_statistics } = session.data;
   const sessionType = session_info.session_type || 'race';
   const isPracticeOrQualifying = sessionType === 'practice' || sessionType === 'qualifying';
-
-  // Helper function to get car display name
-  const getCarName = (carName: string | undefined): string => {
-    if (!carName) return 'Unknown';
-    return cars?.[carName]?.name || carName.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-  };
 
   // Sort drivers: by lap time for practice/qualifying, by position for race
   const drivers = isPracticeOrQualifying

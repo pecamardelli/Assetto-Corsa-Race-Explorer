@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getChampionship } from '../../../lib/race-data';
 import { calculateStandings } from '../../../lib/standings';
+import { getCarName } from '../../../lib/car-data';
 import BackButton from '../../../components/BackButton';
 import FlagIcon from '../../../components/FlagIcon';
 
@@ -15,18 +16,6 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
 
   const standings = calculateStandings(championship);
   const { data } = championship;
-
-  // Helper function to get car display name
-  const getCarName = (carName: string): string => {
-    // Try to get from any session's cars object
-    for (const session of championship.sessions) {
-      if (session.data.cars?.[carName]?.name) {
-        return session.data.cars[carName].name;
-      }
-    }
-    // Fallback to formatted car_name
-    return carName.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
