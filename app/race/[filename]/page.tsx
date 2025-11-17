@@ -32,6 +32,11 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
         })
     : getSortedDrivers(driver_statistics);
 
+  // Get winner data for gap calculation (for race mode)
+  const winner = !isPracticeOrQualifying && drivers.length > 0 ? drivers[0] : null;
+  const winnerLaps = winner ? safeNumber(winner.laps_completed, 0) : 0;
+  const winnerTime = winner ? safeNumber(winner.total_time_seconds, 0) : 0;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -130,9 +135,14 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                       Best Lap
                     </th>
                     {!isPracticeOrQualifying && (
-                      <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider hidden xl:table-cell">
-                        Total Time
-                      </th>
+                      <>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider hidden xl:table-cell">
+                          Total Time
+                        </th>
+                        <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
+                          Gap
+                        </th>
+                      </>
                     )}
                     <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                       {isPracticeOrQualifying ? 'Gap' : 'Score'}
@@ -151,6 +161,22 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                     const fastestLap = drivers[0]?.best_lap || 0;
                     const driverLap = safeNumber(driver.best_lap);
                     const timeDiff = driverLap > 0 && fastestLap > 0 ? driverLap - fastestLap : 0;
+
+                    // Calculate gap to winner for race mode
+                    const driverLaps = safeNumber(driver.laps_completed, 0);
+                    const driverTime = safeNumber(driver.total_time_seconds, 0);
+                    let gapText = '';
+                    if (!isPracticeOrQualifying && !isWinner) {
+                      const lapDiff = winnerLaps - driverLaps;
+                      if (lapDiff > 0) {
+                        // Driver is laps behind
+                        gapText = `+${lapDiff} ${lapDiff === 1 ? 'lap' : 'laps'}`;
+                      } else if (winnerTime > 0 && driverTime > 0) {
+                        // Same lap count, show time difference
+                        const timeDiff = driverTime - winnerTime;
+                        gapText = `+${timeDiff.toFixed(3)}s`;
+                      }
+                    }
 
                     return (
                       <tr
@@ -216,9 +242,14 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                           </div>
                         </td>
                         {!isPracticeOrQualifying && (
-                          <td className="px-4 py-4 text-white font-mono hidden xl:table-cell">
-                            {driver.total_time_formatted || '-'}
-                          </td>
+                          <>
+                            <td className="px-4 py-4 text-white font-mono hidden xl:table-cell">
+                              {driver.total_time_formatted || '-'}
+                            </td>
+                            <td className="px-4 py-4 text-zinc-400 font-mono hidden lg:table-cell">
+                              {isWinner ? '-' : gapText}
+                            </td>
+                          </>
                         )}
                         <td className="px-4 py-4">
                           {isPracticeOrQualifying ? (

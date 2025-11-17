@@ -1,6 +1,15 @@
 import { Championship, DriverStanding, ChampionshipOpponent, RaceSession } from '../types/race';
 import { safeNumber } from './format-utils';
 
+export interface ConstructorStanding {
+  name: string;
+  customPoints: number;
+  wins: number;
+  podiums: number;
+  fastestLaps: number;
+  poles: number;
+}
+
 export interface AllTimeDriverStats {
   name: string;
   nation: string;
@@ -243,6 +252,132 @@ export function calculateStandings(championship: Championship): DriverStanding[]
 
   // Convert map to array and sort by custom points (desc), then wins (desc), then podiums (desc)
   return Array.from(standingsMap.values()).sort((a, b) => {
+    if (b.customPoints !== a.customPoints) return b.customPoints - a.customPoints;
+    if (b.wins !== a.wins) return b.wins - a.wins;
+    if (b.podiums !== a.podiums) return b.podiums - a.podiums;
+    return a.name.localeCompare(b.name);
+  });
+}
+
+export function calculateConstructorStandings(championship: Championship): ConstructorStanding[] {
+  const { sessions } = championship;
+
+  // Map to store constructor standings
+  const constructorsMap = new Map<string, ConstructorStanding>();
+
+  // Helper function to format car name
+  const formatCarName = (carName: string): string => {
+    return carName.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  };
+
+  // Process qualifying sessions for pole positions
+  sessions
+    .filter((session) => session.data.session_info.session_type === 'qualifying')
+    .forEach((session) => {
+      const drivers = session.data.driver_statistics;
+
+      // Find the driver with the fastest lap (pole position)
+      let fastestLap = Infinity;
+      let poleDriver = '';
+
+      Object.entries(drivers).forEach(([driverName, stats]) => {
+        const bestLap = safeNumber(stats.best_lap);
+        if (bestLap > 0 && bestLap < fastestLap) {
+          fastestLap = bestLap;
+          poleDriver = driverName;
+        }
+      });
+
+      // Award pole position to constructor
+      if (poleDriver) {
+        const poleDriverStats = drivers[poleDriver];
+        const carName = poleDriverStats.car_name;
+        if (carName) {
+          if (!constructorsMap.has(carName)) {
+            constructorsMap.set(carName, {
+              name: formatCarName(carName),
+              customPoints: 0,
+              wins: 0,
+              podiums: 0,
+              fastestLaps: 0,
+              poles: 0,
+            });
+          }
+          const constructor = constructorsMap.get(carName)!;
+          constructor.poles++;
+        }
+      }
+    });
+
+  // Process race sessions for points, wins, podiums, and fastest laps
+  sessions
+    .filter((session) => session.data.session_info.session_type === 'race')
+    .forEach((session) => {
+      const drivers = session.data.driver_statistics;
+
+      // Find the driver with the fastest lap
+      let fastestLap = Infinity;
+      let fastestLapDriver = '';
+
+      Object.entries(drivers).forEach(([driverName, stats]) => {
+        const bestLap = safeNumber(stats.best_lap);
+        if (bestLap > 0 && bestLap < fastestLap) {
+          fastestLap = bestLap;
+          fastestLapDriver = driverName;
+        }
+      });
+
+      // Award fastest lap to constructor
+      if (fastestLapDriver) {
+        const fastestDriverStats = drivers[fastestLapDriver];
+        const carName = fastestDriverStats.car_name;
+        if (carName) {
+          if (!constructorsMap.has(carName)) {
+            constructorsMap.set(carName, {
+              name: formatCarName(carName),
+              customPoints: 0,
+              wins: 0,
+              podiums: 0,
+              fastestLaps: 0,
+              poles: 0,
+            });
+          }
+          const constructor = constructorsMap.get(carName)!;
+          constructor.fastestLaps++;
+        }
+      }
+
+      // Aggregate points from all drivers per constructor
+      Object.entries(drivers).forEach(([driverName, stats]) => {
+        const carName = stats.car_name;
+        if (!carName) return;
+
+        // Initialize constructor if not exists
+        if (!constructorsMap.has(carName)) {
+          constructorsMap.set(carName, {
+            name: formatCarName(carName),
+            customPoints: 0,
+            wins: 0,
+            podiums: 0,
+            fastestLaps: 0,
+            poles: 0,
+          });
+        }
+
+        const constructor = constructorsMap.get(carName)!;
+        const position = stats.position ?? 999;
+
+        // Add custom points (total_score from the session)
+        constructor.customPoints += safeNumber(stats.total_score, 0);
+
+        // Track wins and podiums
+        if (position === 1) constructor.wins++;
+        if (position <= 3) constructor.podiums++;
+      });
+    });
+
+  // Convert map to array and sort by custom points (desc), then wins (desc), then podiums (desc)
+  return Array.from(constructorsMap.values()).sort((a, b) => {
     if (b.customPoints !== a.customPoints) return b.customPoints - a.customPoints;
     if (b.wins !== a.wins) return b.wins - a.wins;
     if (b.podiums !== a.podiums) return b.podiums - a.podiums;
