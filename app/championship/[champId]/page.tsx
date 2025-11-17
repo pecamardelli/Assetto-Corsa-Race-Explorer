@@ -199,15 +199,26 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ c
                             </Link>
                           )}
                           {race && (
-                            <Link
-                              href={`/race/${encodeURIComponent(race.filename)}`}
-                              className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm font-medium transition-all"
-                            >
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3l14 9-14 9V3z" />
-                              </svg>
-                              Race
-                            </Link>
+                            <>
+                              <Link
+                                href={`/race/${encodeURIComponent(race.filename)}`}
+                                className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg text-sm font-medium transition-all"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3l14 9-14 9V3z" />
+                                </svg>
+                                Race
+                              </Link>
+                              <Link
+                                href={`/fastest-lap/${encodeURIComponent(race.filename)}`}
+                                className="inline-flex items-center gap-2 px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-medium transition-all"
+                              >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                                Fastest Lap
+                              </Link>
+                            </>
                           )}
                         </div>
                       ) : (

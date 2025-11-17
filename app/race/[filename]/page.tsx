@@ -104,6 +104,21 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                 </div>
               )}
             </div>
+
+            {/* Quick Actions */}
+            {sessionType === 'race' && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Link
+                  href={`/fastest-lap/${encodeURIComponent(decodedFilename)}`}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-semibold transition-all"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  View Fastest Lap Standings
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 

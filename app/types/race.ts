@@ -34,6 +34,8 @@ export interface DriverStatistics {
   overtakes_made?: number;
   net_positions_gained?: number;
   position?: number;
+  nation?: string;
+  car?: string;
 }
 
 export interface CrashPenaltyConfig {
