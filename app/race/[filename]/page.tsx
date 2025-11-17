@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getRaceSession } from '../../lib/race-data';
-import { formatTrackName, formatLapTime, formatCarName, getSortedDrivers, safeNumber } from '../../lib/format-utils';
+import { formatTrackName, formatLapTime, getSortedDrivers, safeNumber } from '../../lib/format-utils';
 import BackButton from '../../components/BackButton';
 
 export default async function RacePage({ params }: { params: Promise<{ filename: string }> }) {
@@ -13,9 +13,15 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
     notFound();
   }
 
-  const { session_info, driver_statistics } = session.data;
+  const { session_info, driver_statistics, cars } = session.data;
   const sessionType = session_info.session_type || 'race';
   const isPracticeOrQualifying = sessionType === 'practice' || sessionType === 'qualifying';
+
+  // Helper function to get car display name
+  const getCarName = (carName: string | undefined): string => {
+    if (!carName) return 'Unknown';
+    return cars?.[carName]?.name || carName.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  };
 
   // Sort drivers: by lap time for practice/qualifying, by position for race
   const drivers = isPracticeOrQualifying
@@ -206,7 +212,7 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                           )}
                         </td>
                         <td className="px-4 py-4 text-zinc-400 text-sm hidden sm:table-cell">
-                          {formatCarName(driver.car_name)}
+                          {getCarName(driver.car_name)}
                         </td>
                         <td className="px-4 py-4 text-center text-white">
                           {safeNumber(driver.laps_completed, 0)}

@@ -65,7 +65,10 @@ export default async function ConstructorsPage({ params }: { params: Promise<{ c
                     Pos
                   </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
-                    Constructor
+                    Brand
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                    Model
                   </th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
                     Wins
@@ -108,7 +111,10 @@ export default async function ConstructorsPage({ params }: { params: Promise<{ c
                         </span>
                       </td>
                       <td className="px-4 py-4">
-                        <div className="text-white font-medium">{constructor.name}</div>
+                        <div className="text-white font-medium">{constructor.brand}</div>
+                      </td>
+                      <td className="px-4 py-4">
+                        <div className="text-zinc-300">{constructor.model}</div>
                       </td>
                       <td className="px-4 py-4 text-center text-white hidden md:table-cell">
                         {constructor.wins > 0 ? (

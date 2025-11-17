@@ -9,12 +9,12 @@
     "total_cars": 50,
     "session_type": "qualifying",
     "date": "2025-11-16 20:38:38",
-    "scoring_formula": "score = base_score \u00d7 position_factor \u00d7 speed_factor \u00d7 crash_factor",
+    "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor",
     "track_length_meters": 10068.1,
     "session_duration_formatted": "38:25.130",
     "crash_penalty_config": {
       "penalty_percent_per_g": 0.01,
-      "max_penalty_per_crash_g": 100.0
+      "max_penalty_per_crash_g": 100
     },
     "track_length_miles": 6.256
   },
@@ -30,8 +30,8 @@
       },
       "crashes": {
         "crash_intensities_g": [
-          4.15, 39.0, 19.07, 14.03, 20.58, 6.85, 6.43, 43.87, 27.51, 18.87,
-          20.92, 6.1, 4.7, 10.54, 16.22, 79.42, 57.03, 21.55, 8.38
+          4.15, 39, 19.07, 14.03, 20.58, 6.85, 6.43, 43.87, 27.51, 18.87, 20.92,
+          6.1, 4.7, 10.54, 16.22, 79.42, 57.03, 21.55, 8.38
         ],
         "total_crashes": 19,
         "average_crash_g": 22.38,
@@ -102,7 +102,7 @@
       },
       "crashes": {
         "crash_intensities_g": [
-          33.17, 8.14, 12.46, 6.72, 15.0, 9.74, 11.14, 6.26, 8.01, 4.1
+          33.17, 8.14, 12.46, 6.72, 15, 9.74, 11.14, 6.26, 8.01, 4.1
         ],
         "total_crashes": 10,
         "average_crash_g": 11.48,
@@ -157,7 +157,7 @@
       "average_speed_mph": 113.95,
       "car_name": "mercedes_ssk_1928",
       "average_lap": 260.181,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "best_lap": 223.356,
       "net_positions_gained": 22
     },
@@ -240,7 +240,7 @@
         "crash_penalty_percent": 0.43,
         "crash_factor": 0.996,
         "base_score": 5737.99,
-        "position_factor": 1.0,
+        "position_factor": 1,
         "speed_factor": 0.551
       },
       "crashes": {
@@ -270,8 +270,8 @@
     "Ching Chinchulin": {
       "laps_completed": 4,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
-        "crash_factor": 1.0,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
         "base_score": 7160.92,
         "position_factor": 0.18,
         "speed_factor": 0.296
@@ -279,8 +279,8 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
       "overtakes_made": 10,
@@ -353,7 +353,7 @@
         "total_crash_intensity": 33.98
       },
       "overtakes_made": 36,
-      "distance_covered_km": 64.0,
+      "distance_covered_km": 64,
       "distance_covered_miles": 39.77,
       "times_overtaken": 30,
       "average_speed_kmh": 114.91,
@@ -441,7 +441,7 @@
       "laps_completed": 6,
       "score_breakdown": {
         "crash_penalty_percent": 0.05,
-        "crash_factor": 1.0,
+        "crash_factor": 1,
         "base_score": 9358.84,
         "position_factor": 0.48,
         "speed_factor": 0.238
@@ -457,7 +457,7 @@
       "distance_covered_km": 74.58,
       "distance_covered_miles": 46.34,
       "times_overtaken": 33,
-      "average_speed_kmh": 140.0,
+      "average_speed_kmh": 140,
       "total_time_formatted": "31:57.921",
       "total_time_seconds": 1917.921,
       "lap_times": [477.318, 290.235, 288.414, 287.529, 288.084, 286.341],
@@ -481,12 +481,12 @@
       },
       "crashes": {
         "crash_intensities_g": [
-          52.77, 33.23, 15.5, 29.0, 31.19, 35.49, 20.86, 6.97
+          52.77, 33.23, 15.5, 29, 31.19, 35.49, 20.86, 6.97
         ],
         "total_crashes": 8,
         "average_crash_g": 28.13,
         "worst_crash_g": 52.77,
-        "total_crash_intensity": 225.0
+        "total_crash_intensity": 225
       },
       "overtakes_made": 34,
       "distance_covered_km": 73.73,
@@ -545,7 +545,7 @@
     "Carlo Pappolongo": {
       "laps_completed": 4,
       "score_breakdown": {
-        "crash_penalty_percent": 2.0,
+        "crash_penalty_percent": 2,
         "crash_factor": 0.98,
         "base_score": 7161.33,
         "position_factor": 0.16,
@@ -659,7 +659,7 @@
         "crash_factor": 0.658,
         "base_score": 1406.47,
         "position_factor": 0.02,
-        "speed_factor": 1.0
+        "speed_factor": 1
       },
       "crashes": {
         "crash_intensities_g": [
@@ -675,14 +675,14 @@
           7.42, 5.95, 4.65, 4.11, 5.33, 4.6, 5.28, 4.27, 4.57, 4.34, 6.19, 5.07,
           6.86, 5.57, 5.93, 5.17, 6.78, 5.58, 6.28, 5.21, 5.83, 5.27, 6.1, 4.55,
           6.16, 4.33, 7.36, 5.95, 6.9, 5.52, 7.07, 5.7, 6.89, 5.53, 7.45, 5.93,
-          7.09, 5.76, 6.48, 5.25, 7.22, 5.04, 6.01, 5.0, 6.52, 5.42, 6.33, 5.13,
+          7.09, 5.76, 6.48, 5.25, 7.22, 5.04, 6.01, 5, 6.52, 5.42, 6.33, 5.13,
           7.02, 5.67, 5.29, 4.31, 7.02, 5.68, 4.49, 5.58, 4.21, 6.1, 5.03, 7.24,
           5.88, 6.11, 4.89, 7.06, 5.77, 6.44, 5.32, 7.05, 5.69, 4.21, 5.1, 4.15,
           5.98, 4.95, 7.68, 5.45, 4.23, 6.21, 5.13, 6.07, 4.96, 6.68, 5.37,
           6.84, 5.67, 6.1, 4.48, 6.4, 5.1, 6.39, 4.62, 6.07, 5.02, 6.64, 4.71,
           5.63, 4.59, 4.75, 6.85, 5.66, 5.18, 4.39, 4.29, 7.04, 5.86, 6.09,
           5.04, 6.28, 5.18, 6.54, 5.86, 4.58, 5.56, 4.68, 7.28, 6.32, 6.33,
-          5.45, 5.8, 4.69, 6.02, 4.97, 5.91, 4.84, 7.0, 5.59, 6.53, 5.43, 6.57,
+          5.45, 5.8, 4.69, 6.02, 4.97, 5.91, 4.84, 7, 5.59, 6.53, 5.43, 6.57,
           5.71, 4.43, 4.13, 6.31, 5.11, 6.92, 6.3, 5.07, 4.46, 6.02, 4.9, 4.01,
           7.18, 5.9, 5.04, 4.21, 4.17, 5.9, 4.82, 7.17, 5.96, 5.18, 4.21, 7.71,
           6.2, 5.95, 4.92, 7.35, 6.5, 6.26, 5.11, 6.13, 5.41, 6.39, 5.62, 6.18,
@@ -700,7 +700,7 @@
           8.07, 6.5, 7.82, 6.81, 7.41, 6.03, 8.57, 6.73, 5.76, 4.85, 8.02, 6.25,
           5.08, 4.69, 7.78, 6.2, 4.62, 4.05, 5.81, 5.24, 7.8, 6.77, 7.35, 5.83,
           5.83, 4.97, 6.36, 5.4, 5.23, 4.84, 5.3, 4.74, 7.54, 6.08, 5.59, 4.95,
-          6.14, 4.91, 7.67, 6.8, 5.74, 5.26, 7.21, 5.7, 5.84, 5.32, 5.93, 5.0,
+          6.14, 4.91, 7.67, 6.8, 5.74, 5.26, 7.21, 5.7, 5.84, 5.32, 5.93, 5,
           5.13, 4.53, 7.29, 5.89, 6.52, 5.91, 5.34, 4.28, 7.38, 6.41, 7.29,
           6.55, 4.58, 4.26, 8.03, 6.97, 7.74, 6.75, 7.53, 6.68, 7.07, 6.31,
           6.97, 6.14, 8.1, 6.39, 7.6, 6.54, 7.21, 5.92, 7.21, 6.24, 5.79, 4.9,
@@ -722,17 +722,17 @@
       "distance_covered_km": 17.25,
       "distance_covered_miles": 10.72,
       "times_overtaken": 25,
-      "average_speed_kmh": 0.0,
+      "average_speed_kmh": 0,
       "total_time_formatted": "00:00.000",
-      "total_time_seconds": 0.0,
+      "total_time_seconds": 0,
       "lap_times": [],
       "total_score": 185,
       "position": 50,
-      "average_speed_mph": 0.0,
+      "average_speed_mph": 0,
       "car_name": "legion_bentley_blower",
-      "average_lap": 0.0,
+      "average_lap": 0,
       "partial_lap_completion": 0.978,
-      "best_lap": 0.0,
+      "best_lap": 0,
       "net_positions_gained": -8
     },
     "Pity Dominguez": {
@@ -774,7 +774,7 @@
     "Matt LaPallita": {
       "laps_completed": 7,
       "score_breakdown": {
-        "crash_penalty_percent": 2.0,
+        "crash_penalty_percent": 2,
         "crash_factor": 0.98,
         "base_score": 10068.1,
         "position_factor": 0.86,
@@ -802,18 +802,18 @@
       "average_speed_mph": 110.5,
       "car_name": "exmods_bug_type57sc_atlantic",
       "average_lap": 266.842,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "best_lap": 224.709,
       "net_positions_gained": -6
     },
-    "Carles Mara\u00f1o": {
+    "Carles Maraño": {
       "laps_completed": 0,
       "score_breakdown": {
         "crash_penalty_percent": 1.61,
         "crash_factor": 0.984,
         "base_score": 1425.51,
         "position_factor": 0.08,
-        "speed_factor": 1.0
+        "speed_factor": 1
       },
       "crashes": {
         "crash_intensities_g": [
@@ -829,17 +829,17 @@
       "distance_covered_km": 12.96,
       "distance_covered_miles": 8.05,
       "times_overtaken": 29,
-      "average_speed_kmh": 0.0,
+      "average_speed_kmh": 0,
       "total_time_formatted": "00:00.000",
-      "total_time_seconds": 0.0,
+      "total_time_seconds": 0,
       "lap_times": [],
       "total_score": 1123,
       "position": 47,
-      "average_speed_mph": 0.0,
+      "average_speed_mph": 0,
       "car_name": "legion_bentley_blower",
-      "average_lap": 0.0,
+      "average_lap": 0,
       "partial_lap_completion": 0.991,
-      "best_lap": 0.0,
+      "best_lap": 0,
       "net_positions_gained": -27
     },
     "Grospo Pelella": {
@@ -860,7 +860,7 @@
           13.41, 4.87, 7.44, 6.89, 24.78, 28.38, 19.07, 5.57, 8.99, 9.11
         ],
         "total_crashes": 53,
-        "average_crash_g": 14.0,
+        "average_crash_g": 14,
         "worst_crash_g": 103.52,
         "total_crash_intensity": 742.13
       },
@@ -879,7 +879,7 @@
       "average_speed_mph": 116.53,
       "car_name": "bugatti_57sc_tour_1937",
       "average_lap": 262.291,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "best_lap": 208.125,
       "net_positions_gained": 16
     },
@@ -926,7 +926,7 @@
         "crash_factor": 0.981,
         "base_score": 1406.9,
         "position_factor": 0.04,
-        "speed_factor": 1.0
+        "speed_factor": 1
       },
       "crashes": {
         "crash_intensities_g": [
@@ -934,7 +934,7 @@
           14.06, 7.17, 8.14, 9.84, 7.85
         ],
         "total_crashes": 16,
-        "average_crash_g": 12.0,
+        "average_crash_g": 12,
         "worst_crash_g": 29.48,
         "total_crash_intensity": 192.06
       },
@@ -942,23 +942,23 @@
       "distance_covered_km": 23.38,
       "distance_covered_miles": 14.53,
       "times_overtaken": 21,
-      "average_speed_kmh": 0.0,
+      "average_speed_kmh": 0,
       "total_time_formatted": "00:00.000",
-      "total_time_seconds": 0.0,
+      "total_time_seconds": 0,
       "lap_times": [],
       "total_score": 552,
       "position": 49,
-      "average_speed_mph": 0.0,
+      "average_speed_mph": 0,
       "car_name": "napier_railton",
-      "average_lap": 0.0,
+      "average_lap": 0,
       "partial_lap_completion": 0.978,
-      "best_lap": 0.0,
+      "best_lap": 0,
       "net_positions_gained": -20
     },
     "Shawn Cachamai": {
       "laps_completed": 5,
       "score_breakdown": {
-        "crash_penalty_percent": 2.0,
+        "crash_penalty_percent": 2,
         "crash_factor": 0.98,
         "base_score": 8609.77,
         "position_factor": 0.5,
@@ -991,8 +991,8 @@
     "Mark Fullthrottle": {
       "laps_completed": 5,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
-        "crash_factor": 1.0,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
         "base_score": 8612.99,
         "position_factor": 0.34,
         "speed_factor": 0.276
@@ -1000,13 +1000,13 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
       "overtakes_made": 27,
       "distance_covered_km": 70.81,
-      "distance_covered_miles": 44.0,
+      "distance_covered_miles": 44,
       "times_overtaken": 36,
       "average_speed_kmh": 153.91,
       "total_time_formatted": "27:36.299",
@@ -1033,11 +1033,11 @@
       "crashes": {
         "crash_intensities_g": [
           29.59, 24.06, 4.3, 31.16, 9.57, 7.18, 6.92, 5.44, 8.31, 4.48, 4.09,
-          11.22, 5.69, 4.79, 19.0, 9.38, 4.75, 12.75, 4.5, 7.08, 8.08, 4.68,
-          5.04, 5.38, 17.85, 7.71, 5.32, 8.76, 4.06, 32.12, 21.88, 7.61, 4.93,
-          4.13, 20.17, 6.02, 9.93, 5.41, 29.32, 14.12, 10.57, 4.92, 11.43, 9.54,
-          4.54, 99.93, 49.27, 11.8, 15.43, 22.88, 9.18, 6.64, 4.75, 9.97, 4.02,
-          11.13, 7.09, 4.09, 4.71, 4.96
+          11.22, 5.69, 4.79, 19, 9.38, 4.75, 12.75, 4.5, 7.08, 8.08, 4.68, 5.04,
+          5.38, 17.85, 7.71, 5.32, 8.76, 4.06, 32.12, 21.88, 7.61, 4.93, 4.13,
+          20.17, 6.02, 9.93, 5.41, 29.32, 14.12, 10.57, 4.92, 11.43, 9.54, 4.54,
+          99.93, 49.27, 11.8, 15.43, 22.88, 9.18, 6.64, 4.75, 9.97, 4.02, 11.13,
+          7.09, 4.09, 4.71, 4.96
         ],
         "total_crashes": 60,
         "average_crash_g": 12.39,
@@ -1163,7 +1163,7 @@
       "average_speed_mph": 99.13,
       "car_name": "bg_mercedes_500k",
       "average_lap": 283.045,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "best_lap": 225.813,
       "net_positions_gained": 11
     },
@@ -1203,8 +1203,8 @@
     "Mitch Bazooka": {
       "laps_completed": 4,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
-        "crash_factor": 1.0,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
         "base_score": 7167.4,
         "position_factor": 0.36,
         "speed_factor": 0.345
@@ -1212,8 +1212,8 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
       "overtakes_made": 39,
@@ -1236,8 +1236,8 @@
     "Volo Putup": {
       "laps_completed": 7,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
-        "crash_factor": 1.0,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
         "base_score": 10068.1,
         "position_factor": 0.94,
         "speed_factor": 0.226
@@ -1245,8 +1245,8 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
       "overtakes_made": 36,
@@ -1264,7 +1264,7 @@
       "average_speed_mph": 95.67,
       "car_name": "bg_mercedes_500k_cab",
       "average_lap": 288.06,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "best_lap": 222.729,
       "net_positions_gained": 18
     },
@@ -1441,7 +1441,7 @@
       "average_speed_mph": 100.4,
       "car_name": "exmods_bug_type57sc_atlantic",
       "average_lap": 288.404,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "best_lap": 226.905,
       "net_positions_gained": -10
     },
@@ -1461,7 +1461,7 @@
           9.77, 9.25, 16.91, 4.59, 4.3, 11.6, 9.19, 6.94, 6.52, 7.89, 7.37,
           4.97, 5.73, 7.22, 6.8, 9.8, 7.91, 6.76, 5.33, 4.15, 5.01, 17.83, 6.36,
           6.46, 10.22, 23.56, 7.03, 22.48, 4.86, 29.04, 11.91, 13.1, 6.86, 5.4,
-          10.0, 9.16, 6.88, 7.31, 14.99, 12.27, 4.49, 8.27, 7.64
+          10, 9.16, 6.88, 7.31, 14.99, 12.27, 4.49, 8.27, 7.64
         ],
         "total_crashes": 63,
         "average_crash_g": 15.16,
@@ -1598,7 +1598,7 @@
         "crash_factor": 0.989,
         "base_score": 2864.23,
         "position_factor": 0.12,
-        "speed_factor": 1.0
+        "speed_factor": 1
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1695,15 +1695,15 @@
       "average_speed_mph": 104.92,
       "car_name": "exmods_alfa_8c_2900b_mm_roadster",
       "average_lap": 277.776,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "best_lap": 246.054,
       "net_positions_gained": -6
     },
     "Miroslav Rusito": {
       "laps_completed": 7,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
-        "crash_factor": 1.0,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
         "base_score": 10068.1,
         "position_factor": 0.9,
         "speed_factor": 0.26
@@ -1711,8 +1711,8 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
       "overtakes_made": 41,
@@ -1730,7 +1730,7 @@
       "average_speed_mph": 121.22,
       "car_name": "mercedes_ssk_1928",
       "average_lap": 250.843,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "best_lap": 224.118,
       "net_positions_gained": 32
     },
@@ -1741,7 +1741,7 @@
         "crash_factor": 0.993,
         "base_score": 1407.1,
         "position_factor": 0.06,
-        "speed_factor": 1.0
+        "speed_factor": 1
       },
       "crashes": {
         "crash_intensities_g": [27.49, 12.05, 7.1, 4.18, 4.77, 7.29, 4.67],
@@ -1754,17 +1754,17 @@
       "distance_covered_km": 27.34,
       "distance_covered_miles": 16.99,
       "times_overtaken": 21,
-      "average_speed_kmh": 0.0,
+      "average_speed_kmh": 0,
       "total_time_formatted": "00:00.000",
-      "total_time_seconds": 0.0,
+      "total_time_seconds": 0,
       "lap_times": [],
       "total_score": 839,
       "position": 48,
-      "average_speed_mph": 0.0,
+      "average_speed_mph": 0,
       "car_name": "napier_railton",
-      "average_lap": 0.0,
+      "average_lap": 0,
       "partial_lap_completion": 0.978,
-      "best_lap": 0.0,
+      "best_lap": 0,
       "net_positions_gained": -20
     },
     "Chulo Peteri": {
@@ -1829,7 +1829,7 @@
       "average_speed_kmh": 148.28,
       "total_time_formatted": "31:44.796",
       "total_time_seconds": 1904.796,
-      "lap_times": [474.0, 286.497, 284.808, 285.36, 289.353, 284.778],
+      "lap_times": [474, 286.497, 284.808, 285.36, 289.353, 284.778],
       "total_score": 11728,
       "position": 24,
       "average_speed_mph": 92.14,
@@ -1838,6 +1838,333 @@
       "partial_lap_completion": 0.545,
       "best_lap": 284.778,
       "net_positions_gained": 11
+    }
+  },
+  "cars": {
+    "exmods_jaguar_ss100": {
+      "name": "Jaguar SS100 Roadster",
+      "brand": "Jaguar",
+      "description": "",
+      "class": "street",
+      "specs": {
+        "bhp": "103 bhp",
+        "torque": "--- Nm",
+        "weight": "1100 kg",
+        "topspeed": "167 km/h",
+        "acceleration": "10.4s 0-100",
+        "pwratio": "10.68 kg/hp",
+        "range": 79
+      },
+      "country": "England",
+      "author": "Jaguar",
+      "version": null,
+      "url": null,
+      "year": 1936
+    },
+    "mg_mgtc": {
+      "name": "MGTC 1949",
+      "brand": "MG",
+      "description": "MG MGTC",
+      "class": "racing",
+      "specs": {
+        "bhp": "--- bhp",
+        "torque": "175Nm",
+        "weight": "1266kg",
+        "topspeed": "260+km/h",
+        "acceleration": "---",
+        "pwratio": "---"
+      },
+      "country": "Great Britain",
+      "year": 1949,
+      "author": null,
+      "version": null,
+      "url": null
+    },
+    "mercedes_ssk_1928": {
+      "name": "Mercedes SSK 1928",
+      "brand": "Mercedes",
+      "class": "racing",
+      "country": "Germany",
+      "description": "v1.1 by ACTK<br>Add AO skins<br>Add LODs<br>Add data to data.acd<br><br>Mercedes-Benz SSK 27/240/300 (man. 4 speed)Engine manufacturer:Daimler-Benz M06, Engine type:spark-ignition 4-stroke,Fuel type:gasoline (petrol),Fuel system:carburetor,<br>Charge system:roots type supercharger,Valves per cylinder:2,Additional features:engageable Roots Supercharger, twin spark plugs,Cylinders alignment:Line 6,Displacement:7069 cm3 / 432.3 cui,<br>Bore:100 mm / 3.94 in,Stroke:150 mm / 5.91 in,Compression ratio:7 : 1,Horsepower net:220.5 kW / 300 PS / 296 hp (DIN)/ 3400,Torque net:689 Nm / 508 ft-lb/ 2000",
+      "specs": {
+        "bhp": "222bhp",
+        "torque": "520 Nm",
+        "weight": "1700kg",
+        "topspeed": "197+km/h",
+        "acceleration": "---",
+        "pwratio": "---"
+      },
+      "year": 1928,
+      "author": "Velo",
+      "url": null,
+      "version": "1.1"
+    },
+    "bugatti_type_57g": {
+      "name": "Bugatti Type 57G",
+      "brand": "Bugatti",
+      "description": "The first French winner of Le Mans since 1926, the iconic Bugatti 57G took its place in racing history by winning the 1937 race. Car no.2, alternately driven by Jean-Pierre Wimille and Robert Benoist, quickly took and held the lead, it&#39;s streamlined shape reportedly giving it a clear advantage in fuel economy, allowing it to lap more and pit less.<br><br>Although a possible one-two was thwarted by the no.1 car (driven by Roger Labric and Pierre Veyron) retiring after 130 laps, Wimille and Benoist covered a record-breaking 3287.938 kms or 243 laps, 7 more laps (103km/64 m) than the second place Delahaye 135 CS, at an average speed of 136.997 km/h. A lead that might have been greater but for an 11 minute pause to recover the car after an accident. Roger Labric also set the race&#39;s fastest lap of 5:13 before his car&#39;s retirement.<br><br>A modified and supercharged variant of the car won again in 1939. A success that was quickly overshadowed by the tragic death of Jean Bugatti (Ettore Bugatti&#39;s eldest son), the driving force behind the car&#39;s development, on August 11th 1939 whilst testing the car at high speed.",
+      "class": "race",
+      "specs": {
+        "bhp": "166 bhp",
+        "torque": "254 Nm",
+        "weight": "1245kg",
+        "topspeed": "230+km/h",
+        "acceleration": "10.97s 0-100 kmh",
+        "pwratio": "7.64 kg/hp"
+      },
+      "country": "France",
+      "author": "Nicecuppatea",
+      "version": "1.0",
+      "url": null,
+      "year": 1937
+    },
+    "bg_mercedes_500k": {
+      "name": "Mercedes-Benz 500K Roadster",
+      "brand": "Mercedes-Benz",
+      "class": "street",
+      "country": "Germany",
+      "description": "based on Velos Mercedes SSK<br><br>Feel free to work on the car",
+      "specs": {
+        "bhp": "222bhp",
+        "torque": "520 Nm",
+        "weight": "1700kg",
+        "topspeed": "197+km/h",
+        "acceleration": "---",
+        "pwratio": "---"
+      },
+      "year": 1936,
+      "author": "B. Gili (xCHx_Exitus)",
+      "url": null,
+      "version": null
+    },
+    "bugatti_57sc_tour_1937": {
+      "name": "Bugatti 57SC Tour 1937",
+      "brand": "Bugatti",
+      "class": "race",
+      "country": "France",
+      "description": "v1.1 by ACTK<br>Update shaders<br>Fix tyres.ini<br>Add AO skins<br>Add LODs<br>Add data to data.acd",
+      "specs": {
+        "bhp": "160 bhp",
+        "torque": "227 Nm",
+        "weight": "864 kg",
+        "topspeed": "190 km/h",
+        "acceleration": "-- s 0–100",
+        "pwratio": "5.4 kg/hp"
+      },
+      "year": 1937,
+      "author": "Unknown",
+      "url": null,
+      "version": "1.1"
+    },
+    "rz_aston_ulster": {
+      "name": "Aston Martin Ulster",
+      "brand": "Aston Martin",
+      "description": "Aston Martin Ulster 1935",
+      "class": "street",
+      "specs": {
+        "bhp": "80 bhp",
+        "torque": "136 Nm",
+        "weight": "940 kg",
+        "topspeed": "160 km/h",
+        "acceleration": "--- s 0-100",
+        "pwratio": "11.75 kg/hp"
+      },
+      "country": "Great Britain",
+      "author": "Ex-Mods / ACTK",
+      "version": "1.1",
+      "url": null,
+      "year": 1935
+    },
+    "frazer_nash_tt_1934": {
+      "name": "Frazer Nash TT Replica",
+      "brand": "Frazer Nash",
+      "class": "race",
+      "country": "Great Britain",
+      "description": "Founded by cyclecar designer Archie Frazer-Nash in 1922, the Frazer Nash company produced a series of unique and iconic pre-war sports cars. Known mainly for their chain-driven transmissions, the \"chain gang\" Frazer Nash cars were successful as road-going sports cars and in racing. The TT Replica model was based on the cars that contested the 1931 RAC Tourist Trophy Race. Although none of the cars entered that year actually finished the event, the TT Replica fared well in races from its introduction in 1932 until the end of production in 1939. Power was provided by three different engines - a modified 1,500 cc Meadows engine, or a 1500 cc engine produced in-house, designed by Albert Gough, or lastly the 1,660 cc 6-cylinder Blackburne engine, which required a slightly longer wheelbase to fit into the chassis. The example presented here is powered by the Meadows engine, which was fitted with a Gough-designed cylinder head, to produce a peak output of around 62 horsepower.",
+      "specs": {
+        "bhp": "62 bhp",
+        "torque": "160 Nm",
+        "weight": "812 kg",
+        "topspeed": "143 km/h (standard gearing)",
+        "pwratio": "13.09 kg/hp"
+      },
+      "year": 1934,
+      "author": "T2Beatnik",
+      "url": null,
+      "version": "1.0"
+    },
+    "exmods_fiat_508s_balilla": {
+      "name": "Fiat 508S Balilla Spider",
+      "brand": "Fiat",
+      "description": "",
+      "class": "street",
+      "specs": {
+        "bhp": "36 bhp",
+        "torque": "--- Nm",
+        "weight": "500 kg",
+        "topspeed": "100+ km/h",
+        "acceleration": "--s 0-100",
+        "pwratio": "17.67 kg/hp",
+        "range": 79
+      },
+      "country": "Italy",
+      "author": "Fiat",
+      "version": null,
+      "url": null,
+      "year": 1933
+    },
+    "gd_alfa_romeo_8c_2300": {
+      "name": "Alfa Romeo 8C 2300 Corto Touring Spider \"Touring\"",
+      "brand": "Alfa Romeo",
+      "description": "v1.13 by ACTK<br>Add news LODs (animations working)<br>Add data to data.acd<br><br>&quot;It’s hard to even conceive how courageous the drivers who raced these early open cars were. Their bravery inspired the race cars and super cars of today. Enzo Ferrari himself raced an 8C 2300 at the Circuito delle Tre Provence, taking second place in 1931. Built between 1931 and 1934 the model was bodied by top coach builders (carrozzeria) Zagato and Touring. <br><br>Underneath the hood are two four-cylinder motors facing back-to-back and mated in the middle at the flywheel. The cams and supercharger are driven by gears in the middle of that marriage. <br>These cars were expensive in their day and are priceless now. Driving the 8C, the great Tazio Nuvolari saw victory at the Grand Prix of Italy and Monaco. Lord Howe won the 24 Hours of Le Mans, and a pair of Italians won the 1932 Mille Miglia in one.",
+      "class": "street",
+      "specs": {
+        "bhp": "155 bhp",
+        "torque": "239 Nm",
+        "weight": "990 kg",
+        "topspeed": "185 km/h",
+        "acceleration": "10.2 s 0–100",
+        "pwratio": "6.39 kg/hp"
+      },
+      "year": 1932,
+      "country": "Italy",
+      "author": "GeroDa74",
+      "url": "https://www.patreon.com/GeroDa74",
+      "version": "1.13"
+    },
+    "exmods_av_voisin_c25_aero": {
+      "name": "Avions Voisin C25 Aerodyne",
+      "brand": "Avions Voisin",
+      "description": "",
+      "class": "street",
+      "specs": {
+        "bhp": "105 bhp",
+        "torque": "---Nm",
+        "weight": "1150 kg",
+        "topspeed": "---",
+        "acceleration": "---",
+        "pwratio": "---"
+      },
+      "country": "France",
+      "author": "Avions",
+      "version": null,
+      "url": null,
+      "year": 1935
+    },
+    "legion_bentley_blower": {
+      "name": "Bentley 4½ Litre Blower",
+      "brand": "Bentley",
+      "class": "Le Mans 1930",
+      "country": "Italy",
+      "description": null,
+      "specs": {
+        "bhp": "212 whp",
+        "torque": "-- Nm*",
+        "weight": "1725 kg*",
+        "topspeed": "-- km/h",
+        "acceleration": "-- s 0–100",
+        "pwratio": "8.14 kg/hp"
+      },
+      "year": 1930,
+      "author": "Legion",
+      "url": null,
+      "version": "20200623"
+    },
+    "exmods_bug_type57sc_atlantic": {
+      "name": "Bugatti Type 57SC Atlantic",
+      "brand": "Bugatti",
+      "description": "",
+      "class": "street",
+      "specs": {
+        "bhp": "210 bhp",
+        "torque": "299 Nm",
+        "weight": "950 kg",
+        "topspeed": "---",
+        "acceleration": "---",
+        "pwratio": "---"
+      },
+      "country": "France",
+      "author": "Bugatti",
+      "version": null,
+      "url": null,
+      "year": 1938
+    },
+    "napier_railton": {
+      "name": "Napier Railton",
+      "brand": "Railton",
+      "class": "Formula Libre",
+      "country": "Great Britain",
+      "description": null,
+      "specs": {
+        "bhp": "562 whp",
+        "torque": "2600 Nm*",
+        "weight": "2055 kg",
+        "topspeed": "270 km/h",
+        "acceleration": "---",
+        "pwratio": "3.66 kg/hp"
+      },
+      "year": 1934,
+      "author": "Legion",
+      "url": null,
+      "version": "BlckBox 1.0"
+    },
+    "bugatti_type57_aerolithe": {
+      "name": "Bugatti Type57 Aerolithe",
+      "brand": "Bugatti",
+      "description": "Bugatti Type57 Aerolithe (1935)",
+      "class": "street",
+      "specs": {
+        "bhp": "98 bhp",
+        "torque": "250 Nm",
+        "weight": "1100kg",
+        "topspeed": "153km/h",
+        "acceleration": "10.7s 0-100",
+        "pwratio": "11.22 kg/hp"
+      },
+      "country": "Great Britain",
+      "author": null,
+      "version": null,
+      "url": null,
+      "year": 1935
+    },
+    "bg_mercedes_500k_cab": {
+      "name": "Mercedes-Benz 500K Roadster Cabriolet",
+      "brand": "Mercedes-Benz",
+      "class": "street",
+      "country": "Germany",
+      "description": "based on Velos Mercedes SSK<br><br>Feel free to work on the car",
+      "specs": {
+        "bhp": "222bhp",
+        "torque": "520 Nm",
+        "weight": "1700kg",
+        "topspeed": "197+km/h",
+        "acceleration": "---",
+        "pwratio": "---"
+      },
+      "year": 1936,
+      "author": "B. Gili (xCHx_Exitus)",
+      "url": null,
+      "version": null,
+      "parent": "bg_mercedes_500k"
+    },
+    "exmods_alfa_8c_2900b_mm_roadster": {
+      "name": "Alfa Romeo 8C 2900B Mille Miglia Spider Touring",
+      "brand": "Alfa Romeo",
+      "description": "v1.1 by ACTK<br>Add COCKPIT_HR in 3d model<br>Add LODs",
+      "class": "street",
+      "specs": {
+        "bhp": "225 bhp",
+        "torque": "---Nm",
+        "weight": "1250kg",
+        "topspeed": "180+km/h",
+        "acceleration": "---",
+        "pwratio": "---"
+      },
+      "country": "Italy",
+      "author": "EX Mods",
+      "version": "1.1",
+      "url": null,
+      "year": 1938
     }
   }
 }

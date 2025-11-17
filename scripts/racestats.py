@@ -43,11 +43,43 @@ CRASH_G_FORCE_THRESHOLD = 4.0
 CRASH_PENALTY_PERCENT_PER_G = 0.01        # 0.01% penalty per G-force (0.1% per 10G)
 MAX_CRASH_PENALTY_PER_CRASH = 100.0       # Cap each crash at 100G (1% max penalty per crash)
 
+def load_car_data(car_name):
+    """Load car data from ui_car.json, excluding power_curve, torque_curve, and tags"""
+    try:
+        # Get Assetto Corsa installation path
+        ac_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+        car_ui_path = os.path.join(ac_path, "content", "cars", car_name, "ui", "ui_car.json")
+
+        if not os.path.exists(car_ui_path):
+            ac.log("Race Stats: ui_car.json not found for car: {0}".format(car_name))
+            return None
+
+        with open(car_ui_path, 'r') as f:
+            car_data = json.load(f)
+
+        # Remove power_curve, torque_curve, powerCurve, torqueCurve, and tags if they exist
+        if 'power_curve' in car_data:
+            del car_data['power_curve']
+        if 'torque_curve' in car_data:
+            del car_data['torque_curve']
+        if 'powerCurve' in car_data:
+            del car_data['powerCurve']
+        if 'torqueCurve' in car_data:
+            del car_data['torqueCurve']
+        if 'tags' in car_data:
+            del car_data['tags']
+
+        return car_data
+    except Exception as e:
+        ac.log("Race Stats: Error loading car data for {0}: {1}".format(car_name, str(e)))
+        return None
+
 class CarStats:
     def __init__(self, car_id, driver_name, car_name):
         self.car_id = car_id
         self.driver_name = driver_name
         self.car_name = car_name
+        self.car_data = load_car_data(car_name)  # Load full car data from ui.json
         self.distance_covered = 0.0  # in meters
         self.lap_times = []  # list of lap times in seconds
         self.total_time = 0.0  # individual driver racing time in seconds
@@ -184,6 +216,12 @@ def save_current_session():
                 if best_total_time == 0.0 or total_time < best_total_time:
                     best_total_time = total_time
 
+        # Collect unique car data
+        cars_data = {}
+        for stats in car_stats.values():
+            if stats.car_name not in cars_data and stats.car_data:
+                cars_data[stats.car_name] = stats.car_data
+
         # Prepare session data
         session_data = {
             'session_info': {
@@ -205,6 +243,7 @@ def save_current_session():
                     'max_penalty_per_crash_g': MAX_CRASH_PENALTY_PER_CRASH
                 }
             },
+            'cars': cars_data,
             'driver_statistics': {}
         }
 

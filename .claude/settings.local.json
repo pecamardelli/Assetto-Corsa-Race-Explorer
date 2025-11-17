@@ -9,7 +9,8 @@
       "Bash(python:*)",
       "WebFetch(domain:www.npmjs.com)",
       "Bash(node scripts/update-scores.js:*)",
-      "Bash(del scriptsupdate-scores.js)"
+      "Bash(del scriptsupdate-scores.js)",
+      "Bash(node scripts/add-car-data.js:*)"
     ],
     "deny": [],
     "ask": []

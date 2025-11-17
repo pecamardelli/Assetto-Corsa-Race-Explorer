@@ -58,9 +58,18 @@ export interface SessionInfo {
   session_type?: 'practice' | 'qualifying' | 'race';
 }
 
+export interface CarData {
+  name?: string;
+  brand?: string;
+  class?: string;
+  specs?: Record<string, any>;
+  [key: string]: any;
+}
+
 export interface RaceData {
   session_info: SessionInfo;
   driver_statistics: Record<string, DriverStatistics>;
+  cars?: Record<string, CarData>;
 }
 
 export interface RaceSession {

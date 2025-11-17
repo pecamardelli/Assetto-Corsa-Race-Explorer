@@ -3,6 +3,8 @@ import { safeNumber } from './format-utils';
 
 export interface ConstructorStanding {
   name: string;
+  brand: string;
+  model: string;
   customPoints: number;
   wins: number;
   podiums: number;
@@ -265,9 +267,35 @@ export function calculateConstructorStandings(championship: Championship): Const
   // Map to store constructor standings
   const constructorsMap = new Map<string, ConstructorStanding>();
 
-  // Helper function to format car name
-  const formatCarName = (carName: string): string => {
-    return carName.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  // Helper function to get car data from cars object
+  const getCarData = (carName: string): { name: string; brand: string; model: string } => {
+    // Try to get from any session's cars object
+    for (const session of sessions) {
+      if (session.data.cars?.[carName]) {
+        const carData = session.data.cars[carName];
+        const fullName = carData.name || carName.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        const brand = carData.brand || 'Unknown';
+
+        // Remove brand from model name if it starts with the brand
+        let model = fullName;
+        if (brand !== 'Unknown' && fullName.toLowerCase().startsWith(brand.toLowerCase())) {
+          model = fullName.substring(brand.length).trim();
+        }
+
+        return {
+          name: fullName,
+          brand: brand,
+          model: model || fullName
+        };
+      }
+    }
+    // Fallback to formatted car_name
+    const formattedName = carName.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    return {
+      name: formattedName,
+      brand: 'Unknown',
+      model: formattedName
+    };
   };
 
   // Process qualifying sessions for pole positions
@@ -294,8 +322,11 @@ export function calculateConstructorStandings(championship: Championship): Const
         const carName = poleDriverStats.car_name;
         if (carName) {
           if (!constructorsMap.has(carName)) {
+            const carData = getCarData(carName);
             constructorsMap.set(carName, {
-              name: formatCarName(carName),
+              name: carData.name,
+              brand: carData.brand,
+              model: carData.model,
               customPoints: 0,
               wins: 0,
               podiums: 0,
@@ -333,8 +364,11 @@ export function calculateConstructorStandings(championship: Championship): Const
         const carName = fastestDriverStats.car_name;
         if (carName) {
           if (!constructorsMap.has(carName)) {
+            const carData = getCarData(carName);
             constructorsMap.set(carName, {
-              name: formatCarName(carName),
+              name: carData.name,
+              brand: carData.brand,
+              model: carData.model,
               customPoints: 0,
               wins: 0,
               podiums: 0,
@@ -354,8 +388,11 @@ export function calculateConstructorStandings(championship: Championship): Const
 
         // Initialize constructor if not exists
         if (!constructorsMap.has(carName)) {
+          const carData = getCarData(carName);
           constructorsMap.set(carName, {
-            name: formatCarName(carName),
+            name: carData.name,
+            brand: carData.brand,
+            model: carData.model,
             customPoints: 0,
             wins: 0,
             podiums: 0,

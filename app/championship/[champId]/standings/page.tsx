@@ -16,6 +16,18 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
   const standings = calculateStandings(championship);
   const { data } = championship;
 
+  // Helper function to get car display name
+  const getCarName = (carName: string): string => {
+    // Try to get from any session's cars object
+    for (const session of championship.sessions) {
+      if (session.data.cars?.[carName]?.name) {
+        return session.data.cars[carName].name;
+      }
+    }
+    // Fallback to formatted car_name
+    return carName.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -108,7 +120,7 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
                       <td className="px-4 py-4">
                         <div className="text-white font-medium">{driver.name}</div>
                         <div className="text-xs text-zinc-500 mt-1 hidden sm:block">
-                          {driver.car.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+                          {getCarName(driver.car)}
                         </div>
                       </td>
                       <td className="px-4 py-4 text-center hidden sm:table-cell">
