@@ -124,7 +124,7 @@ class CarStats:
         return {
             'position': position,
             'car_name': self.car_name,
-            'total_score': math.ceil(total_score * 10),
+            'total_score': math.ceil(total_score),
             'score_breakdown': {
                 'base_score': round(base_score, 2),
                 'position_factor': round(position_factor, 3),

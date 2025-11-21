@@ -74,7 +74,7 @@ raceFiles.forEach(raceFile => {
     const crashPenaltyPercent = cappedCrashIntensity * CRASH_PENALTY_PERCENT_PER_G;
 
     // Total score
-    const totalScore = Math.ceil(baseScore * positionFactor * speedFactor * crashFactor * 10);
+    const totalScore = Math.ceil(baseScore * positionFactor * speedFactor * crashFactor);
 
     // Check if changed
     if (stats.total_score !== totalScore) {

@@ -68,7 +68,7 @@ Object.entries(drivers).forEach(([name, stats]) => {
   const crashPenaltyPercent = cappedCrashIntensity * CRASH_PENALTY_PERCENT_PER_G;
 
   // Total score
-  const totalScore = Math.ceil(baseScore * positionFactor * speedFactor * crashFactor * 10);
+  const totalScore = Math.ceil(baseScore * positionFactor * speedFactor * crashFactor);
 
   // Store old values for comparison
   const oldScore = stats.total_score;
