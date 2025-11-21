@@ -98,6 +98,26 @@ let badgesSkipped = 0;
 let badgesNotFound = 0;
 let badgesResized = 0;
 
+// Helper function to clean JSON with control characters
+function parseCarJson(filePath) {
+  let content = fs.readFileSync(filePath, 'utf8');
+
+  // Remove BOM if present
+  content = content.replace(/^\uFEFF/, '');
+
+  // Replace unescaped control characters (tabs, newlines, carriage returns)
+  // that appear in string values with escaped versions
+  // This regex finds control characters within JSON strings
+  content = content.replace(/("(?:[^"\\]|\\.)*")/g, (match) => {
+    return match
+      .replace(/\t/g, '\\t')
+      .replace(/\r/g, '\\r')
+      .replace(/\n/g, '\\n');
+  });
+
+  return JSON.parse(content);
+}
+
 async function processCars() {
   for (const carName of carNames) {
     const uiCarJsonPath = path.join(carsSourceDir, carName, 'ui', 'ui_car.json');
@@ -111,8 +131,8 @@ async function processCars() {
       carDataSkipped++;
     } else if (fs.existsSync(uiCarJsonPath)) {
       try {
-        // Read the ui_car.json file
-        const carData = JSON.parse(fs.readFileSync(uiCarJsonPath, 'utf8'));
+        // Read the ui_car.json file with control character handling
+        const carData = parseCarJson(uiCarJsonPath);
 
         // Remove power_curve, torque_curve, powerCurve, torqueCurve, and tags
         delete carData.power_curve;
