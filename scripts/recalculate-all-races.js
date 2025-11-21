@@ -1,0 +1,81 @@
+const fs = require('fs');
+const path = require('path');
+
+// Path to championship directory
+const champDir = path.join(__dirname, '..', 'app', 'data', 'championship', '57d34e04-9557-437a-a139-1ac6c30f28c7');
+
+// Get all race files
+const raceFiles = fs.readdirSync(champDir).filter(f => f.endsWith('.json') && f.startsWith('stats_'));
+
+console.log(`Found ${raceFiles.length} race files to recalculate\n`);
+
+const CRASH_PENALTY_PERCENT_PER_G = 0.01;
+const MAX_CRASH_PENALTY_PER_CRASH = 100.0;
+
+raceFiles.forEach(raceFile => {
+  const filePath = path.join(champDir, raceFile);
+  const raceData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+
+  const drivers = raceData.driver_statistics;
+  const sessionInfo = raceData.session_info;
+  const raceLaps = sessionInfo.race_laps;
+  const trackLength = sessionInfo.track_length_meters;
+  const totalCars = sessionInfo.total_cars;
+  const bestTotalTime = sessionInfo.best_total_time_seconds;
+
+  console.log(`Processing: ${raceFile}`);
+  console.log(`  Race laps: ${raceLaps}, Best time: ${bestTotalTime.toFixed(3)}s`);
+
+  let changedScores = 0;
+
+  Object.entries(drivers).forEach(([name, stats]) => {
+    const position = stats.position;
+    const lapsCompleted = stats.laps_completed;
+    const partialLap = stats.partial_lap_completion;
+    const totalTime = stats.total_time_seconds;
+
+    // Base score
+    const baseScore = (trackLength * (lapsCompleted + partialLap)) / raceLaps;
+
+    // Position factor
+    const positionFactor = (totalCars - position + 1) / totalCars;
+
+    // Speed factor (CAPPED AT 1.0)
+    let speedFactor = 1.0;
+    if (totalTime > 0 && bestTotalTime > 0) {
+      speedFactor = bestTotalTime / totalTime;
+      // Cap at 1.0 - fastest driver gets 1.0, slower drivers get less
+      if (speedFactor > 1.0) {
+        speedFactor = 1.0;
+      }
+    }
+
+    // Crash factor
+    const cappedCrashIntensities = stats.crashes.crash_intensities_g.map(g => Math.min(g, MAX_CRASH_PENALTY_PER_CRASH));
+    const cappedCrashIntensity = cappedCrashIntensities.reduce((a, b) => a + b, 0);
+    const crashFactor = 1.0 - (cappedCrashIntensity * CRASH_PENALTY_PERCENT_PER_G / 100.0);
+    const crashPenaltyPercent = cappedCrashIntensity * CRASH_PENALTY_PERCENT_PER_G;
+
+    // Total score
+    const totalScore = Math.ceil(baseScore * positionFactor * speedFactor * crashFactor * 10);
+
+    // Check if changed
+    if (stats.total_score !== totalScore) {
+      changedScores++;
+    }
+
+    // Update the driver's data
+    stats.total_score = totalScore;
+    stats.score_breakdown.speed_factor = parseFloat(speedFactor.toFixed(3));
+    stats.score_breakdown.base_score = parseFloat(baseScore.toFixed(2));
+    stats.score_breakdown.position_factor = parseFloat(positionFactor.toFixed(3));
+    stats.score_breakdown.crash_factor = parseFloat(crashFactor.toFixed(3));
+    stats.score_breakdown.crash_penalty_percent = parseFloat(crashPenaltyPercent.toFixed(2));
+  });
+
+  // Write back to file
+  fs.writeFileSync(filePath, JSON.stringify(raceData, null, 2), 'utf8');
+  console.log(`  ✓ Updated ${changedScores} driver scores\n`);
+});
+
+console.log('✅ All races recalculated with capped speed factor!');

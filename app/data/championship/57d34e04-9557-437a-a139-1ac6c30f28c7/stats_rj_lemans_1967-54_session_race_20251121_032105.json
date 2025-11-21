@@ -2,16 +2,23 @@
   "driver_statistics": {
     "Miko Nunchaku": {
       "crashes": {
-        "crash_intensities_g": [83.99, 60.02, 12.31, 6.28, 5.26, 4.18],
+        "crash_intensities_g": [
+          83.99,
+          60.02,
+          12.31,
+          6.28,
+          5.26,
+          4.18
+        ],
         "total_crashes": 6,
         "average_crash_g": 28.67,
         "worst_crash_g": 83.99,
         "total_crash_intensity": 172.04
       },
-      "total_score": 116446,
+      "total_score": 111127,
       "position": 4,
       "average_speed_kmh": 252.32,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 81.78,
       "net_positions_gained": 4,
@@ -19,12 +26,18 @@
       "average_lap": 233.376,
       "total_time_formatted": "19:26.880",
       "distance_covered_miles": 50.82,
-      "lap_times": [242.457, 231.453, 230.475, 231.84, 230.655],
+      "lap_times": [
+        242.457,
+        231.453,
+        230.475,
+        231.84,
+        230.655
+      ],
       "overtakes_made": 7,
       "score_breakdown": {
         "crash_penalty_percent": 1.72,
         "position_factor": 0.893,
-        "speed_factor": 0.979,
+        "speed_factor": 0.934,
         "base_score": 13556.21,
         "crash_factor": 0.983
       },
@@ -37,14 +50,14 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
-      "total_score": 78553,
+      "total_score": 77125,
       "position": 12,
       "average_speed_kmh": 244.86,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 81.41,
       "net_positions_gained": -5,
@@ -52,14 +65,20 @@
       "average_lap": 239.366,
       "total_time_formatted": "19:56.832",
       "distance_covered_miles": 50.58,
-      "lap_times": [274.932, 230.28, 231.402, 229.77, 230.448],
+      "lap_times": [
+        274.932,
+        230.28,
+        231.402,
+        229.77,
+        230.448
+      ],
       "overtakes_made": 6,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "position_factor": 0.607,
-        "speed_factor": 0.954,
+        "speed_factor": 0.937,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 229.77,
       "average_speed_mph": 152.15,
@@ -68,16 +87,23 @@
     },
     "Klingon Popinsky": {
       "crashes": {
-        "crash_intensities_g": [7.18, 6.02, 6.06, 8.46, 4.75, 5.72],
+        "crash_intensities_g": [
+          7.18,
+          6.02,
+          6.06,
+          8.46,
+          4.75,
+          5.72
+        ],
         "total_crashes": 6,
         "average_crash_g": 6.36,
         "worst_crash_g": 8.46,
         "total_crash_intensity": 38.18
       },
-      "total_score": 127617,
+      "total_score": 126905,
       "position": 2,
       "average_speed_kmh": 253.98,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 82.23,
       "net_positions_gained": 4,
@@ -85,12 +111,18 @@
       "average_lap": 233.116,
       "total_time_formatted": "19:25.577",
       "distance_covered_miles": 51.1,
-      "lap_times": [270.219, 221.913, 227.769, 224.742, 220.935],
+      "lap_times": [
+        270.219,
+        221.913,
+        227.769,
+        224.742,
+        220.935
+      ],
       "overtakes_made": 14,
       "score_breakdown": {
         "crash_penalty_percent": 0.38,
         "position_factor": 0.964,
-        "speed_factor": 0.98,
+        "speed_factor": 0.975,
         "base_score": 13556.21,
         "crash_factor": 0.996
       },
@@ -103,14 +135,14 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
-      "total_score": 108038,
+      "total_score": 103713,
       "position": 6,
       "average_speed_kmh": 248.94,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 81.41,
       "net_positions_gained": 8,
@@ -118,14 +150,20 @@
       "average_lap": 235.466,
       "total_time_formatted": "19:37.328",
       "distance_covered_miles": 50.59,
-      "lap_times": [247.905, 232.35, 233.622, 231.171, 232.281],
+      "lap_times": [
+        247.905,
+        232.35,
+        233.622,
+        231.171,
+        232.281
+      ],
       "overtakes_made": 12,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "position_factor": 0.821,
-        "speed_factor": 0.97,
+        "speed_factor": 0.931,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 231.171,
       "average_speed_mph": 154.69,
@@ -136,14 +174,14 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
-      "total_score": 83456,
+      "total_score": 81304,
       "position": 11,
       "average_speed_kmh": 245.77,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 81.43,
       "net_positions_gained": 2,
@@ -151,14 +189,20 @@
       "average_lap": 238.558,
       "total_time_formatted": "19:52.790",
       "distance_covered_miles": 50.6,
-      "lap_times": [260.283, 231.621, 234.381, 230.781, 235.725],
+      "lap_times": [
+        260.283,
+        231.621,
+        234.381,
+        230.781,
+        235.725
+      ],
       "overtakes_made": 8,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "position_factor": 0.643,
-        "speed_factor": 0.958,
+        "speed_factor": 0.933,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 230.781,
       "average_speed_mph": 152.71,
@@ -167,16 +211,18 @@
     },
     "Danny Paletto": {
       "crashes": {
-        "crash_intensities_g": [4.09],
+        "crash_intensities_g": [
+          4.09
+        ],
         "total_crashes": 1,
         "average_crash_g": 4.09,
         "worst_crash_g": 4.09,
         "total_crash_intensity": 4.09
       },
-      "total_score": 27940,
+      "total_score": 27247,
       "position": 22,
       "average_speed_kmh": 179.64,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 69.11,
       "net_positions_gained": 3,
@@ -184,14 +230,20 @@
       "average_lap": 276.997,
       "total_time_formatted": "23:04.986",
       "distance_covered_miles": 42.94,
-      "lap_times": [297.546, 273.927, 273.492, 272.322, 267.699],
+      "lap_times": [
+        297.546,
+        273.927,
+        273.492,
+        272.322,
+        267.699
+      ],
       "overtakes_made": 20,
       "score_breakdown": {
         "crash_penalty_percent": 0.04,
         "position_factor": 0.25,
-        "speed_factor": 0.825,
+        "speed_factor": 0.804,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 267.699,
       "average_speed_mph": 111.63,
@@ -200,16 +252,18 @@
     },
     "Carlo Pappolongo": {
       "crashes": {
-        "crash_intensities_g": [5.77],
+        "crash_intensities_g": [
+          5.77
+        ],
         "total_crashes": 1,
         "average_crash_g": 5.77,
         "worst_crash_g": 5.77,
         "total_crash_intensity": 5.77
       },
-      "total_score": 88129,
+      "total_score": 86752,
       "position": 10,
       "average_speed_kmh": 246.33,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 81.53,
       "net_positions_gained": 13,
@@ -217,12 +271,18 @@
       "average_lap": 238.32,
       "total_time_formatted": "19:51.599",
       "distance_covered_miles": 50.66,
-      "lap_times": [269.262, 228.174, 229.278, 230.898, 233.988],
+      "lap_times": [
+        269.262,
+        228.174,
+        229.278,
+        230.898,
+        233.988
+      ],
       "overtakes_made": 18,
       "score_breakdown": {
         "crash_penalty_percent": 0.06,
         "position_factor": 0.679,
-        "speed_factor": 0.959,
+        "speed_factor": 0.944,
         "base_score": 13556.21,
         "crash_factor": 0.999
       },
@@ -233,16 +293,21 @@
     },
     "Pierre Blitzkrieg": {
       "crashes": {
-        "crash_intensities_g": [5.72, 8.58, 4.69, 8.42],
+        "crash_intensities_g": [
+          5.72,
+          8.58,
+          4.69,
+          8.42
+        ],
         "total_crashes": 4,
         "average_crash_g": 6.85,
         "worst_crash_g": 8.58,
         "total_crash_intensity": 27.42
       },
-      "total_score": 7850,
+      "total_score": 7723,
       "position": 27,
       "average_speed_kmh": 174.17,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 67.99,
       "net_positions_gained": -15,
@@ -250,12 +315,18 @@
       "average_lap": 281.054,
       "total_time_formatted": "23:25.269",
       "distance_covered_miles": 42.24,
-      "lap_times": [302.484, 269.211, 276.273, 283.461, 273.84],
+      "lap_times": [
+        302.484,
+        269.211,
+        276.273,
+        283.461,
+        273.84
+      ],
       "overtakes_made": 3,
       "score_breakdown": {
         "crash_penalty_percent": 0.27,
         "position_factor": 0.071,
-        "speed_factor": 0.813,
+        "speed_factor": 0.8,
         "base_score": 13556.21,
         "crash_factor": 0.997
       },
@@ -268,14 +339,14 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
-      "total_score": 92963,
+      "total_score": 88908,
       "position": 9,
       "average_speed_kmh": 246.47,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 81.46,
       "net_positions_gained": 12,
@@ -283,14 +354,20 @@
       "average_lap": 237.956,
       "total_time_formatted": "19:49.781",
       "distance_covered_miles": 50.61,
-      "lap_times": [247.833, 237.192, 234.492, 234.759, 235.506],
+      "lap_times": [
+        247.833,
+        237.192,
+        234.492,
+        234.759,
+        235.506
+      ],
       "overtakes_made": 18,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "position_factor": 0.714,
-        "speed_factor": 0.96,
+        "speed_factor": 0.918,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 234.492,
       "average_speed_mph": 153.15,
@@ -301,14 +378,14 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
-      "total_score": 32118,
+      "total_score": 31194,
       "position": 21,
       "average_speed_kmh": 181.15,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 69.32,
       "net_positions_gained": -18,
@@ -316,14 +393,20 @@
       "average_lap": 275.504,
       "total_time_formatted": "22:57.521",
       "distance_covered_miles": 43.07,
-      "lap_times": [297.573, 272.25, 271.992, 268.368, 267.339],
+      "lap_times": [
+        297.573,
+        272.25,
+        271.992,
+        268.368,
+        267.339
+      ],
       "overtakes_made": 4,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "position_factor": 0.286,
-        "speed_factor": 0.829,
+        "speed_factor": 0.805,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 267.339,
       "average_speed_mph": 112.56,
@@ -334,14 +417,14 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
-      "total_score": 69043,
+      "total_score": 69905,
       "position": 14,
       "average_speed_kmh": 244.2,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 81.5,
       "net_positions_gained": -13,
@@ -349,14 +432,20 @@
       "average_lap": 240.299,
       "total_time_formatted": "20:01.493",
       "distance_covered_miles": 50.64,
-      "lap_times": [295.557, 234.186, 224.1, 223.971, 223.68],
+      "lap_times": [
+        295.557,
+        234.186,
+        224.1,
+        223.971,
+        223.68
+      ],
       "overtakes_made": 14,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "position_factor": 0.536,
-        "speed_factor": 0.951,
+        "speed_factor": 0.963,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 223.68,
       "average_speed_mph": 151.74,
@@ -365,16 +454,18 @@
     },
     "Shura McPinch": {
       "crashes": {
-        "crash_intensities_g": [4.83],
+        "crash_intensities_g": [
+          4.83
+        ],
         "total_crashes": 1,
         "average_crash_g": 4.83,
         "worst_crash_g": 4.83,
         "total_crash_intensity": 4.83
       },
-      "total_score": 113443,
+      "total_score": 115423,
       "position": 5,
       "average_speed_kmh": 253.18,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 82.24,
       "net_positions_gained": 0,
@@ -382,14 +473,20 @@
       "average_lap": 233.885,
       "total_time_formatted": "19:29.423",
       "distance_covered_miles": 51.1,
-      "lap_times": [289.452, 221.811, 216.645, 222.783, 218.733],
+      "lap_times": [
+        289.452,
+        221.811,
+        216.645,
+        222.783,
+        218.733
+      ],
       "overtakes_made": 19,
       "score_breakdown": {
         "crash_penalty_percent": 0.05,
         "position_factor": 0.857,
-        "speed_factor": 0.977,
+        "speed_factor": 0.994,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 216.645,
       "average_speed_mph": 157.32,
@@ -398,16 +495,21 @@
     },
     "Sakon Matraka": {
       "crashes": {
-        "crash_intensities_g": [6.57, 6.83, 4.23, 6.88],
+        "crash_intensities_g": [
+          6.57,
+          6.83,
+          4.23,
+          6.88
+        ],
         "total_crashes": 4,
         "average_crash_g": 6.13,
         "worst_crash_g": 6.88,
         "total_crash_intensity": 24.51
       },
-      "total_score": 15810,
+      "total_score": 15368,
       "position": 25,
       "average_speed_kmh": 176.92,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 68.59,
       "net_positions_gained": 1,
@@ -415,12 +517,18 @@
       "average_lap": 279.157,
       "total_time_formatted": "23:15.786",
       "distance_covered_miles": 42.62,
-      "lap_times": [303.831, 270.663, 270.897, 276.696, 273.699],
+      "lap_times": [
+        303.831,
+        270.663,
+        270.897,
+        276.696,
+        273.699
+      ],
       "overtakes_made": 6,
       "score_breakdown": {
         "crash_penalty_percent": 0.25,
         "position_factor": 0.143,
-        "speed_factor": 0.818,
+        "speed_factor": 0.795,
         "base_score": 13556.21,
         "crash_factor": 0.998
       },
@@ -431,16 +539,18 @@
     },
     "Pete Slipstream": {
       "crashes": {
-        "crash_intensities_g": [5.23],
+        "crash_intensities_g": [
+          5.23
+        ],
         "total_crashes": 1,
         "average_crash_g": 5.23,
         "worst_crash_g": 5.23,
         "total_crash_intensity": 5.23
       },
-      "total_score": 19828,
+      "total_score": 19041,
       "position": 24,
       "average_speed_kmh": 176.91,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 68.5,
       "net_positions_gained": 3,
@@ -448,12 +558,18 @@
       "average_lap": 278.768,
       "total_time_formatted": "23:13.842",
       "distance_covered_miles": 42.56,
-      "lap_times": [291.087, 274.461, 274.125, 280.581, 273.588],
+      "lap_times": [
+        291.087,
+        274.461,
+        274.125,
+        280.581,
+        273.588
+      ],
       "overtakes_made": 20,
       "score_breakdown": {
         "crash_penalty_percent": 0.05,
         "position_factor": 0.179,
-        "speed_factor": 0.82,
+        "speed_factor": 0.787,
         "base_score": 13556.21,
         "crash_factor": 0.999
       },
@@ -464,16 +580,18 @@
     },
     "Pavel Voludin": {
       "crashes": {
-        "crash_intensities_g": [5.72],
+        "crash_intensities_g": [
+          5.72
+        ],
         "total_crashes": 1,
         "average_crash_g": 5.72,
         "worst_crash_g": 5.72,
         "total_crash_intensity": 5.72
       },
-      "total_score": 36209,
+      "total_score": 34854,
       "position": 20,
       "average_speed_kmh": 181.69,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 69.34,
       "net_positions_gained": -16,
@@ -481,12 +599,18 @@
       "average_lap": 274.761,
       "total_time_formatted": "22:53.805",
       "distance_covered_miles": 43.08,
-      "lap_times": [295.323, 270.537, 269.34, 269.019, 269.586],
+      "lap_times": [
+        295.323,
+        270.537,
+        269.34,
+        269.019,
+        269.586
+      ],
       "overtakes_made": 2,
       "score_breakdown": {
         "crash_penalty_percent": 0.06,
         "position_factor": 0.321,
-        "speed_factor": 0.831,
+        "speed_factor": 0.8,
         "base_score": 13556.21,
         "crash_factor": 0.999
       },
@@ -497,7 +621,14 @@
     },
     "Vicente Gasoil": {
       "crashes": {
-        "crash_intensities_g": [98.58, 71.55, 14.32, 7.5, 6.34, 5.12],
+        "crash_intensities_g": [
+          98.58,
+          71.55,
+          14.32,
+          7.5,
+          6.34,
+          5.12
+        ],
         "total_crashes": 6,
         "average_crash_g": 33.9,
         "worst_crash_g": 98.58,
@@ -506,7 +637,7 @@
       "total_score": 132805,
       "position": 1,
       "average_speed_kmh": 261.98,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 83.12,
       "net_positions_gained": 16,
@@ -514,12 +645,18 @@
       "average_lap": 228.452,
       "total_time_formatted": "19:02.259",
       "distance_covered_miles": 51.65,
-      "lap_times": [271.797, 219.762, 218.598, 215.307, 216.795],
+      "lap_times": [
+        271.797,
+        219.762,
+        218.598,
+        215.307,
+        216.795
+      ],
       "overtakes_made": 18,
       "score_breakdown": {
         "crash_penalty_percent": 2.03,
-        "position_factor": 1.0,
-        "speed_factor": 1.0,
+        "position_factor": 1,
+        "speed_factor": 1,
         "base_score": 13556.21,
         "crash_factor": 0.98
       },
@@ -532,14 +669,14 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
-      "total_score": 98026,
+      "total_score": 98987,
       "position": 8,
       "average_speed_kmh": 247.61,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 81.49,
       "net_positions_gained": -6,
@@ -547,14 +684,20 @@
       "average_lap": 236.95,
       "total_time_formatted": "19:44.750",
       "distance_covered_miles": 50.63,
-      "lap_times": [291.459, 225.126, 222.447, 221.148, 224.571],
+      "lap_times": [
+        291.459,
+        225.126,
+        222.447,
+        221.148,
+        224.571
+      ],
       "overtakes_made": 17,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "position_factor": 0.75,
-        "speed_factor": 0.964,
+        "speed_factor": 0.974,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 221.148,
       "average_speed_mph": 153.86,
@@ -565,14 +708,14 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
-      "total_score": 23881,
+      "total_score": 23236,
       "position": 23,
       "average_speed_kmh": 178.41,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 68.86,
       "net_positions_gained": -4,
@@ -580,14 +723,20 @@
       "average_lap": 277.898,
       "total_time_formatted": "23:09.491",
       "distance_covered_miles": 42.79,
-      "lap_times": [301.293, 271.866, 270.714, 276.441, 269.178],
+      "lap_times": [
+        301.293,
+        271.866,
+        270.714,
+        276.441,
+        269.178
+      ],
       "overtakes_made": 7,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "position_factor": 0.214,
-        "speed_factor": 0.822,
+        "speed_factor": 0.8,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 269.178,
       "average_speed_mph": 110.86,
@@ -596,16 +745,21 @@
     },
     "Mitch Bazooka": {
       "crashes": {
-        "crash_intensities_g": [754.46, 754.58, 754.6, 754.85],
+        "crash_intensities_g": [
+          754.46,
+          754.58,
+          754.6,
+          754.85
+        ],
         "total_crashes": 4,
         "average_crash_g": 754.62,
         "worst_crash_g": 754.85,
         "total_crash_intensity": 3018.49
       },
-      "total_score": 11378,
+      "total_score": 11154,
       "position": 26,
       "average_speed_kmh": 174.64,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 67.91,
       "net_positions_gained": -15,
@@ -613,12 +767,18 @@
       "average_lap": 279.97,
       "total_time_formatted": "23:19.851",
       "distance_covered_miles": 42.2,
-      "lap_times": [302.181, 269.16, 275.787, 283.269, 269.454],
+      "lap_times": [
+        302.181,
+        269.16,
+        275.787,
+        283.269,
+        269.454
+      ],
       "overtakes_made": 4,
       "score_breakdown": {
-        "crash_penalty_percent": 4.0,
+        "crash_penalty_percent": 4,
         "position_factor": 0.107,
-        "speed_factor": 0.816,
+        "speed_factor": 0.8,
         "base_score": 13556.21,
         "crash_factor": 0.96
       },
@@ -631,14 +791,14 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
-      "total_score": 63894,
+      "total_score": 63190,
       "position": 15,
       "average_speed_kmh": 242.46,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 81.61,
       "net_positions_gained": 9,
@@ -646,14 +806,20 @@
       "average_lap": 242.353,
       "total_time_formatted": "20:11.762",
       "distance_covered_miles": 50.71,
-      "lap_times": [283.941, 232.953, 231.615, 232.302, 230.952],
+      "lap_times": [
+        283.941,
+        232.953,
+        231.615,
+        232.302,
+        230.952
+      ],
       "overtakes_made": 13,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "position_factor": 0.5,
-        "speed_factor": 0.943,
+        "speed_factor": 0.932,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 230.952,
       "average_speed_mph": 150.66,
@@ -664,14 +830,14 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
-      "total_score": 102911,
+      "total_score": 98429,
       "position": 7,
       "average_speed_kmh": 248.02,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 81.45,
       "net_positions_gained": 15,
@@ -679,14 +845,20 @@
       "average_lap": 236.449,
       "total_time_formatted": "19:42.246",
       "distance_covered_miles": 50.61,
-      "lap_times": [246.723, 233.517, 234.696, 234.318, 232.992],
+      "lap_times": [
+        246.723,
+        233.517,
+        234.696,
+        234.318,
+        232.992
+      ],
       "overtakes_made": 20,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "position_factor": 0.786,
-        "speed_factor": 0.966,
+        "speed_factor": 0.924,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 232.992,
       "average_speed_mph": 154.11,
@@ -697,14 +869,14 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
-      "total_score": 123248,
+      "total_score": 123743,
       "position": 3,
       "average_speed_kmh": 253.82,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 82.26,
       "net_positions_gained": 15,
@@ -712,14 +884,20 @@
       "average_lap": 233.33,
       "total_time_formatted": "19:26.648",
       "distance_covered_miles": 51.11,
-      "lap_times": [284.679, 222.204, 219.744, 219.024, 220.998],
+      "lap_times": [
+        284.679,
+        222.204,
+        219.744,
+        219.024,
+        220.998
+      ],
       "overtakes_made": 18,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "position_factor": 0.929,
-        "speed_factor": 0.979,
+        "speed_factor": 0.983,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 219.024,
       "average_speed_mph": 157.72,
@@ -728,16 +906,19 @@
     },
     "Pity Dominguez": {
       "crashes": {
-        "crash_intensities_g": [755.19, 755.35],
+        "crash_intensities_g": [
+          755.19,
+          755.35
+        ],
         "total_crashes": 2,
         "average_crash_g": 755.27,
         "worst_crash_g": 755.35,
         "total_crash_intensity": 1510.54
       },
-      "total_score": 47180,
+      "total_score": 48535,
       "position": 18,
       "average_speed_kmh": 232.35,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 81.56,
       "net_positions_gained": -8,
@@ -745,12 +926,18 @@
       "average_lap": 252.719,
       "total_time_formatted": "21:03.596",
       "distance_covered_miles": 50.68,
-      "lap_times": [294.087, 235.482, 241.932, 260.568, 231.528],
+      "lap_times": [
+        294.087,
+        235.482,
+        241.932,
+        260.568,
+        231.528
+      ],
       "overtakes_made": 10,
       "score_breakdown": {
-        "crash_penalty_percent": 2.0,
+        "crash_penalty_percent": 2,
         "position_factor": 0.393,
-        "speed_factor": 0.904,
+        "speed_factor": 0.93,
         "base_score": 13556.21,
         "crash_factor": 0.98
       },
@@ -763,14 +950,14 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
-      "total_score": 40965,
+      "total_score": 39090,
       "position": 19,
       "average_speed_kmh": 187.13,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 70.18,
       "net_positions_gained": 1,
@@ -778,14 +965,20 @@
       "average_lap": 270.001,
       "total_time_formatted": "22:30.002",
       "distance_covered_miles": 43.61,
-      "lap_times": [279.513, 268.287, 267.366, 266.67, 268.167],
+      "lap_times": [
+        279.513,
+        268.287,
+        267.366,
+        266.67,
+        268.167
+      ],
       "overtakes_made": 18,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "position_factor": 0.357,
-        "speed_factor": 0.846,
+        "speed_factor": 0.807,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 266.67,
       "average_speed_mph": 116.28,
@@ -795,17 +988,26 @@
     "Pablin": {
       "crashes": {
         "crash_intensities_g": [
-          7.59, 4.07, 7.77, 6.23, 6.39, 36.34, 14.67, 4.84, 10.48, 6.62
+          7.59,
+          4.07,
+          7.77,
+          6.23,
+          6.39,
+          36.34,
+          14.67,
+          4.84,
+          10.48,
+          6.62
         ],
         "total_crashes": 10,
         "average_crash_g": 10.5,
         "worst_crash_g": 36.34,
         "total_crash_intensity": 105.01
       },
-      "total_score": 3892,
+      "total_score": 3749,
       "position": 28,
       "average_speed_kmh": 174.46,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 68.15,
       "net_positions_gained": 0,
@@ -813,14 +1015,20 @@
       "average_lap": 281.248,
       "total_time_formatted": "23:26.238",
       "distance_covered_miles": 42.34,
-      "lap_times": [291.708, 277.5, 285.978, 275.181, 275.871],
+      "lap_times": [
+        291.708,
+        277.5,
+        285.978,
+        275.181,
+        275.871
+      ],
       "overtakes_made": 11,
       "score_breakdown": {
         "crash_penalty_percent": 1.05,
         "position_factor": 0.036,
-        "speed_factor": 0.812,
+        "speed_factor": 0.782,
         "base_score": 13556.21,
-        "crash_factor": 0.989
+        "crash_factor": 0.99
       },
       "best_lap": 275.181,
       "average_speed_mph": 108.4,
@@ -829,16 +1037,19 @@
     },
     "Paul Morlacko": {
       "crashes": {
-        "crash_intensities_g": [754.76, 754.89],
+        "crash_intensities_g": [
+          754.76,
+          754.89
+        ],
         "total_crashes": 2,
         "average_crash_g": 754.82,
         "worst_crash_g": 754.89,
         "total_crash_intensity": 1509.65
       },
-      "total_score": 51902,
+      "total_score": 53353,
       "position": 17,
       "average_speed_kmh": 233.94,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 81.43,
       "net_positions_gained": -8,
@@ -846,12 +1057,18 @@
       "average_lap": 250.613,
       "total_time_formatted": "20:53.067",
       "distance_covered_miles": 50.6,
-      "lap_times": [288.663, 234.63, 240.84, 259.164, 229.77],
+      "lap_times": [
+        288.663,
+        234.63,
+        240.84,
+        259.164,
+        229.77
+      ],
       "overtakes_made": 4,
       "score_breakdown": {
-        "crash_penalty_percent": 2.0,
+        "crash_penalty_percent": 2,
         "position_factor": 0.429,
-        "speed_factor": 0.912,
+        "speed_factor": 0.937,
         "base_score": 13556.21,
         "crash_factor": 0.98
       },
@@ -862,16 +1079,20 @@
     },
     "Andy Mendieta": {
       "crashes": {
-        "crash_intensities_g": [4.79, 4.15, 5.94],
+        "crash_intensities_g": [
+          4.79,
+          4.15,
+          5.94
+        ],
         "total_crashes": 3,
         "average_crash_g": 4.96,
         "worst_crash_g": 5.94,
         "total_crash_intensity": 14.88
       },
-      "total_score": 58210,
+      "total_score": 56694,
       "position": 16,
       "average_speed_kmh": 237.79,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 81.46,
       "net_positions_gained": 0,
@@ -879,12 +1100,18 @@
       "average_lap": 246.647,
       "total_time_formatted": "20:33.233",
       "distance_covered_miles": 50.62,
-      "lap_times": [275.028, 240.159, 238.674, 239.484, 239.889],
+      "lap_times": [
+        275.028,
+        240.159,
+        238.674,
+        239.484,
+        239.889
+      ],
       "overtakes_made": 9,
       "score_breakdown": {
         "crash_penalty_percent": 0.15,
         "position_factor": 0.464,
-        "speed_factor": 0.926,
+        "speed_factor": 0.902,
         "base_score": 13556.21,
         "crash_factor": 0.999
       },
@@ -897,14 +1124,14 @@
       "crashes": {
         "crash_intensities_g": [],
         "total_crashes": 0,
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0,
         "total_crash_intensity": 0
       },
-      "total_score": 73676,
+      "total_score": 70327,
       "position": 13,
       "average_speed_kmh": 243.95,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "laps_completed": 5,
       "distance_covered_km": 81.39,
       "net_positions_gained": 2,
@@ -912,14 +1139,20 @@
       "average_lap": 240.199,
       "total_time_formatted": "20:00.992",
       "distance_covered_miles": 50.57,
-      "lap_times": [247.065, 239.442, 239.919, 237.408, 237.159],
+      "lap_times": [
+        247.065,
+        239.442,
+        239.919,
+        237.408,
+        237.159
+      ],
       "overtakes_made": 14,
       "score_breakdown": {
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "position_factor": 0.571,
-        "speed_factor": 0.951,
+        "speed_factor": 0.908,
         "base_score": 13556.21,
-        "crash_factor": 1.0
+        "crash_factor": 1
       },
       "best_lap": 237.159,
       "average_speed_mph": 151.59,
@@ -935,7 +1168,7 @@
     "track_config": "54",
     "crash_penalty_config": {
       "penalty_percent_per_g": 0.01,
-      "max_penalty_per_crash_g": 100.0
+      "max_penalty_per_crash_g": 100
     },
     "total_cars": 28,
     "session_type": "race",
@@ -943,7 +1176,7 @@
     "track": "rj_lemans_1967",
     "session_duration_seconds": 1460.07,
     "session_duration_formatted": "24:20.068",
-    "best_total_time_seconds": 1142.259,
-    "scoring_formula": "score = base_score \u00d7 position_factor \u00d7 speed_factor \u00d7 crash_factor"
+    "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor",
+    "best_lap_time_seconds": 215.307
   }
 }

@@ -61,7 +61,7 @@ class CarStats:
         self.last_spline_pos = 0.0
         self.last_update_time = 0.0
 
-    def to_dict(self, position=0, total_cars=1, track_length_m=0, race_laps=1, best_total_time=0.0):
+    def to_dict(self, position=0, total_cars=1, track_length_m=0, race_laps=1, best_lap_time=0.0):
         # Calculate total_time as sum of all completed lap times (convert ms to seconds)
         self.total_time = sum(self.lap_times) / 1000.0
 
@@ -91,12 +91,18 @@ class CarStats:
         else:
             position_factor = 1.0
 
-        # Speed factor: best_total_time / driver_total_time
+        # Speed factor: based on best lap time
         # Fastest driver gets 1.0x, slower drivers get proportionally less
-        if self.total_time > 0 and best_total_time > 0:
-            speed_factor = best_total_time / self.total_time
+        # Drivers with no laps get 0.5x penalty
+        if laps_completed > 0 and best_lap_time > 0:
+            driver_best_lap = min(self.lap_times) / 1000.0
+            speed_factor = best_lap_time / driver_best_lap
+            # Cap at 1.0 - fastest driver gets 1.0, slower drivers get less
+            if speed_factor > 1.0:
+                speed_factor = 1.0
         else:
-            speed_factor = 1.0
+            # Driver completed no laps, penalty
+            speed_factor = 0.5
 
         # Crash penalty factor
         # Cap each crash at MAX_CRASH_PENALTY_PER_CRASH (100G) for penalty calculation
@@ -176,13 +182,13 @@ def save_current_session():
         # Find the maximum laps completed
         race_laps = max([len(stats.lap_times) for stats in car_stats.values()]) if car_stats else 1
 
-        # Calculate best total time (only from drivers who completed the race)
-        best_total_time = 0.0
+        # Calculate best lap time across all drivers
+        best_lap_time = 0.0
         for stats in car_stats.values():
-            if len(stats.lap_times) == race_laps:  # Only count drivers who finished
-                total_time = sum(stats.lap_times) / 1000.0
-                if best_total_time == 0.0 or total_time < best_total_time:
-                    best_total_time = total_time
+            if len(stats.lap_times) > 0:
+                driver_best_lap = min(stats.lap_times) / 1000.0
+                if best_lap_time == 0.0 or driver_best_lap < best_lap_time:
+                    best_lap_time = driver_best_lap
 
         # Prepare session data
         session_data = {
@@ -199,7 +205,7 @@ def save_current_session():
                 'session_duration_seconds': round(session_total_time, 2),
                 'session_duration_formatted': format_time(session_total_time),
                 'scoring_formula': 'score = base_score × position_factor × speed_factor × crash_factor',
-                'best_total_time_seconds': round(best_total_time, 3),
+                'best_lap_time_seconds': round(best_lap_time, 3),
                 'crash_penalty_config': {
                     'penalty_percent_per_g': CRASH_PENALTY_PERCENT_PER_G,
                     'max_penalty_per_crash_g': MAX_CRASH_PENALTY_PER_CRASH
@@ -222,7 +228,7 @@ def save_current_session():
         total_cars_count = len(car_stats)
         for car_id, stats in sorted_drivers:
             session_data['driver_statistics'][stats.driver_name] = stats.to_dict(
-                stats.final_position, total_cars_count, track_length_m, race_laps, best_total_time)
+                stats.final_position, total_cars_count, track_length_m, race_laps, best_lap_time)
 
         # Determine output directory
         documents_path = os.path.expanduser("~\\Documents")
