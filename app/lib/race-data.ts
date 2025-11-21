@@ -2,6 +2,31 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { RaceData, RaceSession, Championship, ChampionshipData } from '../types/race';
 
+// Helper function to extract session type from filename
+// Filename format: stats_{track}_session_{type}_{timestamp}.json
+function extractSessionTypeFromFilename(filename: string): string | null {
+  const match = filename.match(/stats_.*_session_([^_]+)_\d+\.json$/);
+  return match ? match[1] : null;
+}
+
+// Helper function to ensure session has correct session_type
+function ensureSessionType(data: RaceData, filename: string): RaceData {
+  // If session_type is missing or empty, try to extract from filename
+  if (!data.session_info.session_type) {
+    const extractedType = extractSessionTypeFromFilename(filename);
+    if (extractedType) {
+      return {
+        ...data,
+        session_info: {
+          ...data.session_info,
+          session_type: extractedType as 'practice' | 'qualifying' | 'race'
+        }
+      };
+    }
+  }
+  return data;
+}
+
 export async function getRaceSessions(): Promise<RaceSession[]> {
   const quickRaceDirectory = path.join(process.cwd(), 'app', 'data', 'quick_race');
 
@@ -15,7 +40,10 @@ export async function getRaceSessions(): Promise<RaceSession[]> {
     for (const filename of jsonFiles) {
       const filePath = path.join(quickRaceDirectory, filename);
       const fileContents = await fs.readFile(filePath, 'utf8');
-      const data: RaceData = JSON.parse(fileContents);
+      let data: RaceData = JSON.parse(fileContents);
+
+      // Ensure session_type is populated from filename if empty
+      data = ensureSessionType(data, filename);
 
       sessions.push({
         filename: `quick_race/${filename}`,
@@ -45,7 +73,11 @@ export async function getRaceSession(filename: string): Promise<RaceSession | nu
 
   try {
     const fileContents = await fs.readFile(filePath, 'utf8');
-    const data: RaceData = JSON.parse(fileContents);
+    let data: RaceData = JSON.parse(fileContents);
+
+    // Ensure session_type is populated from filename if empty
+    const actualFilename = parts[parts.length - 1];
+    data = ensureSessionType(data, actualFilename);
 
     // Extract race type and championship from filename
     const raceType = parts[0];
@@ -96,7 +128,10 @@ export async function getChampionships(): Promise<Championship[]> {
         for (const sessionFile of jsonFiles) {
           const sessionPath = path.join(folderPath, sessionFile);
           const sessionContents = await fs.readFile(sessionPath, 'utf8');
-          const sessionData: RaceData = JSON.parse(sessionContents);
+          let sessionData: RaceData = JSON.parse(sessionContents);
+
+          // Ensure session_type is populated from filename if empty
+          sessionData = ensureSessionType(sessionData, sessionFile);
 
           sessions.push({
             filename: `championship/${folderName}/${sessionFile}`,
@@ -152,7 +187,10 @@ export async function getChampionship(champId: string): Promise<Championship | n
       for (const sessionFile of jsonFiles) {
         const sessionPath = path.join(folderPath, sessionFile);
         const sessionContents = await fs.readFile(sessionPath, 'utf8');
-        const sessionData: RaceData = JSON.parse(sessionContents);
+        let sessionData: RaceData = JSON.parse(sessionContents);
+
+        // Ensure session_type is populated from filename if empty
+        sessionData = ensureSessionType(sessionData, sessionFile);
 
         sessions.push({
           filename: `championship/${folderName}/${sessionFile}`,

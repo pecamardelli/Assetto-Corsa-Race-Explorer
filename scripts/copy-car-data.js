@@ -11,8 +11,8 @@ const badgesDir = path.join(__dirname, '..', 'public', 'badges');
 // Maximum width for resizing badges
 const MAX_WIDTH = 1024;
 
-// Get championship files to find which cars are used
-const championshipDir = path.join(__dirname, '..', 'app', 'data', 'championship', 'e3dabc14-e97d-4951-b132-761ffad3608d');
+// Get championship directory to find all championships
+const championshipBaseDir = path.join(__dirname, '..', 'app', 'data', 'championship');
 
 // Create destination directories if they don't exist
 if (!fs.existsSync(carsDestDir)) {
@@ -25,22 +25,63 @@ if (!fs.existsSync(badgesDir)) {
   console.log(`Created directory: ${badgesDir}`);
 }
 
-// Collect unique car names from championship files
+// Collect unique car names from all championship files
 const carNames = new Set();
 
-const files = fs.readdirSync(championshipDir)
-  .filter(file => file.endsWith('.json'));
+// Get all championship folders
+const championshipFolders = fs.readdirSync(championshipBaseDir)
+  .filter(item => {
+    const itemPath = path.join(championshipBaseDir, item);
+    return fs.statSync(itemPath).isDirectory();
+  });
 
-console.log(`Scanning ${files.length} championship files for car names...`);
+console.log(`Found ${championshipFolders.length} championship folders`);
 
-files.forEach(file => {
-  const filePath = path.join(championshipDir, file);
-  const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+let totalFiles = 0;
 
-  if (data.driver_statistics) {
-    Object.values(data.driver_statistics).forEach(stats => {
-      if (stats.car_name) {
-        carNames.add(stats.car_name);
+// Scan each championship folder for JSON files
+championshipFolders.forEach(folder => {
+  const championshipDir = path.join(championshipBaseDir, folder);
+  const files = fs.readdirSync(championshipDir)
+    .filter(file => file.endsWith('.json'));
+
+  totalFiles += files.length;
+
+  console.log(`Scanning ${folder}: ${files.length} files`);
+
+  files.forEach(file => {
+    const filePath = path.join(championshipDir, file);
+    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+
+    if (data.driver_statistics) {
+      Object.values(data.driver_statistics).forEach(stats => {
+        if (stats.car_name) {
+          carNames.add(stats.car_name);
+        }
+      });
+    }
+  });
+});
+
+console.log(`\nScanned ${totalFiles} total championship files`);
+
+// Also scan championship .champ files for opponent cars
+const champFiles = fs.readdirSync(championshipBaseDir)
+  .filter(file => file.endsWith('.champ'));
+
+console.log(`Scanning ${champFiles.length} .champ files for cars...`);
+
+champFiles.forEach(file => {
+  const filePath = path.join(championshipBaseDir, file);
+  const fileContents = fs.readFileSync(filePath, 'utf8');
+  // Remove BOM if present
+  const cleanedContents = fileContents.replace(/^\uFEFF/, '');
+  const data = JSON.parse(cleanedContents);
+
+  if (data.opponents) {
+    data.opponents.forEach(opponent => {
+      if (opponent.car) {
+        carNames.add(opponent.car);
       }
     });
   }
