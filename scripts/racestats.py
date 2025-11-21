@@ -176,10 +176,10 @@ def save_current_session():
         # Find the maximum laps completed
         race_laps = max([len(stats.lap_times) for stats in car_stats.values()]) if car_stats else 1
 
-        # Calculate best total time
+        # Calculate best total time (only from drivers who completed the race)
         best_total_time = 0.0
         for stats in car_stats.values():
-            if len(stats.lap_times) > 0:
+            if len(stats.lap_times) == race_laps:  # Only count drivers who finished
                 total_time = sum(stats.lap_times) / 1000.0
                 if best_total_time == 0.0 or total_time < best_total_time:
                     best_total_time = total_time
