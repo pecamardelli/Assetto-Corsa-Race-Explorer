@@ -26,6 +26,19 @@ raceFiles.forEach(raceFile => {
   console.log(`Processing: ${raceFile}`);
   console.log(`  Race laps: ${raceLaps}, Best time: ${bestTotalTime.toFixed(3)}s`);
 
+  // Find driver with fastest lap
+  let bestLapTime = 0.0;
+  let fastestLapDriver = null;
+  Object.entries(drivers).forEach(([name, stats]) => {
+    if (stats.lap_times && stats.lap_times.length > 0) {
+      const driverBestLap = Math.min(...stats.lap_times);
+      if (bestLapTime === 0.0 || driverBestLap < bestLapTime) {
+        bestLapTime = driverBestLap;
+        fastestLapDriver = name;
+      }
+    }
+  });
+
   let changedScores = 0;
 
   Object.entries(drivers).forEach(([name, stats]) => {
@@ -57,7 +70,15 @@ raceFiles.forEach(raceFile => {
     const crashPenaltyPercent = cappedCrashIntensity * CRASH_PENALTY_PERCENT_PER_G;
 
     // Total score
-    const totalScore = Math.ceil(baseScore * positionFactor * speedFactor * crashFactor);
+    let totalScore = baseScore * positionFactor * speedFactor * crashFactor;
+
+    // Fastest lap bonus: 5% bonus if driver has fastest lap
+    const hasFastestLap = (name === fastestLapDriver);
+    const fastestLapBonus = hasFastestLap ? totalScore * 0.05 : 0.0;
+    if (hasFastestLap) {
+      totalScore = totalScore * 1.05;
+    }
+    totalScore = Math.ceil(totalScore);
 
     // Check if changed
     if (stats.total_score !== totalScore) {
@@ -71,6 +92,7 @@ raceFiles.forEach(raceFile => {
     stats.score_breakdown.position_factor = parseFloat(positionFactor.toFixed(3));
     stats.score_breakdown.crash_factor = parseFloat(crashFactor.toFixed(3));
     stats.score_breakdown.crash_penalty_percent = parseFloat(crashPenaltyPercent.toFixed(2));
+    stats.score_breakdown.fastest_lap_bonus = hasFastestLap ? parseFloat(fastestLapBonus.toFixed(2)) : 0.0;
   });
 
   // Write back to file

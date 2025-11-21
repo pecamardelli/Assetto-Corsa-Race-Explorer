@@ -73,7 +73,15 @@ Object.entries(drivers).forEach(([name, stats]) => {
   const crashPenaltyPercent = cappedCrashIntensity * CRASH_PENALTY_PERCENT_PER_G;
 
   // Total score
-  const totalScore = Math.ceil(baseScore * positionFactor * speedFactor * crashFactor);
+  let totalScore = baseScore * positionFactor * speedFactor * crashFactor;
+
+  // Fastest lap bonus: 5% bonus if driver has fastest lap
+  const hasFastestLap = (lapsCompleted === raceLaps && speedFactor === 1.0);
+  const fastestLapBonus = hasFastestLap ? totalScore * 0.05 : 0.0;
+  if (hasFastestLap) {
+    totalScore = totalScore * 1.05;
+  }
+  totalScore = Math.ceil(totalScore);
 
   // Store old values for comparison
   const oldScore = stats.total_score;
@@ -103,6 +111,7 @@ Object.entries(drivers).forEach(([name, stats]) => {
   stats.score_breakdown.position_factor = parseFloat(positionFactor.toFixed(3));
   stats.score_breakdown.crash_factor = parseFloat(crashFactor.toFixed(3));
   stats.score_breakdown.crash_penalty_percent = parseFloat(crashPenaltyPercent.toFixed(2));
+  stats.score_breakdown.fastest_lap_bonus = hasFastestLap ? parseFloat(fastestLapBonus.toFixed(2)) : 0.0;
 });
 
 // Sort by new score descending

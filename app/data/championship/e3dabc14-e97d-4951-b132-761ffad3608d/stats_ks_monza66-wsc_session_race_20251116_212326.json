@@ -24,9 +24,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 9044.69,
+        "base_score": 9045.18,
         "position_factor": 0.48,
-        "speed_factor": 0.896
+        "speed_factor": 0.731,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -52,7 +53,7 @@
         286.917,
         286.287
       ],
-      "total_score": 3891,
+      "total_score": 3176,
       "position": 27,
       "average_speed_mph": 76.02,
       "car_name": "exmods_jaguar_ss100",
@@ -66,9 +67,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.55,
         "crash_factor": 0.995,
-        "base_score": 9041.02,
+        "base_score": 9041.15,
         "position_factor": 0.58,
-        "speed_factor": 0.911
+        "speed_factor": 0.741,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -106,7 +108,7 @@
         285.72,
         286.488
       ],
-      "total_score": 4750,
+      "total_score": 3865,
       "position": 22,
       "average_speed_mph": 78.67,
       "car_name": "mg_mgtc",
@@ -120,9 +122,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 2,
         "crash_factor": 0.98,
-        "base_score": 9044.99,
+        "base_score": 9045.18,
         "position_factor": 0.46,
-        "speed_factor": 0.887
+        "speed_factor": 0.729,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -151,7 +154,7 @@
         290.949,
         287.145
       ],
-      "total_score": 3617,
+      "total_score": 2974,
       "position": 28,
       "average_speed_mph": 78.26,
       "car_name": "exmods_jaguar_ss100",
@@ -167,7 +170,8 @@
         "crash_factor": 1,
         "base_score": 10068.1,
         "position_factor": 0.94,
-        "speed_factor": 0.933
+        "speed_factor": 0.934,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -195,7 +199,7 @@
         234.993,
         229.38
       ],
-      "total_score": 8833,
+      "total_score": 8842,
       "position": 4,
       "average_speed_mph": 107.26,
       "car_name": "mercedes_ssk_1928",
@@ -209,9 +213,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 567.16,
+        "base_score": 566.83,
         "position_factor": 0.1,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -228,7 +233,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 57,
+      "total_score": 29,
       "position": 46,
       "average_speed_mph": 0,
       "car_name": "legion_bentley_blower",
@@ -242,9 +247,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.12,
         "crash_factor": 0.999,
-        "base_score": 566.3,
+        "base_score": 565.83,
         "position_factor": 0.32,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -264,7 +270,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 181,
+      "total_score": 91,
       "position": 35,
       "average_speed_mph": 0,
       "car_name": "bg_mercedes_500k",
@@ -280,7 +286,8 @@
         "crash_factor": 0.973,
         "base_score": 10068.1,
         "position_factor": 0.98,
-        "speed_factor": 0.983
+        "speed_factor": 0.988,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -325,7 +332,7 @@
         212.826,
         214.86
       ],
-      "total_score": 9438,
+      "total_score": 9493,
       "position": 2,
       "average_speed_mph": 114.33,
       "car_name": "bugatti_57sc_tour_1937",
@@ -339,9 +346,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 1.31,
         "crash_factor": 0.987,
-        "base_score": 554.42,
+        "base_score": 554.75,
         "position_factor": 0.14,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -361,7 +369,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 77,
+      "total_score": 39,
       "position": 44,
       "average_speed_mph": 0,
       "car_name": "rz_aston_ulster",
@@ -375,9 +383,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 558.07,
+        "base_score": 557.77,
         "position_factor": 0.18,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -394,7 +403,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 101,
+      "total_score": 51,
       "position": 42,
       "average_speed_mph": 0,
       "car_name": "frazer_nash_tt_1934",
@@ -408,9 +417,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.4,
         "crash_factor": 0.996,
-        "base_score": 7031.93,
+        "base_score": 7031.56,
         "position_factor": 0.36,
-        "speed_factor": 0.983
+        "speed_factor": 0.604,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -444,7 +454,7 @@
         351.504,
         346.392
       ],
-      "total_score": 2478,
+      "total_score": 1524,
       "position": 33,
       "average_speed_mph": 71.87,
       "car_name": "exmods_fiat_508s_balilla",
@@ -458,9 +468,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 554.98,
+        "base_score": 554.75,
         "position_factor": 0.16,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -477,7 +488,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 89,
+      "total_score": 45,
       "position": 43,
       "average_speed_mph": 0,
       "car_name": "rz_aston_ulster",
@@ -491,9 +502,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.32,
         "crash_factor": 0.997,
-        "base_score": 10049.8,
+        "base_score": 10049.98,
         "position_factor": 0.68,
-        "speed_factor": 0.896
+        "speed_factor": 0.81,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -525,7 +537,7 @@
         271.464,
         259.809
       ],
-      "total_score": 6101,
+      "total_score": 5519,
       "position": 17,
       "average_speed_mph": 85.4,
       "car_name": "gd_alfa_romeo_8c_2300",
@@ -539,9 +551,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.44,
         "crash_factor": 0.996,
-        "base_score": 7031.64,
+        "base_score": 7031.56,
         "position_factor": 0.34,
-        "speed_factor": 0.972
+        "speed_factor": 0.604,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -576,7 +589,7 @@
         377.196,
         347.016
       ],
-      "total_score": 2314,
+      "total_score": 1438,
       "position": 34,
       "average_speed_mph": 75.43,
       "car_name": "exmods_fiat_508s_balilla",
@@ -590,9 +603,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 1.42,
         "crash_factor": 0.986,
-        "base_score": 562.08,
+        "base_score": 561.8,
         "position_factor": 0.24,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -612,7 +626,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 133,
+      "total_score": 67,
       "position": 39,
       "average_speed_mph": 0,
       "car_name": "exmods_av_voisin_c25_aero",
@@ -626,9 +640,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.38,
         "crash_factor": 0.996,
-        "base_score": 8037.31,
+        "base_score": 8037.36,
         "position_factor": 0.4,
-        "speed_factor": 0.935
+        "speed_factor": 0.711,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -659,7 +674,7 @@
         294.567,
         295.548
       ],
-      "total_score": 2997,
+      "total_score": 2277,
       "position": 31,
       "average_speed_mph": 73.26,
       "car_name": "frazer_nash_tt_1934",
@@ -673,9 +688,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 554.69,
+        "base_score": 554.75,
         "position_factor": 0.12,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -692,7 +708,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 67,
+      "total_score": 34,
       "position": 45,
       "average_speed_mph": 0,
       "car_name": "rz_aston_ulster",
@@ -706,9 +722,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.38,
         "crash_factor": 0.996,
-        "base_score": 10056.05,
+        "base_score": 10056.02,
         "position_factor": 0.72,
-        "speed_factor": 0.911
+        "speed_factor": 0.821,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -741,7 +758,7 @@
         262.179,
         259.251
       ],
-      "total_score": 6573,
+      "total_score": 5921,
       "position": 15,
       "average_speed_mph": 88.38,
       "car_name": "bugatti_type_57g",
@@ -755,9 +772,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 8033.94,
+        "base_score": 8034.34,
         "position_factor": 0.42,
-        "speed_factor": 0.961
+        "speed_factor": 0.712,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -782,7 +800,7 @@
         323.499,
         306.135
       ],
-      "total_score": 3244,
+      "total_score": 2404,
       "position": 30,
       "average_speed_mph": 89.36,
       "car_name": "rz_aston_ulster",
@@ -796,9 +814,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 553.58,
+        "base_score": 553.75,
         "position_factor": 0.02,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -815,7 +834,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 12,
+      "total_score": 6,
       "position": 50,
       "average_speed_mph": 0,
       "car_name": "legion_bentley_blower",
@@ -831,7 +850,8 @@
         "crash_factor": 0.999,
         "base_score": 10068.1,
         "position_factor": 0.9,
-        "speed_factor": 0.921
+        "speed_factor": 0.94,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -861,7 +881,7 @@
         237.435,
         232.206
       ],
-      "total_score": 8343,
+      "total_score": 8512,
       "position": 6,
       "average_speed_mph": 100.77,
       "car_name": "mercedes_ssk_1928",
@@ -875,9 +895,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 10050.1,
+        "base_score": 10049.98,
         "position_factor": 0.7,
-        "speed_factor": 0.9
+        "speed_factor": 0.809,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -904,7 +925,7 @@
         264.831,
         262.146
       ],
-      "total_score": 6330,
+      "total_score": 5691,
       "position": 16,
       "average_speed_mph": 87.56,
       "car_name": "gd_alfa_romeo_8c_2300",
@@ -918,9 +939,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 566.87,
+        "base_score": 566.83,
         "position_factor": 0.08,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -937,7 +959,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 46,
+      "total_score": 23,
       "position": 47,
       "average_speed_mph": 0,
       "car_name": "legion_bentley_blower",
@@ -951,9 +973,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.14,
         "crash_factor": 0.999,
-        "base_score": 563.47,
+        "base_score": 563.81,
         "position_factor": 0.3,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -973,7 +996,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 169,
+      "total_score": 85,
       "position": 36,
       "average_speed_mph": 0,
       "car_name": "bugatti_type_57g",
@@ -987,9 +1010,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 9041.59,
+        "base_score": 9041.15,
         "position_factor": 0.64,
-        "speed_factor": 0.924
+        "speed_factor": 0.739,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -1015,7 +1039,7 @@
         283.722,
         285.501
       ],
-      "total_score": 5346,
+      "total_score": 4277,
       "position": 19,
       "average_speed_mph": 81,
       "car_name": "mg_mgtc",
@@ -1029,9 +1053,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 553.86,
+        "base_score": 553.75,
         "position_factor": 0.04,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -1048,7 +1073,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 23,
+      "total_score": 12,
       "position": 49,
       "average_speed_mph": 0,
       "car_name": "napier_railton",
@@ -1062,9 +1087,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 9047.25,
+        "base_score": 9047.19,
         "position_factor": 0.62,
-        "speed_factor": 0.921
+        "speed_factor": 0.739,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -1090,7 +1116,7 @@
         285.03,
         284.508
       ],
-      "total_score": 5164,
+      "total_score": 4147,
       "position": 20,
       "average_speed_mph": 80.31,
       "car_name": "exmods_av_voisin_c25_aero",
@@ -1104,9 +1130,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 9049.52,
+        "base_score": 9049.21,
         "position_factor": 0.54,
-        "speed_factor": 0.905
+        "speed_factor": 0.73,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -1132,7 +1159,7 @@
         290.223,
         288.039
       ],
-      "total_score": 4422,
+      "total_score": 3567,
       "position": 24,
       "average_speed_mph": 77.65,
       "car_name": "bugatti_type57_aerolithe",
@@ -1146,9 +1173,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.13,
         "crash_factor": 0.999,
-        "base_score": 563.2,
+        "base_score": 562.81,
         "position_factor": 0.26,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1168,7 +1196,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 147,
+      "total_score": 74,
       "position": 38,
       "average_speed_mph": 0,
       "car_name": "bugatti_type_57g",
@@ -1182,9 +1210,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 1.65,
         "crash_factor": 0.983,
-        "base_score": 564.33,
+        "base_score": 564.82,
         "position_factor": 0.2,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1205,7 +1234,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 112,
+      "total_score": 56,
       "position": 41,
       "average_speed_mph": 0,
       "car_name": "bugatti_type57_aerolithe",
@@ -1221,7 +1250,8 @@
         "crash_factor": 0.995,
         "base_score": 10068.1,
         "position_factor": 1,
-        "speed_factor": 1
+        "speed_factor": 1,
+        "fastest_lap_bonus": 501.13
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1254,7 +1284,7 @@
         209.874,
         209.388
       ],
-      "total_score": 10023,
+      "total_score": 10524,
       "position": 1,
       "average_speed_mph": 117.93,
       "car_name": "bugatti_57sc_tour_1937",
@@ -1270,7 +1300,8 @@
         "crash_factor": 0.997,
         "base_score": 10068.1,
         "position_factor": 0.88,
-        "speed_factor": 0.92
+        "speed_factor": 0.942,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1303,7 +1334,7 @@
         240.846,
         234.828
       ],
-      "total_score": 8128,
+      "total_score": 8317,
       "position": 7,
       "average_speed_mph": 100.09,
       "car_name": "bg_mercedes_500k",
@@ -1317,9 +1348,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 9050.38,
+        "base_score": 9050.22,
         "position_factor": 0.6,
-        "speed_factor": 0.911
+        "speed_factor": 0.732,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -1345,7 +1377,7 @@
         286.119,
         286.662
       ],
-      "total_score": 4948,
+      "total_score": 3977,
       "position": 21,
       "average_speed_mph": 78.65,
       "car_name": "bugatti_type57_aerolithe",
@@ -1359,9 +1391,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.22,
         "crash_factor": 0.998,
-        "base_score": 9044.42,
+        "base_score": 9044.17,
         "position_factor": 0.5,
-        "speed_factor": 0.897
+        "speed_factor": 0.729,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1391,7 +1424,7 @@
         313.923,
         289.251
       ],
-      "total_score": 4046,
+      "total_score": 3290,
       "position": 26,
       "average_speed_mph": 80.1,
       "car_name": "exmods_jaguar_ss100",
@@ -1407,7 +1440,8 @@
         "crash_factor": 0.999,
         "base_score": 10068.1,
         "position_factor": 0.86,
-        "speed_factor": 0.92
+        "speed_factor": 0.934,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1437,7 +1471,7 @@
         242.328,
         235.623
       ],
-      "total_score": 7960,
+      "total_score": 8085,
       "position": 8,
       "average_speed_mph": 99.97,
       "car_name": "exmods_bug_type57sc_atlantic",
@@ -1451,9 +1485,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 2,
         "crash_factor": 0.98,
-        "base_score": 561.51,
+        "base_score": 561.8,
         "position_factor": 0.22,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1473,7 +1508,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 122,
+      "total_score": 61,
       "position": 40,
       "average_speed_mph": 0,
       "car_name": "exmods_av_voisin_c25_aero",
@@ -1489,7 +1524,8 @@
         "crash_factor": 0.991,
         "base_score": 10068.1,
         "position_factor": 0.96,
-        "speed_factor": 0.977
+        "speed_factor": 0.997,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1526,7 +1562,7 @@
         218.88,
         214.797
       ],
-      "total_score": 9352,
+      "total_score": 9544,
       "position": 3,
       "average_speed_mph": 113.43,
       "car_name": "bugatti_57sc_tour_1937",
@@ -1540,9 +1576,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.21,
         "crash_factor": 0.998,
-        "base_score": 9050.09,
+        "base_score": 9050.22,
         "position_factor": 0.52,
-        "speed_factor": 0.9
+        "speed_factor": 0.73,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1572,7 +1609,7 @@
         288.555,
         287.973
       ],
-      "total_score": 4227,
+      "total_score": 3427,
       "position": 25,
       "average_speed_mph": 76.69,
       "car_name": "bugatti_type57_aerolithe",
@@ -1586,9 +1623,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.09,
         "crash_factor": 0.999,
-        "base_score": 557.24,
+        "base_score": 556.77,
         "position_factor": 0.28,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1608,7 +1646,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 156,
+      "total_score": 78,
       "position": 37,
       "average_speed_mph": 0,
       "car_name": "gd_alfa_romeo_8c_2300",
@@ -1624,7 +1662,8 @@
         "crash_factor": 0.999,
         "base_score": 10068.1,
         "position_factor": 0.84,
-        "speed_factor": 0.917
+        "speed_factor": 0.939,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1655,7 +1694,7 @@
         239.883,
         235.161
       ],
-      "total_score": 7745,
+      "total_score": 7927,
       "position": 9,
       "average_speed_mph": 99.55,
       "car_name": "exmods_bug_type57sc_atlantic",
@@ -1671,7 +1710,8 @@
         "crash_factor": 1,
         "base_score": 10068.1,
         "position_factor": 0.8,
-        "speed_factor": 0.914
+        "speed_factor": 0.943,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -1699,7 +1739,7 @@
         244.968,
         238.635
       ],
-      "total_score": 7366,
+      "total_score": 7593,
       "position": 11,
       "average_speed_mph": 98.92,
       "car_name": "bg_mercedes_500k_cab",
@@ -1713,9 +1753,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.35,
         "crash_factor": 0.996,
-        "base_score": 9046.69,
+        "base_score": 9047.19,
         "position_factor": 0.56,
-        "speed_factor": 0.909
+        "speed_factor": 0.731,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1747,7 +1788,7 @@
         286.35,
         286.596
       ],
-      "total_score": 4591,
+      "total_score": 3692,
       "position": 23,
       "average_speed_mph": 83.02,
       "car_name": "exmods_av_voisin_c25_aero",
@@ -1763,7 +1804,8 @@
         "crash_factor": 1,
         "base_score": 10068.1,
         "position_factor": 0.82,
-        "speed_factor": 0.916
+        "speed_factor": 0.944,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -1791,7 +1833,7 @@
         241.467,
         235.458
       ],
-      "total_score": 7564,
+      "total_score": 7797,
       "position": 10,
       "average_speed_mph": 99.41,
       "car_name": "exmods_bug_type57sc_atlantic",
@@ -1805,9 +1847,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 1.09,
         "crash_factor": 0.989,
-        "base_score": 8037.03,
+        "base_score": 8037.36,
         "position_factor": 0.38,
-        "speed_factor": 0.921
+        "speed_factor": 0.692,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1843,7 +1886,7 @@
         304.179,
         304.359
       ],
-      "total_score": 2784,
+      "total_score": 2090,
       "position": 32,
       "average_speed_mph": 70.66,
       "car_name": "frazer_nash_tt_1934",
@@ -1857,9 +1900,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.36,
         "crash_factor": 0.996,
-        "base_score": 10054.65,
+        "base_score": 10055.01,
         "position_factor": 0.74,
-        "speed_factor": 0.932
+        "speed_factor": 0.842,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1891,7 +1935,7 @@
         251.826,
         252.909
       ],
-      "total_score": 6912,
+      "total_score": 6242,
       "position": 14,
       "average_speed_mph": 98.11,
       "car_name": "exmods_alfa_8c_2900b_mm_roadster",
@@ -1905,9 +1949,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.29,
         "crash_factor": 0.997,
-        "base_score": 8046.1,
+        "base_score": 8046.43,
         "position_factor": 0.44,
-        "speed_factor": 0.976
+        "speed_factor": 0.814,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -1938,7 +1983,7 @@
         626.904,
         266.952
       ],
-      "total_score": 3445,
+      "total_score": 2875,
       "position": 29,
       "average_speed_mph": 86.28,
       "car_name": "legion_bentley_blower",
@@ -1952,9 +1997,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 10054.93,
+        "base_score": 10055.01,
         "position_factor": 0.78,
-        "speed_factor": 0.95
+        "speed_factor": 0.851,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -1981,7 +2027,7 @@
         249.771,
         246.219
       ],
-      "total_score": 7450,
+      "total_score": 6676,
       "position": 12,
       "average_speed_mph": 99.17,
       "car_name": "exmods_alfa_8c_2900b_mm_roadster",
@@ -1997,7 +2043,8 @@
         "crash_factor": 0.999,
         "base_score": 10068.1,
         "position_factor": 0.92,
-        "speed_factor": 0.932
+        "speed_factor": 0.95,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -2027,7 +2074,7 @@
         232.506,
         230.787
       ],
-      "total_score": 8631,
+      "total_score": 8790,
       "position": 5,
       "average_speed_mph": 107.17,
       "car_name": "mercedes_ssk_1928",
@@ -2041,9 +2088,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0,
         "crash_factor": 1,
-        "base_score": 985.12,
+        "base_score": 984.66,
         "position_factor": 0.06,
-        "speed_factor": 1
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [],
@@ -2060,7 +2108,7 @@
       "total_time_formatted": "00:00.000",
       "total_time_seconds": 0,
       "lap_times": [],
-      "total_score": 60,
+      "total_score": 30,
       "position": 48,
       "average_speed_mph": 0,
       "car_name": "napier_railton",
@@ -2074,9 +2122,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.44,
         "crash_factor": 0.996,
-        "base_score": 10055.21,
+        "base_score": 10055.01,
         "position_factor": 0.76,
-        "speed_factor": 0.933
+        "speed_factor": 0.86,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -2110,7 +2159,7 @@
         253.773,
         251.643
       ],
-      "total_score": 7102,
+      "total_score": 6541,
       "position": 13,
       "average_speed_mph": 97.52,
       "car_name": "exmods_alfa_8c_2900b_mm_roadster",
@@ -2124,9 +2173,10 @@
       "score_breakdown": {
         "crash_penalty_percent": 0.86,
         "crash_factor": 0.991,
-        "base_score": 9041.31,
+        "base_score": 9041.15,
         "position_factor": 0.66,
-        "speed_factor": 0.924
+        "speed_factor": 0.74,
+        "fastest_lap_bonus": 0
       },
       "crashes": {
         "crash_intensities_g": [
@@ -2166,7 +2216,7 @@
         283.932,
         285.186
       ],
-      "total_score": 5468,
+      "total_score": 4379,
       "position": 18,
       "average_speed_mph": 85.26,
       "car_name": "mg_mgtc",
