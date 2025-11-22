@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Path to championship directory
-const champDir = path.join(__dirname, '..', 'app', 'data', 'championship', '57d34e04-9557-437a-a139-1ac6c30f28c7');
+const champDir = path.join(__dirname, '..', 'app', 'data', 'championship', 'Test Drive Tour', 'Season 01');
 
 // Get all race files
 const raceFiles = fs.readdirSync(champDir).filter(f => f.endsWith('.json') && f.startsWith('stats_'));

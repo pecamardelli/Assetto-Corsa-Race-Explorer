@@ -9,7 +9,7 @@ const AC_PATH = 'C:\\GAMES\\Assetto Corsa';
 const MAX_WIDTH = 1024;
 
 // Get championship files to find which cars are used
-const championshipDir = path.join(__dirname, '..', 'app', 'data', 'championship', 'e3dabc14-e97d-4951-b132-761ffad3608d');
+const championshipDir = path.join(__dirname, '..', 'app', 'data', 'championship', 'Le Mans Classic', 'Season 01');
 const badgesDir = path.join(__dirname, '..', 'public', 'badges');
 
 // Create badges directory if it doesn't exist

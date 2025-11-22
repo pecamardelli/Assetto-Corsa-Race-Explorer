@@ -24,7 +24,9 @@
       "Bash(git add:*)",
       "Bash(git stash:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(mkdir:*)",
+      "mcp__ide__getDiagnostics"
     ],
     "deny": [],
     "ask": []

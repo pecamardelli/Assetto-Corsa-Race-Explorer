@@ -8,7 +8,8 @@ import FlagIcon from '../../../components/FlagIcon';
 
 export default async function StandingsPage({ params }: { params: Promise<{ champId: string }> }) {
   const { champId } = await params;
-  const championship = await getChampionship(champId);
+  const decodedChampId = decodeURIComponent(champId);
+  const championship = await getChampionship(decodedChampId);
 
   if (!championship) {
     notFound();
@@ -22,7 +23,7 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <BackButton fallbackUrl={`/championship/${champId}`}>Back</BackButton>
+          <BackButton fallbackUrl={`/championship/${encodeURIComponent(decodedChampId)}`}>Back</BackButton>
 
           <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6 mb-4">
             <div className="flex items-center gap-2 mb-3">
@@ -44,7 +45,7 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
           </div>
 
           <Link
-            href={`/championship/${champId}`}
+            href={`/championship/${encodeURIComponent(decodedChampId)}`}
             className="inline-flex items-center text-zinc-400 hover:text-amber-400 transition-colors text-sm"
           >
             View Championship Rounds →

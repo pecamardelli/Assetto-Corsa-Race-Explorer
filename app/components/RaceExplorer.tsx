@@ -137,7 +137,7 @@ export default function RaceExplorer({ quickRaces, championships }: RaceExplorer
                 return (
                   <Link
                     key={championship.id}
-                    href={`/championship/${championship.id}`}
+                    href={`/championship/${encodeURIComponent(championship.id)}`}
                     className="group block bg-zinc-800/50 border border-zinc-700 rounded-lg p-6 transition-all hover:bg-zinc-800 hover:border-amber-600 hover:shadow-lg hover:shadow-amber-500/10"
                   >
                     <div className="flex items-start justify-between mb-4">

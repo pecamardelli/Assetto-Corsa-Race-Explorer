@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Path to Spa race file
-const spaFile = path.join(__dirname, '..', 'app', 'data', 'championship', '57d34e04-9557-437a-a139-1ac6c30f28c7', 'stats_rj_spa_34_66-34_session_race_20251121_165148.json');
+const spaFile = path.join(__dirname, '..', 'app', 'data', 'championship', 'Test Drive Tour', 'Season 01', 'stats_rj_spa_34_66-34_session_race_20251121_165148.json');
 
 // Read the race data
 console.log('Reading Spa race file...');

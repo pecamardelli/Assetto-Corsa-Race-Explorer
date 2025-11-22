@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Path to Monaco race file
-const monacoFile = path.join(__dirname, '..', 'app', 'data', 'championship', '57d34e04-9557-437a-a139-1ac6c30f28c7', 'stats_monaco_1966_session_race_20251121_035320.json');
+const monacoFile = path.join(__dirname, '..', 'app', 'data', 'championship', 'Test Drive Tour', 'Season 01', 'stats_monaco_1966_session_race_20251121_035320.json');
 
 // Read the race data
 console.log('Reading Monaco race file...');
