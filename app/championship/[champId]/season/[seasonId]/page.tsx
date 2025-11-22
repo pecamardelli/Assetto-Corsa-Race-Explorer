@@ -54,6 +54,31 @@ export default async function SeasonPage({ params }: { params: Promise<{ champId
     champion = standings.length > 0 ? standings[0].name : null;
   }
 
+  // Get season start and end dates from race sessions
+  let startDate: string | null = null;
+  let endDate: string | null = null;
+
+  if (sessions.length > 0) {
+    // Sort sessions by date to get first and last
+    const sortedSessions = [...sessions].sort((a, b) => {
+      const dateA = new Date(a.data.session_info.date).getTime();
+      const dateB = new Date(b.data.session_info.date).getTime();
+      return dateA - dateB;
+    });
+
+    const firstSession = sortedSessions[0];
+    const lastSession = sortedSessions[sortedSessions.length - 1];
+
+    // Format dates
+    const formatDate = (dateString: string) => {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    };
+
+    startDate = formatDate(firstSession.data.session_info.date);
+    endDate = formatDate(lastSession.data.session_info.date);
+  }
+
   // Match rounds with sessions based on track name and session type
   const roundsWithSessions = data.rounds.map((round, index) => {
     // Match by track name (the full round.track includes config, e.g., "ks_brands_hatch-indy")
@@ -103,10 +128,15 @@ export default async function SeasonPage({ params }: { params: Promise<{ champId
 
           <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
             <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs font-semibold px-2 py-1 rounded bg-green-500/20 text-green-400 uppercase">
                   {season.seasonName}
                 </span>
+                {startDate && endDate && (
+                  <span className="text-xs text-zinc-400">
+                    {startDate} - {endDate}
+                  </span>
+                )}
               </div>
               <div className="flex items-center gap-2 flex-wrap">
                 <Link
@@ -192,6 +222,14 @@ export default async function SeasonPage({ params }: { params: Promise<{ champId
 
           <div className="divide-y divide-zinc-700">
             {roundsWithSessions.map(({ round, roundNumber, trackDetails, practice, qualifying, race, hasAnySessions }) => {
+              // Get the race date (prefer race session, fall back to qualifying, then practice)
+              const sessionForDate = race || qualifying || practice;
+              const raceDate = sessionForDate ? new Date(sessionForDate.data.session_info.date).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+              }) : null;
+
               return (
                 <div key={roundNumber} className="p-6">
                   <div className="flex items-start gap-4">
@@ -213,6 +251,13 @@ export default async function SeasonPage({ params }: { params: Promise<{ champId
                         }`}>
                           {trackDetails.name}
                         </div>
+
+                        {/* Race Date */}
+                        {raceDate && (
+                          <div className="text-xs text-zinc-400 bg-zinc-900/50 px-2 py-1 rounded">
+                            {raceDate}
+                          </div>
+                        )}
                       </div>
 
                       <div className={`flex items-center gap-3 mb-3 text-sm ${

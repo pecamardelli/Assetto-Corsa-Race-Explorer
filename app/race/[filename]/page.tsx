@@ -48,7 +48,7 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
           <BackButton fallbackUrl="/">Back</BackButton>
 
           <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-3 flex-wrap">
               <span className={`text-xs font-semibold px-2 py-1 rounded uppercase ${
                 sessionType === 'practice' ? 'bg-blue-500/20 text-blue-400' :
                 sessionType === 'qualifying' ? 'bg-yellow-500/20 text-yellow-400' :
@@ -59,6 +59,15 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
               {session.championship && (
                 <span className="text-xs font-semibold px-2 py-1 rounded bg-amber-500/20 text-amber-400">
                   {session.championship}
+                </span>
+              )}
+              {session_info.date && (
+                <span className="text-xs text-zinc-400">
+                  {new Date(session_info.date).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
                 </span>
               )}
             </div>
