@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { RaceData, RaceSession, Championship, ChampionshipData } from '../types/race';
+import { RaceData, RaceSession, Championship, ChampionshipData, Season } from '../types/race';
 
 // Helper function to extract session type from filename
 // Filename format: stats_{track}_session_{type}_{timestamp}.json
@@ -111,22 +111,31 @@ export async function getChampionships(): Promise<Championship[]> {
       const champPath = path.join(championshipDirectory, champName);
 
       try {
-        // Look for season folders and .champ files
+        // Read all entries in championship folder
         const seasonEntries = await fs.readdir(champPath, { withFileTypes: true });
-        const seasonDirs = seasonEntries.filter(entry => entry.isDirectory() && entry.name.startsWith('Season '));
 
-        // For now, we'll read all seasons and combine them
-        // Later we can add per-season support
+        // Find all .champ files
+        const champFiles = seasonEntries.filter(entry => entry.isFile() && entry.name.endsWith('.champ'));
+
         let allSessions: RaceSession[] = [];
         let champData: ChampionshipData | null = null;
+        const seasons: Season[] = [];
 
-        for (const seasonDir of seasonDirs) {
-          const seasonName = seasonDir.name;
-          const seasonPath = path.join(champPath, seasonName);
-
-          // Look for corresponding .champ file (e.g., season_01.champ for Season 01)
-          const champFileName = seasonName.toLowerCase().replace(' ', '_') + '.champ';
+        for (const champFile of champFiles) {
+          const champFileName = champFile.name;
           const champFilePath = path.join(champPath, champFileName);
+
+          // Get the season folder name (same as .champ file without extension)
+          // e.g., season_01.champ -> season_01
+          const seasonFolderName = champFileName.replace('.champ', '');
+          const seasonPath = path.join(champPath, seasonFolderName);
+
+          // Extract season number from name (e.g., "season_01" -> 1)
+          const seasonNumberMatch = seasonFolderName.match(/season_(\d+)/i);
+          const seasonNumber = seasonNumberMatch ? parseInt(seasonNumberMatch[1], 10) : 0;
+
+          // Create display name (e.g., "season_01" -> "Season 01")
+          const seasonDisplayName = `Season ${String(seasonNumber).padStart(2, '0')}`;
 
           let seasonChampData: ChampionshipData;
           try {
@@ -139,40 +148,67 @@ export async function getChampionships(): Promise<Championship[]> {
             continue;
           }
 
-          // Read race session files
-          const sessionFiles = await fs.readdir(seasonPath);
-          const jsonFiles = sessionFiles.filter(file => file.endsWith('.json'));
+          // Read race session files for this season
+          const seasonSessions: RaceSession[] = [];
 
-          for (const sessionFile of jsonFiles) {
-            const sessionPath = path.join(seasonPath, sessionFile);
-            const sessionContents = await fs.readFile(sessionPath, 'utf8');
-            let sessionData: RaceData = JSON.parse(sessionContents);
+          try {
+            const sessionFiles = await fs.readdir(seasonPath);
+            const jsonFiles = sessionFiles.filter(file => file.endsWith('.json'));
 
-            // Ensure session_type is populated from filename if empty
-            sessionData = ensureSessionType(sessionData, sessionFile);
+            for (const sessionFile of jsonFiles) {
+              const sessionFilePath = path.join(seasonPath, sessionFile);
+              const sessionContents = await fs.readFile(sessionFilePath, 'utf8');
+              let sessionData: RaceData = JSON.parse(sessionContents);
 
-            allSessions.push({
-              filename: `championship/${champName}/${seasonName}/${sessionFile}`,
-              data: sessionData,
-              raceType: 'championship',
-              championship: seasonChampData.name,
-            });
+              // Ensure session_type is populated from filename if empty
+              sessionData = ensureSessionType(sessionData, sessionFile);
+
+              const session = {
+                filename: `championship/${champName}/${seasonFolderName}/${sessionFile}`,
+                data: sessionData,
+                raceType: 'championship' as const,
+                championship: seasonChampData.name,
+              };
+
+              seasonSessions.push(session);
+              allSessions.push(session);
+            }
+          } catch (error) {
+            console.error(`Error reading season folder ${seasonFolderName}:`, error);
           }
+
+          // Sort season sessions by date
+          seasonSessions.sort((a, b) => {
+            const dateA = new Date(a.data.session_info.date);
+            const dateB = new Date(b.data.session_info.date);
+            return dateA.getTime() - dateB.getTime();
+          });
+
+          seasons.push({
+            seasonName: seasonDisplayName,
+            seasonNumber,
+            data: seasonChampData,
+            sessions: seasonSessions,
+          });
         }
 
         if (champData) {
-          // Sort sessions by date
+          // Sort all sessions by date
           allSessions.sort((a, b) => {
             const dateA = new Date(a.data.session_info.date);
             const dateB = new Date(b.data.session_info.date);
             return dateA.getTime() - dateB.getTime();
           });
 
+          // Sort seasons by season number
+          seasons.sort((a, b) => a.seasonNumber - b.seasonNumber);
+
           championships.push({
             id: champName,
             data: champData,
             folderName: champName,
             sessions: allSessions,
+            seasons,
           });
         }
       } catch (error) {
@@ -192,20 +228,31 @@ export async function getChampionship(champId: string): Promise<Championship | n
   const champPath = path.join(championshipDirectory, champId);
 
   try {
-    // Look for season folders and .champ files
+    // Read all entries in championship folder
     const seasonEntries = await fs.readdir(champPath, { withFileTypes: true });
-    const seasonDirs = seasonEntries.filter(entry => entry.isDirectory() && entry.name.startsWith('Season '));
+
+    // Find all .champ files
+    const champFiles = seasonEntries.filter(entry => entry.isFile() && entry.name.endsWith('.champ'));
 
     let allSessions: RaceSession[] = [];
     let champData: ChampionshipData | null = null;
+    const seasons: Season[] = [];
 
-    for (const seasonDir of seasonDirs) {
-      const seasonName = seasonDir.name;
-      const seasonPath = path.join(champPath, seasonName);
-
-      // Look for corresponding .champ file (e.g., season_01.champ for Season 01)
-      const champFileName = seasonName.toLowerCase().replace(' ', '_') + '.champ';
+    for (const champFile of champFiles) {
+      const champFileName = champFile.name;
       const champFilePath = path.join(champPath, champFileName);
+
+      // Get the season folder name (same as .champ file without extension)
+      // e.g., season_01.champ -> season_01
+      const seasonFolderName = champFileName.replace('.champ', '');
+      const seasonPath = path.join(champPath, seasonFolderName);
+
+      // Extract season number from name (e.g., "season_01" -> 1)
+      const seasonNumberMatch = seasonFolderName.match(/season_(\d+)/i);
+      const seasonNumber = seasonNumberMatch ? parseInt(seasonNumberMatch[1], 10) : 0;
+
+      // Create display name (e.g., "season_01" -> "Season 01")
+      const seasonDisplayName = `Season ${String(seasonNumber).padStart(2, '0')}`;
 
       let seasonChampData: ChampionshipData;
       try {
@@ -218,43 +265,70 @@ export async function getChampionship(champId: string): Promise<Championship | n
         continue;
       }
 
-      // Read race session files
-      const sessionFiles = await fs.readdir(seasonPath);
-      const jsonFiles = sessionFiles.filter(file => file.endsWith('.json'));
+      // Read race session files for this season
+      const seasonSessions: RaceSession[] = [];
 
-      for (const sessionFile of jsonFiles) {
-        const sessionFilePath = path.join(seasonPath, sessionFile);
-        const sessionContents = await fs.readFile(sessionFilePath, 'utf8');
-        let sessionData: RaceData = JSON.parse(sessionContents);
+      try {
+        const sessionFiles = await fs.readdir(seasonPath);
+        const jsonFiles = sessionFiles.filter(file => file.endsWith('.json'));
 
-        // Ensure session_type is populated from filename if empty
-        sessionData = ensureSessionType(sessionData, sessionFile);
+        for (const sessionFile of jsonFiles) {
+          const sessionFilePath = path.join(seasonPath, sessionFile);
+          const sessionContents = await fs.readFile(sessionFilePath, 'utf8');
+          let sessionData: RaceData = JSON.parse(sessionContents);
 
-        allSessions.push({
-          filename: `championship/${champId}/${seasonName}/${sessionFile}`,
-          data: sessionData,
-          raceType: 'championship',
-          championship: seasonChampData.name,
-        });
+          // Ensure session_type is populated from filename if empty
+          sessionData = ensureSessionType(sessionData, sessionFile);
+
+          const session = {
+            filename: `championship/${champId}/${seasonFolderName}/${sessionFile}`,
+            data: sessionData,
+            raceType: 'championship' as const,
+            championship: seasonChampData.name,
+          };
+
+          seasonSessions.push(session);
+          allSessions.push(session);
+        }
+      } catch (error) {
+        console.error(`Error reading season folder ${seasonFolderName}:`, error);
       }
+
+      // Sort season sessions by date
+      seasonSessions.sort((a, b) => {
+        const dateA = new Date(a.data.session_info.date);
+        const dateB = new Date(b.data.session_info.date);
+        return dateA.getTime() - dateB.getTime();
+      });
+
+      seasons.push({
+        seasonName: seasonDisplayName,
+        seasonNumber,
+        data: seasonChampData,
+        sessions: seasonSessions,
+      });
     }
 
     if (!champData) {
       return null;
     }
 
-    // Sort sessions by date
+    // Sort all sessions by date
     allSessions.sort((a, b) => {
       const dateA = new Date(a.data.session_info.date);
       const dateB = new Date(b.data.session_info.date);
       return dateA.getTime() - dateB.getTime();
     });
 
+    // Sort seasons by season number
+    seasons.sort((a, b) => a.seasonNumber - b.seasonNumber);
+
     return {
       id: champId,
       data: champData,
       folderName: champId,
       sessions: allSessions,
+      seasons,
     };
   } catch (error) {
     console.error('Error reading championship:', error);

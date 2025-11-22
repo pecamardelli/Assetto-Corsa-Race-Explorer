@@ -26,13 +26,22 @@ if (!fs.existsSync(trackPreviewsDir)) {
 const trackConfigs = new Set();
 
 // First, scan .champ files for all rounds (including unraced tracks)
-const champFiles = fs.readdirSync(championshipBaseDir)
-  .filter(file => file.endsWith('.champ'));
+// New structure: championship/{championship-name}/season_*.champ
+const champDirEntries = fs.readdirSync(championshipBaseDir, { withFileTypes: true })
+  .filter(dirent => dirent.isDirectory());
+
+let champFiles = [];
+champDirEntries.forEach(dirent => {
+  const champDir = path.join(championshipBaseDir, dirent.name);
+  const seasonFiles = fs.readdirSync(champDir)
+    .filter(file => file.endsWith('.champ'))
+    .map(file => path.join(champDir, file));
+  champFiles = champFiles.concat(seasonFiles);
+});
 
 console.log(`Scanning ${champFiles.length} .champ files for tracks...`);
 
-champFiles.forEach(file => {
-  const filePath = path.join(championshipBaseDir, file);
+champFiles.forEach(filePath => {
   const content = fs.readFileSync(filePath, 'utf8').replace(/^\uFEFF/, ''); // Remove BOM
   const data = JSON.parse(content);
 
@@ -52,29 +61,35 @@ champFiles.forEach(file => {
 });
 
 // Also scan result JSON files for any additional tracks
-const champDirs = fs.readdirSync(championshipBaseDir, { withFileTypes: true })
-  .filter(dirent => dirent.isDirectory())
-  .map(dirent => dirent.name);
+// New structure: championship/{championship-name}/season_{season}/stats_*.json
+champDirEntries.forEach(dirent => {
+  const champDir = path.join(championshipBaseDir, dirent.name);
 
-champDirs.forEach(dir => {
-  const dirPath = path.join(championshipBaseDir, dir);
-  const files = fs.readdirSync(dirPath)
-    .filter(file => file.endsWith('.json'));
+  // Look for season subdirectories
+  const seasonDirs = fs.readdirSync(champDir, { withFileTypes: true })
+    .filter(d => d.isDirectory() && d.name.startsWith('season_'))
+    .map(d => d.name);
 
-  files.forEach(file => {
-    const filePath = path.join(dirPath, file);
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  seasonDirs.forEach(seasonDir => {
+    const seasonPath = path.join(champDir, seasonDir);
+    const files = fs.readdirSync(seasonPath)
+      .filter(file => file.endsWith('.json'));
 
-    if (data.session_info) {
-      const trackName = data.session_info.track;
-      const trackConfig = data.session_info.track_config;
+    files.forEach(file => {
+      const filePath = path.join(seasonPath, file);
+      const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
-      if (trackName) {
-        // Create identifier: trackName-config or just trackName if no config
-        const identifier = trackConfig ? `${trackName}-${trackConfig}` : trackName;
-        trackConfigs.add(JSON.stringify({ trackName, trackConfig, identifier }));
+      if (data.session_info) {
+        const trackName = data.session_info.track;
+        const trackConfig = data.session_info.track_config;
+
+        if (trackName) {
+          // Create identifier: trackName-config or just trackName if no config
+          const identifier = trackConfig ? `${trackName}-${trackConfig}` : trackName;
+          trackConfigs.add(JSON.stringify({ trackName, trackConfig, identifier }));
+        }
       }
-    }
+    });
   });
 });
 
@@ -131,11 +146,42 @@ tracks.forEach(({ trackName, trackConfig, identifier }) => {
   } else if (fs.existsSync(uiTrackJsonPath)) {
     try {
       // Read the ui_track.json file
-      const trackData = JSON.parse(fs.readFileSync(uiTrackJsonPath, 'utf8'));
+      let rawContent = fs.readFileSync(uiTrackJsonPath, 'utf8');
+
+      // Try to parse as-is first
+      let trackData;
+      let wasSanitized = false;
+      try {
+        trackData = JSON.parse(rawContent);
+      } catch (parseError) {
+        // If parsing fails, try to fix common JSON issues
+        // Fix unescaped newlines in string values
+        rawContent = rawContent.replace(
+          /"([^"]+)":\s*"([^"]*(?:\n[^"]*)*?)"/g,
+          (match, key, value) => {
+            // Escape newlines and other control characters in the value
+            const escapedValue = value
+              .replace(/\\/g, '\\\\')  // Escape backslashes first
+              .replace(/\n/g, '\\n')   // Escape newlines
+              .replace(/\r/g, '\\r')   // Escape carriage returns
+              .replace(/\t/g, '\\t')   // Escape tabs
+              .replace(/"/g, '\\"');   // Escape quotes
+            return `"${key}": "${escapedValue}"`;
+          }
+        );
+
+        // Try parsing again with sanitized content
+        trackData = JSON.parse(rawContent);
+        wasSanitized = true;
+      }
 
       // Write to destination
       fs.writeFileSync(trackDataDestPath, JSON.stringify(trackData, null, 2), 'utf8');
-      console.log(`✓ Track data copied: ${identifier}.json`);
+      if (wasSanitized) {
+        console.log(`⚠ Track data sanitized and copied: ${identifier}.json`);
+      } else {
+        console.log(`✓ Track data copied: ${identifier}.json`);
+      }
       trackDataCopied++;
     } catch (error) {
       console.log(`✗ Error copying track data ${identifier}: ${error.message}`);

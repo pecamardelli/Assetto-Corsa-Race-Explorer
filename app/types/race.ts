@@ -121,11 +121,19 @@ export interface ChampionshipData {
   changedByCm: boolean;
 }
 
+export interface Season {
+  seasonName: string;
+  seasonNumber: number;
+  data: ChampionshipData;
+  sessions: RaceSession[];
+}
+
 export interface Championship {
   id: string;
   data: ChampionshipData;
   folderName: string;
   sessions: RaceSession[];
+  seasons: Season[];
 }
 
 export interface DriverStanding {

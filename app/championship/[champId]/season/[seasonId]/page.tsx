@@ -1,21 +1,32 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { getChampionship } from '../../lib/race-data';
-import { getTrackDetails } from '../../lib/track-data';
-import BackButton from '../../components/BackButton';
-import FlagIcon from '../../components/FlagIcon';
+import { getChampionship } from '../../../../lib/race-data';
+import { getTrackDetails } from '../../../../lib/track-data';
+import BackButton from '../../../../components/BackButton';
+import FlagIcon from '../../../../components/FlagIcon';
 
-export default async function ChampionshipPage({ params }: { params: Promise<{ champId: string }> }) {
-  const { champId } = await params;
+export default async function SeasonPage({ params }: { params: Promise<{ champId: string; seasonId: string }> }) {
+  const { champId, seasonId } = await params;
   const decodedChampId = decodeURIComponent(champId);
+  const decodedSeasonId = decodeURIComponent(seasonId);
+
   const championship = await getChampionship(decodedChampId);
 
   if (!championship) {
     notFound();
   }
 
-  const { data, sessions } = championship;
+  // Find the specific season
+  const season = championship.seasons.find(s =>
+    s.seasonName.toLowerCase().replace(' ', '_') === decodedSeasonId.toLowerCase()
+  );
+
+  if (!season) {
+    notFound();
+  }
+
+  const { data, sessions } = season;
 
   // Count only race sessions (not practice or qualifying)
   const completedRaces = sessions.filter(session => {
@@ -37,7 +48,6 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ c
     const trackDetails = getTrackDetails(baseTrackName, trackConfig);
 
     // Find practice, qualifying, and race sessions for this round
-    // Filenames are like: stats_ks_brands_hatch-indy_session_practice_20251112_022523.json
     const practiceSessions = sessions.filter(session => {
       const filename = session.filename.split('/').pop() || '';
       return filename.includes(trackWithConfig) && filename.includes('session_practice');
@@ -69,13 +79,13 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ c
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <BackButton fallbackUrl="/">Back</BackButton>
+          <BackButton fallbackUrl={`/championship/${encodeURIComponent(decodedChampId)}/seasons`}>Back to Seasons</BackButton>
 
           <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold px-2 py-1 rounded bg-amber-500/20 text-amber-400 uppercase">
-                  Championship
+                <span className="text-xs font-semibold px-2 py-1 rounded bg-green-500/20 text-green-400 uppercase">
+                  {season.seasonName}
                 </span>
               </div>
               <div className="flex items-center gap-2 flex-wrap">
@@ -86,7 +96,7 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ c
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  Seasons
+                  All Seasons
                 </Link>
                 <Link
                   href={`/championship/${encodeURIComponent(decodedChampId)}/standings`}
@@ -108,9 +118,12 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ c
                 </Link>
               </div>
             </div>
-            <h1 className="text-4xl font-bold text-white mb-4">
+            <h1 className="text-4xl font-bold text-white mb-2">
               {data.name}
             </h1>
+            <div className="text-xl text-green-400 mb-4">
+              {season.seasonName}
+            </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
@@ -248,7 +261,7 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ c
                         alt={trackDetails.name}
                         width={200}
                         height={112}
-                        className="rounded-lg object-cover"
+                        className="rounded-lg"
                         unoptimized
                       />
                     </div>
