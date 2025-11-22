@@ -1,0 +1,200 @@
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { getChampionship } from '../../../../../lib/race-data';
+import { calculateStandings } from '../../../../../lib/standings';
+import { Championship } from '../../../../../types/race';
+import { getCarName } from '../../../../../lib/car-data';
+import BackButton from '../../../../../components/BackButton';
+import FlagIcon from '../../../../../components/FlagIcon';
+
+export default async function SeasonStandingsPage({ params }: { params: Promise<{ champId: string; seasonId: string }> }) {
+  const { champId, seasonId } = await params;
+  const decodedChampId = decodeURIComponent(champId);
+  const decodedSeasonId = decodeURIComponent(seasonId);
+  const championship = await getChampionship(decodedChampId);
+
+  if (!championship) {
+    notFound();
+  }
+
+  // Find the specific season
+  const season = championship.seasons.find(s =>
+    s.seasonName.toLowerCase().replace(' ', '_') === decodedSeasonId.toLowerCase()
+  );
+
+  if (!season) {
+    notFound();
+  }
+
+  // Create a temporary Championship object for this season only
+  const seasonChampionship: Championship = {
+    id: championship.id,
+    data: season.data,
+    folderName: championship.folderName,
+    sessions: season.sessions,
+    seasons: [season],
+  };
+
+  const standings = calculateStandings(seasonChampionship);
+  const { data } = season;
+
+  // Count only race sessions
+  const completedRaces = season.sessions.filter(s => s.data.session_info.session_type === 'race').length;
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="mb-8">
+          <BackButton fallbackUrl={`/championship/${encodeURIComponent(decodedChampId)}/season/${encodeURIComponent(decodedSeasonId)}`}>
+            Back to {season.seasonName}
+          </BackButton>
+
+          <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6 mb-4">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-xs font-semibold px-2 py-1 rounded bg-amber-500/20 text-amber-400 uppercase">
+                Driver Standings
+              </span>
+              <span className="text-xs font-semibold px-2 py-1 rounded bg-green-500/20 text-green-400 uppercase">
+                {season.seasonName}
+              </span>
+            </div>
+            <h1 className="text-4xl font-bold text-white mb-4">
+              {data.name}
+            </h1>
+
+            <div className="flex flex-wrap gap-4 text-sm text-zinc-400">
+              <span>
+                {completedRaces} of {data.rounds.length} rounds completed
+              </span>
+              <span>•</span>
+              <span>{data.opponents.length} drivers</span>
+            </div>
+          </div>
+
+          <div className="flex gap-3">
+            <Link
+              href={`/championship/${encodeURIComponent(decodedChampId)}/season/${encodeURIComponent(decodedSeasonId)}`}
+              className="inline-flex items-center text-zinc-400 hover:text-amber-400 transition-colors text-sm"
+            >
+              View Season Rounds →
+            </Link>
+            <Link
+              href={`/championship/${encodeURIComponent(decodedChampId)}/season/${encodeURIComponent(decodedSeasonId)}/constructors`}
+              className="inline-flex items-center text-zinc-400 hover:text-blue-400 transition-colors text-sm"
+            >
+              Constructor Standings →
+            </Link>
+          </div>
+        </div>
+
+        {/* Standings Table */}
+        <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-zinc-900/50 border-b border-zinc-700">
+                  <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                    Pos
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                    Driver
+                  </th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden sm:table-cell">
+                    Nation
+                  </th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
+                    Wins
+                  </th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
+                    Poles
+                  </th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
+                    Podiums
+                  </th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
+                    Fast Laps
+                  </th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                    Points
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-zinc-700">
+                {standings.map((driver, index) => {
+                  const position = index + 1;
+                  const isLeader = position === 1;
+                  const isPodium = position <= 3;
+
+                  return (
+                    <tr
+                      key={driver.name}
+                      className={`hover:bg-zinc-800/80 transition-colors ${
+                        isLeader ? 'bg-amber-500/5' : isPodium ? 'bg-zinc-700/10' : ''
+                      }`}
+                    >
+                      <td className="px-4 py-4 whitespace-nowrap">
+                        <span className={`inline-flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm ${
+                          isLeader ? 'bg-amber-500 text-zinc-900' :
+                          position === 2 ? 'bg-zinc-400 text-zinc-900' :
+                          position === 3 ? 'bg-amber-700 text-white' :
+                          'bg-zinc-700 text-white'
+                        }`}>
+                          {position}
+                        </span>
+                      </td>
+                      <td className="px-4 py-4">
+                        <div className="text-white font-medium">{driver.name}</div>
+                        <div className="text-xs text-zinc-500 mt-1 hidden sm:block">
+                          {getCarName(driver.car)}
+                        </div>
+                      </td>
+                      <td className="px-4 py-4 text-center hidden sm:table-cell">
+                        <FlagIcon nation={driver.nation} />
+                      </td>
+                      <td className="px-4 py-4 text-center text-white hidden md:table-cell">
+                        {driver.wins > 0 ? (
+                          <span className="text-amber-400 font-semibold">{driver.wins}</span>
+                        ) : (
+                          <span className="text-zinc-600">0</span>
+                        )}
+                      </td>
+                      <td className="px-4 py-4 text-center text-white hidden md:table-cell">
+                        {driver.poles > 0 ? (
+                          <span className="text-purple-400 font-semibold">{driver.poles}</span>
+                        ) : (
+                          <span className="text-zinc-600">0</span>
+                        )}
+                      </td>
+                      <td className="px-4 py-4 text-center text-white hidden lg:table-cell">
+                        {driver.podiums > 0 ? (
+                          <span className="text-zinc-300 font-semibold">{driver.podiums}</span>
+                        ) : (
+                          <span className="text-zinc-600">0</span>
+                        )}
+                      </td>
+                      <td className="px-4 py-4 text-center text-white hidden lg:table-cell">
+                        {driver.fastestLaps > 0 ? (
+                          <span className="text-green-400 font-semibold">{driver.fastestLaps}</span>
+                        ) : (
+                          <span className="text-zinc-600">0</span>
+                        )}
+                      </td>
+                      <td className="px-4 py-4 text-center">
+                        <div className={`font-bold text-lg font-mono ${
+                          isLeader ? 'text-amber-400' : 'text-white'
+                        }`}>
+                          {driver.customPoints.toLocaleString()}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

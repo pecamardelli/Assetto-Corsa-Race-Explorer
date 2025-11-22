@@ -33,6 +33,14 @@ export async function getRaceSessions(): Promise<RaceSession[]> {
   try {
     const sessions: RaceSession[] = [];
 
+    // Check if directory exists, if not return empty array
+    try {
+      await fs.access(quickRaceDirectory);
+    } catch {
+      console.log('Quick race directory does not exist, returning empty sessions');
+      return [];
+    }
+
     // Read quick race JSON files
     const files = await fs.readdir(quickRaceDirectory);
     const jsonFiles = files.filter(file => file.endsWith('.json'));

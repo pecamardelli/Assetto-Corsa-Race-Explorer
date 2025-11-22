@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getChampionship } from '../../../../lib/race-data';
 import { getTrackDetails } from '../../../../lib/track-data';
+import { calculateStandings } from '../../../../lib/standings';
+import { Championship } from '../../../../types/race';
 import BackButton from '../../../../components/BackButton';
 import FlagIcon from '../../../../components/FlagIcon';
 
@@ -33,6 +35,24 @@ export default async function SeasonPage({ params }: { params: Promise<{ champId
     const filename = session.filename.split('/').pop() || '';
     return filename.includes('session_race');
   }).length;
+
+  // Check if season is completed and get champion
+  const isCompleted = completedRaces === data.rounds.length;
+  let champion: string | null = null;
+
+  if (isCompleted && sessions.length > 0) {
+    // Create a temporary Championship object for this season only
+    const seasonChampionship: Championship = {
+      id: 'temp',
+      data: season.data,
+      folderName: 'temp',
+      sessions: season.sessions,
+      seasons: [season],
+    };
+
+    const standings = calculateStandings(seasonChampionship);
+    champion = standings.length > 0 ? standings[0].name : null;
+  }
 
   // Match rounds with sessions based on track name and session type
   const roundsWithSessions = data.rounds.map((round, index) => {
@@ -99,7 +119,7 @@ export default async function SeasonPage({ params }: { params: Promise<{ champId
                   All Seasons
                 </Link>
                 <Link
-                  href={`/championship/${encodeURIComponent(decodedChampId)}/standings`}
+                  href={`/championship/${encodeURIComponent(decodedChampId)}/season/${encodeURIComponent(decodedSeasonId)}/standings`}
                   className="px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-amber-500/20 flex items-center gap-2"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -108,7 +128,7 @@ export default async function SeasonPage({ params }: { params: Promise<{ champId
                   Driver Standings
                 </Link>
                 <Link
-                  href={`/championship/${encodeURIComponent(decodedChampId)}/constructors`}
+                  href={`/championship/${encodeURIComponent(decodedChampId)}/season/${encodeURIComponent(decodedSeasonId)}/constructors`}
                   className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-blue-500/20 flex items-center gap-2"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -123,9 +143,10 @@ export default async function SeasonPage({ params }: { params: Promise<{ champId
             </h1>
             <div className="text-xl text-green-400 mb-4">
               {season.seasonName}
+              {isCompleted && <span className="ml-2 text-sm text-green-400">• Completed</span>}
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm items-center">
               <div>
                 <span className="text-zinc-500 block mb-1">Total Rounds</span>
                 <span className="text-white font-medium">{data.rounds.length}</span>
@@ -142,6 +163,23 @@ export default async function SeasonPage({ params }: { params: Promise<{ champId
                 <span className="text-zinc-500 block mb-1">Qualifying</span>
                 <span className="text-white font-medium">{data.rules.qualifying} min</span>
               </div>
+              {isCompleted && champion && (
+                <div className="col-span-2 md:col-span-1">
+                  <div className="flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2">
+                    <Image
+                      src="/trophy.svg"
+                      alt="Champion"
+                      width={24}
+                      height={24}
+                      className="drop-shadow-lg"
+                    />
+                    <div className="text-sm">
+                      <div className="text-yellow-500 font-semibold">{champion}</div>
+                      <div className="text-yellow-400/70 text-xs">Champion</div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

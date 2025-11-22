@@ -1,7 +1,27 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import Image from 'next/image';
 import { getChampionship } from '../../../lib/race-data';
+import { calculateStandings } from '../../../lib/standings';
+import { Championship, Season } from '../../../types/race';
 import BackButton from '../../../components/BackButton';
+
+// Helper function to calculate the champion for a specific season
+function getSeasonChampion(season: Season): string | null {
+  if (season.sessions.length === 0) return null;
+
+  // Create a temporary Championship object for this season only
+  const seasonChampionship: Championship = {
+    id: 'temp',
+    data: season.data,
+    folderName: 'temp',
+    sessions: season.sessions,
+    seasons: [season],
+  };
+
+  const standings = calculateStandings(seasonChampionship);
+  return standings.length > 0 ? standings[0].name : null;
+}
 
 export default async function SeasonsPage({ params }: { params: Promise<{ champId: string }> }) {
   const { champId } = await params;
@@ -45,6 +65,12 @@ export default async function SeasonsPage({ params }: { params: Promise<{ champI
               return filename.includes('session_race');
             }).length;
 
+            // Check if season is completed
+            const isCompleted = completedRaces === season.data.rounds.length;
+
+            // Get champion name if season is completed
+            const champion = isCompleted ? getSeasonChampion(season) : null;
+
             // Create season ID from season name (e.g., "Season 01" -> "season_01")
             const seasonId = season.seasonName.toLowerCase().replace(' ', '_');
 
@@ -54,13 +80,31 @@ export default async function SeasonsPage({ params }: { params: Promise<{ champI
                 href={`/championship/${encodeURIComponent(decodedChampId)}/season/${seasonId}`}
                 className="group block bg-zinc-800/50 border border-zinc-700 rounded-lg p-6 transition-all hover:bg-zinc-800 hover:border-green-600 hover:shadow-lg hover:shadow-green-500/10"
               >
-                <div className="mb-4">
-                  <h2 className="text-2xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">
-                    {season.seasonName}
-                  </h2>
-                  <div className="text-sm text-zinc-400">
-                    Season {season.seasonNumber}
+                <div className="flex justify-between items-start gap-4">
+                  <div className="flex-1 mb-4">
+                    <h2 className="text-2xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">
+                      {season.seasonName}
+                    </h2>
+                    <div className="text-sm text-zinc-400">
+                      Season {season.seasonNumber}
+                    </div>
                   </div>
+
+                  {isCompleted && champion && (
+                    <div className="flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2">
+                      <Image
+                        src="/trophy.svg"
+                        alt="Champion"
+                        width={24}
+                        height={24}
+                        className="drop-shadow-lg"
+                      />
+                      <div className="text-sm">
+                        <div className="text-yellow-500 font-semibold">{champion}</div>
+                        <div className="text-yellow-400/70 text-xs">Champion</div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-3">
