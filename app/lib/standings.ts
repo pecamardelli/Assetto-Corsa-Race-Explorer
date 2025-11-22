@@ -131,18 +131,38 @@ export function calculateAllTimeStats(
     });
   });
 
-  // Count championship wins
+  // Count championship wins - only for completed seasons
   championships.forEach((championship) => {
-    if (championship.sessions.length === 0) return;
+    championship.seasons.forEach((season) => {
+      if (season.sessions.length === 0) return;
 
-    const standings = calculateStandings(championship);
-    if (standings.length > 0) {
-      const winner = standings[0];
-      const driverStats = statsMap.get(winner.name);
-      if (driverStats) {
-        driverStats.championshipsWon++;
+      // Count completed race sessions
+      const completedRaces = season.sessions.filter(session => {
+        const filename = session.filename.split('/').pop() || '';
+        return filename.includes('session_race');
+      }).length;
+
+      // Only count this season if it's completed (all rounds have been raced)
+      if (completedRaces !== season.data.rounds.length) return;
+
+      // Create a temporary Championship object for this completed season
+      const seasonChampionship: Championship = {
+        id: championship.id,
+        data: season.data,
+        folderName: championship.folderName,
+        sessions: season.sessions,
+        seasons: [season],
+      };
+
+      const standings = calculateStandings(seasonChampionship);
+      if (standings.length > 0) {
+        const winner = standings[0];
+        const driverStats = statsMap.get(winner.name);
+        if (driverStats) {
+          driverStats.championshipsWon++;
+        }
       }
-    }
+    });
   });
 
   // Convert to array and sort by total points first, then wins, then podium finishes
