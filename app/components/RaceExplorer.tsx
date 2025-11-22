@@ -12,23 +12,13 @@ interface RaceExplorerProps {
 type ViewMode = 'quick_race' | 'championship';
 
 export default function RaceExplorer({ quickRaces, championships }: RaceExplorerProps) {
-  const [viewMode, setViewMode] = useState<ViewMode>('quick_race');
+  const [viewMode, setViewMode] = useState<ViewMode>('championship');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Toggle Buttons */}
         <div className="mb-8 flex flex-wrap gap-4">
-          <button
-            onClick={() => setViewMode('quick_race')}
-            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-              viewMode === 'quick_race'
-                ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
-                : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white'
-            }`}
-          >
-            Quick Race
-          </button>
           <button
             onClick={() => setViewMode('championship')}
             className={`px-6 py-3 rounded-lg font-semibold transition-all ${
@@ -38,6 +28,16 @@ export default function RaceExplorer({ quickRaces, championships }: RaceExplorer
             }`}
           >
             Championship
+          </button>
+          <button
+            onClick={() => setViewMode('quick_race')}
+            className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+              viewMode === 'quick_race'
+                ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
+                : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white'
+            }`}
+          >
+            Quick Race
           </button>
           <Link
             href="/drivers"
