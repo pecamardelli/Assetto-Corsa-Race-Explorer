@@ -4,14 +4,22 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { RaceSession, Championship } from '../types/race';
 
+interface ChampionshipStats {
+  currentChampion: string;
+  currentConstructorChampion: string;
+  totalChampions: number;
+  totalRaceWinners: number;
+}
+
 interface RaceExplorerProps {
   quickRaces: RaceSession[];
   championships: Championship[];
+  championshipStats: Map<string, ChampionshipStats>;
 }
 
 type ViewMode = 'quick_race' | 'championship';
 
-export default function RaceExplorer({ quickRaces, championships }: RaceExplorerProps) {
+export default function RaceExplorer({ quickRaces, championships, championshipStats }: RaceExplorerProps) {
   const [viewMode, setViewMode] = useState<ViewMode>('championship');
 
   return (
@@ -128,11 +136,34 @@ export default function RaceExplorer({ quickRaces, championships }: RaceExplorer
               </div>
             ) : (
               championships.map((championship) => {
+                // Total seasons
+                const totalSeasons = championship.seasons.length;
+
+                // Calculate total tracks across all seasons (unique tracks)
+                const allTracks = new Set<string>();
+                championship.seasons.forEach(season => {
+                  season.data.rounds.forEach(round => {
+                    allTracks.add(round.track);
+                  });
+                });
+                const totalTracks = allTracks.size;
+
+                // Total drivers (opponents)
+                const totalDrivers = championship.data.opponents.length;
+
                 // Count only race sessions (not practice or qualifying)
-                const completedRaces = championship.sessions.filter(session => {
+                const totalRaces = championship.sessions.filter(session => {
                   const filename = session.filename.split('/').pop() || '';
                   return filename.includes('session_race');
                 }).length;
+
+                // Get pre-calculated stats
+                const stats = championshipStats.get(championship.id) || {
+                  currentChampion: '-',
+                  currentConstructorChampion: '-',
+                  totalChampions: 0,
+                  totalRaceWinners: 0,
+                };
 
                 return (
                   <Link
@@ -146,11 +177,13 @@ export default function RaceExplorer({ quickRaces, championships }: RaceExplorer
                           {championship.data.name}
                         </h2>
                         <div className="flex flex-wrap gap-4 text-sm text-zinc-400">
-                          <span>{championship.data.rounds.length} rounds</span>
+                          <span>{totalSeasons} {totalSeasons === 1 ? 'season' : 'seasons'}</span>
                           <span>•</span>
-                          <span>{championship.data.opponents.length} drivers</span>
+                          <span>{totalTracks} {totalTracks === 1 ? 'track' : 'tracks'}</span>
                           <span>•</span>
-                          <span>{completedRaces} completed</span>
+                          <span>{totalDrivers} {totalDrivers === 1 ? 'driver' : 'drivers'}</span>
+                          <span>•</span>
+                          <span>{totalRaces} {totalRaces === 1 ? 'race' : 'races'}</span>
                         </div>
                     </div>
                     <div className="text-zinc-500 group-hover:text-amber-400 transition-colors">
@@ -163,20 +196,20 @@ export default function RaceExplorer({ quickRaces, championships }: RaceExplorer
                   {/* Championship Info Grid */}
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="bg-zinc-900/50 rounded-lg p-4">
-                      <div className="text-zinc-500 text-xs mb-1">Qualifying</div>
-                      <div className="text-white font-semibold">{championship.data.rules.qualifying} min</div>
+                      <div className="text-zinc-500 text-xs mb-1">Current Champion</div>
+                      <div className="text-white font-semibold truncate">{stats.currentChampion}</div>
                     </div>
                     <div className="bg-zinc-900/50 rounded-lg p-4">
-                      <div className="text-zinc-500 text-xs mb-1">Practice</div>
-                      <div className="text-white font-semibold">{championship.data.rules.practice} min</div>
+                      <div className="text-zinc-500 text-xs mb-1">Constructor Champion</div>
+                      <div className="text-white font-semibold truncate">{stats.currentConstructorChampion}</div>
                     </div>
                     <div className="bg-zinc-900/50 rounded-lg p-4">
-                      <div className="text-zinc-500 text-xs mb-1">Max Cars</div>
-                      <div className="text-white font-semibold">{championship.data.maxCars}</div>
+                      <div className="text-zinc-500 text-xs mb-1">Total Champions</div>
+                      <div className="text-white font-semibold">{stats.totalChampions}</div>
                     </div>
                     <div className="bg-zinc-900/50 rounded-lg p-4">
-                      <div className="text-zinc-500 text-xs mb-1">Penalties</div>
-                      <div className="text-white font-semibold">{championship.data.rules.penalties ? 'Yes' : 'No'}</div>
+                      <div className="text-zinc-500 text-xs mb-1">Race Winners</div>
+                      <div className="text-white font-semibold">{stats.totalRaceWinners}</div>
                     </div>
                   </div>
                 </Link>
