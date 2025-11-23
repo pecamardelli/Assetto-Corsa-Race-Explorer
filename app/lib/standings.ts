@@ -109,8 +109,10 @@ export function calculateAllTimeStats(
       if (position === 3) driverStats.thirdPlaces++;
       if (position <= 3) driverStats.podiums++;
 
-      // Track abandons (didn't complete the race)
-      if (raceLaps > 0 && lapsCompleted < raceLaps && position > 3) {
+      // Track abandons (retired from the race)
+      // Use the retired flag from the data if available, otherwise fall back to old logic
+      const retired = stats.retired !== undefined ? stats.retired : false;
+      if (retired) {
         driverStats.abandons++;
       }
 

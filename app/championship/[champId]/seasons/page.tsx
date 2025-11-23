@@ -42,10 +42,21 @@ export default async function SeasonsPage({ params }: { params: Promise<{ champI
           <BackButton fallbackUrl={`/championship/${encodeURIComponent(decodedChampId)}`}>Back to Championship</BackButton>
 
           <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6 mb-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-semibold px-2 py-1 rounded bg-green-500/20 text-green-400 uppercase">
-                Seasons
-              </span>
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold px-2 py-1 rounded bg-green-500/20 text-green-400 uppercase">
+                  Seasons
+                </span>
+              </div>
+              <Link
+                href={`/championship/${encodeURIComponent(decodedChampId)}/all-time`}
+                className="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-purple-500/20 flex items-center gap-2"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                All-Time Standings
+              </Link>
             </div>
             <h1 className="text-4xl font-bold text-white mb-2">
               {data.name}

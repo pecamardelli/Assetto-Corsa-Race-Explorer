@@ -43,6 +43,11 @@ CRASH_G_FORCE_THRESHOLD = 4.0
 CRASH_PENALTY_PERCENT_PER_G = 0.01        # 0.01% penalty per G-force (0.1% per 10G)
 MAX_CRASH_PENALTY_PER_CRASH = 100.0       # Cap each crash at 100G (1% max penalty per crash)
 
+# Retirement detection parameters
+RETIREMENT_STATIONARY_THRESHOLD = 30.0    # Seconds of being stationary to consider retired
+RETIREMENT_VELOCITY_THRESHOLD = 0.5       # m/s - below this is considered stationary
+RETIREMENT_MIN_DISTANCE_THRESHOLD = 10.0  # meters - minimum distance progress in check interval
+
 class CarStats:
     def __init__(self, car_id, driver_name, car_name):
         self.car_id = car_id
@@ -60,6 +65,11 @@ class CarStats:
         self.final_position = 999  # Final race position (999 = DNF/not finished)
         self.last_spline_pos = 0.0
         self.last_update_time = 0.0
+        # Retirement detection
+        self.retired = False
+        self.stationary_time = 0.0  # Time spent stationary
+        self.last_distance_check = 0.0  # Last recorded distance for retirement check
+        self.last_distance_check_time = 0.0  # Time of last distance check
 
     def to_dict(self, position=0, total_cars=1, track_length_m=0, race_laps=1, best_lap_time=0.0, has_fastest_lap=False):
         # Calculate total_time as sum of all completed lap times (convert ms to seconds)
@@ -159,7 +169,8 @@ class CarStats:
                 'average_crash_g': round(sum(self.crash_intensities) / len(self.crash_intensities), 2) if self.crash_intensities else 0.0,
                 'total_crash_intensity': round(sum(self.crash_intensities), 2)
             },
-            'net_positions_gained': self.overtakes_made - self.times_overtaken
+            'net_positions_gained': self.overtakes_made - self.times_overtaken,
+            'retired': self.retired
         }
 
 
@@ -416,6 +427,50 @@ def acUpdate(deltaT):
                     stats.distance_covered += distance_this_frame
 
             stats.last_spline_pos = current_spline
+
+            # Retirement detection
+            # Only check for retirement during race (not practice/qualifying) and if driver has completed at least 1 lap
+            if current_lap_count > 0 and not stats.retired:
+                try:
+                    # Get current velocity
+                    velocity = ac.getCarState(car_id, acsys.CS.SpeedMS)  # Speed in m/s
+
+                    # Check if car is stationary
+                    if velocity < RETIREMENT_VELOCITY_THRESHOLD:
+                        stats.stationary_time += deltaT
+
+                        # If stationary for too long, mark as retired
+                        if stats.stationary_time >= RETIREMENT_STATIONARY_THRESHOLD:
+                            if not stats.retired:
+                                stats.retired = True
+                                ac.log("Race Stats: {0} RETIRED (stationary for {1:.1f}s)".format(
+                                    stats.driver_name, stats.stationary_time))
+                    else:
+                        # Car is moving, reset stationary timer
+                        stats.stationary_time = 0.0
+
+                    # Additional check: distance progress over time
+                    # Check every 10 seconds if driver is making progress
+                    if stats.last_distance_check_time == 0.0:
+                        stats.last_distance_check_time = session_total_time
+                        stats.last_distance_check = stats.distance_covered
+                    elif (session_total_time - stats.last_distance_check_time) >= 10.0:
+                        distance_progress = stats.distance_covered - stats.last_distance_check
+
+                        # If distance progress is too small, might be retired
+                        if distance_progress < RETIREMENT_MIN_DISTANCE_THRESHOLD:
+                            if not stats.retired:
+                                stats.retired = True
+                                ac.log("Race Stats: {0} RETIRED (insufficient progress: {1:.1f}m in 10s)".format(
+                                    stats.driver_name, distance_progress))
+
+                        # Reset for next check
+                        stats.last_distance_check_time = session_total_time
+                        stats.last_distance_check = stats.distance_covered
+
+                except:
+                    # Velocity or other data might not be available
+                    pass
 
             # Crash detection using G-forces
             try:

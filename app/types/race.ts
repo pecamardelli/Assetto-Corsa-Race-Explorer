@@ -36,6 +36,7 @@ export interface DriverStatistics {
   position?: number;
   nation?: string;
   car?: string;
+  retired?: boolean;
 }
 
 export interface CrashPenaltyConfig {
