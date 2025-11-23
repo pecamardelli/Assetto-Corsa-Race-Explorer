@@ -14,6 +14,7 @@ const countryCodeMap: Record<string, string> = {
   'BRA': 'BR', // Brazil
   'CHN': 'CN', // China
   'CRO': 'HR', // Croatia
+  'HRV': 'HR', // Croatia (alternative code)
   'CZE': 'CZ', // Czech Republic
   'DEU': 'DE', // Germany
   'DNK': 'DK', // Denmark
@@ -21,11 +22,13 @@ const countryCodeMap: Record<string, string> = {
   'FRA': 'FR', // France
   'GBR': 'GB', // Great Britain
   'IRA': 'IR', // Iran
+  'IRE': 'IE', // Ireland (alternative code)
   'IRL': 'IE', // Ireland
   'ITA': 'IT', // Italy
   'JPN': 'JP', // Japan
   'KEN': 'KE', // Kenya
   'MEX': 'MX', // Mexico
+  'PAN': 'PA', // Panama
   'POL': 'PL', // Poland
   'ROU': 'RO', // Romania
   'RUS': 'RU', // Russia
@@ -35,6 +38,7 @@ const countryCodeMap: Record<string, string> = {
   'UAE': 'AE', // United Arab Emirates
   'UKR': 'UA', // Ukraine
   'USA': 'US', // United States
+  'VEN': 'VE', // Venezuela
   'UN': 'UN',  // Unknown
   // Full country names
   'ITALY': 'IT',
