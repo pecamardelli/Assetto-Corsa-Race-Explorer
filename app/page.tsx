@@ -65,18 +65,27 @@ export default async function Home() {
     // Calculate total unique champions across all seasons
     const allChampions = new Set<string>();
     championship.seasons.forEach(season => {
-      if (season.sessions.length > 0) {
-        const seasonChampionship: Championship = {
-          id: championship.id,
-          data: season.data,
-          folderName: championship.folderName,
-          sessions: season.sessions,
-          seasons: [season],
-        };
-        const standings = calculateStandings(seasonChampionship);
-        if (standings.length > 0) {
-          allChampions.add(standings[0].name);
-        }
+      if (season.sessions.length === 0) return;
+
+      // Count completed race sessions
+      const completedRaces = season.sessions.filter(session => {
+        const filename = session.filename.split('/').pop() || '';
+        return filename.includes('session_race');
+      }).length;
+
+      // Only count champions from completed seasons (all rounds have been raced)
+      if (completedRaces !== season.data.rounds.length) return;
+
+      const seasonChampionship: Championship = {
+        id: championship.id,
+        data: season.data,
+        folderName: championship.folderName,
+        sessions: season.sessions,
+        seasons: [season],
+      };
+      const standings = calculateStandings(seasonChampionship);
+      if (standings.length > 0) {
+        allChampions.add(standings[0].name);
       }
     });
     const totalChampions = allChampions.size;

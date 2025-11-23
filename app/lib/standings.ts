@@ -52,7 +52,9 @@ export function calculateAllTimeStats(
   sessions.forEach((session) => {
     const drivers = session.data.driver_statistics;
     const sessionInfo = session.data.session_info;
-    const sessionType = sessionInfo.session_type;
+    const filename = session.filename.split('/').pop() || '';
+    const isQualifying = filename.includes('session_qualifying');
+    const isRace = filename.includes('session_race');
 
     // Find the fastest lap in this session
     let fastestLapTime = Infinity;
@@ -67,7 +69,7 @@ export function calculateAllTimeStats(
     });
 
     // Award pole position for qualifying sessions
-    if (sessionType === 'qualifying' && fastestDriverName) {
+    if (isQualifying && fastestDriverName) {
       const driverStats = statsMap.get(fastestDriverName);
       if (driverStats) {
         driverStats.poles++;
@@ -112,9 +114,8 @@ export function calculateAllTimeStats(
         driverStats.abandons++;
       }
 
-      // Track fastest laps (for race sessions and quick races)
-      // Quick races don't have session_type, or it's not 'practice' or 'qualifying'
-      if (driverName === fastestDriverName && sessionType !== 'practice' && sessionType !== 'qualifying') {
+      // Track fastest laps (for race sessions only, not practice or qualifying)
+      if (driverName === fastestDriverName && isRace) {
         driverStats.fastestLaps++;
       }
 
@@ -122,7 +123,7 @@ export function calculateAllTimeStats(
       driverStats.totalCrashes += crashes;
 
       // Add custom points only for race sessions
-      if (sessionType === 'race') {
+      if (isRace) {
         const totalScore = safeNumber(stats.total_score, 0);
         driverStats.totalPoints += totalScore;
       }
@@ -214,7 +215,10 @@ export function calculateStandings(championship: Championship): DriverStanding[]
 
   // Process qualifying sessions for pole positions
   sessions
-    .filter((session) => session.data.session_info.session_type === 'qualifying')
+    .filter((session) => {
+      const filename = session.filename.split('/').pop() || '';
+      return filename.includes('session_qualifying');
+    })
     .forEach((session) => {
       const drivers = session.data.driver_statistics;
 
@@ -239,7 +243,10 @@ export function calculateStandings(championship: Championship): DriverStanding[]
 
   // Process race sessions for points, wins, podiums, and fastest laps
   sessions
-    .filter((session) => session.data.session_info.session_type === 'race')
+    .filter((session) => {
+      const filename = session.filename.split('/').pop() || '';
+      return filename.includes('session_race');
+    })
     .forEach((session) => {
       const drivers = session.data.driver_statistics;
 
@@ -303,7 +310,10 @@ export function calculateConstructorStandings(championship: Championship): Const
 
   // Process qualifying sessions for pole positions
   sessions
-    .filter((session) => session.data.session_info.session_type === 'qualifying')
+    .filter((session) => {
+      const filename = session.filename.split('/').pop() || '';
+      return filename.includes('session_qualifying');
+    })
     .forEach((session) => {
       const drivers = session.data.driver_statistics;
 
@@ -352,7 +362,10 @@ export function calculateConstructorStandings(championship: Championship): Const
 
   // Process race sessions for points, wins, podiums, and fastest laps
   sessions
-    .filter((session) => session.data.session_info.session_type === 'race')
+    .filter((session) => {
+      const filename = session.filename.split('/').pop() || '';
+      return filename.includes('session_race');
+    })
     .forEach((session) => {
       const drivers = session.data.driver_statistics;
 

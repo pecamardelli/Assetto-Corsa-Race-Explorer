@@ -38,7 +38,10 @@ export default async function SeasonConstructorsPage({ params }: { params: Promi
   const { data } = season;
 
   // Count only race sessions
-  const completedRaces = season.sessions.filter(s => s.data.session_info.session_type === 'race').length;
+  const completedRaces = season.sessions.filter(s => {
+    const filename = s.filename.split('/').pop() || '';
+    return filename.includes('session_race');
+  }).length;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
