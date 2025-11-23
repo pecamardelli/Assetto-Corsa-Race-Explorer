@@ -30,13 +30,30 @@ export function formatCarName(carId: string | undefined): string {
 export function getSortedDrivers(driverStats: Record<string, any>) {
   if (!driverStats) return [];
 
-  return Object.entries(driverStats)
+  const drivers = Object.entries(driverStats)
     .map(([name, stats]) => ({
       name,
       position: stats?.position ?? 999,
       ...stats
-    }))
-    .sort((a, b) => a.position - b.position);
+    }));
+
+  // Separate finished drivers from DNFs
+  const finishedDrivers = drivers.filter(d => !d.retired);
+  const dnfDrivers = drivers.filter(d => d.retired);
+
+  // Sort finished drivers by position
+  finishedDrivers.sort((a, b) => a.position - b.position);
+
+  // Sort DNF drivers by score (descending), then by position as tiebreaker
+  dnfDrivers.sort((a, b) => {
+    const scoreA = safeNumber(a.total_score, 0);
+    const scoreB = safeNumber(b.total_score, 0);
+    if (scoreB !== scoreA) return scoreB - scoreA;
+    return a.position - b.position;
+  });
+
+  // Return finished drivers first, then DNFs
+  return [...finishedDrivers, ...dnfDrivers];
 }
 
 export function safeNumber(value: any, defaultValue: number = 0): number {

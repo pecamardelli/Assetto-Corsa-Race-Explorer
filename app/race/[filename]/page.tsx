@@ -221,7 +221,9 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                       <tr
                         key={driver.name}
                         className={`hover:bg-zinc-800/80 transition-colors ${
-                          isWinner ? 'bg-amber-500/5' : isPodium ? 'bg-zinc-700/20' : ''
+                          isRetired ? 'bg-red-900/10' :
+                          isWinner ? 'bg-amber-500/5' :
+                          isPodium ? 'bg-zinc-700/20' : ''
                         }`}
                       >
                         <td className="px-4 py-4 whitespace-nowrap">
@@ -229,9 +231,10 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                             isWinner ? 'bg-amber-500 text-zinc-900' :
                             index === 1 ? 'bg-zinc-400 text-zinc-900' :
                             index === 2 ? 'bg-amber-700 text-white' :
+                            isRetired ? 'bg-red-900/50 text-red-400' :
                             'bg-zinc-700 text-white'
                           }`}>
-                            {safeNumber(driver.position, index + 1)}
+                            {index + 1}
                           </span>
                         </td>
                         <td className="px-4 py-4">
