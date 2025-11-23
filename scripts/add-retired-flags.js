@@ -43,6 +43,13 @@ function findJsonFiles(dir, fileList = []) {
 
 /**
  * Determine if a driver retired based on their statistics
+ *
+ * A driver is considered retired if they stopped mid-race, not if they were just slow or lapped.
+ *
+ * Criteria for retirement:
+ * 1. Completed less than 50% of race laps AND partial lap < 0.5 (stopped early)
+ * 2. OR: Partial lap < 0.1 AND completed at least 1 lap but not all laps (stopped at/near start/finish)
+ * 3. OR: Distance ratio < 0.85 AND partial lap < 0.5 (stopped mid-lap with insufficient progress)
  */
 function isRetired(stats, raceLaps, trackLengthKm) {
   const laps = stats.laps_completed || 0;
@@ -65,8 +72,28 @@ function isRetired(stats, raceLaps, trackLengthKm) {
   // Calculate ratio of actual to expected distance
   const ratio = actualKm / expectedKm;
 
-  // Driver retired if they covered significantly less distance than expected
-  return ratio < RETIREMENT_RATIO_THRESHOLD;
+  // Criterion 1: Completed very few laps and stopped mid-lap
+  // (less than half race distance and not near finish line of current lap)
+  if (laps < raceLaps / 2 && partial < 0.5) {
+    return true;
+  }
+
+  // Criterion 2: Stopped at or very near start/finish line (not at end of lap)
+  // This catches drivers who stopped after completing some laps
+  if (laps > 0 && laps < raceLaps && partial < 0.1) {
+    return true;
+  }
+
+  // Criterion 3: Significantly less distance AND stopped mid-lap
+  // This catches drivers who went off track and stopped
+  // But only if they're not near the finish (partial < 0.5)
+  if (ratio < RETIREMENT_RATIO_THRESHOLD && partial < 0.5) {
+    return true;
+  }
+
+  // If driver has high partial lap completion (>0.9), they were likely lapped, not retired
+  // Even if their distance ratio is low due to going off track
+  return false;
 }
 
 /**
@@ -95,15 +122,15 @@ function processRaceFile(filePath) {
 
     // Process each driver
     for (const [driverName, stats] of Object.entries(data.driver_statistics)) {
-      // Check if retired flag already exists
-      if (stats.hasOwnProperty('retired')) {
-        continue; // Skip if already has the flag
+      // Determine retirement status (always recalculate to update with new logic)
+      const retired = isRetired(stats, raceLaps, trackLengthKm);
+
+      // Only count as updated if value changed
+      if (stats.retired !== retired) {
+        updatedCount++;
       }
 
-      // Determine retirement status
-      const retired = isRetired(stats, raceLaps, trackLengthKm);
       stats.retired = retired;
-      updatedCount++;
 
       if (retired) {
         retiredCount++;

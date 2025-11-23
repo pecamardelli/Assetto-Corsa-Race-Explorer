@@ -198,16 +198,22 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                     // Calculate gap to winner for race mode
                     const driverLaps = safeNumber(driver.laps_completed, 0);
                     const driverTime = safeNumber(driver.total_time_seconds, 0);
+                    const isRetired = driver.retired === true;
                     let gapText = '';
                     if (!isPracticeOrQualifying && !isWinner) {
-                      const lapDiff = winnerLaps - driverLaps;
-                      if (lapDiff > 0) {
-                        // Driver is laps behind
-                        gapText = `+${lapDiff} ${lapDiff === 1 ? 'lap' : 'laps'}`;
-                      } else if (winnerTime > 0 && driverTime > 0) {
-                        // Same lap count, show time difference
-                        const timeDiff = driverTime - winnerTime;
-                        gapText = `+${timeDiff.toFixed(3)}s`;
+                      if (isRetired) {
+                        // Driver retired - Did Not Finish
+                        gapText = 'DNF';
+                      } else {
+                        const lapDiff = winnerLaps - driverLaps;
+                        if (lapDiff > 0) {
+                          // Driver is laps behind
+                          gapText = `+${lapDiff} ${lapDiff === 1 ? 'lap' : 'laps'}`;
+                        } else if (winnerTime > 0 && driverTime > 0) {
+                          // Same lap count, show time difference
+                          const timeDiff = driverTime - winnerTime;
+                          gapText = `+${timeDiff.toFixed(3)}s`;
+                        }
                       }
                     }
 
@@ -279,8 +285,10 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                             <td className="px-4 py-4 text-white font-mono hidden xl:table-cell">
                               {driver.total_time_formatted || '-'}
                             </td>
-                            <td className="px-4 py-4 text-zinc-400 font-mono hidden lg:table-cell">
-                              {isWinner ? '-' : gapText}
+                            <td className="px-4 py-4 font-mono hidden lg:table-cell">
+                              <span className={isRetired ? 'text-red-400 font-semibold' : 'text-zinc-400'}>
+                                {isWinner ? '-' : gapText}
+                              </span>
                             </td>
                           </>
                         )}
