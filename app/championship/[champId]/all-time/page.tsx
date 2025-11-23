@@ -269,15 +269,16 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
           const mostFastestLaps = driverStats.reduce((max, d) => Math.max(max, d.fastestLaps), 0);
           const fastestLapsDriver = driverStats.find(d => d.fastestLaps === mostFastestLaps);
 
-          const eligibleDrivers = driverStats.filter(d => d.totalRaces >= 3);
-          const cleanestDriver = (eligibleDrivers.length > 0 ? eligibleDrivers : driverStats)
+          // Find cleanest driver: best points/crashes ratio
+          // Drivers with 0 crashes get special handling (infinite ratio)
+          const cleanestDriver = driverStats
             .slice()
             .sort((a, b) => {
-              if (a.totalCrashes !== b.totalCrashes) return a.totalCrashes - b.totalCrashes;
-              if (b.totalRaces !== a.totalRaces) return b.totalRaces - a.totalRaces;
-              if (b.firstPlaces !== a.firstPlaces) return b.firstPlaces - a.firstPlaces;
-              if (b.podiums !== a.podiums) return b.podiums - a.podiums;
-              return a.name.localeCompare(b.name);
+              const ratioA = a.totalCrashes === 0 ? Infinity : a.totalPoints / a.totalCrashes;
+              const ratioB = b.totalCrashes === 0 ? Infinity : b.totalPoints / b.totalCrashes;
+              if (ratioB !== ratioA) return ratioB - ratioA;
+              // If ratios are equal, prefer higher points
+              return b.totalPoints - a.totalPoints;
             })[0];
 
           const mostChampionships = driverStats.reduce((max, d) => Math.max(max, d.championshipsWon), 0);
