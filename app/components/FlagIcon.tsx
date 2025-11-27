@@ -21,6 +21,7 @@ const countryCodeMap: Record<string, string> = {
   'ESP': 'ES', // Spain
   'FRA': 'FR', // France
   'GBR': 'GB', // Great Britain
+  'GEO': 'GE', // Georgia
   'IRA': 'IR', // Iran
   'IRE': 'IE', // Ireland (alternative code)
   'IRL': 'IE', // Ireland
