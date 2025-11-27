@@ -215,7 +215,7 @@ export default async function DriversPage() {
                         </td>
                         <td className="px-4 py-4 text-center">
                           <div className="font-bold text-lg text-blue-400">
-                            {driver.totalPoints}
+                            {driver.totalPoints.toLocaleString('de-DE')}
                           </div>
                         </td>
                       </tr>
