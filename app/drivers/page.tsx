@@ -51,15 +51,15 @@ export default async function DriversPage() {
               </div>
             </div>
             <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-              <h3 className="text-zinc-400 text-sm font-medium mb-2">Championships</h3>
+              <h3 className="text-zinc-400 text-sm font-medium mb-2">Race winners</h3>
               <div className="text-3xl font-bold text-white">
-                {championships.length}
+                {driverStats.filter(d => d.firstPlaces > 0).length}
               </div>
             </div>
             <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-              <h3 className="text-zinc-400 text-sm font-medium mb-2">Total Crashes</h3>
-              <div className="text-3xl font-bold text-red-400">
-                {driverStats.reduce((sum, d) => sum + d.totalCrashes, 0)}
+              <h3 className="text-zinc-400 text-sm font-medium mb-2">Champions</h3>
+              <div className="text-3xl font-bold text-amber-400">
+                {driverStats.filter(d => d.championshipsWon > 0).length}
               </div>
             </div>
           </div>
