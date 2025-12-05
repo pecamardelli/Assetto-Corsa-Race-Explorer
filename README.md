@@ -56,15 +56,22 @@ Place race result JSON files in the `app/data/quick_race/` directory.
 
 ### Championship Data
 
-Championships consist of two parts:
+Championships are organized by name and season:
 
-1. **Championship definition file**: `app/data/championship/[uuid].champ`
-   - Contains championship metadata (name, rules, opponents, rounds)
-   - JSON format
+**Directory structure**: `app/data/championship/[Championship Name]/`
 
-2. **Race result files**: `app/data/championship/[uuid]/[race-file].json`
-   - Place race results in a folder matching the championship UUID
+Each championship can have multiple seasons:
+
+1. **Season definition file**: `app/data/championship/[Championship Name]/season_[XX].champ`
+   - This is the `.champ` file from Assetto Corsa
+   - Found in: `Documents\Assetto Corsa\champ\[uuid].champ` (Assetto Corsa names these with a UUID)
+   - Copy and rename it to match your season number (e.g., `season_01.champ`, `season_02.champ`)
+   - Contains season metadata (name, rules, opponents, rounds) in JSON format
+
+2. **Race result files**: `app/data/championship/[Championship Name]/season_[XX]/[race-file].json`
+   - Place race results in a folder matching the season
    - Same format as quick race results
+   - Example: `app/data/championship/Campeonato Argentino/season_01/stats_ks_barcelona-layout_gp_session_race_20251204_230027.json`
 
 ### Race Result File Format
 
@@ -163,13 +170,23 @@ This script will recursively process all JSON files in the `app/data` directory 
 ```
 race-explorer/
 ├── app/
-│   ├── data/               # Race data files
-│   │   ├── quick_race/     # Quick race sessions
-│   │   └── championship/   # Championship data
-│   ├── lib/                # Utility functions
-│   ├── components/         # React components
-│   ├── race/               # Race detail pages
-│   ├── championship/       # Championship pages
-│   └── drivers/            # All-time standings
-└── scripts/                # Utility scripts
+│   ├── data/                           # Race data files
+│   │   ├── quick_race/                 # Quick race sessions
+│   │   ├── championship/               # Championship data
+│   │   │   └── [Championship Name]/    # Individual championships
+│   │   │       ├── season_01.champ     # Season definition
+│   │   │       ├── season_01/          # Season 1 race results
+│   │   │       ├── season_02.champ     # Season 2 definition
+│   │   │       └── season_02/          # Season 2 race results
+│   │   ├── cars/                       # Car metadata JSON files
+│   │   └── tracks/                     # Track metadata JSON files
+│   ├── lib/                            # Utility functions
+│   ├── components/                     # React components
+│   ├── race/                           # Race detail pages
+│   ├── championship/                   # Championship pages
+│   └── drivers/                        # All-time standings
+├── public/
+│   ├── badges/                         # Car badge images
+│   └── flags/                          # Regional flag SVGs
+└── scripts/                            # Utility scripts
 ```
