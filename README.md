@@ -32,10 +32,12 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 The `scripts/racestats.py` file is a custom Assetto Corsa app that automatically collects race data during gameplay.
 
 **Installation:**
+
 1. Copy `racestats.py` to: `Documents\Assetto Corsa\apps\python\racestats\racestats.py`
 2. Enable in Assetto Corsa: Settings > General > UI Modules > Check "Race Statistics"
 
 **Usage:**
+
 1. Run Assetto Corsa and start a race session
 2. App runs in background tracking all driver statistics
 3. On session end, JSON file auto-saves to: `Documents\Assetto Corsa\out\race_statistics\`
@@ -63,6 +65,7 @@ Championships are organized by name and season:
 Each championship can have multiple seasons:
 
 1. **Season definition file**: `app/data/championship/[Championship Name]/season_[XX].champ`
+
    - This is the `.champ` file from Assetto Corsa
    - Found in: `Documents\Assetto Corsa\champ\[uuid].champ` (Assetto Corsa names these with a UUID)
    - Copy and rename it to match your season number (e.g., `season_01.champ`, `season_02.champ`)
@@ -163,7 +166,7 @@ This script will recursively process all JSON files in the `app/data` directory 
 - **Framework**: Next.js 15 (App Router)
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS
-- **Deployment**: Vercel (recommended)
+- **Deployment**: Run locally or deploy to Vercel if you want
 
 ## Project Structure
 
