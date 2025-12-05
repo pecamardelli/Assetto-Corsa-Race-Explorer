@@ -1,0 +1,19 @@
+{
+  "name": "Ford Falcon 170 1962",
+  "brand": "Ford",
+  "description": "Argentinian model with 2.8L (170 cubic inch) inline-six engine<br>Manufactured by Ford Argentina (1962-1991)<br>Group E racing configuration<br>101 hp @ 4750 rpm, 185 Nm @ 2500 rpm<br><br>v1.1 by ACTK<br>Fix driver3d.ini<br>Update COCKPIT_HR<br>Add LODs<br>Add data to data.acd<br>Add main_geometry.vao-patch",
+  "class": "Group E",
+  "specs": {
+    "bhp": "101 hp",
+    "torque": "185 Nm",
+    "weight": "1170 kg",
+    "topspeed": "150 km/h",
+    "acceleration": "14s 0-100",
+    "pwratio": "11.7 kg/hp"
+  },
+  "country": "Australia",
+  "year": 1962,
+  "author": "BJ911",
+  "version": "1.1",
+  "url": null
+}

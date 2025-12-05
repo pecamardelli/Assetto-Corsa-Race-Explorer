@@ -2,6 +2,7 @@
 
 import * as FlagIcons from 'country-flag-icons/react/3x2';
 import { hasFlag } from 'country-flag-icons';
+import Image from 'next/image';
 
 interface FlagIconProps {
   nation: string;
@@ -33,7 +34,7 @@ const countryCodeMap: Record<string, string> = {
   'POL': 'PL', // Poland
   'ROU': 'RO', // Romania
   'RUS': 'RU', // Russia
-  'SCO': 'GB', // Scotland (use GB flag)
+  'SCO': 'GB-SCT', // Scotland
   'SWE': 'SE', // Sweden
   'TUR': 'TR', // Turkey
   'UAE': 'AE', // United Arab Emirates
@@ -48,8 +49,13 @@ const countryCodeMap: Record<string, string> = {
   'BELGIUM': 'BE',
   'NEW ZEALAND': 'NZ',
   'UNITED STATES': 'US',
+  'U.S.A.': 'US',
   'UNITED KINGDOM': 'GB',
+  'GREAT BRITAIN': 'GB',
+  'SCOTLAND': 'GB-SCT',
   'SPAIN': 'ES',
+  'AUSTRIA': 'AT',
+  'MONACO': 'MC',
 };
 
 export default function FlagIcon({ nation }: FlagIconProps) {
@@ -57,6 +63,22 @@ export default function FlagIcon({ nation }: FlagIconProps) {
 
   // Convert 3-letter code to 2-letter code
   const countryCode = countryCodeMap[nationUpper] || nationUpper;
+
+  // Handle regional UK flags (Scotland, England, Wales, Northern Ireland)
+  // These exist as SVG files but not as React components
+  const regionalFlags = ['GB-SCT', 'GB-ENG', 'GB-WLS', 'GB-NIR'];
+  if (regionalFlags.includes(countryCode)) {
+    return (
+      <div className="flex justify-center">
+        <img
+          src={`/flags/${countryCode}.svg`}
+          alt={nation}
+          title={nation}
+          className="h-6 rounded shadow-sm"
+        />
+      </div>
+    );
+  }
 
   // Check if flag exists for this country code
   if (!hasFlag(countryCode)) {

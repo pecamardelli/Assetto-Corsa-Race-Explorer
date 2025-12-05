@@ -28,7 +28,10 @@
       "Bash(mkdir:*)",
       "mcp__ide__getDiagnostics",
       "Bash(nul)",
-      "Bash(dir nul)"
+      "Bash(dir nul)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "WebSearch"
     ],
     "deny": [],
     "ask": []

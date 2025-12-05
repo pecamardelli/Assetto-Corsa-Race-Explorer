@@ -1,18 +1,24 @@
-const fs = require('fs');
-const path = require('path');
-const sharp = require('sharp');
+const fs = require("fs");
+const path = require("path");
+const sharp = require("sharp");
 
 // Path to Assetto Corsa installation
-const AC_PATH = 'C:\\GAMES\\Assetto Corsa';
-const carsSourceDir = path.join(AC_PATH, 'content', 'cars');
-const carsDestDir = path.join(__dirname, '..', 'app', 'data', 'cars');
-const badgesDir = path.join(__dirname, '..', 'public', 'badges');
+const AC_PATH = "C:\\GAMES\\Assetto Corsa";
+const carsSourceDir = path.join(AC_PATH, "content", "cars");
+const carsDestDir = path.join(__dirname, "..", "app", "data", "cars");
+const badgesDir = path.join(__dirname, "..", "public", "badges");
 
 // Maximum width for resizing badges
 const MAX_WIDTH = 1024;
 
 // Get championship directory to find all championships
-const championshipBaseDir = path.join(__dirname, '..', 'app', 'data', 'championship');
+const championshipBaseDir = path.join(
+  __dirname,
+  "..",
+  "app",
+  "data",
+  "championship"
+);
 
 // Create destination directories if they don't exist
 if (!fs.existsSync(carsDestDir)) {
@@ -29,8 +35,9 @@ if (!fs.existsSync(badgesDir)) {
 const carNames = new Set();
 
 // Get all championship folders
-const championshipFolders = fs.readdirSync(championshipBaseDir)
-  .filter(item => {
+const championshipFolders = fs
+  .readdirSync(championshipBaseDir)
+  .filter((item) => {
     const itemPath = path.join(championshipBaseDir, item);
     return fs.statSync(itemPath).isDirectory();
   });
@@ -39,56 +46,81 @@ console.log(`Found ${championshipFolders.length} championship folders`);
 
 let totalFiles = 0;
 
-// Scan each championship folder for JSON files
-championshipFolders.forEach(folder => {
+// Scan each championship folder for JSON files in season subfolders
+championshipFolders.forEach((folder) => {
   const championshipDir = path.join(championshipBaseDir, folder);
-  const files = fs.readdirSync(championshipDir)
-    .filter(file => file.endsWith('.json'));
 
-  totalFiles += files.length;
+  // Look for season_XX subfolders
+  const seasonFolders = fs
+    .readdirSync(championshipDir)
+    .filter((item) => {
+      const itemPath = path.join(championshipDir, item);
+      return fs.statSync(itemPath).isDirectory() && item.startsWith("season_");
+    });
 
-  console.log(`Scanning ${folder}: ${files.length} files`);
+  console.log(`Scanning ${folder}: ${seasonFolders.length} seasons`);
 
-  files.forEach(file => {
-    const filePath = path.join(championshipDir, file);
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  seasonFolders.forEach((seasonFolder) => {
+    const seasonDir = path.join(championshipDir, seasonFolder);
+    const files = fs
+      .readdirSync(seasonDir)
+      .filter((file) => file.endsWith(".json"));
 
-    if (data.driver_statistics) {
-      Object.values(data.driver_statistics).forEach(stats => {
-        if (stats.car_name) {
-          carNames.add(stats.car_name);
-        }
-      });
-    }
+    totalFiles += files.length;
+
+    console.log(`  ${seasonFolder}: ${files.length} race files`);
+
+    files.forEach((file) => {
+      const filePath = path.join(seasonDir, file);
+      const data = JSON.parse(fs.readFileSync(filePath, "utf8"));
+
+      if (data.driver_statistics) {
+        Object.values(data.driver_statistics).forEach((stats) => {
+          if (stats.car_name) {
+            carNames.add(stats.car_name);
+          }
+        });
+      }
+    });
   });
 });
 
 console.log(`\nScanned ${totalFiles} total championship files`);
 
 // Also scan championship .champ files for opponent cars
-const champFiles = fs.readdirSync(championshipBaseDir)
-  .filter(file => file.endsWith('.champ'));
+console.log(`\nScanning .champ files for cars...`);
 
-console.log(`Scanning ${champFiles.length} .champ files for cars...`);
+let champFileCount = 0;
 
-champFiles.forEach(file => {
-  const filePath = path.join(championshipBaseDir, file);
-  const fileContents = fs.readFileSync(filePath, 'utf8');
-  // Remove BOM if present
-  const cleanedContents = fileContents.replace(/^\uFEFF/, '');
-  const data = JSON.parse(cleanedContents);
+championshipFolders.forEach((folder) => {
+  const championshipDir = path.join(championshipBaseDir, folder);
+  const champFiles = fs
+    .readdirSync(championshipDir)
+    .filter((file) => file.endsWith(".champ"));
 
-  if (data.opponents) {
-    data.opponents.forEach(opponent => {
-      if (opponent.car) {
-        carNames.add(opponent.car);
-      }
-    });
-  }
+  champFileCount += champFiles.length;
+
+  champFiles.forEach((file) => {
+    const filePath = path.join(championshipDir, file);
+    const fileContents = fs.readFileSync(filePath, "utf8");
+    // Remove BOM if present
+    const cleanedContents = fileContents.replace(/^\uFEFF/, "");
+    const data = JSON.parse(cleanedContents);
+
+    if (data.opponents) {
+      data.opponents.forEach((opponent) => {
+        if (opponent.car) {
+          carNames.add(opponent.car);
+        }
+      });
+    }
+  });
 });
 
+console.log(`Scanned ${champFileCount} .champ files`);
+
 console.log(`\nFound ${carNames.size} unique cars`);
-console.log('\nCopying car data and badges...');
+console.log("\nCopying car data and badges...");
 
 let carDataCopied = 0;
 let carDataSkipped = 0;
@@ -100,19 +132,19 @@ let badgesResized = 0;
 
 // Helper function to clean JSON with control characters
 function parseCarJson(filePath) {
-  let content = fs.readFileSync(filePath, 'utf8');
+  let content = fs.readFileSync(filePath, "utf8");
 
   // Remove BOM if present
-  content = content.replace(/^\uFEFF/, '');
+  content = content.replace(/^\uFEFF/, "");
 
   // Replace unescaped control characters (tabs, newlines, carriage returns)
   // that appear in string values with escaped versions
   // This regex finds control characters within JSON strings
   content = content.replace(/("(?:[^"\\]|\\.)*")/g, (match) => {
     return match
-      .replace(/\t/g, '\\t')
-      .replace(/\r/g, '\\r')
-      .replace(/\n/g, '\\n');
+      .replace(/\t/g, "\\t")
+      .replace(/\r/g, "\\r")
+      .replace(/\n/g, "\\n");
   });
 
   return JSON.parse(content);
@@ -120,9 +152,14 @@ function parseCarJson(filePath) {
 
 async function processCars() {
   for (const carName of carNames) {
-    const uiCarJsonPath = path.join(carsSourceDir, carName, 'ui', 'ui_car.json');
+    const uiCarJsonPath = path.join(
+      carsSourceDir,
+      carName,
+      "ui",
+      "ui_car.json"
+    );
     const carDataDestPath = path.join(carsDestDir, `${carName}.json`);
-    const badgePath = path.join(carsSourceDir, carName, 'ui', 'badge.png');
+    const badgePath = path.join(carsSourceDir, carName, "ui", "badge.png");
     const badgeDestPath = path.join(badgesDir, `${carName}.png`);
 
     // Copy car data
@@ -142,7 +179,11 @@ async function processCars() {
         delete carData.tags;
 
         // Write to destination
-        fs.writeFileSync(carDataDestPath, JSON.stringify(carData, null, 2), 'utf8');
+        fs.writeFileSync(
+          carDataDestPath,
+          JSON.stringify(carData, null, 2),
+          "utf8"
+        );
         console.log(`✓ Car data copied: ${carName}.json`);
         carDataCopied++;
       } catch (error) {
@@ -168,10 +209,12 @@ async function processCars() {
           await sharp(badgePath)
             .resize(MAX_WIDTH, null, {
               withoutEnlargement: true,
-              fit: 'inside'
+              fit: "inside",
             })
             .toFile(badgeDestPath);
-          console.log(`✓ Badge copied and resized: ${carName}.png (${metadata.width}px → ${MAX_WIDTH}px)`);
+          console.log(
+            `✓ Badge copied and resized: ${carName}.png (${metadata.width}px → ${MAX_WIDTH}px)`
+          );
           badgesResized++;
         } else {
           // Copy as-is if smaller than or equal to MAX_WIDTH
@@ -190,20 +233,22 @@ async function processCars() {
   }
 }
 
-processCars().then(() => {
-  console.log(`\n✅ Done!`);
-  console.log(`\nCar Data:`);
-  console.log(`  Copied: ${carDataCopied}`);
-  console.log(`  Skipped: ${carDataSkipped}`);
-  console.log(`  Not found/Error: ${carDataNotFound}`);
-  console.log(`\nBadges:`);
-  console.log(`  Copied: ${badgesCopied}`);
-  console.log(`    - Resized: ${badgesResized}`);
-  console.log(`    - As-is: ${badgesCopied - badgesResized}`);
-  console.log(`  Skipped: ${badgesSkipped}`);
-  console.log(`  Not found: ${badgesNotFound}`);
-  console.log(`\nTotal cars processed: ${carNames.size}`);
-}).catch(error => {
-  console.error('Error processing cars:', error);
-  process.exit(1);
-});
+processCars()
+  .then(() => {
+    console.log(`\n✅ Done!`);
+    console.log(`\nCar Data:`);
+    console.log(`  Copied: ${carDataCopied}`);
+    console.log(`  Skipped: ${carDataSkipped}`);
+    console.log(`  Not found/Error: ${carDataNotFound}`);
+    console.log(`\nBadges:`);
+    console.log(`  Copied: ${badgesCopied}`);
+    console.log(`    - Resized: ${badgesResized}`);
+    console.log(`    - As-is: ${badgesCopied - badgesResized}`);
+    console.log(`  Skipped: ${badgesSkipped}`);
+    console.log(`  Not found: ${badgesNotFound}`);
+    console.log(`\nTotal cars processed: ${carNames.size}`);
+  })
+  .catch((error) => {
+    console.error("Error processing cars:", error);
+    process.exit(1);
+  });
