@@ -40,8 +40,8 @@ export default async function SeasonStandingsPage({ params }: { params: Promise<
 
   // Count only race sessions
   const completedRaces = season.sessions.filter(s => {
-    const filename = s.filename.split('/').pop() || '';
-    return filename.includes('session_race');
+    const sessionType = s.data.session_type || s.data.session_info.session_type;
+    return sessionType === 'race';
   }).length;
 
   return (

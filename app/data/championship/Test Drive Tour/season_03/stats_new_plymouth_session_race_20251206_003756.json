@@ -1,7 +1,7 @@
 {
   "session_info": {
     "track_length_meters": 9405.72,
-    "session_type": "",
+    "session_type": "race",
     "crash_penalty_config": {
       "max_penalty_per_crash_g": 100,
       "penalty_percent_per_g": 0.01
@@ -1114,5 +1114,6 @@
         "crash_factor": 0.989
       }
     }
-  }
+  },
+  "session_type": "race"
 }

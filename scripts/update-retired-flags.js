@@ -2,14 +2,13 @@ const fs = require("fs");
 const path = require("path");
 
 // CONFIGURATION - Modify these variables
-const RACE_FILE =
-  "stats_rt_misty_loch-normal_session_race_20251213_011707.json";
-const MIN_LAPS_THRESHOLD = 10;
+const RACE_FILE = "stats_battenbergring_session_race_20251213_133239.json";
+const MIN_LAPS_THRESHOLD = 6;
 
 // File path construction
 const filePath = path.join(
   __dirname,
-  "../app/data/championship/Test Drive Tour/season_03",
+  "../app/data/championship/Test Drive Tour/season_04",
   RACE_FILE
 );
 

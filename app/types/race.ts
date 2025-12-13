@@ -73,6 +73,7 @@ export interface RaceData {
   session_info: SessionInfo;
   driver_statistics: Record<string, DriverStatistics>;
   cars?: Record<string, CarData>;
+  session_type?: 'practice' | 'qualifying' | 'race';
 }
 
 export interface RaceSession {

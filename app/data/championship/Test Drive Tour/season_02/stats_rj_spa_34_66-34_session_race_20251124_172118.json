@@ -1048,9 +1048,10 @@
       "penalty_percent_per_g": 0.01
     },
     "session_duration_formatted": "33:46.108",
-    "session_type": "",
+    "session_type": "race",
     "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)",
     "date": "2025-11-24 17:21:18",
     "total_cars": 28
-  }
+  },
+  "session_type": "race"
 }

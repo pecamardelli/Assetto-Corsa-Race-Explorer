@@ -32,8 +32,8 @@ export default async function SeasonPage({ params }: { params: Promise<{ champId
 
   // Count only race sessions (not practice or qualifying)
   const completedRaces = sessions.filter(session => {
-    const filename = session.filename.split('/').pop() || '';
-    return filename.includes('session_race');
+    const sessionType = session.data.session_type || session.data.session_info.session_type;
+      return sessionType === 'race';
   }).length;
 
   // Check if season is completed and get champion
@@ -95,17 +95,20 @@ export default async function SeasonPage({ params }: { params: Promise<{ champId
     // Find practice, qualifying, and race sessions for this round
     const practiceSessions = sessions.filter(session => {
       const filename = session.filename.split('/').pop() || '';
-      return filename.includes(trackWithConfig) && filename.includes('session_practice');
+      const sessionType = session.data.session_type || session.data.session_info.session_type;
+      return filename.includes(trackWithConfig) && sessionType === 'practice';
     });
 
     const qualifyingSessions = sessions.filter(session => {
       const filename = session.filename.split('/').pop() || '';
-      return filename.includes(trackWithConfig) && filename.includes('session_qualifying');
+      const sessionType = session.data.session_type || session.data.session_info.session_type;
+      return filename.includes(trackWithConfig) && sessionType === 'qualifying';
     });
 
     const raceSessions = sessions.filter(session => {
       const filename = session.filename.split('/').pop() || '';
-      return filename.includes(trackWithConfig) && filename.includes('session_race');
+      const sessionType = session.data.session_type || session.data.session_info.session_type;
+      return filename.includes(trackWithConfig) && sessionType === 'race';
     });
 
     return {

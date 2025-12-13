@@ -1137,7 +1137,7 @@
     "track_length_km": 7.266,
     "session_duration_formatted": "32:00.805",
     "track_length_miles": 4.515,
-    "session_type": "",
+    "session_type": "race",
     "track_config": "normal",
     "date": "2025-11-26 22:37:53",
     "race_laps": 10,
@@ -1151,5 +1151,6 @@
       "penalty_percent_per_g": 0.01
     },
     "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)"
-  }
+  },
+  "session_type": "race"
 }

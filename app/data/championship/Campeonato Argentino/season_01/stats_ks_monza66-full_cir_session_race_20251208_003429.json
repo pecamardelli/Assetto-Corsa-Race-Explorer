@@ -4,8 +4,8 @@
       "average_speed_kmh": 247.29,
       "score_breakdown": {
         "crash_factor": 0.998,
-        "fastest_lap_bonus": 0.0,
-        "position_factor": 1.0,
+        "fastest_lap_bonus": 0,
+        "position_factor": 1,
         "crash_penalty_percent": 0.22,
         "base_score": 60118.97,
         "speed_factor": 0.985
@@ -25,7 +25,7 @@
         "crash_intensities_g": [10.9, 10.69]
       },
       "position": 1,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1264.695,
       "overtakes_made": 8,
       "average_lap": 210.782,
@@ -39,7 +39,7 @@
       "average_speed_kmh": 207.64,
       "score_breakdown": {
         "crash_factor": 0.997,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.75,
         "crash_penalty_percent": 0.28,
         "base_score": 60118.97,
@@ -60,7 +60,7 @@
         "crash_intensities_g": [14.12, 14.35]
       },
       "position": 7,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1311.144,
       "overtakes_made": 18,
       "average_lap": 218.524,
@@ -74,7 +74,7 @@
       "average_speed_kmh": 215.45,
       "score_breakdown": {
         "crash_factor": 0.996,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.625,
         "crash_penalty_percent": 0.38,
         "base_score": 60118.97,
@@ -95,7 +95,7 @@
         "crash_intensities_g": [5.92, 13.14, 5.67, 4.09, 4.49, 4.32]
       },
       "position": 10,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1332.978,
       "overtakes_made": 4,
       "average_lap": 222.163,
@@ -109,7 +109,7 @@
       "average_speed_kmh": 210.11,
       "score_breakdown": {
         "crash_factor": 0.925,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.292,
         "crash_penalty_percent": 7.49,
         "base_score": 60118.97,
@@ -136,7 +136,7 @@
         ]
       },
       "position": 18,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1384.923,
       "overtakes_made": 4,
       "average_lap": 230.821,
@@ -149,10 +149,10 @@
     "Pechito Lopez": {
       "average_speed_kmh": 244.19,
       "score_breakdown": {
-        "crash_factor": 1.0,
-        "fastest_lap_bonus": 0.0,
+        "crash_factor": 1,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.958,
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "base_score": 60118.97,
         "speed_factor": 0.974
       },
@@ -166,12 +166,12 @@
       "crashes": {
         "total_crash_intensity": 0,
         "total_crashes": 0,
-        "worst_crash_g": 0.0,
-        "average_crash_g": 0.0,
+        "worst_crash_g": 0,
+        "average_crash_g": 0,
         "crash_intensities_g": []
       },
       "position": 2,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1279.233,
       "overtakes_made": 21,
       "average_lap": 213.206,
@@ -185,7 +185,7 @@
       "average_speed_kmh": 196.37,
       "score_breakdown": {
         "crash_factor": 0.984,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.5,
         "crash_penalty_percent": 1.59,
         "base_score": 60118.97,
@@ -206,7 +206,7 @@
         "crash_intensities_g": [5.84, 4.25, 72.2, 72.02, 4.5]
       },
       "position": 13,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1352.172,
       "overtakes_made": 9,
       "average_lap": 225.362,
@@ -220,7 +220,7 @@
       "average_speed_kmh": 227.66,
       "score_breakdown": {
         "crash_factor": 0.973,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.917,
         "crash_penalty_percent": 2.68,
         "base_score": 60118.97,
@@ -241,7 +241,7 @@
         "crash_intensities_g": [15.14, 5.11, 4.09, 56.29, 56.13, 65.85, 65.26]
       },
       "position": 3,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1290.018,
       "overtakes_made": 18,
       "average_lap": 215.003,
@@ -254,10 +254,10 @@
     "Piero Campioni": {
       "average_speed_kmh": 205.58,
       "score_breakdown": {
-        "crash_factor": 1.0,
-        "fastest_lap_bonus": 0.0,
+        "crash_factor": 1,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.708,
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "base_score": 60118.97,
         "speed_factor": 0.979
       },
@@ -271,12 +271,12 @@
       "crashes": {
         "total_crash_intensity": 0,
         "total_crashes": 0,
-        "worst_crash_g": 0.0,
-        "average_crash_g": 0.0,
+        "worst_crash_g": 0,
+        "average_crash_g": 0,
         "crash_intensities_g": []
       },
       "position": 8,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1316.295,
       "overtakes_made": 11,
       "average_lap": 219.382,
@@ -290,7 +290,7 @@
       "average_speed_kmh": 204.03,
       "score_breakdown": {
         "crash_factor": 0.947,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.167,
         "crash_penalty_percent": 5.27,
         "base_score": 50099.15,
@@ -330,7 +330,7 @@
       "average_speed_kmh": 198.63,
       "score_breakdown": {
         "crash_factor": 0.989,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.25,
         "crash_penalty_percent": 1.07,
         "base_score": 60118.97,
@@ -353,7 +353,7 @@
         ]
       },
       "position": 19,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1386.423,
       "overtakes_made": 6,
       "average_lap": 231.071,
@@ -367,7 +367,7 @@
       "average_speed_kmh": 215.86,
       "score_breakdown": {
         "crash_factor": 0.999,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.667,
         "crash_penalty_percent": 0.13,
         "base_score": 60118.97,
@@ -388,7 +388,7 @@
         "crash_intensities_g": [9.25, 4.02]
       },
       "position": 9,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1322.1,
       "overtakes_made": 19,
       "average_lap": 220.35,
@@ -402,7 +402,7 @@
       "average_speed_kmh": 195.82,
       "score_breakdown": {
         "crash_factor": 0.987,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.458,
         "crash_penalty_percent": 1.34,
         "base_score": 60118.97,
@@ -423,7 +423,7 @@
         "crash_intensities_g": [4.79, 64.62, 64.46]
       },
       "position": 14,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1356.177,
       "overtakes_made": 5,
       "average_lap": 226.03,
@@ -437,7 +437,7 @@
       "average_speed_kmh": 192.6,
       "score_breakdown": {
         "crash_factor": 0.999,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.125,
         "crash_penalty_percent": 0.13,
         "base_score": 50099.15,
@@ -472,7 +472,7 @@
       "average_speed_kmh": 210.31,
       "score_breakdown": {
         "crash_factor": 0.988,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.833,
         "crash_penalty_percent": 1.19,
         "base_score": 60118.97,
@@ -493,7 +493,7 @@
         "crash_intensities_g": [59.25, 59.61]
       },
       "position": 5,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1304.445,
       "overtakes_made": 16,
       "average_lap": 217.407,
@@ -511,7 +511,7 @@
         "position_factor": 0.875,
         "crash_penalty_percent": 0.6,
         "base_score": 60118.97,
-        "speed_factor": 1.0
+        "speed_factor": 1
       },
       "total_score": 54906,
       "net_positions_gained": 10,
@@ -528,7 +528,7 @@
         "crash_intensities_g": [27.06, 32.54]
       },
       "position": 4,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1302.219,
       "overtakes_made": 18,
       "average_lap": 217.036,
@@ -542,7 +542,7 @@
       "average_speed_kmh": 200.86,
       "score_breakdown": {
         "crash_factor": 0.999,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.583,
         "crash_penalty_percent": 0.12,
         "base_score": 60118.97,
@@ -563,7 +563,7 @@
         "crash_intensities_g": [7.77, 4.49]
       },
       "position": 11,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1336.881,
       "overtakes_made": 13,
       "average_lap": 222.814,
@@ -574,19 +574,19 @@
       "laps_completed": 6
     },
     "Poppy Larrauri": {
-      "average_speed_kmh": 0.0,
+      "average_speed_kmh": 0,
       "score_breakdown": {
         "crash_factor": 0.997,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.042,
         "crash_penalty_percent": 0.26,
-        "base_score": 0.0,
+        "base_score": 0,
         "speed_factor": 0.5
       },
       "total_score": 0,
       "net_positions_gained": -16,
-      "best_lap": 0.0,
-      "average_speed_mph": 0.0,
+      "best_lap": 0,
+      "average_speed_mph": 0,
       "times_overtaken": 22,
       "lap_times": [],
       "retired": true,
@@ -599,9 +599,9 @@
       },
       "position": 24,
       "partial_lap_completion": 0.982,
-      "total_time_seconds": 0.0,
+      "total_time_seconds": 0,
       "overtakes_made": 6,
-      "average_lap": 0.0,
+      "average_lap": 0,
       "distance_covered_km": 4.63,
       "car_name": "sfa_fiat_125_coupe_se78",
       "distance_covered_miles": 2.88,
@@ -612,7 +612,7 @@
       "average_speed_kmh": 201.02,
       "score_breakdown": {
         "crash_factor": 0.975,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.333,
         "crash_penalty_percent": 2.55,
         "base_score": 60118.97,
@@ -636,7 +636,7 @@
         ]
       },
       "position": 17,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1381.422,
       "overtakes_made": 8,
       "average_lap": 230.237,
@@ -650,9 +650,9 @@
       "average_speed_kmh": 234.03,
       "score_breakdown": {
         "crash_factor": 0.98,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.792,
-        "crash_penalty_percent": 2.0,
+        "crash_penalty_percent": 2,
         "base_score": 60118.97,
         "speed_factor": 0.971
       },
@@ -671,7 +671,7 @@
         "crash_intensities_g": [745.85, 745.88]
       },
       "position": 6,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1305.702,
       "overtakes_made": 6,
       "average_lap": 217.617,
@@ -684,10 +684,10 @@
     "Sakon Matraka": {
       "average_speed_kmh": 182.89,
       "score_breakdown": {
-        "crash_factor": 1.0,
-        "fastest_lap_bonus": 0.0,
+        "crash_factor": 1,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.083,
-        "crash_penalty_percent": 0.0,
+        "crash_penalty_percent": 0,
         "base_score": 50099.15,
         "speed_factor": 0.798
       },
@@ -701,8 +701,8 @@
       "crashes": {
         "total_crash_intensity": 0,
         "total_crashes": 0,
-        "worst_crash_g": 0.0,
-        "average_crash_g": 0.0,
+        "worst_crash_g": 0,
+        "average_crash_g": 0,
         "crash_intensities_g": []
       },
       "position": 23,
@@ -720,7 +720,7 @@
       "average_speed_kmh": 207.94,
       "score_breakdown": {
         "crash_factor": 0.981,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.417,
         "crash_penalty_percent": 1.91,
         "base_score": 60118.97,
@@ -741,7 +741,7 @@
         "crash_intensities_g": [25.3, 15.25, 5.11, 72.73, 72.42]
       },
       "position": 15,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1356.492,
       "overtakes_made": 8,
       "average_lap": 226.082,
@@ -755,7 +755,7 @@
       "average_speed_kmh": 185.49,
       "score_breakdown": {
         "crash_factor": 0.982,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.208,
         "crash_penalty_percent": 1.76,
         "base_score": 60118.97,
@@ -778,7 +778,7 @@
         ]
       },
       "position": 20,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1389.306,
       "overtakes_made": 3,
       "average_lap": 231.551,
@@ -789,10 +789,10 @@
       "laps_completed": 6
     },
     "Cochito Lopez": {
-      "average_speed_kmh": 212.0,
+      "average_speed_kmh": 212,
       "score_breakdown": {
         "crash_factor": 0.988,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.542,
         "crash_penalty_percent": 1.17,
         "base_score": 60118.97,
@@ -813,7 +813,7 @@
         "crash_intensities_g": [58.1, 58.7]
       },
       "position": 12,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1346.49,
       "overtakes_made": 4,
       "average_lap": 224.415,
@@ -827,7 +827,7 @@
       "average_speed_kmh": 187.66,
       "score_breakdown": {
         "crash_factor": 0.983,
-        "fastest_lap_bonus": 0.0,
+        "fastest_lap_bonus": 0,
         "position_factor": 0.375,
         "crash_penalty_percent": 1.73,
         "base_score": 60118.97,
@@ -851,11 +851,11 @@
         ]
       },
       "position": 16,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "total_time_seconds": 1381.164,
       "overtakes_made": 15,
       "average_lap": 230.194,
-      "distance_covered_km": 72.0,
+      "distance_covered_km": 72,
       "car_name": "atcc_chrysler_valiant_s-series",
       "distance_covered_miles": 44.74,
       "total_time_formatted": "23:01.163",
@@ -867,18 +867,19 @@
     "track_length_miles": 6.226,
     "crash_penalty_config": {
       "penalty_percent_per_g": 0.01,
-      "max_penalty_per_crash_g": 100.0
+      "max_penalty_per_crash_g": 100
     },
     "total_cars": 24,
     "session_duration_formatted": "27:08.759",
     "best_lap_time_seconds": 203.034,
     "track_config": "full_cir",
-    "session_type": "",
+    "session_type": "race",
     "date": "2025-12-08 00:34:29",
     "track_length_km": 10.02,
-    "scoring_formula": "score = base_score \u00d7 position_factor \u00d7 speed_factor \u00d7 crash_factor (\u00d7 1.05 if fastest lap)",
+    "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)",
     "race_laps": 6,
     "session_duration_seconds": 1628.76,
     "track_length_meters": 10019.83
-  }
+  },
+  "session_type": "race"
 }

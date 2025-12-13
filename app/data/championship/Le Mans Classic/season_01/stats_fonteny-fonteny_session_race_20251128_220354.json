@@ -1785,7 +1785,7 @@
     "track_length_km": 25.878,
     "race_laps": 2,
     "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)",
-    "session_type": "",
+    "session_type": "race",
     "session_duration_formatted": "45:48.884",
     "track": "fonteny",
     "crash_penalty_config": {
@@ -1795,5 +1795,6 @@
     "track_length_miles": 16.08,
     "best_lap_time_seconds": 641.424,
     "total_cars": 50
-  }
+  },
+  "session_type": "race"
 }

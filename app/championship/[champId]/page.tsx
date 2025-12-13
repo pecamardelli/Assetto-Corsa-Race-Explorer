@@ -19,8 +19,8 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ c
 
   // Count only race sessions (not practice or qualifying)
   const completedRaces = sessions.filter(session => {
-    const filename = session.filename.split('/').pop() || '';
-    return filename.includes('session_race');
+    const sessionType = session.data.session_type || session.data.session_info.session_type;
+      return sessionType === 'race';
   }).length;
 
   // Match rounds with sessions based on track name and session type
@@ -40,17 +40,20 @@ export default async function ChampionshipPage({ params }: { params: Promise<{ c
     // Filenames are like: stats_ks_brands_hatch-indy_session_practice_20251112_022523.json
     const practiceSessions = sessions.filter(session => {
       const filename = session.filename.split('/').pop() || '';
-      return filename.includes(trackWithConfig) && filename.includes('session_practice');
+      const sessionType = session.data.session_type || session.data.session_info.session_type;
+      return filename.includes(trackWithConfig) && sessionType === 'practice';
     });
 
     const qualifyingSessions = sessions.filter(session => {
       const filename = session.filename.split('/').pop() || '';
-      return filename.includes(trackWithConfig) && filename.includes('session_qualifying');
+      const sessionType = session.data.session_type || session.data.session_info.session_type;
+      return filename.includes(trackWithConfig) && sessionType === 'qualifying';
     });
 
     const raceSessions = sessions.filter(session => {
       const filename = session.filename.split('/').pop() || '';
-      return filename.includes(trackWithConfig) && filename.includes('session_race');
+      const sessionType = session.data.session_type || session.data.session_info.session_type;
+      return filename.includes(trackWithConfig) && sessionType === 'race';
     });
 
     return {

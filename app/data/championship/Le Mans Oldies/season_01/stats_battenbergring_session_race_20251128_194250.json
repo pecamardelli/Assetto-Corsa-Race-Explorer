@@ -1,6 +1,6 @@
 {
   "session_info": {
-    "session_type": "",
+    "session_type": "race",
     "track": "battenbergring",
     "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)",
     "date": "2025-11-28 19:42:50",
@@ -1198,5 +1198,6 @@
       "partial_lap_completion": 0,
       "total_time_formatted": "29:50.382"
     }
-  }
+  },
+  "session_type": "race"
 }

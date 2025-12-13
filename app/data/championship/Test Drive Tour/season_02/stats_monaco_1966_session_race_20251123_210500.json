@@ -13,7 +13,7 @@
     },
     "best_lap_time_seconds": 96.891,
     "track_length_meters": 3135.07,
-    "session_type": "",
+    "session_type": "race",
     "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)",
     "date": "2025-11-23 21:05:00",
     "track": "monaco_1966"
@@ -1302,5 +1302,6 @@
       "average_lap": 124.383,
       "position": 23
     }
-  }
+  },
+  "session_type": "race"
 }

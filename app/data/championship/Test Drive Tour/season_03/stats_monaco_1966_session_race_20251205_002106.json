@@ -1285,7 +1285,7 @@
   },
   "session_info": {
     "session_duration_formatted": "41:09.452",
-    "session_type": "",
+    "session_type": "race",
     "track_length_km": 3.135,
     "session_duration_seconds": 2469.45,
     "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)",
@@ -1301,5 +1301,6 @@
       "penalty_percent_per_g": 0.01
     },
     "track_config": ""
-  }
+  },
+  "session_type": "race"
 }

@@ -72,8 +72,8 @@ export default async function SeasonsPage({ params }: { params: Promise<{ champI
           {seasons.map((season) => {
             // Count race sessions only
             const completedRaces = season.sessions.filter(session => {
-              const filename = session.filename.split('/').pop() || '';
-              return filename.includes('session_race');
+              const sessionType = session.data.session_type || session.data.session_info.session_type;
+      return sessionType === 'race';
             }).length;
 
             // Check if season is completed

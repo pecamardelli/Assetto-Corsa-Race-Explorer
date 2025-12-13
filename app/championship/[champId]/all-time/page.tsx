@@ -21,8 +21,8 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
 
   // Count race sessions only
   const totalRaces = championship.sessions.filter(session => {
-    const filename = session.filename.split('/').pop() || '';
-    return filename.includes('session_race');
+    const sessionType = session.data.session_type || session.data.session_info.session_type;
+      return sessionType === 'race';
   }).length;
 
   return (

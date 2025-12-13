@@ -14,7 +14,7 @@
       "max_penalty_per_crash_g": 100,
       "penalty_percent_per_g": 0.01
     },
-    "session_type": "",
+    "session_type": "race",
     "session_duration_formatted": "36:07.315",
     "best_lap_time_seconds": 281.955
   },
@@ -1098,5 +1098,6 @@
       },
       "retired": false
     }
-  }
+  },
+  "session_type": "race"
 }

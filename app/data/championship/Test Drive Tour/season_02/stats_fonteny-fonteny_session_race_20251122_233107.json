@@ -1033,10 +1033,11 @@
     "session_duration_formatted": "44:18.862",
     "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)",
     "date": "2025-11-22 23:31:07",
-    "session_type": "",
+    "session_type": "race",
     "track_length_km": 25.878,
     "track_length_miles": 16.08,
     "best_lap_time_seconds": 572.121,
     "track_length_meters": 25878.18
-  }
+  },
+  "session_type": "race"
 }

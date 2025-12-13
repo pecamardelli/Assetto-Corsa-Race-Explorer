@@ -10,7 +10,7 @@
     "track_config": "fonteny",
     "date": "2025-11-29 00:50:15",
     "best_lap_time_seconds": 585.789,
-    "session_type": "",
+    "session_type": "race",
     "track_length_meters": 25878.18,
     "crash_penalty_config": {
       "max_penalty_per_crash_g": 100,
@@ -1057,5 +1057,6 @@
       "car_name": "exmods_dodge_charg_daytona",
       "total_time_seconds": 0
     }
-  }
+  },
+  "session_type": "race"
 }

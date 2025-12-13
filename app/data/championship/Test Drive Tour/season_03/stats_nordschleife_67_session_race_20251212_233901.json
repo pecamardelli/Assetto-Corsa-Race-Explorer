@@ -4,7 +4,7 @@
     "track_length_miles": 14.317,
     "track_length_meters": 23040.26,
     "track_length_km": 23.04,
-    "session_type": "",
+    "session_type": "race",
     "session_duration_formatted": "33:15.917",
     "session_duration_seconds": 1995.92,
     "track": "nordschleife_67",
@@ -1054,5 +1054,6 @@
       "lap_times": [583.11, 563.355, 559.371],
       "average_lap": 568.612
     }
-  }
+  },
+  "session_type": "race"
 }

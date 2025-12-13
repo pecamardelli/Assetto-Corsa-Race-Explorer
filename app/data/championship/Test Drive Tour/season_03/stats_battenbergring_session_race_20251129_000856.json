@@ -1096,12 +1096,13 @@
     "race_laps": 6,
     "session_duration_seconds": 1916.55,
     "date": "2025-11-29 00:08:56",
-    "session_type": "",
+    "session_type": "race",
     "best_lap_time_seconds": 275.31,
     "total_cars": 28,
     "track_length_meters": 12453.47,
     "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)",
     "track_length_km": 12.453,
     "track": "battenbergring"
-  }
+  },
+  "session_type": "race"
 }

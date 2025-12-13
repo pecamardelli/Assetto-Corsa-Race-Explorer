@@ -1031,7 +1031,7 @@
     "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)",
     "track_config": "",
     "track_length_miles": 14.317,
-    "session_type": "",
+    "session_type": "race",
     "track_length_meters": 23040.26,
     "date": "2025-11-24 16:40:38",
     "session_duration_seconds": 2372.68,
@@ -1043,5 +1043,6 @@
       "max_penalty_per_crash_g": 100
     },
     "total_cars": 28
-  }
+  },
+  "session_type": "race"
 }
