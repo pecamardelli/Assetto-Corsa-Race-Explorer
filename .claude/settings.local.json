@@ -31,7 +31,10 @@
       "Bash(dir nul)",
       "Bash(dir:*)",
       "Bash(findstr:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(xargs:*)",
+      "Bash(done)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []

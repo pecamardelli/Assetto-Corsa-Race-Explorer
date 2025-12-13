@@ -38,16 +38,23 @@ export function calculateAllTimeStats(
 ): AllTimeDriverStats[] {
   const statsMap = new Map<string, AllTimeDriverStats>();
 
-  // Create a map of opponent data from all championships
+  // Create a map of opponent data from all championships and all seasons
   // Prioritize non-ARG nationalities to avoid defaulting to player nation
+  // Keep the first non-ARG nation found to maintain consistency across seasons
   const opponentMap = new Map<string, ChampionshipOpponent>();
   championships.forEach((championship) => {
-    championship.data.opponents.forEach((opponent) => {
-      const existing = opponentMap.get(opponent.name);
-      // Always update if we don't have data, or if new nation is not ARG and existing is ARG
-      if (!existing || (opponent.nation !== 'ARG' && existing.nation === 'ARG')) {
-        opponentMap.set(opponent.name, opponent);
-      }
+    // Process opponents from all seasons in this championship
+    championship.seasons.forEach((season) => {
+      season.data.opponents.forEach((opponent) => {
+        const existing = opponentMap.get(opponent.name);
+        // Only update if we don't have data, or if new nation is not ARG and existing is ARG
+        if (!existing) {
+          opponentMap.set(opponent.name, opponent);
+        } else if (opponent.nation !== 'ARG' && existing.nation === 'ARG') {
+          opponentMap.set(opponent.name, opponent);
+        }
+        // If we already have a non-ARG nation, keep it (don't override)
+      });
     });
   });
 
