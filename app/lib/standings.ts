@@ -302,6 +302,12 @@ export function calculateStandings(championship: Championship): DriverStanding[]
         if (position <= 3) standing.podiums++;
 
         standing.racesCompleted++;
+
+        // Update driver's car to the one used in this race
+        // Since sessions are sorted chronologically, the last race will have the most recent car
+        if (stats.car_name) {
+          standing.car = stats.car_name;
+        }
       });
     });
 
