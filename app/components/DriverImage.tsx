@@ -5,11 +5,13 @@ interface DriverImageProps {
 }
 
 export default function DriverImage({ driverName }: DriverImageProps) {
+  const imagePath = `/driver-portraits/${encodeURIComponent(
+    driverName.replace(/ /g, "_").toLowerCase()
+  )}.png`;
+
   return (
     <img
-      src={`/driver-portraits/${driverName
-        .replace(/ /g, "_")
-        .toLowerCase()}.png`}
+      src={imagePath}
       alt={driverName}
       className="w-48 h-48 rounded-lg border-2 border-zinc-700 object-cover"
       onError={(e) => {

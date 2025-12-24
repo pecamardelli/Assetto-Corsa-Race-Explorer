@@ -11,6 +11,7 @@ type DriverProfile = {
   placeOfBirth: string;
   features: string;
   gender: string;
+  isFictional?: boolean;
 };
 
 async function getDriverProfile(driverName: string): Promise<DriverProfile | null> {
@@ -27,10 +28,30 @@ export default async function EditDriverPage({ params }: { params: Promise<{ dri
   const { driverName } = await params;
   const decodedDriverName = decodeURIComponent(driverName);
 
-  const profile = await getDriverProfile(decodedDriverName);
+  let profile = await getDriverProfile(decodedDriverName);
 
+  // If no profile exists, create a default one
   if (!profile) {
-    notFound();
+    profile = {
+      name: decodedDriverName,
+      nationality: 'Unknown',
+      dateOfBirth: '1990-01-01',
+      placeOfBirth: 'Unknown',
+      features: 'athletic build, confident features',
+      gender: 'male',
+      isFictional: true,
+    };
+
+    // Save the default profile
+    try {
+      const profilesDir = path.join(process.cwd(), 'app/lib/driver-profiles');
+      await fs.mkdir(profilesDir, { recursive: true });
+
+      const profilePath = path.join(profilesDir, `${decodedDriverName.replace(/ /g, '_').toLowerCase()}.json`);
+      await fs.writeFile(profilePath, JSON.stringify(profile, null, 2), 'utf8');
+    } catch (error) {
+      console.error('Error creating default profile:', error);
+    }
   }
 
   return (
