@@ -177,10 +177,15 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
                           <FlagIcon nation={driver.nation} />
                         </td>
                         <td className="px-4 py-4">
-                          <div className="text-white font-medium">{driver.name}</div>
-                          <div className="text-xs text-zinc-500 mt-1">
-                            {driver.podiums} podium{driver.podiums !== 1 ? 's' : ''}
-                          </div>
+                          <Link
+                            href={`/driver/${encodeURIComponent(driver.name)}`}
+                            className="block hover:text-amber-400 transition-colors"
+                          >
+                            <div className="text-white font-medium">{driver.name}</div>
+                            <div className="text-xs text-zinc-500 mt-1">
+                              {driver.podiums} podium{driver.podiums !== 1 ? 's' : ''}
+                            </div>
+                          </Link>
                         </td>
                         <td className="px-4 py-4 text-center text-zinc-400 hidden sm:table-cell">
                           {driver.totalRaces}

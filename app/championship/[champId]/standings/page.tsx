@@ -108,10 +108,15 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
                         </span>
                       </td>
                       <td className="px-4 py-4">
-                        <div className="text-white font-medium">{driver.name}</div>
-                        <div className="text-xs text-zinc-500 mt-1 hidden sm:block">
-                          {getCarName(driver.car)}
-                        </div>
+                        <Link
+                          href={`/driver/${encodeURIComponent(driver.name)}`}
+                          className="block hover:text-amber-400 transition-colors"
+                        >
+                          <div className="text-white font-medium">{driver.name}</div>
+                          <div className="text-xs text-zinc-500 mt-1 hidden sm:block">
+                            {getCarName(driver.car)}
+                          </div>
+                        </Link>
                       </td>
                       <td className="px-4 py-4 text-center hidden sm:table-cell">
                         <FlagIcon nation={driver.nation} />
