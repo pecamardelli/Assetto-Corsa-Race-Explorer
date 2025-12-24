@@ -1,0 +1,19 @@
+{
+  "comment": "This is a template. Export your actual ComfyUI workflow and save it as 'comfyui-workflow.json'",
+  "instructions": [
+    "1. Open ComfyUI and load your portrait generation workflow",
+    "2. In your text prompt node, add the placeholder: {{DRIVER_NAME}}",
+    "3. Click 'Save (API Format)' in ComfyUI settings",
+    "4. Save the file as 'comfyui-workflow.json' in the scripts directory",
+    "5. Run: node scripts/generate-driver-portraits.js"
+  ],
+  "example_prompt_node": {
+    "6": {
+      "inputs": {
+        "text": "professional racing driver portrait, {{DRIVER_NAME}}, photorealistic, studio lighting, 4k",
+        "clip": ["4", 1]
+      },
+      "class_type": "CLIPTextEncode"
+    }
+  }
+}

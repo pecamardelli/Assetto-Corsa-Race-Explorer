@@ -7,7 +7,9 @@
     "prebuild": "node scripts/copy-car-data.js && node scripts/copy-track-data.js",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "portraits:check": "node scripts/check-setup.js",
+    "portraits:generate": "node scripts/generate-driver-portraits.js"
   },
   "dependencies": {
     "country-flag-icons": "^1.6.4",
