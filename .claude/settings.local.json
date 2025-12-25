@@ -34,7 +34,9 @@
       "WebSearch",
       "Bash(xargs:*)",
       "Bash(done)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(cd:*)",
+      "Bash(move:*)"
     ],
     "deny": [],
     "ask": []
