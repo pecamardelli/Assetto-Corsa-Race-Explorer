@@ -80,32 +80,24 @@ export default function FlagIcon({ nation }: FlagIconProps) {
     );
   }
 
-  // Check if flag exists for this country code
-  if (!hasFlag(countryCode)) {
-    return (
-      <div className="flex justify-center">
-        <span className="font-mono uppercase text-zinc-400 text-sm">{nation}</span>
-      </div>
-    );
-  }
-
-  // Dynamically get the flag component
+  // Dynamically get the flag component - try the country code directly first
   const FlagComponent = (FlagIcons as any)[countryCode];
 
-  if (!FlagComponent) {
+  if (FlagComponent) {
     return (
       <div className="flex justify-center">
-        <span className="font-mono uppercase text-zinc-400 text-sm">{nation}</span>
+        <FlagComponent
+          title={nation}
+          className="h-6 rounded shadow-sm"
+        />
       </div>
     );
   }
 
+  // Fallback: show country code as text
   return (
     <div className="flex justify-center">
-      <FlagComponent
-        title={nation}
-        className="h-6 rounded shadow-sm"
-      />
+      <span className="font-mono uppercase text-zinc-400 text-sm" title={nation}>{countryCode}</span>
     </div>
   );
 }
