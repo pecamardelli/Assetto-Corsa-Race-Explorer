@@ -3,6 +3,7 @@ import { getRaceSessions, getChampionships } from '../lib/race-data';
 import { calculateAllTimeStats } from '../lib/standings';
 import BackButton from '../components/BackButton';
 import FlagIcon from '../components/FlagIcon';
+import DriverPortrait from '../components/DriverPortrait';
 
 export default async function DriversPage() {
   const [sessions, championships] = await Promise.all([
@@ -80,10 +81,13 @@ export default async function DriversPage() {
                       Rank
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
-                      {/* Nation - no title */}
+                      {/* Driver Image - no title */}
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                       Driver
+                    </th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden sm:table-cell">
+                      Nation
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden sm:table-cell">
                       Races
@@ -140,7 +144,11 @@ export default async function DriversPage() {
                           </span>
                         </td>
                         <td className="px-4 py-4 text-center hidden md:table-cell">
-                          <FlagIcon nation={driver.nation} />
+                          <div className="flex justify-center">
+                            <div className="w-12 h-12 overflow-hidden rounded-full border-2 border-zinc-700">
+                              <DriverPortrait driverName={driver.name} size={48} />
+                            </div>
+                          </div>
                         </td>
                         <td className="px-4 py-4">
                           <Link
@@ -152,6 +160,9 @@ export default async function DriversPage() {
                               {driver.podiums} podium{driver.podiums !== 1 ? 's' : ''}
                             </div>
                           </Link>
+                        </td>
+                        <td className="px-4 py-4 text-center hidden sm:table-cell">
+                          <FlagIcon nation={driver.nation} />
                         </td>
                         <td className="px-4 py-4 text-center text-zinc-400 hidden sm:table-cell">
                           {driver.totalRaces}

@@ -5,6 +5,7 @@ import { calculateStandings } from '../../../lib/standings';
 import { getCarName } from '../../../lib/car-data';
 import BackButton from '../../../components/BackButton';
 import FlagIcon from '../../../components/FlagIcon';
+import DriverPortrait from '../../../components/DriverPortrait';
 
 export default async function StandingsPage({ params }: { params: Promise<{ champId: string }> }) {
   const { champId } = await params;
@@ -61,6 +62,9 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
                   <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                     Pos
                   </th>
+                  <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
+                    {/* Driver Image - no title */}
+                  </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                     Driver
                   </th>
@@ -106,6 +110,13 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
                         }`}>
                           {position}
                         </span>
+                      </td>
+                      <td className="px-4 py-4 text-center hidden md:table-cell">
+                        <div className="flex justify-center">
+                          <div className="w-12 h-12 overflow-hidden rounded-full border-2 border-zinc-700">
+                            <DriverPortrait driverName={driver.name} size={48} />
+                          </div>
+                        </div>
                       </td>
                       <td className="px-4 py-4">
                         <Link

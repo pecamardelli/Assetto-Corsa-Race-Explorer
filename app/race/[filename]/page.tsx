@@ -1,10 +1,12 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getRaceSession } from '../../lib/race-data';
+import { getRaceSession, getChampionship } from '../../lib/race-data';
 import { formatLapTime, getSortedDrivers, safeNumber } from '../../lib/format-utils';
 import { getCarName } from '../../lib/car-data';
 import { getTrackDetails } from '../../lib/track-data';
 import BackButton from '../../components/BackButton';
+import FlagIcon from '../../components/FlagIcon';
+import DriverPortrait from '../../components/DriverPortrait';
 
 export default async function RacePage({ params }: { params: Promise<{ filename: string }> }) {
   const { filename } = await params;
@@ -20,10 +22,25 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
   const sessionType = session_info.session_type || 'race';
   const isPracticeOrQualifying = sessionType === 'practice' || sessionType === 'qualifying';
 
+  // Load championship data if this session is part of a championship
+  const driverNationMap = new Map<string, string>();
+  if (session.championship) {
+    const championship = await getChampionship(session.championship);
+    if (championship?.data?.opponents) {
+      championship.data.opponents.forEach((opponent: any) => {
+        driverNationMap.set(opponent.name, opponent.nation);
+      });
+    }
+  }
+
   // Sort drivers: by lap time for practice/qualifying, by position for race
   const drivers = isPracticeOrQualifying
     ? Object.entries(driver_statistics)
-        .map(([name, stats]) => ({ name, ...stats }))
+        .map(([name, stats]) => ({
+          name,
+          ...stats,
+          nation: (stats as any).nation || driverNationMap.get(name)
+        }))
         .sort((a, b) => {
           const lapA = safeNumber(a.best_lap);
           const lapB = safeNumber(b.best_lap);
@@ -33,7 +50,10 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
           if (lapB === 0) return -1;
           return lapA - lapB;
         })
-    : getSortedDrivers(driver_statistics);
+    : getSortedDrivers(driver_statistics).map(driver => ({
+        ...driver,
+        nation: driver.nation || driverNationMap.get(driver.name)
+      }));
 
   // Get winner data for gap calculation (for race mode)
   const winner = !isPracticeOrQualifying && drivers.length > 0 ? drivers[0] : null;
@@ -145,8 +165,14 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                     <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                       Pos
                     </th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
+                      {/* Driver Image - no title */}
+                    </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                       Driver
+                    </th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden sm:table-cell">
+                      Nation
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider hidden sm:table-cell">
                       Car
@@ -237,6 +263,13 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                             {index + 1}
                           </span>
                         </td>
+                        <td className="px-4 py-4 text-center hidden md:table-cell">
+                          <div className="flex justify-center">
+                            <div className="w-12 h-12 overflow-hidden rounded-full border-2 border-zinc-700">
+                              <DriverPortrait driverName={driver.name || 'Unknown'} size={48} />
+                            </div>
+                          </div>
+                        </td>
                         <td className="px-4 py-4">
                           <div className="text-white font-medium">{driver.name || 'Unknown'}</div>
                           {!isPracticeOrQualifying && netPositions !== 0 && (
@@ -246,6 +279,9 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                               {netPositions > 0 ? '↑' : '↓'} {Math.abs(netPositions)}
                             </div>
                           )}
+                        </td>
+                        <td className="px-4 py-4 text-center hidden sm:table-cell">
+                          {driver.nation && <FlagIcon nation={driver.nation} />}
                         </td>
                         <td className="px-4 py-4 text-zinc-400 text-sm hidden sm:table-cell">
                           {getCarName(driver.car_name)}

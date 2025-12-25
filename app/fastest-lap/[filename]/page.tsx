@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getRaceSession } from '../../lib/race-data';
+import { getRaceSession, getChampionship } from '../../lib/race-data';
 import { formatLapTime, safeNumber } from '../../lib/format-utils';
 import { getCarName } from '../../lib/car-data';
 import { getTrackDetails } from '../../lib/track-data';
 import BackButton from '../../components/BackButton';
 import FlagIcon from '../../components/FlagIcon';
+import DriverPortrait from '../../components/DriverPortrait';
 
 export default async function FastestLapPage({ params }: { params: Promise<{ filename: string }> }) {
   const { filename } = await params;
@@ -20,9 +21,24 @@ export default async function FastestLapPage({ params }: { params: Promise<{ fil
   const trackDetails = getTrackDetails(session_info.track, session_info.track_config);
   const sessionType = session_info.session_type || 'race';
 
+  // Load championship data if this session is part of a championship
+  const driverNationMap = new Map<string, string>();
+  if (session.championship) {
+    const championship = await getChampionship(session.championship);
+    if (championship?.data?.opponents) {
+      championship.data.opponents.forEach((opponent: any) => {
+        driverNationMap.set(opponent.name, opponent.nation);
+      });
+    }
+  }
+
   // Sort drivers by best lap time
   const driversByFastestLap = Object.entries(driver_statistics)
-    .map(([name, stats]) => ({ name, ...stats }))
+    .map(([name, stats]) => ({
+      name,
+      ...stats,
+      nation: (stats as any).nation || driverNationMap.get(name)
+    }))
     .filter(driver => {
       const lapTime = safeNumber(driver.best_lap);
       return lapTime > 0; // Only include drivers with valid lap times
@@ -127,7 +143,9 @@ export default async function FastestLapPage({ params }: { params: Promise<{ fil
                 <thead className="bg-zinc-900/50">
                   <tr className="text-left text-xs uppercase tracking-wider text-zinc-400">
                     <th className="px-6 py-4 font-semibold">Pos</th>
+                    <th className="px-6 py-4 font-semibold text-center hidden md:table-cell">{/* Driver Image */}</th>
                     <th className="px-6 py-4 font-semibold">Driver</th>
+                    <th className="px-6 py-4 font-semibold text-center hidden sm:table-cell">Nation</th>
                     <th className="px-6 py-4 font-semibold">Car</th>
                     <th className="px-6 py-4 font-semibold text-right">Best Lap</th>
                     <th className="px-6 py-4 font-semibold text-right">Gap</th>
@@ -166,16 +184,27 @@ export default async function FastestLapPage({ params }: { params: Promise<{ fil
                           </div>
                         </td>
 
+                        {/* Driver Portrait */}
+                        <td className="px-6 py-4 text-center hidden md:table-cell">
+                          <div className="flex justify-center">
+                            <div className="w-12 h-12 overflow-hidden rounded-full border-2 border-zinc-700">
+                              <DriverPortrait driverName={driver.name} size={48} />
+                            </div>
+                          </div>
+                        </td>
+
                         {/* Driver Name */}
                         <td className="px-6 py-4">
-                          <div className="flex items-center gap-3">
-                            {driver.nation && <FlagIcon nation={driver.nation} />}
-                            <span className={`font-medium ${
-                              isPlayer ? 'text-blue-400' : 'text-white'
-                            }`}>
-                              {driver.name}
-                            </span>
-                          </div>
+                          <span className={`font-medium ${
+                            isPlayer ? 'text-blue-400' : 'text-white'
+                          }`}>
+                            {driver.name}
+                          </span>
+                        </td>
+
+                        {/* Nation */}
+                        <td className="px-6 py-4 text-center hidden sm:table-cell">
+                          {driver.nation && <FlagIcon nation={driver.nation} />}
                         </td>
 
                         {/* Car */}
