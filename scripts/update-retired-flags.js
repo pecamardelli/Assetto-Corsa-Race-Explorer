@@ -2,13 +2,13 @@ const fs = require("fs");
 const path = require("path");
 
 // CONFIGURATION - Modify these variables
-const RACE_FILE = "stats_new_plymouth_session_race_20251225_020345.json";
-const MIN_LAPS_THRESHOLD = 9;
+const RACE_FILE = "stats_new_plymouth_session_race_20251225_155607.json";
+const MIN_LAPS_THRESHOLD = 2;
 
 // File path construction
 const filePath = path.join(
   __dirname,
-  "../app/data/championship/Test Drive Tour/season_05",
+  "../app/data/championship/Le Mans Classic/season_01",
   RACE_FILE
 );
 
