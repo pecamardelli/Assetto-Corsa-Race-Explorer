@@ -38,7 +38,6 @@ type DriverProfile = {
   placeOfBirth: string;
   features: string;
   gender: string;
-  isFictional?: boolean;
 };
 
 async function getDriverProfile(driverName: string): Promise<DriverProfile | null> {
@@ -176,14 +175,6 @@ export default async function DriverPage({ params }: { params: Promise<{ driverN
                       </svg>
                       <span>From: {profile.placeOfBirth}</span>
                     </div>
-                    {profile.isFictional !== false && (
-                      <div className="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-purple-500" viewBox="0 0 20 20" fill="currentColor">
-                          <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
-                        </svg>
-                        <span className="text-purple-400">Fictional Driver</span>
-                      </div>
-                    )}
                   </div>
                 )}
               </div>

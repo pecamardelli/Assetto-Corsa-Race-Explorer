@@ -15,7 +15,6 @@ type DriverProfile = {
   placeOfBirth: string;
   features: string;
   gender: string;
-  isFictional?: boolean;
 };
 
 async function getDriverProfile(driverName: string): Promise<DriverProfile | null> {
