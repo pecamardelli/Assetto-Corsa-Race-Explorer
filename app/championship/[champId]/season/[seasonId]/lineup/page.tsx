@@ -185,17 +185,20 @@ export default async function LineupPage({
               className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6"
             >
               {/* Car Header */}
-              <div className="flex items-center gap-4 mb-6 pb-4 border-b border-zinc-700">
+              <Link
+                href={`/car/${encodeURIComponent(carName)}`}
+                className="flex items-center gap-4 mb-6 pb-4 border-b border-zinc-700 group cursor-pointer"
+              >
                 <Image
                   src={`/badges/${carName}.png`}
                   alt={carDetails.brand}
                   width={60}
                   height={60}
-                  className="rounded-lg"
+                  className="rounded-lg transition-transform group-hover:scale-105"
                   unoptimized
                 />
                 <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-white">
+                  <h2 className="text-2xl font-bold text-white group-hover:text-purple-400 transition-colors">
                     {carDetails.brand}
                   </h2>
                   <div className="text-lg text-zinc-300">{carDetails.model}</div>
@@ -209,7 +212,7 @@ export default async function LineupPage({
                     {drivers.length}
                   </div>
                 </div>
-              </div>
+              </Link>
 
               {/* Drivers List */}
               <div className="space-y-4">
