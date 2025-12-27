@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import BackButton from '../../components/BackButton';
+import CarGallery from '../../components/CarGallery';
 import { getCarData } from '../../lib/car-data';
 import { getChampionships } from '../../lib/race-data';
 
@@ -82,6 +83,9 @@ export default async function CarPage({ params }: { params: Promise<{ carName: s
                       </div>
                     )}
                   </div>
+                </div>
+                <div className="w-64 flex-shrink-0">
+                  <CarGallery carId={decodedCarName} carName={carData.name || decodedCarName} />
                 </div>
               </div>
             </div>
