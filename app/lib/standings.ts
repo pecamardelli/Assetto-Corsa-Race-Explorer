@@ -32,6 +32,22 @@ export interface AllTimeDriverStats {
   podiums: number;
 }
 
+export interface AllTimeConstructorStats {
+  carName: string;
+  name: string;
+  brand: string;
+  model: string;
+  year: string;
+  driverCount: number;
+  totalPoints: number;
+  wins: number;
+  podiums: number;
+  fastestLaps: number;
+  poles: number;
+  championshipsWon: number;
+  totalRaces: number;
+}
+
 export function calculateAllTimeStats(
   sessions: RaceSession[],
   championships: Championship[]
@@ -479,6 +495,221 @@ export function calculateConstructorStandings(championship: Championship): Const
   // Convert map to array and sort by custom points (desc), then wins (desc), then podiums (desc)
   return Array.from(constructorsMap.values()).sort((a, b) => {
     if (b.customPoints !== a.customPoints) return b.customPoints - a.customPoints;
+    if (b.wins !== a.wins) return b.wins - a.wins;
+    if (b.podiums !== a.podiums) return b.podiums - a.podiums;
+    return a.name.localeCompare(b.name);
+  });
+}
+
+export function calculateAllTimeConstructorStats(
+  sessions: RaceSession[],
+  championships: Championship[]
+): AllTimeConstructorStats[] {
+  const statsMap = new Map<string, AllTimeConstructorStats>();
+  const constructorDriversMap = new Map<string, Set<string>>();
+  const raceSessionsMap = new Map<string, Set<string>>(); // Track which races each constructor participated in
+
+  // Process qualifying sessions for pole positions
+  sessions
+    .filter((session) => {
+      const sessionType = session.data.session_type || session.data.session_info.session_type;
+      return sessionType === 'qualifying';
+    })
+    .forEach((session) => {
+      const drivers = session.data.driver_statistics;
+
+      // Find the driver with the fastest lap (pole position)
+      let fastestLap = Infinity;
+      let poleDriver = '';
+
+      Object.entries(drivers).forEach(([driverName, stats]) => {
+        const bestLap = safeNumber(stats.best_lap);
+        if (bestLap > 0 && bestLap < fastestLap) {
+          fastestLap = bestLap;
+          poleDriver = driverName;
+        }
+      });
+
+      // Award pole position to constructor
+      if (poleDriver) {
+        const poleDriverStats = drivers[poleDriver];
+        const carName = poleDriverStats.car_name;
+        if (carName) {
+          if (!statsMap.has(carName)) {
+            const carDetails = getCarDetails(carName);
+            statsMap.set(carName, {
+              carName: carName,
+              name: carDetails.name,
+              brand: carDetails.brand,
+              model: carDetails.model,
+              year: carDetails.year,
+              driverCount: 0,
+              totalPoints: 0,
+              wins: 0,
+              podiums: 0,
+              fastestLaps: 0,
+              poles: 0,
+              championshipsWon: 0,
+              totalRaces: 0,
+            });
+            constructorDriversMap.set(carName, new Set());
+            raceSessionsMap.set(carName, new Set());
+          }
+          const constructor = statsMap.get(carName)!;
+          constructor.poles++;
+
+          // Track unique driver
+          constructorDriversMap.get(carName)!.add(poleDriver);
+        }
+      }
+    });
+
+  // Process race sessions
+
+  sessions
+    .filter((session) => {
+      const sessionType = session.data.session_type || session.data.session_info.session_type;
+      return sessionType === 'race';
+    })
+    .forEach((session) => {
+      const drivers = session.data.driver_statistics;
+      const sessionId = session.filename; // Use filename as unique identifier
+
+      // Find the driver with the fastest lap
+      let fastestLap = Infinity;
+      let fastestLapDriver = '';
+
+      Object.entries(drivers).forEach(([driverName, stats]) => {
+        const bestLap = safeNumber(stats.best_lap);
+        if (bestLap > 0 && bestLap < fastestLap) {
+          fastestLap = bestLap;
+          fastestLapDriver = driverName;
+        }
+      });
+
+      // Award fastest lap to constructor
+      if (fastestLapDriver) {
+        const fastestDriverStats = drivers[fastestLapDriver];
+        const carName = fastestDriverStats.car_name;
+        if (carName) {
+          if (!statsMap.has(carName)) {
+            const carDetails = getCarDetails(carName);
+            statsMap.set(carName, {
+              carName: carName,
+              name: carDetails.name,
+              brand: carDetails.brand,
+              model: carDetails.model,
+              year: carDetails.year,
+              driverCount: 0,
+              totalPoints: 0,
+              wins: 0,
+              podiums: 0,
+              fastestLaps: 0,
+              poles: 0,
+              championshipsWon: 0,
+              totalRaces: 0,
+            });
+            constructorDriversMap.set(carName, new Set());
+            raceSessionsMap.set(carName, new Set());
+          }
+          const constructor = statsMap.get(carName)!;
+          constructor.fastestLaps++;
+
+          // Track unique driver
+          constructorDriversMap.get(carName)!.add(fastestLapDriver);
+        }
+      }
+
+      // Aggregate points from all drivers per constructor
+      Object.entries(drivers).forEach(([driverName, stats]) => {
+        const carName = stats.car_name;
+        if (!carName) return;
+
+        // Initialize constructor if not exists
+        if (!statsMap.has(carName)) {
+          const carDetails = getCarDetails(carName);
+          statsMap.set(carName, {
+            carName: carName,
+            name: carDetails.name,
+            brand: carDetails.brand,
+            model: carDetails.model,
+            year: carDetails.year,
+            driverCount: 0,
+            totalPoints: 0,
+            wins: 0,
+            podiums: 0,
+            fastestLaps: 0,
+            poles: 0,
+            championshipsWon: 0,
+            totalRaces: 0,
+          });
+          constructorDriversMap.set(carName, new Set());
+          raceSessionsMap.set(carName, new Set());
+        }
+
+        const constructor = statsMap.get(carName)!;
+        const position = stats.position ?? 999;
+
+        // Track unique driver
+        constructorDriversMap.get(carName)!.add(driverName);
+
+        // Track unique race sessions
+        if (!raceSessionsMap.get(carName)!.has(sessionId)) {
+          raceSessionsMap.get(carName)!.add(sessionId);
+        }
+
+        // Add custom points (total_score from the session)
+        constructor.totalPoints += safeNumber(stats.total_score, 0);
+
+        // Track wins and podiums
+        if (position === 1) constructor.wins++;
+        if (position <= 3) constructor.podiums++;
+      });
+    });
+
+  // Update driver counts and race counts
+  statsMap.forEach((constructor, carName) => {
+    constructor.driverCount = constructorDriversMap.get(carName)?.size || 0;
+    constructor.totalRaces = raceSessionsMap.get(carName)?.size || 0;
+  });
+
+  // Count constructor championships - only for completed seasons
+  championships.forEach((championship) => {
+    championship.seasons.forEach((season) => {
+      if (season.sessions.length === 0) return;
+
+      // Count completed race sessions
+      const completedRaces = season.sessions.filter(session => {
+        const sessionType = session.data.session_type || session.data.session_info.session_type;
+        return sessionType === 'race';
+      }).length;
+
+      // Only count this season if it's completed (all rounds have been raced)
+      if (completedRaces !== season.data.rounds.length) return;
+
+      // Create a temporary Championship object for this completed season
+      const seasonChampionship: Championship = {
+        id: championship.id,
+        data: season.data,
+        folderName: championship.folderName,
+        sessions: season.sessions,
+        seasons: [season],
+      };
+
+      const standings = calculateConstructorStandings(seasonChampionship);
+      if (standings.length > 0) {
+        const winner = standings[0];
+        const constructorStats = statsMap.get(winner.carName);
+        if (constructorStats) {
+          constructorStats.championshipsWon++;
+        }
+      }
+    });
+  });
+
+  // Convert to array and sort by total points, then wins, then podiums
+  return Array.from(statsMap.values()).sort((a, b) => {
+    if (b.totalPoints !== a.totalPoints) return b.totalPoints - a.totalPoints;
     if (b.wins !== a.wins) return b.wins - a.wins;
     if (b.podiums !== a.podiums) return b.podiums - a.podiums;
     return a.name.localeCompare(b.name);
