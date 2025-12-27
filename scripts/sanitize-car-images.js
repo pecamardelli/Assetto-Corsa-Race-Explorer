@@ -4,7 +4,7 @@ const sharp = require('sharp');
 
 // Configuration
 const GALLERY_DIR = path.join(__dirname, '..', 'public', 'car-gallery');
-const SUPPORTED_FORMATS = ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.bmp', '.tiff', '.tif'];
+const SUPPORTED_FORMATS = ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.bmp', '.tiff', '.tif', '.avif'];
 
 /**
  * Get all image files in a directory
