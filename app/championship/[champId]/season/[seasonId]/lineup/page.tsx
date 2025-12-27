@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getChampionship } from "../../../../../lib/race-data";
 import { getCarDetails } from "../../../../../lib/car-data";
+import { calculateStandings } from "../../../../../lib/standings";
 import BackButton from "../../../../../components/BackButton";
 import FlagIcon from "../../../../../components/FlagIcon";
 import DriverImage from "../../../../../components/DriverImage";
@@ -78,10 +79,51 @@ export default async function LineupPage({
 
   const { data } = season;
 
+  // Calculate champions across all seasons in this championship
+  const championWins = new Map<string, number>();
+  let reigningChampion: string | null = null;
+
+  // Sort seasons to find the most recent one with race data
+  const seasonsWithData = championship.seasons
+    .map(s => ({
+      season: s,
+      standings: calculateStandings({
+        id: championship.id,
+        data: s.data,
+        folderName: championship.folderName,
+        sessions: s.sessions,
+        seasons: [s],
+      })
+    }))
+    .filter(s => s.standings.length > 0);
+
+  // Get reigning champion (from most recent season with data)
+  if (seasonsWithData.length > 0) {
+    const mostRecent = seasonsWithData[seasonsWithData.length - 1];
+    reigningChampion = mostRecent.standings[0].name;
+  }
+
+  // Count all championship wins
+  for (const s of championship.seasons) {
+    const seasonChampionship = {
+      id: championship.id,
+      data: s.data,
+      folderName: championship.folderName,
+      sessions: s.sessions,
+      seasons: [s],
+    };
+
+    const standings = calculateStandings(seasonChampionship);
+    if (standings.length > 0) {
+      const championName = standings[0].name;
+      championWins.set(championName, (championWins.get(championName) || 0) + 1);
+    }
+  }
+
   // Group drivers by car
   const carDriverMap = new Map<
     string,
-    Array<{ name: string; nation: string; profile: DriverProfile | null }>
+    Array<{ name: string; nation: string; profile: DriverProfile | null; championshipWins: number; isReigningChampion: boolean }>
   >();
 
   for (const opponent of data.opponents) {
@@ -90,6 +132,8 @@ export default async function LineupPage({
       name: opponent.name,
       nation: opponent.nation,
       profile,
+      championshipWins: championWins.get(opponent.name) || 0,
+      isReigningChampion: opponent.name === reigningChampion,
     };
 
     if (!carDriverMap.has(opponent.car)) {
@@ -178,8 +222,41 @@ export default async function LineupPage({
                     <Link
                       key={driver.name}
                       href={`/driver/${encodeURIComponent(driver.name)}`}
-                      className="flex items-start gap-4 p-4 bg-zinc-900/50 rounded-lg border border-zinc-700/50 hover:border-purple-500/50 hover:bg-zinc-900/80 transition-all group"
+                      className={`relative flex items-start gap-4 p-4 rounded-lg border transition-all group ${
+                        driver.isReigningChampion
+                          ? 'bg-gradient-to-br from-amber-500/10 via-zinc-900/50 to-zinc-900/50 border-amber-500/50 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/20'
+                          : 'bg-zinc-900/50 border-zinc-700/50 hover:border-purple-500/50 hover:bg-zinc-900/80'
+                      }`}
                     >
+                      {/* Reigning Champion Crown Badge */}
+                      {driver.isReigningChampion && (
+                        <div className="absolute -top-2 -right-2 z-10">
+                          <div className="relative">
+                            {/* Glow effect */}
+                            <div className="absolute inset-0 bg-amber-400 rounded-full blur-md opacity-60 animate-pulse"></div>
+                            {/* Badge */}
+                            <div className="relative flex items-center justify-center w-12 h-12 bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 rounded-full border-2 border-amber-300 shadow-xl">
+                              <svg
+                                className="w-7 h-7 text-zinc-900 drop-shadow-md"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                              </svg>
+                              {/* Sparkle decorations */}
+                              <div className="absolute -top-1 -left-1 w-2 h-2 bg-white rounded-full animate-ping"></div>
+                              <div className="absolute -bottom-1 -right-1 w-1.5 h-1.5 bg-amber-200 rounded-full animate-pulse"></div>
+                            </div>
+                            {/* Tooltip */}
+                            <div className="absolute top-14 right-0 hidden group-hover:block w-max">
+                              <div className="bg-gradient-to-r from-amber-500 to-yellow-500 text-zinc-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg whitespace-nowrap">
+                                👑 REIGNING CHAMPION
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
                       {/* Driver Photo */}
                       <div className="flex-shrink-0">
                         <DriverImage driverName={driver.name} />
@@ -213,6 +290,23 @@ export default async function LineupPage({
                               <span className="text-zinc-500">Nationality: </span>
                               <span className="text-zinc-300">
                                 {driver.profile.nationality}
+                              </span>
+                            </div>
+                          )}
+                          {driver.championshipWins > 0 && (
+                            <div className="mt-1">
+                              <span
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold bg-gradient-to-r from-amber-400 to-yellow-500 text-zinc-900 rounded-full shadow-lg"
+                                title={`${driver.championshipWins} Championship ${driver.championshipWins === 1 ? 'Win' : 'Wins'}`}
+                              >
+                                <svg
+                                  className="w-3.5 h-3.5"
+                                  fill="currentColor"
+                                  viewBox="0 0 20 20"
+                                >
+                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                </svg>
+                                <span>{driver.championshipWins}× CHAMPION</span>
                               </span>
                             </div>
                           )}

@@ -38,7 +38,10 @@
       "Bash(cd:*)",
       "Bash(move:*)",
       "Bash(grep:*)",
-      "Bash(test:*)"
+      "Bash(test:*)",
+      "Bash(netstat:*)",
+      "Bash(taskkill /PID 9408 /F)",
+      "Bash(taskkill:*)"
     ],
     "deny": [],
     "ask": []
