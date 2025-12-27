@@ -83,10 +83,19 @@ export default async function LineupPage({
   const championWins = new Map<string, number>();
   let reigningChampion: string | null = null;
 
-  // Sort seasons to find the most recent one with race data
-  const seasonsWithData = championship.seasons
-    .map(s => ({
+  // Find the index of the current season
+  const currentSeasonIndex = championship.seasons.findIndex(
+    (s) =>
+      s.seasonName.toLowerCase().replace(" ", "_") ===
+      decodedSeasonId.toLowerCase()
+  );
+
+  // Get all seasons before the current one (sorted by their order in the array)
+  const previousSeasons = championship.seasons
+    .slice(0, currentSeasonIndex)
+    .map((s, index) => ({
       season: s,
+      originalIndex: index,
       standings: calculateStandings({
         id: championship.id,
         data: s.data,
@@ -97,14 +106,15 @@ export default async function LineupPage({
     }))
     .filter(s => s.standings.length > 0);
 
-  // Get reigning champion (from most recent season with data)
-  if (seasonsWithData.length > 0) {
-    const mostRecent = seasonsWithData[seasonsWithData.length - 1];
-    reigningChampion = mostRecent.standings[0].name;
+  // Get reigning champion (from the most recent previous season with race data)
+  if (previousSeasons.length > 0) {
+    const previousChampion = previousSeasons[previousSeasons.length - 1];
+    reigningChampion = previousChampion.standings[0].name;
   }
 
-  // Count all championship wins
-  for (const s of championship.seasons) {
+  // Count championship wins only from finished seasons (before the current one)
+  const finishedSeasons = championship.seasons.slice(0, currentSeasonIndex);
+  for (const s of finishedSeasons) {
     const seasonChampionship = {
       id: championship.id,
       data: s.data,
