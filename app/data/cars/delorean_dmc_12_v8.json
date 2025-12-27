@@ -1,0 +1,19 @@
+{
+  "name": "DeLorean DMC-12 V8",
+  "brand": "DMC",
+  "description": "v1.1 by ACTK<br>Fix cast shadows in 3d model<br>Fix blur rims<br>Fix car.ini<br>Update shaders<br>Update UV map in 3d model<br>Update suspensions.ini<br>Add AO skins<br>Add fuel_cons.ini<br>Add COCKPIT_HR<br>Add LODs<br>Add data to data.acd<br><br>Nicholas Roedl subscribes to the notion that there nothing in the world that an LS V8 can&#39;t fix. The original 2.8-liter PRV V6, unloved and unworthy of the DeLorean (at least when new) has been deep-sixed in favor of 5.7 liters of American iron. You all know the advantages of the LS-series: compact and extremely power-dense, it allows folks to put lots of power where a distinct lack of power used to be.",
+  "class": "street",
+  "specs": {
+    "bhp": "498 bhp",
+    "torque": "674 Nm",
+    "weight": "1200kg",
+    "topspeed": "209km/h",
+    "acceleration": "9s 0-100",
+    "pwratio": "2.41 kg/hp"
+  },
+  "year": 1981,
+  "country": "USA",
+  "author": "S3R1U5 & VincentGC",
+  "url": null,
+  "version": "1.1"
+}

@@ -129,6 +129,30 @@ export default async function DriverPage({ params }: { params: Promise<{ driverN
     }
   }
 
+  // If no race data found, check if driver exists in any championship lineup
+  if (!driverData) {
+    for (const champ of championships) {
+      for (const season of champ.seasons) {
+        const opponent = season.data.opponents?.find((o: any) => o.name === decodedDriverName);
+        if (opponent) {
+          driverData = {
+            name: opponent.name,
+            nation: opponent.nation,
+            car: opponent.car,
+            totalPoints: 0,
+            totalWins: 0,
+            totalPoles: 0,
+            totalPodiums: 0,
+            totalFastestLaps: 0,
+            championships: [],
+          };
+          break;
+        }
+      }
+      if (driverData) break;
+    }
+  }
+
   if (!driverData) {
     notFound();
   }

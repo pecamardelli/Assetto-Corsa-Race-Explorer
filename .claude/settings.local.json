@@ -37,7 +37,8 @@
       "Bash(npm run build:*)",
       "Bash(cd:*)",
       "Bash(move:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(test:*)"
     ],
     "deny": [],
     "ask": []

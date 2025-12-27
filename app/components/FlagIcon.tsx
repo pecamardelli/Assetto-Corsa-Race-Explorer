@@ -27,14 +27,17 @@ const countryCodeMap: Record<string, string> = {
   'IRE': 'IE', // Ireland (alternative code)
   'IRL': 'IE', // Ireland
   'ITA': 'IT', // Italy
+  'JOR': 'JO', // Jordan
   'JPN': 'JP', // Japan
   'KEN': 'KE', // Kenya
   'MEX': 'MX', // Mexico
+  'NGA': 'NG', // Nigeria
   'PAN': 'PA', // Panama
   'POL': 'PL', // Poland
   'ROU': 'RO', // Romania
   'RUS': 'RU', // Russia
   'SCO': 'GB-SCT', // Scotland
+  'SCT': 'GB-SCT', // Scotland (alternative code)
   'SWE': 'SE', // Sweden
   'TUR': 'TR', // Turkey
   'UAE': 'AE', // United Arab Emirates
@@ -70,11 +73,14 @@ export default function FlagIcon({ nation }: FlagIconProps) {
   if (regionalFlags.includes(countryCode)) {
     return (
       <div className="flex justify-center">
-        <img
+        <Image
           src={`/flags/${countryCode}.svg`}
           alt={nation}
           title={nation}
+          width={24}
+          height={16}
           className="h-6 rounded shadow-sm"
+          unoptimized
         />
       </div>
     );
