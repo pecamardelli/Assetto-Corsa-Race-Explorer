@@ -7,6 +7,7 @@ import { getTrackDetails } from '../../lib/track-data';
 import BackButton from '../../components/BackButton';
 import FlagIcon from '../../components/FlagIcon';
 import DriverPortrait from '../../components/DriverPortrait';
+import LapTimesDialog from '../../components/LapTimesDialog';
 
 export default async function RacePage({ params }: { params: Promise<{ filename: string }> }) {
   const { filename } = await params;
@@ -303,11 +304,6 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                               }`}>
                                 {totalCrashes}
                               </div>
-                              {worstCrashG > 0 && (
-                                <div className="text-xs text-zinc-500">
-                                  {worstCrashG.toFixed(0)}G max
-                                </div>
-                              )}
                             </td>
                           </>
                         )}
@@ -321,8 +317,12 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                         </td>
                         {!isPracticeOrQualifying && (
                           <>
-                            <td className="px-4 py-4 text-white font-mono hidden xl:table-cell">
-                              {driver.total_time_formatted || '-'}
+                            <td className="px-4 py-4 hidden xl:table-cell">
+                              <LapTimesDialog
+                                driverName={driver.name || 'Unknown'}
+                                lapTimes={driver.lap_times || []}
+                                totalTime={driver.total_time_formatted || '-'}
+                              />
                             </td>
                             <td className="px-4 py-4 font-mono hidden lg:table-cell">
                               <span className={isRetired ? 'text-red-400 font-semibold' : 'text-zinc-400'}>
