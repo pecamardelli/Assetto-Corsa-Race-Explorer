@@ -25,6 +25,7 @@ car_stats = {}
 prev_positions = {}
 prev_lap_counts = {}
 prev_g_forces = {}
+last_crash_times = {}  # Track time of last crash for cooldown
 
 # Session info
 session_start_time = 0
@@ -37,11 +38,14 @@ current_session_number = 0
 previous_session_time = 0.0
 
 # Crash detection threshold (G-force)
-CRASH_G_FORCE_THRESHOLD = 4.0
+CRASH_G_FORCE_THRESHOLD = 70.0            # Only count crashes above 70G
 
 # Crash penalty parameters
 CRASH_PENALTY_PERCENT_PER_G = 0.01        # 0.01% penalty per G-force (0.1% per 10G)
 MAX_CRASH_PENALTY_PER_CRASH = 100.0       # Cap each crash at 100G (1% max penalty per crash)
+
+# Crash cooldown period
+CRASH_COOLDOWN_SECONDS = 10.0             # Ignore additional crashes for 10 seconds after a crash
 
 class CarStats:
     def __init__(self, car_id, driver_name, car_name):
@@ -296,7 +300,7 @@ def acMain(ac_version):
 def acUpdate(deltaT):
     """Called every frame - track all statistics"""
     global car_stats, prev_positions, prev_lap_counts, total_cars, session_active, session_start_time, prev_g_forces, session_total_time
-    global current_session_number, previous_session_time
+    global current_session_number, previous_session_time, last_crash_times
 
     try:
         # Detect session change by monitoring if lap counts reset or session time goes backwards
@@ -329,6 +333,7 @@ def acUpdate(deltaT):
             prev_positions = {}
             prev_lap_counts = {}
             prev_g_forces = {}
+            last_crash_times = {}
             session_active = False
 
             ac.log("Race Stats: Starting NEW SESSION {0}".format(current_session_number + 1))
@@ -347,6 +352,7 @@ def acUpdate(deltaT):
                 prev_positions[i] = ac.getCarLeaderboardPosition(i)
                 prev_lap_counts[i] = 0
                 prev_g_forces[i] = [0.0, 0.0, 0.0]
+                last_crash_times[i] = -999.0  # Initialize far in the past
 
             ac.log("Race Stats: Tracking {0} cars".format(total_cars))
             ac.console("Race Stats: Tracking {0} cars".format(total_cars))
@@ -434,9 +440,15 @@ def acUpdate(deltaT):
                     # Detect sudden impact (rapid G-force change)
                     g_change = abs(total_g - prev_total_g)
 
-                    # If G-force spike is above threshold, record crash with intensity
-                    if g_change > CRASH_G_FORCE_THRESHOLD:
+                    # Check if enough time has passed since last crash (cooldown period)
+                    time_since_last_crash = session_total_time - last_crash_times.get(car_id, -999.0)
+
+                    # Only count crash if:
+                    # 1. G-force spike is above 70G threshold
+                    # 2. At least 10 seconds have passed since last crash
+                    if g_change > CRASH_G_FORCE_THRESHOLD and time_since_last_crash >= CRASH_COOLDOWN_SECONDS:
                         stats.crash_intensities.append(g_change)
+                        last_crash_times[car_id] = session_total_time
                         ac.log("Race Stats: {0} CRASH detected! G-force spike: {1:.2f}g (Total crashes: {2})".format(
                             stats.driver_name, g_change, len(stats.crash_intensities)))
 
