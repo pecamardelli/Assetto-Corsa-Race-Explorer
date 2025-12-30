@@ -21,14 +21,15 @@ const path = require("path");
 // CONFIGURATION: Set these paths and options
 // ============================================================================
 const QUALIFYING_JSON_PATH =
-  "app/data/championship/Test Drive Tour/season_06/stats_feldberg_session_qualifying_20251228_182155.json";
+  "app/data/championship/Test Drive Tour/season_06/stats_ks_monza66-full_cir_session_qualifying_20251229_225512.json";
 
-const CHAMPIONSHIP_FILE = "app/data/championship/Test Drive Tour/season_06.champ";
+const CHAMPIONSHIP_FILE =
+  "app/data/championship/Test Drive Tour/season_06.champ";
 
 const PLAYER_NAME = "Pablin"; // Your driver name - used to determine starting position from qualifying
 
 const OUTPUT_FILE = null; // null = auto-generate path in AppData
-const TRACK_NAME = "feldberg";
+const TRACK_NAME = "monza";
 const SESSION_NUMBER = "6";
 const AI_LEVEL = 100.0;
 const AI_LEVEL_MIN = 95.0;
@@ -66,7 +67,6 @@ const COUNTRY_CODES = {
   USA: "USA",
   VEN: "Venezuela",
 };
-
 
 function loadChampionship(filePath) {
   try {
@@ -216,11 +216,17 @@ function main() {
   const qualyResults = loadQualifyingResults(QUALIFYING_JSON_PATH);
   let playerPosition = 1; // Default to P1 if not found
 
-  if (qualyResults && qualyResults.driver_statistics && qualyResults.driver_statistics[PLAYER_NAME]) {
+  if (
+    qualyResults &&
+    qualyResults.driver_statistics &&
+    qualyResults.driver_statistics[PLAYER_NAME]
+  ) {
     playerPosition = qualyResults.driver_statistics[PLAYER_NAME].position;
     console.log(`Player "${PLAYER_NAME}" qualified in P${playerPosition}`);
   } else {
-    console.warn(`Warning: Could not find player "${PLAYER_NAME}" in qualifying results, defaulting to P1`);
+    console.warn(
+      `Warning: Could not find player "${PLAYER_NAME}" in qualifying results, defaulting to P1`
+    );
   }
 
   const preset = generateCMPreset(grid, playerPosition);
