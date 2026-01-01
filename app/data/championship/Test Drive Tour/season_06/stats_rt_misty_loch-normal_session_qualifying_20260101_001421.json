@@ -1,0 +1,1536 @@
+{
+  "driver_statistics": {
+    "Percy Goodpace": {
+      "car_name": "a3dr_lambo_diablo_vt",
+      "average_speed_mph": 102.31,
+      "total_time_seconds": 1692.885,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "28:12.884",
+      "average_lap": 153.899,
+      "lap_times": [
+        166.038, 141.795, 142.401, 149.112, 141.795, 214.917, 163.89, 144.318,
+        143.466, 144.042, 141.111
+      ],
+      "partial_lap_completion": 0.01,
+      "average_speed_kmh": 164.65,
+      "times_overtaken": 18,
+      "best_lap": 141.111,
+      "distance_covered_km": 77.42,
+      "overtakes_made": 17,
+      "score_breakdown": {
+        "speed_factor": 0.958,
+        "crash_penalty_percent": 0.0,
+        "base_score": 70966.21,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.675
+      },
+      "position": 14,
+      "total_score": 45871,
+      "distance_covered_miles": 48.11,
+      "retired": false,
+      "laps_completed": 11,
+      "net_positions_gained": -1
+    },
+    "Pablin": {
+      "car_name": "a3dr_lambo_diablo_vt",
+      "average_speed_mph": 86.77,
+      "total_time_seconds": 1918.11,
+      "crashes": {
+        "total_crash_intensity": 328.5,
+        "worst_crash_g": 92.98,
+        "total_crashes": 4,
+        "average_crash_g": 82.13,
+        "crash_intensities_g": [85.95, 92.98, 76.44, 73.12]
+      },
+      "total_time_formatted": "31:58.109",
+      "average_lap": 191.811,
+      "lap_times": [
+        196.935, 146.739, 410.889, 137.409, 148.35, 151.704, 145.746, 143.895,
+        301.317, 135.126
+      ],
+      "partial_lap_completion": 0.001,
+      "average_speed_kmh": 139.65,
+      "times_overtaken": 22,
+      "best_lap": 135.126,
+      "distance_covered_km": 74.4,
+      "overtakes_made": 43,
+      "score_breakdown": {
+        "speed_factor": 1.0,
+        "crash_penalty_percent": 3.29,
+        "base_score": 64514.74,
+        "crash_factor": 0.967,
+        "fastest_lap_bonus": 3119.77,
+        "position_factor": 1.0
+      },
+      "position": 1,
+      "total_score": 65516,
+      "distance_covered_miles": 46.23,
+      "retired": false,
+      "laps_completed": 10,
+      "net_positions_gained": 21
+    },
+    "Bolo Fekal": {
+      "car_name": "dg_bp_callaway_c12",
+      "average_speed_mph": 88.67,
+      "total_time_seconds": 1790.313,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "29:50.313",
+      "average_lap": 162.756,
+      "lap_times": [
+        221.586, 146.61, 151.761, 151.509, 144.918, 156.246, 247.545, 140.802,
+        139.236, 138.903, 151.197
+      ],
+      "partial_lap_completion": 0.041,
+      "average_speed_kmh": 142.7,
+      "times_overtaken": 28,
+      "best_lap": 138.903,
+      "distance_covered_km": 70.97,
+      "overtakes_made": 52,
+      "score_breakdown": {
+        "speed_factor": 0.973,
+        "crash_penalty_percent": 0.0,
+        "base_score": 70966.21,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.875
+      },
+      "position": 6,
+      "total_score": 60407,
+      "distance_covered_miles": 44.1,
+      "retired": false,
+      "laps_completed": 11,
+      "net_positions_gained": 24
+    },
+    "Pavel Voludin": {
+      "car_name": "rs_testarossa_84",
+      "average_speed_mph": 81.11,
+      "total_time_seconds": 1601.421,
+      "crashes": {
+        "total_crash_intensity": 672.33,
+        "worst_crash_g": 672.33,
+        "total_crashes": 1,
+        "average_crash_g": 672.33,
+        "crash_intensities_g": [672.33]
+      },
+      "total_time_formatted": "26:41.421",
+      "average_lap": 177.936,
+      "lap_times": [
+        274.869, 148.569, 167.22, 240.366, 168.522, 151.47, 146.727, 146.235,
+        157.443
+      ],
+      "partial_lap_completion": 0.032,
+      "average_speed_kmh": 130.53,
+      "times_overtaken": 21,
+      "best_lap": 146.235,
+      "distance_covered_km": 58.06,
+      "overtakes_made": 26,
+      "score_breakdown": {
+        "speed_factor": 0.924,
+        "crash_penalty_percent": 1.0,
+        "base_score": 58063.26,
+        "crash_factor": 0.99,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.225
+      },
+      "position": 32,
+      "total_score": 11952,
+      "distance_covered_miles": 36.08,
+      "retired": false,
+      "laps_completed": 9,
+      "net_positions_gained": 5
+    },
+    "Klingon Popinsky": {
+      "car_name": "ks_lamborghini_countach",
+      "average_speed_mph": 88.7,
+      "total_time_seconds": 1789.8,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "29:49.799",
+      "average_lap": 162.709,
+      "lap_times": [
+        202.854, 148.761, 157.368, 155.262, 223.647, 154.617, 152.853, 146.763,
+        146.847, 144.54, 156.288
+      ],
+      "partial_lap_completion": 0.03,
+      "average_speed_kmh": 142.74,
+      "times_overtaken": 29,
+      "best_lap": 144.54,
+      "distance_covered_km": 70.97,
+      "overtakes_made": 42,
+      "score_breakdown": {
+        "speed_factor": 0.935,
+        "crash_penalty_percent": 0.0,
+        "base_score": 70966.21,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.375
+      },
+      "position": 26,
+      "total_score": 24880,
+      "distance_covered_miles": 44.1,
+      "retired": false,
+      "laps_completed": 11,
+      "net_positions_gained": 13
+    },
+    "Paolo Spaghetti": {
+      "car_name": "jf_porsche_959",
+      "average_speed_mph": 89.6,
+      "total_time_seconds": 1771.857,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "29:31.856",
+      "average_lap": 177.186,
+      "lap_times": [
+        233.352, 144.594, 153.924, 149.691, 154.818, 179.724, 221.022, 156.603,
+        222.639, 155.49
+      ],
+      "partial_lap_completion": 0.007,
+      "average_speed_kmh": 144.2,
+      "times_overtaken": 43,
+      "best_lap": 144.594,
+      "distance_covered_km": 70.97,
+      "overtakes_made": 32,
+      "score_breakdown": {
+        "speed_factor": 0.935,
+        "crash_penalty_percent": 0.0,
+        "base_score": 64514.74,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.35
+      },
+      "position": 27,
+      "total_score": 21102,
+      "distance_covered_miles": 44.1,
+      "retired": false,
+      "laps_completed": 10,
+      "net_positions_gained": -11
+    },
+    "Willy Sandia": {
+      "car_name": "porsche_911_turbo",
+      "average_speed_mph": 77.86,
+      "total_time_seconds": 1668.243,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "27:48.242",
+      "average_lap": 208.53,
+      "lap_times": [
+        256.518, 147.729, 268.179, 160.734, 249.132, 158.988, 267.99, 158.973
+      ],
+      "partial_lap_completion": 0.011,
+      "average_speed_kmh": 125.3,
+      "times_overtaken": 40,
+      "best_lap": 147.729,
+      "distance_covered_km": 58.06,
+      "overtakes_made": 15,
+      "score_breakdown": {
+        "speed_factor": 0.915,
+        "crash_penalty_percent": 0.0,
+        "base_score": 51611.79,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.1
+      },
+      "position": 37,
+      "total_score": 4721,
+      "distance_covered_miles": 36.08,
+      "retired": false,
+      "laps_completed": 8,
+      "net_positions_gained": -25
+    },
+    "Hassan Sali Baba": {
+      "car_name": "dg_bp_callaway_c12",
+      "average_speed_mph": 92.02,
+      "total_time_seconds": 1725.153,
+      "crashes": {
+        "total_crash_intensity": 672.49,
+        "worst_crash_g": 672.49,
+        "total_crashes": 1,
+        "average_crash_g": 672.49,
+        "crash_intensities_g": [672.49]
+      },
+      "total_time_formatted": "28:45.153",
+      "average_lap": 156.832,
+      "lap_times": [
+        219.753, 141.543, 147.711, 155.811, 177.981, 165.807, 144.597, 142.422,
+        139.278, 139.566, 150.684
+      ],
+      "partial_lap_completion": 0.04,
+      "average_speed_kmh": 148.09,
+      "times_overtaken": 15,
+      "best_lap": 139.278,
+      "distance_covered_km": 70.97,
+      "overtakes_made": 39,
+      "score_breakdown": {
+        "speed_factor": 0.97,
+        "crash_penalty_percent": 1.0,
+        "base_score": 70966.21,
+        "crash_factor": 0.99,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.85
+      },
+      "position": 7,
+      "total_score": 57938,
+      "distance_covered_miles": 44.1,
+      "retired": false,
+      "laps_completed": 11,
+      "net_positions_gained": 24
+    },
+    "Mark Fullthrottle": {
+      "car_name": "lotus_esprit_v8_gt",
+      "average_speed_mph": 93.91,
+      "total_time_seconds": 1690.443,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "28:10.442",
+      "average_lap": 153.677,
+      "lap_times": [
+        166.704, 141.531, 138.786, 149.322, 198.897, 139.515, 154.173, 175.203,
+        137.832, 139.11, 149.37
+      ],
+      "partial_lap_completion": 0.023,
+      "average_speed_kmh": 151.13,
+      "times_overtaken": 10,
+      "best_lap": 137.832,
+      "distance_covered_km": 70.97,
+      "overtakes_made": 10,
+      "score_breakdown": {
+        "speed_factor": 0.98,
+        "crash_penalty_percent": 0.0,
+        "base_score": 70966.21,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.95
+      },
+      "position": 3,
+      "total_score": 66095,
+      "distance_covered_miles": 44.1,
+      "retired": false,
+      "laps_completed": 11,
+      "net_positions_gained": 0
+    },
+    "Shura McPinch": {
+      "car_name": "ruf_yellowbird",
+      "average_speed_mph": 83.83,
+      "total_time_seconds": 1916.691,
+      "crashes": {
+        "total_crash_intensity": 678.53,
+        "worst_crash_g": 678.53,
+        "total_crashes": 1,
+        "average_crash_g": 678.53,
+        "crash_intensities_g": [678.53]
+      },
+      "total_time_formatted": "31:56.691",
+      "average_lap": 174.245,
+      "lap_times": [
+        256.686, 142.59, 161.487, 197.286, 143.937, 162.216, 195.384, 141.594,
+        154.242, 220.776, 140.493
+      ],
+      "partial_lap_completion": 0.164,
+      "average_speed_kmh": 134.91,
+      "times_overtaken": 23,
+      "best_lap": 140.493,
+      "distance_covered_km": 71.83,
+      "overtakes_made": 50,
+      "score_breakdown": {
+        "speed_factor": 0.962,
+        "crash_penalty_percent": 1.0,
+        "base_score": 70966.21,
+        "crash_factor": 0.99,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.75
+      },
+      "position": 11,
+      "total_score": 50680,
+      "distance_covered_miles": 44.63,
+      "retired": false,
+      "laps_completed": 11,
+      "net_positions_gained": 27
+    },
+    "Dave Gargiulo": {
+      "car_name": "gd_dodge_viper_gts",
+      "average_speed_mph": 91.69,
+      "total_time_seconds": 1573.89,
+      "crashes": {
+        "total_crash_intensity": 70.16,
+        "worst_crash_g": 70.16,
+        "total_crashes": 1,
+        "average_crash_g": 70.16,
+        "crash_intensities_g": [70.16]
+      },
+      "total_time_formatted": "26:13.890",
+      "average_lap": 174.877,
+      "lap_times": [
+        212.187, 150.438, 156.177, 161.202, 154.092, 280.386, 160.899, 149.031,
+        149.478
+      ],
+      "partial_lap_completion": 0.013,
+      "average_speed_kmh": 147.57,
+      "times_overtaken": 51,
+      "best_lap": 149.031,
+      "distance_covered_km": 64.51,
+      "overtakes_made": 23,
+      "score_breakdown": {
+        "speed_factor": 0.907,
+        "crash_penalty_percent": 0.7,
+        "base_score": 58063.26,
+        "crash_factor": 0.993,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.05
+      },
+      "position": 39,
+      "total_score": 2614,
+      "distance_covered_miles": 40.09,
+      "retired": false,
+      "laps_completed": 9,
+      "net_positions_gained": -28
+    },
+    "Andrea Crotto": {
+      "car_name": "porsche_911_turbo",
+      "average_speed_mph": 81.82,
+      "total_time_seconds": 1587.483,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "26:27.482",
+      "average_lap": 176.387,
+      "lap_times": [
+        219.687, 148.17, 171.414, 223.11, 151.431, 163.356, 204.021, 146.634,
+        159.66
+      ],
+      "partial_lap_completion": 0.035,
+      "average_speed_kmh": 131.67,
+      "times_overtaken": 32,
+      "best_lap": 146.634,
+      "distance_covered_km": 58.06,
+      "overtakes_made": 32,
+      "score_breakdown": {
+        "speed_factor": 0.922,
+        "crash_penalty_percent": 0.0,
+        "base_score": 58063.26,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.15
+      },
+      "position": 35,
+      "total_score": 8026,
+      "distance_covered_miles": 36.08,
+      "retired": false,
+      "laps_completed": 9,
+      "net_positions_gained": 0
+    },
+    "Dick Palumbo": {
+      "car_name": "chevy_camaro_1969_zl1",
+      "average_speed_mph": 92.83,
+      "total_time_seconds": 1903.293,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "31:43.292",
+      "average_lap": 158.608,
+      "lap_times": [
+        190.47, 143.253, 141.009, 144.693, 146.511, 146.604, 210.699, 156.459,
+        188.568, 154.62, 140.586, 139.821
+      ],
+      "partial_lap_completion": 0.0,
+      "average_speed_kmh": 149.39,
+      "times_overtaken": 19,
+      "best_lap": 139.821,
+      "distance_covered_km": 78.98,
+      "overtakes_made": 17,
+      "score_breakdown": {
+        "speed_factor": 0.966,
+        "crash_penalty_percent": 0.0,
+        "base_score": 77417.68,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.8
+      },
+      "position": 9,
+      "total_score": 59855,
+      "distance_covered_miles": 49.08,
+      "retired": false,
+      "laps_completed": 12,
+      "net_positions_gained": -2
+    },
+    "Holly Sikorsky": {
+      "car_name": "pantera_gts",
+      "average_speed_mph": 89.78,
+      "total_time_seconds": 1607.514,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "26:47.513",
+      "average_lap": 160.751,
+      "lap_times": [
+        161.37, 146.586, 145.308, 160.62, 232.125, 167.607, 150.078, 145.182,
+        143.955, 154.683
+      ],
+      "partial_lap_completion": 0.038,
+      "average_speed_kmh": 144.48,
+      "times_overtaken": 34,
+      "best_lap": 143.955,
+      "distance_covered_km": 64.52,
+      "overtakes_made": 43,
+      "score_breakdown": {
+        "speed_factor": 0.939,
+        "crash_penalty_percent": 0.0,
+        "base_score": 64514.74,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.425
+      },
+      "position": 24,
+      "total_score": 25738,
+      "distance_covered_miles": 40.09,
+      "retired": false,
+      "laps_completed": 10,
+      "net_positions_gained": 9
+    },
+    "Dex Winrace": {
+      "car_name": "delorean_dmc_12_v8",
+      "average_speed_mph": 87.37,
+      "total_time_seconds": 1881.426,
+      "crashes": {
+        "total_crash_intensity": 670.42,
+        "worst_crash_g": 670.42,
+        "total_crashes": 1,
+        "average_crash_g": 670.42,
+        "crash_intensities_g": [670.42]
+      },
+      "total_time_formatted": "31:21.425",
+      "average_lap": 171.039,
+      "lap_times": [
+        277.983, 139.641, 141.351, 137.79, 153.696, 176.538, 140.622, 140.046,
+        152.652, 283.983, 137.124
+      ],
+      "partial_lap_completion": 0.435,
+      "average_speed_kmh": 140.6,
+      "times_overtaken": 27,
+      "best_lap": 137.124,
+      "distance_covered_km": 73.48,
+      "overtakes_made": 51,
+      "score_breakdown": {
+        "speed_factor": 0.985,
+        "crash_penalty_percent": 1.0,
+        "base_score": 70966.21,
+        "crash_factor": 0.99,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.975
+      },
+      "position": 2,
+      "total_score": 67503,
+      "distance_covered_miles": 45.66,
+      "retired": false,
+      "laps_completed": 11,
+      "net_positions_gained": 24
+    },
+    "Carlo Pappolongo": {
+      "car_name": "chevrolet_corvette_c4_1989",
+      "average_speed_mph": 81.03,
+      "total_time_seconds": 1781.154,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "29:41.153",
+      "average_lap": 197.906,
+      "lap_times": [
+        250.101, 143.544, 237.609, 256.329, 162.087, 245.4, 155.961, 174.534,
+        155.589
+      ],
+      "partial_lap_completion": 0.008,
+      "average_speed_kmh": 130.4,
+      "times_overtaken": 37,
+      "best_lap": 143.544,
+      "distance_covered_km": 64.52,
+      "overtakes_made": 30,
+      "score_breakdown": {
+        "speed_factor": 0.941,
+        "crash_penalty_percent": 0.0,
+        "base_score": 58063.26,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.475
+      },
+      "position": 22,
+      "total_score": 25963,
+      "distance_covered_miles": 40.09,
+      "retired": false,
+      "laps_completed": 9,
+      "net_positions_gained": -7
+    },
+    "Krosty Ganzua": {
+      "car_name": "jaguar_xj220",
+      "average_speed_mph": 87.98,
+      "total_time_seconds": 1640.307,
+      "crashes": {
+        "total_crash_intensity": 650.61,
+        "worst_crash_g": 650.61,
+        "total_crashes": 1,
+        "average_crash_g": 650.61,
+        "crash_intensities_g": [650.61]
+      },
+      "total_time_formatted": "27:20.307",
+      "average_lap": 164.031,
+      "lap_times": [
+        253.986, 144.261, 149.52, 142.431, 145.896, 171.147, 151.383, 183.87,
+        141.387, 156.426
+      ],
+      "partial_lap_completion": 0.043,
+      "average_speed_kmh": 141.59,
+      "times_overtaken": 33,
+      "best_lap": 141.387,
+      "distance_covered_km": 64.51,
+      "overtakes_made": 45,
+      "score_breakdown": {
+        "speed_factor": 0.956,
+        "crash_penalty_percent": 1.0,
+        "base_score": 64514.74,
+        "crash_factor": 0.99,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.625
+      },
+      "position": 16,
+      "total_score": 38151,
+      "distance_covered_miles": 40.09,
+      "retired": false,
+      "laps_completed": 10,
+      "net_positions_gained": 12
+    },
+    "Kito Banzai": {
+      "car_name": "sts_r33_gtr_400r",
+      "average_speed_mph": 83.61,
+      "total_time_seconds": 1726.377,
+      "crashes": {
+        "total_crash_intensity": 184.69,
+        "worst_crash_g": 184.69,
+        "total_crashes": 1,
+        "average_crash_g": 184.69,
+        "crash_intensities_g": [184.69]
+      },
+      "total_time_formatted": "28:46.376",
+      "average_lap": 172.638,
+      "lap_times": [
+        221.352, 148.851, 156.468, 154.614, 153.141, 170.136, 273.288, 146.862,
+        147.954, 153.711
+      ],
+      "partial_lap_completion": 0.042,
+      "average_speed_kmh": 134.56,
+      "times_overtaken": 32,
+      "best_lap": 146.862,
+      "distance_covered_km": 64.53,
+      "overtakes_made": 25,
+      "score_breakdown": {
+        "speed_factor": 0.92,
+        "crash_penalty_percent": 1.0,
+        "base_score": 64514.74,
+        "crash_factor": 0.99,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.125
+      },
+      "position": 36,
+      "total_score": 7346,
+      "distance_covered_miles": 40.1,
+      "retired": false,
+      "laps_completed": 10,
+      "net_positions_gained": -7
+    },
+    "Trump Miranda": {
+      "car_name": "chevrolet_corvette_c4_1989",
+      "average_speed_mph": 77.12,
+      "total_time_seconds": 1497.081,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "24:57.080",
+      "average_lap": 187.135,
+      "lap_times": [
+        220.587, 157.809, 284.745, 146.973, 158.202, 227.187, 146.106, 155.472
+      ],
+      "partial_lap_completion": 0.039,
+      "average_speed_kmh": 124.12,
+      "times_overtaken": 31,
+      "best_lap": 146.106,
+      "distance_covered_km": 51.61,
+      "overtakes_made": 32,
+      "score_breakdown": {
+        "speed_factor": 0.925,
+        "crash_penalty_percent": 0.0,
+        "base_score": 51611.79,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.25
+      },
+      "position": 31,
+      "total_score": 11934,
+      "distance_covered_miles": 32.07,
+      "retired": false,
+      "laps_completed": 8,
+      "net_positions_gained": 1
+    },
+    "Matt LaPallita": {
+      "car_name": "bmw_m635_csi_sc",
+      "average_speed_mph": 99.95,
+      "total_time_seconds": 1443.963,
+      "crashes": {
+        "total_crash_intensity": 659.58,
+        "worst_crash_g": 659.58,
+        "total_crashes": 1,
+        "average_crash_g": 659.58,
+        "crash_intensities_g": [659.58]
+      },
+      "total_time_formatted": "24:03.962",
+      "average_lap": 160.44,
+      "lap_times": [
+        165.936, 144.711, 145.893, 220.644, 158.13, 171.729, 145.725, 145.524,
+        145.671
+      ],
+      "partial_lap_completion": 0.021,
+      "average_speed_kmh": 160.85,
+      "times_overtaken": 28,
+      "best_lap": 144.711,
+      "distance_covered_km": 64.52,
+      "overtakes_made": 5,
+      "score_breakdown": {
+        "speed_factor": 0.934,
+        "crash_penalty_percent": 1.0,
+        "base_score": 58063.26,
+        "crash_factor": 0.99,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.325
+      },
+      "position": 28,
+      "total_score": 17445,
+      "distance_covered_miles": 40.09,
+      "retired": false,
+      "laps_completed": 9,
+      "net_positions_gained": -23
+    },
+    "Vicente Gasoil": {
+      "car_name": "rs_testarossa_84",
+      "average_speed_mph": 90.35,
+      "total_time_seconds": 1597.392,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "26:37.392",
+      "average_lap": 177.488,
+      "lap_times": [
+        205.386, 148.992, 162.522, 195.372, 163.962, 266.484, 160.299, 146.613,
+        147.762
+      ],
+      "partial_lap_completion": 0.015,
+      "average_speed_kmh": 145.4,
+      "times_overtaken": 51,
+      "best_lap": 146.613,
+      "distance_covered_km": 64.52,
+      "overtakes_made": 26,
+      "score_breakdown": {
+        "speed_factor": 0.922,
+        "crash_penalty_percent": 0.0,
+        "base_score": 58063.26,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.175
+      },
+      "position": 34,
+      "total_score": 9365,
+      "distance_covered_miles": 40.09,
+      "retired": false,
+      "laps_completed": 9,
+      "net_positions_gained": -25
+    },
+    "Hugo Fast": {
+      "car_name": "exmods_dodge_m4s",
+      "average_speed_mph": 86.74,
+      "total_time_seconds": 1830.138,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "30:30.137",
+      "average_lap": 166.376,
+      "lap_times": [
+        193.536, 154.551, 151.506, 180.48, 155.61, 176.928, 240.573, 142.206,
+        144.528, 140.13, 150.09
+      ],
+      "partial_lap_completion": 0.027,
+      "average_speed_kmh": 139.6,
+      "times_overtaken": 35,
+      "best_lap": 140.13,
+      "distance_covered_km": 70.97,
+      "overtakes_made": 46,
+      "score_breakdown": {
+        "speed_factor": 0.964,
+        "crash_penalty_percent": 0.0,
+        "base_score": 70966.21,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.775
+      },
+      "position": 10,
+      "total_score": 53035,
+      "distance_covered_miles": 44.1,
+      "retired": false,
+      "laps_completed": 11,
+      "net_positions_gained": 11
+    },
+    "Shake Myhand": {
+      "car_name": "lotus_esprit_v8_gt",
+      "average_speed_mph": 99.87,
+      "total_time_seconds": 1734.036,
+      "crashes": {
+        "total_crash_intensity": 719.9,
+        "worst_crash_g": 647.48,
+        "total_crashes": 2,
+        "average_crash_g": 359.95,
+        "crash_intensities_g": [647.48, 72.42]
+      },
+      "total_time_formatted": "28:54.036",
+      "average_lap": 157.64,
+      "lap_times": [
+        189.003, 138.231, 140.058, 141.417, 146.802, 261.144, 152.586, 138.933,
+        143.511, 141.228, 141.123
+      ],
+      "partial_lap_completion": 0.022,
+      "average_speed_kmh": 160.73,
+      "times_overtaken": 7,
+      "best_lap": 138.231,
+      "distance_covered_km": 77.42,
+      "overtakes_made": 7,
+      "score_breakdown": {
+        "speed_factor": 0.978,
+        "crash_penalty_percent": 1.72,
+        "base_score": 70966.21,
+        "crash_factor": 0.983,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.925
+      },
+      "position": 4,
+      "total_score": 63063,
+      "distance_covered_miles": 48.11,
+      "retired": false,
+      "laps_completed": 11,
+      "net_positions_gained": 0
+    },
+    "Kevin Pirongo": {
+      "car_name": "ks_lamborghini_countach",
+      "average_speed_mph": 95.86,
+      "total_time_seconds": 1505.511,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "25:05.510",
+      "average_lap": 167.279,
+      "lap_times": [
+        192.303, 145.926, 170.544, 152.601, 250.362, 160.146, 144.759, 144.456,
+        144.414
+      ],
+      "partial_lap_completion": 0.019,
+      "average_speed_kmh": 154.27,
+      "times_overtaken": 32,
+      "best_lap": 144.414,
+      "distance_covered_km": 64.52,
+      "overtakes_made": 13,
+      "score_breakdown": {
+        "speed_factor": 0.936,
+        "crash_penalty_percent": 0.0,
+        "base_score": 58063.26,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.4
+      },
+      "position": 25,
+      "total_score": 21732,
+      "distance_covered_miles": 40.09,
+      "retired": false,
+      "laps_completed": 9,
+      "net_positions_gained": -19
+    },
+    "Paul Morlacko": {
+      "car_name": "jf_porsche_959",
+      "average_speed_mph": 86.86,
+      "total_time_seconds": 1827.777,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "30:27.777",
+      "average_lap": 166.162,
+      "lap_times": [
+        215.985, 144.957, 156.069, 148.443, 144.912, 161.934, 276.018, 144.003,
+        141.675, 141.342, 152.439
+      ],
+      "partial_lap_completion": 0.026,
+      "average_speed_kmh": 139.78,
+      "times_overtaken": 48,
+      "best_lap": 141.342,
+      "distance_covered_km": 70.97,
+      "overtakes_made": 34,
+      "score_breakdown": {
+        "speed_factor": 0.956,
+        "crash_penalty_percent": 0.0,
+        "base_score": 70966.21,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.65
+      },
+      "position": 15,
+      "total_score": 44100,
+      "distance_covered_miles": 44.1,
+      "retired": false,
+      "laps_completed": 11,
+      "net_positions_gained": -14
+    },
+    "Klej Bergan": {
+      "car_name": "jaguar_xj220",
+      "average_speed_mph": 87.96,
+      "total_time_seconds": 1640.634,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "27:20.634",
+      "average_lap": 164.063,
+      "lap_times": [
+        239.634, 140.952, 151.233, 140.439, 151.929, 247.635, 140.061, 138.501,
+        138.519, 151.731
+      ],
+      "partial_lap_completion": 0.044,
+      "average_speed_kmh": 141.56,
+      "times_overtaken": 19,
+      "best_lap": 138.501,
+      "distance_covered_km": 64.51,
+      "overtakes_made": 41,
+      "score_breakdown": {
+        "speed_factor": 0.976,
+        "crash_penalty_percent": 0.0,
+        "base_score": 64514.74,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.9
+      },
+      "position": 5,
+      "total_score": 56649,
+      "distance_covered_miles": 40.09,
+      "retired": false,
+      "laps_completed": 10,
+      "net_positions_gained": 22
+    },
+    "Pete Slipstream": {
+      "car_name": "ferrari_f40",
+      "average_speed_mph": 100.02,
+      "total_time_seconds": 1587.252,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "26:27.251",
+      "average_lap": 158.725,
+      "lap_times": [
+        206.502, 144.738, 147.693, 150.675, 179.61, 184.464, 147.111, 141.894,
+        141.657, 142.908
+      ],
+      "partial_lap_completion": 0.003,
+      "average_speed_kmh": 160.96,
+      "times_overtaken": 44,
+      "best_lap": 141.657,
+      "distance_covered_km": 70.97,
+      "overtakes_made": 46,
+      "score_breakdown": {
+        "speed_factor": 0.954,
+        "crash_penalty_percent": 0.0,
+        "base_score": 64514.74,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.6
+      },
+      "position": 17,
+      "total_score": 36925,
+      "distance_covered_miles": 44.1,
+      "retired": false,
+      "laps_completed": 10,
+      "net_positions_gained": 2
+    },
+    "Chuck Tornado": {
+      "car_name": "bmw_m635_csi_sc",
+      "average_speed_mph": 83.86,
+      "total_time_seconds": 1548.816,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "25:48.816",
+      "average_lap": 172.091,
+      "lap_times": [
+        237.318, 143.595, 158.802, 260.793, 150.144, 153.996, 147.312, 142.755,
+        154.101
+      ],
+      "partial_lap_completion": 0.034,
+      "average_speed_kmh": 134.96,
+      "times_overtaken": 23,
+      "best_lap": 142.755,
+      "distance_covered_km": 58.06,
+      "overtakes_made": 40,
+      "score_breakdown": {
+        "speed_factor": 0.947,
+        "crash_penalty_percent": 0.0,
+        "base_score": 58063.26,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.55
+      },
+      "position": 19,
+      "total_score": 30229,
+      "distance_covered_miles": 36.08,
+      "retired": false,
+      "laps_completed": 9,
+      "net_positions_gained": 17
+    },
+    "Elber Gamota": {
+      "car_name": "dome_jiotto_caspita",
+      "average_speed_mph": 81.61,
+      "total_time_seconds": 1253.031,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "20:53.030",
+      "average_lap": 179.004,
+      "lap_times": [
+        285.417, 143.073, 148.245, 152.871, 220.734, 157.227, 145.464
+      ],
+      "partial_lap_completion": 0.049,
+      "average_speed_kmh": 131.34,
+      "times_overtaken": 39,
+      "best_lap": 143.073,
+      "distance_covered_km": 45.72,
+      "overtakes_made": 41,
+      "score_breakdown": {
+        "speed_factor": 0.944,
+        "crash_penalty_percent": 0.0,
+        "base_score": 45160.32,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.5
+      },
+      "position": 21,
+      "total_score": 21326,
+      "distance_covered_miles": 28.41,
+      "retired": false,
+      "laps_completed": 7,
+      "net_positions_gained": 2
+    },
+    "Michael Birulo": {
+      "car_name": "gd_dodge_viper_gts",
+      "average_speed_mph": 90.13,
+      "total_time_seconds": 1851.738,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "30:51.738",
+      "average_lap": 168.34,
+      "lap_times": [
+        277.818, 149.451, 154.581, 150.09, 156.219, 166.629, 201.531, 149.952,
+        148.653, 148.257, 148.557
+      ],
+      "partial_lap_completion": 0.589,
+      "average_speed_kmh": 145.05,
+      "times_overtaken": 44,
+      "best_lap": 148.257,
+      "distance_covered_km": 74.61,
+      "overtakes_made": 8,
+      "score_breakdown": {
+        "speed_factor": 0.911,
+        "crash_penalty_percent": 0.0,
+        "base_score": 70966.21,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.075
+      },
+      "position": 38,
+      "total_score": 4852,
+      "distance_covered_miles": 46.36,
+      "retired": false,
+      "laps_completed": 11,
+      "net_positions_gained": -36
+    },
+    "Mario Ravioli": {
+      "car_name": "ferrari_f40",
+      "average_speed_mph": 63.76,
+      "total_time_seconds": 679.137,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "11:19.136",
+      "average_lap": 339.568,
+      "lap_times": [168.237, 510.9],
+      "partial_lap_completion": 0.014,
+      "average_speed_kmh": 102.61,
+      "times_overtaken": 37,
+      "best_lap": 168.237,
+      "distance_covered_km": 19.36,
+      "overtakes_made": 7,
+      "score_breakdown": {
+        "speed_factor": 0.803,
+        "crash_penalty_percent": 0.0,
+        "base_score": 12902.95,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.025
+      },
+      "position": 40,
+      "total_score": 260,
+      "distance_covered_miles": 12.03,
+      "retired": false,
+      "laps_completed": 2,
+      "net_positions_gained": -30
+    },
+    "Dieter Von Heil": {
+      "car_name": "mercedes_190_evo_ii",
+      "average_speed_mph": 89.89,
+      "total_time_seconds": 1931.13,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "32:11.130",
+      "average_lap": 160.928,
+      "lap_times": [
+        189.852, 146.445, 144.414, 150.828, 227.979, 158.976, 155.22, 143.232,
+        143.025, 172.761, 155.001, 143.397
+      ],
+      "partial_lap_completion": 0.0,
+      "average_speed_kmh": 144.66,
+      "times_overtaken": 29,
+      "best_lap": 143.025,
+      "distance_covered_km": 77.6,
+      "overtakes_made": 27,
+      "score_breakdown": {
+        "speed_factor": 0.945,
+        "crash_penalty_percent": 0.0,
+        "base_score": 77417.68,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.525
+      },
+      "position": 20,
+      "total_score": 38400,
+      "distance_covered_miles": 48.22,
+      "retired": false,
+      "laps_completed": 12,
+      "net_positions_gained": -2
+    },
+    "Shawn Cachamai": {
+      "car_name": "chevy_camaro_1969_zl1",
+      "average_speed_mph": 90.58,
+      "total_time_seconds": 1593.3,
+      "crashes": {
+        "total_crash_intensity": 659.98,
+        "worst_crash_g": 659.98,
+        "total_crashes": 1,
+        "average_crash_g": 659.98,
+        "crash_intensities_g": [659.98]
+      },
+      "total_time_formatted": "26:33.299",
+      "average_lap": 177.033,
+      "lap_times": [
+        226.686, 143.607, 231.819, 156.657, 144.405, 249.588, 153.99, 142.38,
+        144.168
+      ],
+      "partial_lap_completion": 0.009,
+      "average_speed_kmh": 145.77,
+      "times_overtaken": 40,
+      "best_lap": 142.38,
+      "distance_covered_km": 64.52,
+      "overtakes_made": 36,
+      "score_breakdown": {
+        "speed_factor": 0.949,
+        "crash_penalty_percent": 1.0,
+        "base_score": 58063.26,
+        "crash_factor": 0.99,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.575
+      },
+      "position": 18,
+      "total_score": 31369,
+      "distance_covered_miles": 40.09,
+      "retired": false,
+      "laps_completed": 9,
+      "net_positions_gained": -4
+    },
+    "Pierre Du Mans": {
+      "car_name": "dome_jiotto_caspita",
+      "average_speed_mph": 90.83,
+      "total_time_seconds": 1920.459,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "32:00.459",
+      "average_lap": 160.038,
+      "lap_times": [
+        286.2, 142.779, 156.615, 143.322, 151.08, 155.571, 176.85, 141.879,
+        141.012, 140.559, 143.106, 141.486
+      ],
+      "partial_lap_completion": 0.0,
+      "average_speed_kmh": 146.17,
+      "times_overtaken": 41,
+      "best_lap": 140.559,
+      "distance_covered_km": 77.98,
+      "overtakes_made": 49,
+      "score_breakdown": {
+        "speed_factor": 0.961,
+        "crash_penalty_percent": 0.0,
+        "base_score": 77417.68,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.725
+      },
+      "position": 12,
+      "total_score": 53959,
+      "distance_covered_miles": 48.45,
+      "retired": false,
+      "laps_completed": 12,
+      "net_positions_gained": 8
+    },
+    "Danny Paletto": {
+      "car_name": "mercedes_190_evo_ii",
+      "average_speed_mph": 89.24,
+      "total_time_seconds": 1778.799,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "29:38.798",
+      "average_lap": 177.88,
+      "lap_times": [
+        266.535, 145.581, 207.543, 158.934, 150.624, 254.949, 156.849, 145.716,
+        146.238, 145.83
+      ],
+      "partial_lap_completion": 0.005,
+      "average_speed_kmh": 143.62,
+      "times_overtaken": 35,
+      "best_lap": 145.581,
+      "distance_covered_km": 70.97,
+      "overtakes_made": 22,
+      "score_breakdown": {
+        "speed_factor": 0.928,
+        "crash_penalty_percent": 0.0,
+        "base_score": 64514.74,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.275
+      },
+      "position": 30,
+      "total_score": 16468,
+      "distance_covered_miles": 44.1,
+      "retired": false,
+      "laps_completed": 10,
+      "net_positions_gained": -13
+    },
+    "Rick Pegasus": {
+      "car_name": "delorean_dmc_12_v8",
+      "average_speed_mph": 92.31,
+      "total_time_seconds": 1876.218,
+      "crashes": {
+        "total_crash_intensity": 84.45,
+        "worst_crash_g": 84.45,
+        "total_crashes": 1,
+        "average_crash_g": 84.45,
+        "crash_intensities_g": [84.45]
+      },
+      "total_time_formatted": "31:16.218",
+      "average_lap": 156.351,
+      "lap_times": [
+        237.453, 141.018, 151.953, 151.374, 149.124, 157.863, 177.78, 140.466,
+        141.453, 139.296, 141.825, 146.613
+      ],
+      "partial_lap_completion": 0.0,
+      "average_speed_kmh": 148.55,
+      "times_overtaken": 23,
+      "best_lap": 139.296,
+      "distance_covered_km": 77.42,
+      "overtakes_made": 40,
+      "score_breakdown": {
+        "speed_factor": 0.97,
+        "crash_penalty_percent": 0.84,
+        "base_score": 77417.68,
+        "crash_factor": 0.992,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.825
+      },
+      "position": 8,
+      "total_score": 61435,
+      "distance_covered_miles": 48.11,
+      "retired": false,
+      "laps_completed": 12,
+      "net_positions_gained": 17
+    },
+    "Sakon Matraka": {
+      "car_name": "sts_r33_gtr_400r",
+      "average_speed_mph": 87.53,
+      "total_time_seconds": 1877.619,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "31:17.618",
+      "average_lap": 170.693,
+      "lap_times": [
+        245.868, 146.442, 155.331, 155.934, 258.762, 149.772, 155.829, 166.98,
+        146.916, 148.989, 146.796
+      ],
+      "partial_lap_completion": 0.436,
+      "average_speed_kmh": 140.87,
+      "times_overtaken": 33,
+      "best_lap": 146.442,
+      "distance_covered_km": 73.47,
+      "overtakes_made": 24,
+      "score_breakdown": {
+        "speed_factor": 0.923,
+        "crash_penalty_percent": 0.0,
+        "base_score": 70966.21,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.2
+      },
+      "position": 33,
+      "total_score": 13097,
+      "distance_covered_miles": 45.65,
+      "retired": false,
+      "laps_completed": 11,
+      "net_positions_gained": -9
+    },
+    "Billy Lampazzo": {
+      "car_name": "pantera_gts",
+      "average_speed_mph": 92.56,
+      "total_time_seconds": 1827.366,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "30:27.365",
+      "average_lap": 166.124,
+      "lap_times": [
+        237.219, 145.749, 149.181, 146.781, 160.212, 262.419, 145.257, 146.079,
+        146.37, 144.321, 143.778
+      ],
+      "partial_lap_completion": 0.757,
+      "average_speed_kmh": 148.96,
+      "times_overtaken": 28,
+      "best_lap": 143.778,
+      "distance_covered_km": 75.61,
+      "overtakes_made": 39,
+      "score_breakdown": {
+        "speed_factor": 0.94,
+        "crash_penalty_percent": 0.0,
+        "base_score": 70966.21,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.45
+      },
+      "position": 23,
+      "total_score": 30014,
+      "distance_covered_miles": 46.98,
+      "retired": false,
+      "laps_completed": 11,
+      "net_positions_gained": 11
+    },
+    "Andy Mendieta": {
+      "car_name": "ruf_yellowbird",
+      "average_speed_mph": 81.56,
+      "total_time_seconds": 1592.592,
+      "crashes": {
+        "total_crash_intensity": 1356.34,
+        "worst_crash_g": 678.42,
+        "total_crashes": 2,
+        "average_crash_g": 678.17,
+        "crash_intensities_g": [678.42, 677.92]
+      },
+      "total_time_formatted": "26:32.592",
+      "average_lap": 199.074,
+      "lap_times": [
+        281.751, 145.083, 201.462, 156.003, 297.63, 155.523, 198.687, 156.453
+      ],
+      "partial_lap_completion": 0.017,
+      "average_speed_kmh": 131.25,
+      "times_overtaken": 42,
+      "best_lap": 145.083,
+      "distance_covered_km": 58.06,
+      "overtakes_made": 21,
+      "score_breakdown": {
+        "speed_factor": 0.931,
+        "crash_penalty_percent": 2.0,
+        "base_score": 51611.79,
+        "crash_factor": 0.98,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.3
+      },
+      "position": 29,
+      "total_score": 14133,
+      "distance_covered_miles": 36.08,
+      "retired": false,
+      "laps_completed": 8,
+      "net_positions_gained": -21
+    },
+    "Cop Mulligan": {
+      "car_name": "exmods_dodge_m4s",
+      "average_speed_mph": 86.13,
+      "total_time_seconds": 1675.608,
+      "crashes": {
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0.0,
+        "total_crashes": 0,
+        "average_crash_g": 0.0,
+        "crash_intensities_g": []
+      },
+      "total_time_formatted": "27:55.607",
+      "average_lap": 167.561,
+      "lap_times": [
+        243.453, 142.092, 148.077, 153.426, 264.159, 150.333, 140.946, 141.324,
+        140.817, 150.981
+      ],
+      "partial_lap_completion": 0.028,
+      "average_speed_kmh": 138.61,
+      "times_overtaken": 15,
+      "best_lap": 140.817,
+      "distance_covered_km": 64.52,
+      "overtakes_made": 42,
+      "score_breakdown": {
+        "speed_factor": 0.96,
+        "crash_penalty_percent": 0.0,
+        "base_score": 64514.74,
+        "crash_factor": 1.0,
+        "fastest_lap_bonus": 0.0,
+        "position_factor": 0.7
+      },
+      "position": 13,
+      "total_score": 43336,
+      "distance_covered_miles": 40.09,
+      "retired": false,
+      "laps_completed": 10,
+      "net_positions_gained": 27
+    }
+  },
+  "session_info": {
+    "crash_penalty_config": {
+      "penalty_percent_per_g": 0.01,
+      "max_penalty_per_crash_g": 100.0
+    },
+    "track_length_meters": 6451.47,
+    "session_type": "qualifying",
+    "session_duration_formatted": "32:17.138",
+    "best_lap_time_seconds": 135.126,
+    "track_length_miles": 4.009,
+    "total_cars": 40,
+    "race_laps": 12,
+    "track": "rt_misty_loch",
+    "track_config": "normal",
+    "date": "2026-01-01 00:14:21",
+    "scoring_formula": "score = base_score \u00d7 position_factor \u00d7 speed_factor \u00d7 crash_factor (\u00d7 1.05 if fastest lap)",
+    "track_length_km": 6.451,
+    "session_duration_seconds": 1937.14
+  }
+}
