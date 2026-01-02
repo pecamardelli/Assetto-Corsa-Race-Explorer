@@ -41,7 +41,8 @@
       "Bash(test:*)",
       "Bash(netstat:*)",
       "Bash(taskkill /PID 9408 /F)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []
