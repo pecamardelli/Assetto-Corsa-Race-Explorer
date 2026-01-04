@@ -28,14 +28,9 @@ prev_g_forces = {}
 last_crash_times = {}  # Track time of last crash for cooldown
 
 # Session info
-session_start_time = 0
 total_cars = 0
 session_active = False
 session_total_time = 0.0
-
-# Multi-session tracking for race weekends
-current_session_number = 0
-previous_session_time = 0.0
 
 # Crash detection threshold (G-force)
 CRASH_G_FORCE_THRESHOLD = 50.0            # Only count crashes above 50G
@@ -52,18 +47,13 @@ class CarStats:
         self.car_id = car_id
         self.driver_name = driver_name
         self.car_name = car_name
-        self.distance_covered = 0.0  # in meters
         self.lap_times = []  # list of lap times in seconds
         self.total_time = 0.0  # individual driver racing time in seconds
         self.overtakes_made = 0
         self.times_overtaken = 0
         self.crash_intensities = []  # list of G-force values for each crash
         self.current_lap_time = 0.0
-        self.lap_count = 0
-        self.last_position = 0
         self.final_position = 999  # Final race position (999 = DNF/not finished)
-        self.last_spline_pos = 0.0
-        self.last_update_time = 0.0
         self.max_speed_ms = 0.0  # maximum speed in m/s
 
     def to_dict(self, position=0, total_cars=1, track_length_m=0, race_laps=1, best_lap_time=0.0, has_fastest_lap=False):
@@ -72,11 +62,6 @@ class CarStats:
 
         # Calculate score: base_score × position_factor × speed_factor
         laps_completed = len(self.lap_times)
-        partial_lap = 0.0
-
-        # If driver didn't complete all race laps, add the partial lap completion
-        if laps_completed < race_laps:
-            partial_lap = self.last_spline_pos  # 0-1 representing percentage of current lap
 
         # Base score: track_length × laps_completed
         # Only count fully completed laps for base score
@@ -138,13 +123,9 @@ class CarStats:
                 'fastest_lap_bonus': round(fastest_lap_bonus, 2) if has_fastest_lap else 0.0
             },
             'laps_completed': laps_completed,
-            'partial_lap_completion': round(partial_lap, 3),
             'total_time_seconds': round(self.total_time, 3),
             'total_time_formatted': format_time(self.total_time),
-            'distance_covered_km': round(self.distance_covered / 1000, 2),
-            'distance_covered_miles': round(self.distance_covered / 1609.34, 2),
             'max_speed_kmh': round(self.max_speed_ms * 3.6, 2),
-            'max_speed_mph': round(self.max_speed_ms * 2.23694, 2),
             'lap_times': [round(lt / 1000.0, 3) for lt in self.lap_times],
             'best_lap': round(min(self.lap_times) / 1000.0, 3) if self.lap_times else 0.0,
             'average_lap': round(sum(self.lap_times) / len(self.lap_times) / 1000.0, 3) if self.lap_times else 0.0,
@@ -264,9 +245,6 @@ def save_current_session():
         with open(filepath, 'w') as f:
             json.dump(session_data, f, indent=2)
 
-        ac.log("Race Stats: Session data saved to {0}".format(filename))
-        ac.console("Race Stats: Session saved")
-
     except Exception as e:
         ac.log("Race Stats ERROR in save_current_session: " + str(e))
         ac.log("Race Stats TRACEBACK: " + traceback.format_exc())
@@ -274,8 +252,6 @@ def save_current_session():
 def acMain(ac_version):
     global appWindow
     try:
-        ac.log("Race Stats: acMain called, version: " + str(ac_version))
-
         appWindow = ac.newApp("RaceStats")
         ac.setSize(appWindow, 250, 100)
         ac.setTitle(appWindow, "Race Statistics")
@@ -283,9 +259,6 @@ def acMain(ac_version):
         # Add status label
         label = ac.addLabel(appWindow, "Tracking race statistics...\n\nData will be saved automatically\nwhen session ends.")
         ac.setPosition(label, 10, 25)
-
-        ac.console("Race Stats: Initialized")
-        ac.log("Race Stats: App started successfully")
 
         return "RaceStats"
     except Exception as e:
@@ -295,45 +268,9 @@ def acMain(ac_version):
 
 def acUpdate(deltaT):
     """Called every frame - track all statistics"""
-    global car_stats, prev_positions, prev_lap_counts, total_cars, session_active, session_start_time, prev_g_forces, session_total_time
-    global current_session_number, previous_session_time, last_crash_times
+    global car_stats, prev_positions, prev_lap_counts, total_cars, session_active, prev_g_forces, session_total_time, last_crash_times
 
     try:
-        # Detect session change by monitoring if lap counts reset or session time goes backwards
-        session_changed = False
-        if session_active and total_cars > 0:
-            # Check if session time has reset (new session started)
-            # If session time is significantly less than previous check, a new session started
-            if session_total_time > 10.0 and previous_session_time > 10.0:
-                # Also check if any car's lap count reset to 0 while previously having laps
-                lap_count_reset = False
-                for car_id in range(total_cars):
-                    current_lap = ac.getCarState(car_id, acsys.CS.LapCount)
-                    if car_id in prev_lap_counts and prev_lap_counts[car_id] > 0 and current_lap == 0:
-                        lap_count_reset = True
-                        break
-
-                if lap_count_reset:
-                    session_changed = True
-                    ac.log("Race Stats: SESSION CHANGE DETECTED (lap counts reset)")
-
-        # If session changed, save current session and reset
-        if session_changed:
-            ac.log("Race Stats: Saving current session before reset...")
-            save_current_session()
-
-            # Reset for new session
-            current_session_number += 1
-            session_total_time = 0.0
-            car_stats = {}
-            prev_positions = {}
-            prev_lap_counts = {}
-            prev_g_forces = {}
-            last_crash_times = {}
-            session_active = False
-
-            ac.log("Race Stats: Starting NEW SESSION {0}".format(current_session_number + 1))
-            ac.console("Race Stats: Now tracking new session")
 
         # Initialize on first update
         if not session_active:
@@ -349,9 +286,6 @@ def acUpdate(deltaT):
                 prev_lap_counts[i] = 0
                 prev_g_forces[i] = [0.0, 0.0, 0.0]
                 last_crash_times[i] = -999.0  # Initialize far in the past
-
-            ac.log("Race Stats: Tracking {0} cars".format(total_cars))
-            ac.console("Race Stats: Tracking {0} cars".format(total_cars))
 
         # Update statistics for each car
         for car_id in range(total_cars):
@@ -370,12 +304,10 @@ def acUpdate(deltaT):
                 # If position improved (number decreased), this car overtook someone
                 if current_position < prev_pos and prev_pos > 0 and current_position > 0:
                     stats.overtakes_made += (prev_pos - current_position)
-                    ac.log("Race Stats: {0} overtook! Position {1} -> {2}".format(stats.driver_name, prev_pos, current_position))
 
                 # If position worsened (number increased), this car was overtaken
                 elif current_position > prev_pos and prev_pos > 0 and current_position > 0:
                     stats.times_overtaken += (current_position - prev_pos)
-                    ac.log("Race Stats: {0} was overtaken. Position {1} -> {2}".format(stats.driver_name, prev_pos, current_position))
 
             prev_positions[car_id] = current_position
 
@@ -387,36 +319,9 @@ def acUpdate(deltaT):
             if current_lap_count > prev_lap_counts.get(car_id, 0):
                 if stats.current_lap_time > 0:
                     stats.lap_times.append(stats.current_lap_time)
-                    ac.log("Race Stats: {0} completed lap in {1:.3f}s".format(stats.driver_name, stats.current_lap_time))
 
             stats.current_lap_time = current_lap_time
-            stats.lap_count = current_lap_count
             prev_lap_counts[car_id] = current_lap_count
-
-            # Track distance covered
-            # Get track length
-            track_length = ac.getTrackLength(0)  # in meters
-
-            # Get current position on track (normalized 0-1)
-            current_spline = ac.getCarState(car_id, acsys.CS.NormalizedSplinePosition)
-
-            # Calculate distance traveled this frame
-            if stats.last_spline_pos > 0:
-                spline_diff = current_spline - stats.last_spline_pos
-
-                # Handle lap transition (spline goes from ~1.0 to ~0.0)
-                if spline_diff < -0.5:
-                    spline_diff += 1.0
-                elif spline_diff > 0.5:
-                    spline_diff -= 1.0
-
-                distance_this_frame = spline_diff * track_length
-
-                # Only add positive distance (moving forward)
-                if distance_this_frame > 0:
-                    stats.distance_covered += distance_this_frame
-
-            stats.last_spline_pos = current_spline
 
             # Track maximum speed
             try:
@@ -449,13 +354,11 @@ def acUpdate(deltaT):
                     time_since_last_crash = session_total_time - last_crash_times.get(car_id, -999.0)
 
                     # Only count crash if:
-                    # 1. G-force spike is above 70G threshold
-                    # 2. At least 10 seconds have passed since last crash
+                    # 1. G-force spike is above threshold
+                    # 2. At least CRASH_COOLDOWN_SECONDS have passed since last crash
                     if g_change > CRASH_G_FORCE_THRESHOLD and time_since_last_crash >= CRASH_COOLDOWN_SECONDS:
                         stats.crash_intensities.append(g_change)
                         last_crash_times[car_id] = session_total_time
-                        ac.log("Race Stats: {0} CRASH detected! G-force spike: {1:.2f}g (Total crashes: {2})".format(
-                            stats.driver_name, g_change, len(stats.crash_intensities)))
 
                 prev_g_forces[car_id] = [g_x, g_y, g_z]
 
@@ -475,16 +378,11 @@ def acShutdown():
     """Called when session ends - save final session statistics"""
     global car_stats
 
-    ac.log("Race Stats: Shutting down, saving final session...")
-
     try:
         # Save the current/final session
         if car_stats:
             save_current_session()
-        else:
-            ac.log("Race Stats: No session data to save")
 
     except Exception as e:
-        ac.console("Race Stats ERROR: {0}".format(str(e)))
-        ac.log("Race Stats ERROR: {0}".format(str(e)))
+        ac.log("Race Stats ERROR in acShutdown: " + str(e))
         ac.log("Race Stats TRACEBACK: " + traceback.format_exc())
