@@ -21,6 +21,8 @@ export interface DriverStatistics {
   best_lap?: number;
   total_time_formatted?: string;
   average_speed_kmh?: number;
+  max_speed_kmh?: number;
+  max_speed_mph?: number;
   score_breakdown?: ScoreBreakdown;
   times_overtaken?: number;
   lap_times?: number[];

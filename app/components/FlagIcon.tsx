@@ -12,6 +12,8 @@ interface FlagIconProps {
 const countryCodeMap: Record<string, string> = {
   // 3-letter codes
   'ARG': 'AR', // Argentina
+  'BGD': 'BD', // Bangladesh
+  'BOL': 'BO', // Bolivia
   'BRA': 'BR', // Brazil
   'CHN': 'CN', // China
   'CRO': 'HR', // Croatia

@@ -38,7 +38,7 @@ current_session_number = 0
 previous_session_time = 0.0
 
 # Crash detection threshold (G-force)
-CRASH_G_FORCE_THRESHOLD = 70.0            # Only count crashes above 70G
+CRASH_G_FORCE_THRESHOLD = 50.0            # Only count crashes above 50G
 
 # Crash penalty parameters
 CRASH_PENALTY_PERCENT_PER_G = 0.01        # 0.01% penalty per G-force (0.1% per 10G)
@@ -64,15 +64,11 @@ class CarStats:
         self.final_position = 999  # Final race position (999 = DNF/not finished)
         self.last_spline_pos = 0.0
         self.last_update_time = 0.0
+        self.max_speed_ms = 0.0  # maximum speed in m/s
 
     def to_dict(self, position=0, total_cars=1, track_length_m=0, race_laps=1, best_lap_time=0.0, has_fastest_lap=False):
         # Calculate total_time as sum of all completed lap times (convert ms to seconds)
         self.total_time = sum(self.lap_times) / 1000.0
-
-        # Calculate average speed
-        avg_speed_ms = (self.distance_covered / self.total_time) if self.total_time > 0 else 0.0
-        avg_speed_kmh = avg_speed_ms * 3.6
-        avg_speed_mph = avg_speed_ms * 2.23694
 
         # Calculate score: base_score × position_factor × speed_factor
         laps_completed = len(self.lap_times)
@@ -147,8 +143,8 @@ class CarStats:
             'total_time_formatted': format_time(self.total_time),
             'distance_covered_km': round(self.distance_covered / 1000, 2),
             'distance_covered_miles': round(self.distance_covered / 1609.34, 2),
-            'average_speed_kmh': round(avg_speed_kmh, 2),
-            'average_speed_mph': round(avg_speed_mph, 2),
+            'max_speed_kmh': round(self.max_speed_ms * 3.6, 2),
+            'max_speed_mph': round(self.max_speed_ms * 2.23694, 2),
             'lap_times': [round(lt / 1000.0, 3) for lt in self.lap_times],
             'best_lap': round(min(self.lap_times) / 1000.0, 3) if self.lap_times else 0.0,
             'average_lap': round(sum(self.lap_times) / len(self.lap_times) / 1000.0, 3) if self.lap_times else 0.0,
@@ -421,6 +417,15 @@ def acUpdate(deltaT):
                     stats.distance_covered += distance_this_frame
 
             stats.last_spline_pos = current_spline
+
+            # Track maximum speed
+            try:
+                current_speed_ms = ac.getCarState(car_id, acsys.CS.SpeedMS)
+                if current_speed_ms > stats.max_speed_ms:
+                    stats.max_speed_ms = current_speed_ms
+            except:
+                # Speed data might not be available
+                pass
 
             # Crash detection using G-forces
             try:

@@ -182,17 +182,15 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                       {isPracticeOrQualifying ? 'Total Laps' : 'Laps'}
                     </th>
                     {!isPracticeOrQualifying && (
-                      <>
-                        <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
-                          Overtakes
-                        </th>
-                        <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
-                          Crashes
-                        </th>
-                      </>
+                      <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
+                        Crashes
+                      </th>
                     )}
                     <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                       Best Lap
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell min-w-[120px]">
+                      Speed
                     </th>
                     {!isPracticeOrQualifying && (
                       <>
@@ -244,6 +242,12 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                       }
                     }
 
+                    // Calculate average speed: (track_length_km * laps) / total_time_seconds * 3600
+                    const trackLengthKm = session_info.track_length_km || 0;
+                    const avgSpeedKmh = driverTime > 0 && driverLaps > 0
+                      ? (trackLengthKm * driverLaps / driverTime) * 3600
+                      : 0;
+
                     return (
                       <tr
                         key={driver.name}
@@ -291,21 +295,15 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                           {safeNumber(driver.laps_completed, 0)}
                         </td>
                         {!isPracticeOrQualifying && (
-                          <>
-                            <td className="px-4 py-4 text-center hidden lg:table-cell">
-                              <div className="text-green-400 font-medium">+{safeNumber(driver.overtakes_made, 0)}</div>
-                              <div className="text-red-400 text-xs">-{safeNumber(driver.times_overtaken, 0)}</div>
-                            </td>
-                            <td className="px-4 py-4 text-center hidden lg:table-cell">
-                              <div className={`font-medium ${
-                                totalCrashes === 0 ? 'text-green-400' :
-                                totalCrashes > 5 ? 'text-red-400' :
-                                'text-amber-400'
-                              }`}>
-                                {totalCrashes}
-                              </div>
-                            </td>
-                          </>
+                          <td className="px-4 py-4 text-center hidden lg:table-cell">
+                            <div className={`font-medium ${
+                              totalCrashes === 0 ? 'text-green-400' :
+                              totalCrashes > 5 ? 'text-red-400' :
+                              'text-amber-400'
+                            }`}>
+                              {totalCrashes}
+                            </div>
+                          </td>
                         )}
                         <td className="px-4 py-4">
                           <div className="text-white font-mono">
@@ -313,6 +311,14 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                           </div>
                           <div className="text-xs text-zinc-500 mt-1">
                             Avg: {formatLapTime(driver.average_lap)}
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 hidden lg:table-cell min-w-[120px]">
+                          <div className="text-white font-mono">
+                            {driver.max_speed_kmh ? `${driver.max_speed_kmh.toFixed(0)} km/h` : '-'}
+                          </div>
+                          <div className="text-xs text-zinc-500 mt-1">
+                            Avg: {avgSpeedKmh > 0 ? `${avgSpeedKmh.toFixed(0)} km/h` : '-'}
                           </div>
                         </td>
                         {!isPracticeOrQualifying && (
