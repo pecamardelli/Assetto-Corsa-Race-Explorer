@@ -21,15 +21,15 @@ const path = require("path");
 // CONFIGURATION: Set these paths and options
 // ============================================================================
 const QUALIFYING_JSON_PATH =
-  "app/data/championship/Test Drive Tour/season_06/stats_ks_monza66-full_cir_session_qualifying_20251229_225512.json";
+  "app/data/championship/Test Drive Tour/season_07/stats_rj_lemans_1967-54_session_qualifying_20260105_010947.json";
 
 const CHAMPIONSHIP_FILE =
-  "app/data/championship/Test Drive Tour/season_06.champ";
+  "app/data/championship/Test Drive Tour/season_07.champ";
 
 const PLAYER_NAME = "Pablin"; // Your driver name - used to determine starting position from qualifying
 
 const OUTPUT_FILE = null; // null = auto-generate path in AppData
-const TRACK_NAME = "monza";
+const TRACK_NAME = "lemans";
 const SESSION_NUMBER = "6";
 const AI_LEVEL = 100.0;
 const AI_LEVEL_MIN = 95.0;
