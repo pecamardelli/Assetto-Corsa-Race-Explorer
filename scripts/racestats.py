@@ -32,6 +32,10 @@ total_cars = 0
 session_active = False
 session_total_time = 0.0
 
+# Multi-session tracking for race weekends
+current_session_number = 0
+previous_session_time = 0.0
+
 # Crash detection threshold (G-force)
 CRASH_G_FORCE_THRESHOLD = 50.0            # Only count crashes above 50G
 
@@ -157,7 +161,7 @@ def format_time(seconds):
 
 def save_current_session():
     """Save current session data to individual JSON file"""
-    global car_stats, session_total_time, current_session_number
+    global car_stats, session_total_time
 
     if not car_stats:
         return
@@ -268,9 +272,40 @@ def acMain(ac_version):
 
 def acUpdate(deltaT):
     """Called every frame - track all statistics"""
-    global car_stats, prev_positions, prev_lap_counts, total_cars, session_active, prev_g_forces, session_total_time, last_crash_times
+    global car_stats, prev_positions, prev_lap_counts, total_cars, session_active, prev_g_forces, session_total_time
+    global current_session_number, previous_session_time, last_crash_times
 
     try:
+        # Detect session change by monitoring if lap counts reset or session time goes backwards
+        session_changed = False
+        if session_active and total_cars > 0:
+            # Check if session time has reset (new session started)
+            # If session time is significantly less than previous check, a new session started
+            if session_total_time > 10.0 and previous_session_time > 10.0:
+                # Also check if any car's lap count reset to 0 while previously having laps
+                lap_count_reset = False
+                for car_id in range(total_cars):
+                    current_lap = ac.getCarState(car_id, acsys.CS.LapCount)
+                    if car_id in prev_lap_counts and prev_lap_counts[car_id] > 0 and current_lap == 0:
+                        lap_count_reset = True
+                        break
+
+                if lap_count_reset:
+                    session_changed = True
+
+        # If session changed, save current session and reset
+        if session_changed:
+            save_current_session()
+
+            # Reset for new session
+            current_session_number += 1
+            session_total_time = 0.0
+            car_stats = {}
+            prev_positions = {}
+            prev_lap_counts = {}
+            prev_g_forces = {}
+            last_crash_times = {}
+            session_active = False
 
         # Initialize on first update
         if not session_active:
