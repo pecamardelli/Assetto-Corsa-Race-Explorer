@@ -108,8 +108,8 @@ async function sanitizeCarFolder(carFolder) {
 
   console.log(`  Found ${imageFiles.length} image(s)`);
 
-  // Sort files by extracted number
-  const numberedFiles = imageFiles
+  // Separate numbered and unnumbered files
+  const withNumbers = imageFiles
     .map(file => ({
       path: file,
       number: extractNumber(file)
@@ -117,12 +117,21 @@ async function sanitizeCarFolder(carFolder) {
     .filter(item => item.number !== null)
     .sort((a, b) => a.number - b.number);
 
+  const unnumberedFiles = imageFiles
+    .filter(file => extractNumber(file) === null);
+
+  // Combine: numbered files first, then unnumbered files appended at the end
+  const allFilesToProcess = [
+    ...withNumbers.map(item => item.path),
+    ...unnumberedFiles
+  ];
+
   console.log('\n  Step 1: Renaming files to convention...');
 
   // STEP 1: Create mapping of current files to target names
   const renameMap = new Map();
-  for (let i = 0; i < numberedFiles.length; i++) {
-    const { path: originalPath } = numberedFiles[i];
+  for (let i = 0; i < allFilesToProcess.length; i++) {
+    const originalPath = allFilesToProcess[i];
     const newNumber = String(i + 1).padStart(2, '0');
     const ext = path.extname(originalPath);
     const targetPath = path.join(carFolder, `${newNumber}${ext}`);
@@ -190,16 +199,9 @@ async function sanitizeCarFolder(carFolder) {
     }
   }
 
-  // Handle unnumbered files
-  const unnumberedFiles = imageFiles
-    .filter(file => extractNumber(file) === null);
-
+  // Log info about unnumbered files that were processed
   if (unnumberedFiles.length > 0) {
-    console.log(`\n  ⚠️  Found ${unnumberedFiles.length} unnumbered file(s):`);
-    unnumberedFiles.forEach(file => {
-      console.log(`      - ${path.basename(file)}`);
-    });
-    console.log(`  These files were not processed. Please rename them manually.`);
+    console.log(`\n  ℹ️  Processed ${unnumberedFiles.length} unnumbered file(s) (assigned sequential numbers)`);
   }
 
   console.log(`\n  Summary: ${converted} converted, ${skipped} already WebP, ${failed} failed`);
