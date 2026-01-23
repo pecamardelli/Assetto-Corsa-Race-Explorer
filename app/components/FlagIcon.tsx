@@ -11,6 +11,7 @@ interface FlagIconProps {
 // Mapping from 3-letter codes (ISO 3166-1 alpha-3) and country names to 2-letter codes (ISO 3166-1 alpha-2)
 const countryCodeMap: Record<string, string> = {
   // 3-letter codes
+  'AFG': 'AF', // Afghanistan
   'ARG': 'AR', // Argentina
   'BGD': 'BD', // Bangladesh
   'BOL': 'BO', // Bolivia
@@ -25,6 +26,7 @@ const countryCodeMap: Record<string, string> = {
   'FRA': 'FR', // France
   'GBR': 'GB', // Great Britain
   'GEO': 'GE', // Georgia
+  'GRC': 'GR', // Greece
   'IRA': 'IR', // Iran
   'IRE': 'IE', // Ireland (alternative code)
   'IRL': 'IE', // Ireland
@@ -34,6 +36,7 @@ const countryCodeMap: Record<string, string> = {
   'KEN': 'KE', // Kenya
   'MEX': 'MX', // Mexico
   'NGA': 'NG', // Nigeria
+  'NLD': 'NL', // Netherlands
   'PAN': 'PA', // Panama
   'POL': 'PL', // Poland
   'ROU': 'RO', // Romania

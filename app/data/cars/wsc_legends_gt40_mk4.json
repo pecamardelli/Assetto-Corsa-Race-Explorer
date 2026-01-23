@@ -1,0 +1,20 @@
+{
+  "name": "Ford GT40 Mk IV",
+  "brand": "Ford",
+  "description": "Perhaps the most significant post-war American race car ever produced, the Mk IV was the ultimate development of the GT40 platform. It dominated fields that included the Ferrari 330 P4 and Chaparral 2F.<br><br>The Mk IV was only campaigned in two races: the 1967 12 Hours of Sebring, where Mario Andretti and Bruce McLaren took victory, and the 1967 24 Hours of Le Mans, where Dan Gurney and A.J. Foyt won outright along with the Index of Performance. That Le Mans victory remains the only all-American win - American chassis, engine, team, and drivers - at the legendary endurance race.<br><br>The 7-litre Ford V8 produced around 530 bhp. Ford issued strict orders limiting drivers to 6200 rpm despite a safe limit of 7400 rpm for short bursts. Due to the Mk IV's dominance, the FIA banned prototypes with engines larger than 3 litres for 1968, ending the GT40 Mk IV's brief but glorious career.",
+  "class": "Prototype +5000",
+  "specs": {
+    "bhp": "530 hp",
+    "torque": "644 Nm",
+    "weight": "1000 kg",
+    "topspeed": "340+km/h",
+    "acceleration": "--s 0-100",
+    "pwratio": "1.89 kg/hp",
+    "range": 220
+  },
+  "country": "USA",
+  "year": 1967,
+  "author": "Team WSC Legends",
+  "version": "2.0",
+  "url": "https://thracing.de/"
+}
