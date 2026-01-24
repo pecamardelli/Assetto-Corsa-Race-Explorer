@@ -2,14 +2,14 @@ const fs = require("fs");
 const path = require("path");
 
 // CONFIGURATION - Modify these variables
-const RACE_FILE = "stats_nordschleife_67_session_race_20260112_005621.json";
-const MIN_LAPS_THRESHOLD = 4;
+const RACE_FILE = "stats_battenbergring_session_race_20260123_232903.json";
+const MIN_LAPS_THRESHOLD = 7;
 
 // File path construction
 const filePath = path.join(
   __dirname,
-  "../app/data/championship/Test Drive Tour/season_07",
-  RACE_FILE
+  "../app/data/championship/Le Mans Oldies/season_01",
+  RACE_FILE,
 );
 
 const data = JSON.parse(fs.readFileSync(filePath, "utf8"));
@@ -23,7 +23,7 @@ driverNames.forEach((name) => {
   const driver = data.driver_statistics[name];
   if (driver.laps_completed < MIN_LAPS_THRESHOLD && !driver.retired) {
     console.log(
-      `Setting retired=true for ${name}: ${driver.laps_completed} laps`
+      `Setting retired=true for ${name}: ${driver.laps_completed} laps`,
     );
     driver.retired = true;
     updatedCount++;
