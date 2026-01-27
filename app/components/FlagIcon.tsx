@@ -16,6 +16,7 @@ const countryCodeMap: Record<string, string> = {
   'BGD': 'BD', // Bangladesh
   'BOL': 'BO', // Bolivia
   'BRA': 'BR', // Brazil
+  'CAN': 'CA', // Canada
   'CHN': 'CN', // China
   'CRO': 'HR', // Croatia
   'HRV': 'HR', // Croatia (alternative code)
@@ -55,6 +56,7 @@ const countryCodeMap: Record<string, string> = {
   'FRANCE': 'FR',
   'GERMANY': 'DE',
   'BELGIUM': 'BE',
+  'CANADA': 'CA',
   'NEW ZEALAND': 'NZ',
   'UNITED STATES': 'US',
   'U.S.A.': 'US',
