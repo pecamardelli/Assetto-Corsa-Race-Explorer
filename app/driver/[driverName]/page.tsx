@@ -13,10 +13,12 @@ type DriverData = {
   nation: string;
   car: string;
   totalPoints: number;
+  totalRaces: number;
   totalWins: number;
   totalPoles: number;
   totalPodiums: number;
   totalFastestLaps: number;
+  totalChampionships: number;
   championships: Array<{
     champName: string;
     champId: string;
@@ -97,10 +99,12 @@ export default async function DriverPage({ params }: { params: Promise<{ driverN
             nation: driver.nation,
             car: driver.car,
             totalPoints: 0,
+            totalRaces: 0,
             totalWins: 0,
             totalPoles: 0,
             totalPodiums: 0,
             totalFastestLaps: 0,
+            totalChampionships: 0,
             championships: [],
           };
         }
@@ -108,10 +112,19 @@ export default async function DriverPage({ params }: { params: Promise<{ driverN
         const position = standings.findIndex(d => d.name === decodedDriverName) + 1;
 
         driverData.totalPoints += driver.customPoints;
+        driverData.totalRaces += driver.racesCompleted;
         driverData.totalWins += driver.wins;
         driverData.totalPoles += driver.poles;
         driverData.totalPodiums += driver.podiums;
         driverData.totalFastestLaps += driver.fastestLaps;
+
+        // Only count championship if season is complete
+        const completedRaces = season.sessions.filter(session => {
+          const sessionType = session.data.session_type || session.data.session_info.session_type;
+          return sessionType === 'race';
+        }).length;
+        const isSeasonComplete = completedRaces === season.data.rounds.length;
+        if (position === 1 && isSeasonComplete) driverData.totalChampionships++;
 
         driverData.championships.push({
           champName: season.data.name,
@@ -140,10 +153,12 @@ export default async function DriverPage({ params }: { params: Promise<{ driverN
             nation: opponent.nation,
             car: opponent.car,
             totalPoints: 0,
+            totalRaces: 0,
             totalWins: 0,
             totalPoles: 0,
             totalPodiums: 0,
             totalFastestLaps: 0,
+            totalChampionships: 0,
             championships: [],
           };
           break;
@@ -205,10 +220,14 @@ export default async function DriverPage({ params }: { params: Promise<{ driverN
             </div>
 
             {/* Career Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mt-6">
               <div className="bg-zinc-900/50 rounded-lg p-4 border border-zinc-700">
                 <div className="text-xs text-zinc-500 uppercase mb-1">Total Points</div>
                 <div className="text-2xl font-bold text-white">{driverData.totalPoints.toLocaleString()}</div>
+              </div>
+              <div className="bg-zinc-900/50 rounded-lg p-4 border border-zinc-700">
+                <div className="text-xs text-zinc-500 uppercase mb-1">Races</div>
+                <div className="text-2xl font-bold text-sky-400">{driverData.totalRaces}</div>
               </div>
               <div className="bg-zinc-900/50 rounded-lg p-4 border border-zinc-700">
                 <div className="text-xs text-zinc-500 uppercase mb-1">Wins</div>
@@ -225,6 +244,10 @@ export default async function DriverPage({ params }: { params: Promise<{ driverN
               <div className="bg-zinc-900/50 rounded-lg p-4 border border-zinc-700">
                 <div className="text-xs text-zinc-500 uppercase mb-1">Fast Laps</div>
                 <div className="text-2xl font-bold text-green-400">{driverData.totalFastestLaps}</div>
+              </div>
+              <div className="bg-zinc-900/50 rounded-lg p-4 border border-zinc-700">
+                <div className="text-xs text-zinc-500 uppercase mb-1">Championships</div>
+                <div className="text-2xl font-bold text-amber-500">{driverData.totalChampionships}</div>
               </div>
             </div>
           </div>
