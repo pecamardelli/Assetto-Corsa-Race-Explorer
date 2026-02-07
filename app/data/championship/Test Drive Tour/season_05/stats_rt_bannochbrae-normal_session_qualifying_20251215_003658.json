@@ -12,32 +12,35 @@
     "date": "2025-12-15 00:36:58",
     "best_lap_time_seconds": 159.306,
     "crash_penalty_config": {
-      "max_penalty_per_crash_g": 100.0,
+      "max_penalty_per_crash_g": 100,
       "penalty_percent_per_g": 0.01
     },
     "track": "rt_bannochbrae",
-    "scoring_formula": "score = base_score \u00d7 position_factor \u00d7 speed_factor \u00d7 crash_factor (\u00d7 1.05 if fastest lap)"
+    "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)"
   },
   "driver_statistics": {
     "Holly Sikorsky": {
       "average_lap": 205.981,
       "crashes": {
         "total_crash_intensity": 1478.54,
-        "crash_intensities_g": [738.82, 739.72],
-        "average_crash_g": 739.27,
         "worst_crash_g": 739.72,
-        "total_crashes": 2
+        "total_crashes": 2,
+        "average_crash_g": 739.27,
+        "crash_intensities_g": [
+          738.82,
+          739.72
+        ]
       },
       "total_time_formatted": "30:53.832",
       "position": 27,
       "laps_completed": 9,
       "score_breakdown": {
         "base_score": 65392.71,
-        "crash_penalty_percent": 2.0,
+        "crash_penalty_percent": 2,
         "crash_factor": 0.98,
         "position_factor": 0.133,
         "speed_factor": 0.903,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -25,
       "best_lap": 176.508,
@@ -53,29 +56,39 @@
       "overtakes_made": 5,
       "total_score": 7712,
       "lap_times": [
-        297.321, 180.552, 179.652, 185.733, 299.856, 179.331, 177.441, 176.508,
+        297.321,
+        180.552,
+        179.652,
+        185.733,
+        299.856,
+        179.331,
+        177.441,
+        176.508,
         177.438
       ]
     },
     "Shake Myhand": {
       "average_lap": 186.693,
       "crashes": {
-        "total_crash_intensity": 1330.77,
-        "crash_intensities_g": [664.81, 665.95],
-        "average_crash_g": 665.38,
+        "total_crash_intensity": 1330.76,
         "worst_crash_g": 665.95,
-        "total_crashes": 2
+        "total_crashes": 2,
+        "average_crash_g": 665.38,
+        "crash_intensities_g": [
+          664.81,
+          665.95
+        ]
       },
       "total_time_formatted": "31:06.930",
       "position": 24,
       "laps_completed": 10,
       "score_breakdown": {
         "base_score": 72658.56,
-        "crash_penalty_percent": 2.0,
+        "crash_penalty_percent": 2,
         "crash_factor": 0.98,
         "position_factor": 0.233,
         "speed_factor": 0.914,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -10,
       "best_lap": 174.291,
@@ -91,29 +104,40 @@
       "overtakes_made": 14,
       "total_score": 15187,
       "lap_times": [
-        214.926, 174.726, 174.291, 177.213, 176.946, 178.965, 244.53, 175.596,
-        174.684, 175.053
+        214.926,
+        174.726,
+        174.291,
+        177.213,
+        176.946,
+        178.965,
+        244.53,
+        175.596,
+        174.684,
+        175.053
       ]
     },
     "Willy Sandia": {
       "average_lap": 198.808,
       "crashes": {
         "total_crash_intensity": 1482.69,
-        "crash_intensities_g": [740.84, 741.85],
-        "average_crash_g": 741.35,
         "worst_crash_g": 741.85,
-        "total_crashes": 2
+        "total_crashes": 2,
+        "average_crash_g": 741.35,
+        "crash_intensities_g": [
+          740.84,
+          741.85
+        ]
       },
       "total_time_formatted": "29:49.271",
       "position": 22,
       "laps_completed": 9,
       "score_breakdown": {
         "base_score": 65392.71,
-        "crash_penalty_percent": 2.0,
+        "crash_penalty_percent": 2,
         "crash_factor": 0.98,
         "position_factor": 0.3,
         "speed_factor": 0.916,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": 0,
       "best_lap": 173.955,
@@ -129,21 +153,25 @@
       "overtakes_made": 24,
       "total_score": 17607,
       "lap_times": [
-        193.215, 175.938, 184.923, 262.464, 173.955, 182.877, 256.653, 176.67,
+        193.215,
+        175.938,
+        184.923,
+        262.464,
+        173.955,
+        182.877,
+        256.653,
+        176.67,
         182.577
       ]
     },
     "Paolo Spaghetti": {
       "average_lap": 179.397,
       "crashes": {
-        "total_crash_intensity": 180.19,
-        "crash_intensities_g": [
-          11.74, 14.89, 23.69, 6.35, 24.69, 8.53, 9.12, 4.24, 9.84, 4.45, 6.48,
-          14.58, 4.32, 9.45, 5.59, 4.16, 11.83, 6.25
-        ],
-        "average_crash_g": 10.01,
-        "worst_crash_g": 24.69,
-        "total_crashes": 18
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "total_time_formatted": "08:58.191",
       "position": 20,
@@ -154,7 +182,7 @@
         "crash_factor": 0.982,
         "position_factor": 0.367,
         "speed_factor": 0.916,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": 6,
       "best_lap": 173.856,
@@ -169,19 +197,25 @@
       "times_overtaken": 19,
       "overtakes_made": 25,
       "total_score": 7192,
-      "lap_times": [189.426, 173.856, 174.909]
+      "lap_times": [
+        189.426,
+        173.856,
+        174.909
+      ]
     },
     "Michael Birulo": {
       "average_lap": 192.843,
       "crashes": {
-        "total_crash_intensity": 2941.49,
-        "crash_intensities_g": [
-          49.29, 23.82, 9.39, 15.77, 47.24, 14.61, 6.57, 25.66, 9.05, 4.8, 6.83,
-          5.1, 13.95, 4.57, 5.39, 8.14, 672.25, 673.39, 672.25, 673.4
-        ],
-        "average_crash_g": 147.07,
+        "total_crash_intensity": 2691.29,
         "worst_crash_g": 673.4,
-        "total_crashes": 20
+        "total_crashes": 4,
+        "average_crash_g": 672.82,
+        "crash_intensities_g": [
+          672.25,
+          673.39,
+          672.25,
+          673.4
+        ]
       },
       "total_time_formatted": "28:55.586",
       "position": 23,
@@ -192,7 +226,7 @@
         "crash_factor": 0.935,
         "position_factor": 0.267,
         "speed_factor": 0.916,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -11,
       "best_lap": 173.973,
@@ -208,7 +242,14 @@
       "overtakes_made": 18,
       "total_score": 14930,
       "lap_times": [
-        217.746, 185.109, 184.329, 267.81, 176.499, 176.184, 174.996, 173.973,
+        217.746,
+        185.109,
+        184.329,
+        267.81,
+        176.499,
+        176.184,
+        174.996,
+        173.973,
         178.941
       ]
     },
@@ -216,21 +257,21 @@
       "average_lap": 202.425,
       "crashes": {
         "total_crash_intensity": 0,
-        "crash_intensities_g": [],
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
-        "total_crashes": 0
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "total_time_formatted": "30:21.825",
       "position": 30,
       "laps_completed": 9,
       "score_breakdown": {
         "base_score": 65392.71,
-        "crash_penalty_percent": 0.0,
-        "crash_factor": 1.0,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
         "position_factor": 0.033,
         "speed_factor": 0.887,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -3,
       "best_lap": 179.631,
@@ -246,7 +287,14 @@
       "overtakes_made": 10,
       "total_score": 1934,
       "lap_times": [
-        262.662, 180.468, 185.211, 289.335, 182.715, 181.395, 180.594, 179.631,
+        262.662,
+        180.468,
+        185.211,
+        289.335,
+        182.715,
+        181.395,
+        180.594,
+        179.631,
         179.814
       ]
     },
@@ -254,21 +302,24 @@
       "average_lap": 188.92,
       "crashes": {
         "total_crash_intensity": 1374.74,
-        "crash_intensities_g": [686.8, 687.94],
-        "average_crash_g": 687.37,
         "worst_crash_g": 687.94,
-        "total_crashes": 2
+        "total_crashes": 2,
+        "average_crash_g": 687.37,
+        "crash_intensities_g": [
+          686.8,
+          687.94
+        ]
       },
       "total_time_formatted": "31:29.199",
       "position": 11,
       "laps_completed": 10,
       "score_breakdown": {
         "base_score": 72658.56,
-        "crash_penalty_percent": 2.0,
+        "crash_penalty_percent": 2,
         "crash_factor": 0.98,
         "position_factor": 0.667,
         "speed_factor": 0.938,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": 6,
       "best_lap": 169.875,
@@ -284,21 +335,30 @@
       "overtakes_made": 26,
       "total_score": 44517,
       "lap_times": [
-        240.834, 173.604, 172.578, 171.129, 171.999, 174.624, 273.78, 170.211,
-        169.875, 170.565
+        240.834,
+        173.604,
+        172.578,
+        171.129,
+        171.999,
+        174.624,
+        273.78,
+        170.211,
+        169.875,
+        170.565
       ]
     },
     "Mario Ravioli": {
       "average_lap": 176.659,
       "crashes": {
-        "total_crash_intensity": 1609.25,
-        "crash_intensities_g": [
-          6.34, 44.42, 22.21, 14.57, 4.28, 84.5, 49.01, 11.99, 10.1, 4.41, 8.27,
-          6.17, 6.3, 4.46, 9.5, 9.59, 5.1, 653.37, 654.66
-        ],
-        "average_crash_g": 84.7,
+        "total_crash_intensity": 1392.53,
         "worst_crash_g": 654.66,
-        "total_crashes": 19
+        "total_crashes": 3,
+        "average_crash_g": 464.18,
+        "crash_intensities_g": [
+          84.5,
+          653.37,
+          654.66
+        ]
       },
       "total_time_formatted": "26:29.933",
       "position": 4,
@@ -309,7 +369,7 @@
         "crash_factor": 0.95,
         "position_factor": 0.9,
         "speed_factor": 0.971,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": 16,
       "best_lap": 164.046,
@@ -325,22 +385,30 @@
       "overtakes_made": 24,
       "total_score": 54289,
       "lap_times": [
-        193.344, 169.122, 165.978, 165.588, 172.164, 213.222, 164.046, 167.424,
+        193.344,
+        169.122,
+        165.978,
+        165.588,
+        172.164,
+        213.222,
+        164.046,
+        167.424,
         179.046
       ]
     },
     "Shura McPinch": {
       "average_lap": 198.461,
       "crashes": {
-        "total_crash_intensity": 3064.51,
-        "crash_intensities_g": [
-          39.23, 17.94, 9.85, 5.41, 21.06, 6.88, 6.0, 5.35, 4.71, 34.89, 15.01,
-          10.57, 5.57, 36.87, 15.93, 49.47, 15.05, 26.84, 10.48, 5.14, 4.95,
-          10.42, 10.55, 8.54, 12.34, 5.55, 4.13, 666.56, 667.8, 665.1, 666.35
-        ],
-        "average_crash_g": 98.86,
+        "total_crash_intensity": 2665.81,
         "worst_crash_g": 667.8,
-        "total_crashes": 31
+        "total_crashes": 4,
+        "average_crash_g": 666.45,
+        "crash_intensities_g": [
+          666.56,
+          667.8,
+          665.1,
+          666.35
+        ]
       },
       "total_time_formatted": "29:46.152",
       "position": 3,
@@ -351,7 +419,7 @@
         "crash_factor": 0.92,
         "position_factor": 0.933,
         "speed_factor": 0.978,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": 4,
       "best_lap": 162.972,
@@ -367,7 +435,14 @@
       "overtakes_made": 30,
       "total_score": 54896,
       "lap_times": [
-        223.494, 172.515, 177.018, 258.519, 162.972, 176.823, 274.374, 165.006,
+        223.494,
+        172.515,
+        177.018,
+        258.519,
+        162.972,
+        176.823,
+        274.374,
+        165.006,
         175.431
       ]
     },
@@ -375,21 +450,21 @@
       "average_lap": 186.646,
       "crashes": {
         "total_crash_intensity": 0,
-        "crash_intensities_g": [],
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
-        "total_crashes": 0
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "total_time_formatted": "31:06.459",
       "position": 14,
       "laps_completed": 10,
       "score_breakdown": {
         "base_score": 72658.56,
-        "crash_penalty_percent": 0.0,
-        "crash_factor": 1.0,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
         "position_factor": 0.567,
         "speed_factor": 0.932,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -9,
       "best_lap": 170.847,
@@ -405,29 +480,37 @@
       "overtakes_made": 16,
       "total_score": 38392,
       "lap_times": [
-        206.151, 173.49, 174.771, 176.205, 171.603, 170.847, 175.029, 274.839,
-        170.871, 172.653
+        206.151,
+        173.49,
+        174.771,
+        176.205,
+        171.603,
+        170.847,
+        175.029,
+        274.839,
+        170.871,
+        172.653
       ]
     },
     "Paul Morlacko": {
       "average_lap": 201.922,
       "crashes": {
         "total_crash_intensity": 0,
-        "crash_intensities_g": [],
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
-        "total_crashes": 0
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "total_time_formatted": "30:17.300",
       "position": 15,
       "laps_completed": 9,
       "score_breakdown": {
         "base_score": 65392.71,
-        "crash_penalty_percent": 0.0,
-        "crash_factor": 1.0,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
         "position_factor": 0.533,
         "speed_factor": 0.927,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -4,
       "best_lap": 171.792,
@@ -443,18 +526,25 @@
       "overtakes_made": 16,
       "total_score": 32342,
       "lap_times": [
-        211.878, 172.176, 171.996, 181.071, 295.29, 176.481, 179.142, 257.475,
+        211.878,
+        172.176,
+        171.996,
+        181.071,
+        295.29,
+        176.481,
+        179.142,
+        257.475,
         171.792
       ]
     },
     "Matt LaPallita": {
       "average_lap": 176.249,
       "crashes": {
-        "total_crash_intensity": 18.78,
-        "crash_intensities_g": [4.63, 7.94, 6.21],
-        "average_crash_g": 6.26,
-        "worst_crash_g": 7.94,
-        "total_crashes": 3
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "total_time_formatted": "32:18.743",
       "position": 12,
@@ -465,7 +555,7 @@
         "crash_factor": 0.998,
         "position_factor": 0.633,
         "speed_factor": 0.937,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": 3,
       "best_lap": 169.95,
@@ -476,23 +566,35 @@
       "distance_covered_miles": 50.27,
       "average_speed_mph": 93.34,
       "average_speed_kmh": 150.22,
-      "partial_lap_completion": 0.0,
+      "partial_lap_completion": 0,
       "times_overtaken": 23,
       "overtakes_made": 26,
       "total_score": 47360,
       "lap_times": [
-        202.668, 173.358, 173.163, 172.206, 175.683, 187.164, 170.034, 170.505,
-        169.95, 172.551, 171.462
+        202.668,
+        173.358,
+        173.163,
+        172.206,
+        175.683,
+        187.164,
+        170.034,
+        170.505,
+        169.95,
+        172.551,
+        171.462
       ]
     },
     "Kevin Pirongo": {
       "average_lap": 193.959,
       "crashes": {
-        "total_crash_intensity": 1340.23,
-        "crash_intensities_g": [667.37, 668.58, 4.29],
-        "average_crash_g": 446.74,
+        "total_crash_intensity": 1335.95,
         "worst_crash_g": 668.58,
-        "total_crashes": 3
+        "total_crashes": 2,
+        "average_crash_g": 667.98,
+        "crash_intensities_g": [
+          667.37,
+          668.58
+        ]
       },
       "total_time_formatted": "32:19.593",
       "position": 17,
@@ -503,7 +605,7 @@
         "crash_factor": 0.98,
         "position_factor": 0.467,
         "speed_factor": 0.923,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -1,
       "best_lap": 172.662,
@@ -519,21 +621,29 @@
       "overtakes_made": 18,
       "total_score": 30646,
       "lap_times": [
-        221.73, 175.392, 174.75, 177.951, 289.608, 172.803, 177.663, 204.243,
-        172.662, 172.791
+        221.73,
+        175.392,
+        174.75,
+        177.951,
+        289.608,
+        172.803,
+        177.663,
+        204.243,
+        172.662,
+        172.791
       ]
     },
     "Andy Mendieta": {
       "average_lap": 193.373,
       "crashes": {
-        "total_crash_intensity": 1539.32,
-        "crash_intensities_g": [
-          32.41, 8.69, 8.02, 6.68, 24.16, 7.76, 8.45, 4.39, 5.78, 9.23, 15.55,
-          4.08, 17.1, 4.77, 690.56, 691.69
-        ],
-        "average_crash_g": 96.21,
+        "total_crash_intensity": 1382.25,
         "worst_crash_g": 691.69,
-        "total_crashes": 16
+        "total_crashes": 2,
+        "average_crash_g": 691.13,
+        "crash_intensities_g": [
+          690.56,
+          691.69
+        ]
       },
       "total_time_formatted": "32:13.730",
       "position": 9,
@@ -544,7 +654,7 @@
         "crash_factor": 0.964,
         "position_factor": 0.733,
         "speed_factor": 0.946,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": 9,
       "best_lap": 168.486,
@@ -560,18 +670,29 @@
       "overtakes_made": 25,
       "total_score": 48581,
       "lap_times": [
-        200.733, 171.849, 171.105, 177.675, 248.862, 168.486, 173.385, 283.623,
-        169.464, 168.549
+        200.733,
+        171.849,
+        171.105,
+        177.675,
+        248.862,
+        168.486,
+        173.385,
+        283.623,
+        169.464,
+        168.549
       ]
     },
     "Klingon Popinsky": {
       "average_lap": 193.205,
       "crashes": {
-        "total_crash_intensity": 1414.27,
-        "crash_intensities_g": [669.12, 670.35, 29.3, 17.13, 6.18, 12.69, 9.5],
-        "average_crash_g": 202.04,
+        "total_crash_intensity": 1339.47,
         "worst_crash_g": 670.35,
-        "total_crashes": 7
+        "total_crashes": 2,
+        "average_crash_g": 669.74,
+        "crash_intensities_g": [
+          669.12,
+          670.35
+        ]
       },
       "total_time_formatted": "32:12.048",
       "position": 13,
@@ -582,7 +703,7 @@
         "crash_factor": 0.973,
         "position_factor": 0.6,
         "speed_factor": 0.935,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -5,
       "best_lap": 170.328,
@@ -598,29 +719,40 @@
       "overtakes_made": 22,
       "total_score": 39654,
       "lap_times": [
-        243.999, 172.08, 172.197, 171.891, 174.747, 306.768, 176.364, 171.72,
-        171.954, 170.328
+        243.999,
+        172.08,
+        172.197,
+        171.891,
+        174.747,
+        306.768,
+        176.364,
+        171.72,
+        171.954,
+        170.328
       ]
     },
     "Dave Gargiulo": {
       "average_lap": 207.202,
       "crashes": {
         "total_crash_intensity": 1286.31,
-        "crash_intensities_g": [642.47, 643.84],
-        "average_crash_g": 643.16,
         "worst_crash_g": 643.84,
-        "total_crashes": 2
+        "total_crashes": 2,
+        "average_crash_g": 643.16,
+        "crash_intensities_g": [
+          642.47,
+          643.84
+        ]
       },
       "total_time_formatted": "31:04.815",
       "position": 10,
       "laps_completed": 9,
       "score_breakdown": {
         "base_score": 65392.71,
-        "crash_penalty_percent": 2.0,
+        "crash_penalty_percent": 2,
         "crash_factor": 0.98,
         "position_factor": 0.7,
         "speed_factor": 0.944,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": 11,
       "best_lap": 168.69,
@@ -636,7 +768,14 @@
       "overtakes_made": 30,
       "total_score": 42364,
       "lap_times": [
-        295.662, 170.901, 175.635, 281.286, 171.735, 174.843, 256.887, 168.69,
+        295.662,
+        170.901,
+        175.635,
+        281.286,
+        171.735,
+        174.843,
+        256.887,
+        168.69,
         169.176
       ]
     },
@@ -644,21 +783,21 @@
       "average_lap": 178.988,
       "crashes": {
         "total_crash_intensity": 0,
-        "crash_intensities_g": [],
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
-        "total_crashes": 0
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "total_time_formatted": "26:50.892",
       "position": 2,
       "laps_completed": 9,
       "score_breakdown": {
         "base_score": 65392.71,
-        "crash_penalty_percent": 0.0,
-        "crash_factor": 1.0,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
         "position_factor": 0.967,
         "speed_factor": 0.979,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": 27,
       "best_lap": 162.684,
@@ -674,7 +813,14 @@
       "overtakes_made": 31,
       "total_score": 61901,
       "lap_times": [
-        260.16, 165.636, 170.64, 187.938, 163.221, 162.684, 164.853, 166.566,
+        260.16,
+        165.636,
+        170.64,
+        187.938,
+        163.221,
+        162.684,
+        164.853,
+        166.566,
         169.194
       ]
     },
@@ -682,21 +828,26 @@
       "average_lap": 200.049,
       "crashes": {
         "total_crash_intensity": 2911.97,
-        "crash_intensities_g": [725.05, 725.96, 730.24, 730.72],
-        "average_crash_g": 727.99,
         "worst_crash_g": 730.72,
-        "total_crashes": 4
+        "total_crashes": 4,
+        "average_crash_g": 727.99,
+        "crash_intensities_g": [
+          725.05,
+          725.96,
+          730.24,
+          730.72
+        ]
       },
       "total_time_formatted": "30:00.443",
       "position": 5,
       "laps_completed": 9,
       "score_breakdown": {
         "base_score": 65392.71,
-        "crash_penalty_percent": 4.0,
+        "crash_penalty_percent": 4,
         "crash_factor": 0.96,
         "position_factor": 0.867,
         "speed_factor": 0.954,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": 5,
       "best_lap": 166.932,
@@ -712,18 +863,28 @@
       "overtakes_made": 25,
       "total_score": 51922,
       "lap_times": [
-        269.703, 167.034, 172.311, 287.505, 166.932, 170.277, 231.726, 167.742,
+        269.703,
+        167.034,
+        172.311,
+        287.505,
+        166.932,
+        170.277,
+        231.726,
+        167.742,
         167.214
       ]
     },
     "Percy Goodpace": {
       "average_lap": 188.598,
       "crashes": {
-        "total_crash_intensity": 1335.66,
-        "crash_intensities_g": [665.21, 666.36, 4.09],
-        "average_crash_g": 445.22,
+        "total_crash_intensity": 1331.57,
         "worst_crash_g": 666.36,
-        "total_crashes": 3
+        "total_crashes": 2,
+        "average_crash_g": 665.79,
+        "crash_intensities_g": [
+          665.21,
+          666.36
+        ]
       },
       "total_time_formatted": "31:25.980",
       "position": 6,
@@ -734,7 +895,7 @@
         "crash_factor": 0.98,
         "position_factor": 0.833,
         "speed_factor": 0.954,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": 17,
       "best_lap": 167.001,
@@ -743,36 +904,47 @@
       "total_time_seconds": 1885.98,
       "distance_covered_km": 75.88,
       "distance_covered_miles": 47.15,
-      "average_speed_mph": 90.0,
+      "average_speed_mph": 90,
       "average_speed_kmh": 144.84,
       "partial_lap_completion": 0.453,
       "times_overtaken": 16,
       "overtakes_made": 33,
       "total_score": 56581,
       "lap_times": [
-        229.302, 172.524, 170.655, 171.189, 174.552, 292.368, 171.258, 169.371,
-        167.76, 167.001
+        229.302,
+        172.524,
+        170.655,
+        171.189,
+        174.552,
+        292.368,
+        171.258,
+        169.371,
+        167.76,
+        167.001
       ]
     },
     "Vicente Gasoil": {
       "average_lap": 194.32,
       "crashes": {
         "total_crash_intensity": 1333.96,
-        "crash_intensities_g": [666.36, 667.6],
-        "average_crash_g": 666.98,
         "worst_crash_g": 667.6,
-        "total_crashes": 2
+        "total_crashes": 2,
+        "average_crash_g": 666.98,
+        "crash_intensities_g": [
+          666.36,
+          667.6
+        ]
       },
       "total_time_formatted": "32:23.201",
       "position": 26,
       "laps_completed": 10,
       "score_breakdown": {
         "base_score": 72658.56,
-        "crash_penalty_percent": 2.0,
+        "crash_penalty_percent": 2,
         "crash_factor": 0.98,
         "position_factor": 0.167,
         "speed_factor": 0.907,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -7,
       "best_lap": 175.614,
@@ -788,29 +960,40 @@
       "overtakes_made": 9,
       "total_score": 10766,
       "lap_times": [
-        308.121, 176.529, 177.129, 180.876, 179.805, 175.614, 178.677, 212.628,
-        177.993, 175.83
+        308.121,
+        176.529,
+        177.129,
+        180.876,
+        179.805,
+        175.614,
+        178.677,
+        212.628,
+        177.993,
+        175.83
       ]
     },
     "Carlo Pappolongo": {
       "average_lap": 194.562,
       "crashes": {
         "total_crash_intensity": 1371.26,
-        "crash_intensities_g": [685.06, 686.2],
-        "average_crash_g": 685.63,
         "worst_crash_g": 686.2,
-        "total_crashes": 2
+        "total_crashes": 2,
+        "average_crash_g": 685.63,
+        "crash_intensities_g": [
+          685.06,
+          686.2
+        ]
       },
       "total_time_formatted": "29:11.060",
       "position": 16,
       "laps_completed": 9,
       "score_breakdown": {
         "base_score": 65392.71,
-        "crash_penalty_percent": 2.0,
+        "crash_penalty_percent": 2,
         "crash_factor": 0.98,
         "position_factor": 0.5,
         "speed_factor": 0.927,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": 9,
       "best_lap": 171.918,
@@ -826,29 +1009,41 @@
       "overtakes_made": 22,
       "total_score": 29692,
       "lap_times": [
-        284.244, 174.477, 171.918, 172.602, 177.486, 246.981, 172.431, 172.851,
+        284.244,
+        174.477,
+        171.918,
+        172.602,
+        177.486,
+        246.981,
+        172.431,
+        172.851,
         178.071
       ]
     },
     "Andrea Crotto": {
       "average_lap": 199.842,
       "crashes": {
-        "total_crash_intensity": 2965.02,
-        "crash_intensities_g": [740.81, 741.8, 740.71, 741.71],
-        "average_crash_g": 741.26,
+        "total_crash_intensity": 2965.03,
         "worst_crash_g": 741.8,
-        "total_crashes": 4
+        "total_crashes": 4,
+        "average_crash_g": 741.26,
+        "crash_intensities_g": [
+          740.81,
+          741.8,
+          740.71,
+          741.71
+        ]
       },
       "total_time_formatted": "29:58.580",
       "position": 28,
       "laps_completed": 9,
       "score_breakdown": {
         "base_score": 65392.71,
-        "crash_penalty_percent": 4.0,
+        "crash_penalty_percent": 4,
         "crash_factor": 0.96,
         "position_factor": 0.1,
         "speed_factor": 0.902,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -24,
       "best_lap": 176.679,
@@ -864,7 +1059,14 @@
       "overtakes_made": 4,
       "total_score": 5661,
       "lap_times": [
-        296.844, 178.398, 186.255, 204.231, 176.679, 185.931, 206.883, 178.011,
+        296.844,
+        178.398,
+        186.255,
+        204.231,
+        176.679,
+        185.931,
+        206.883,
+        178.011,
         185.349
       ]
     },
@@ -872,21 +1074,24 @@
       "average_lap": 200.194,
       "crashes": {
         "total_crash_intensity": 1334.38,
-        "crash_intensities_g": [666.57, 667.81],
-        "average_crash_g": 667.19,
         "worst_crash_g": 667.81,
-        "total_crashes": 2
+        "total_crashes": 2,
+        "average_crash_g": 667.19,
+        "crash_intensities_g": [
+          666.57,
+          667.81
+        ]
       },
       "total_time_formatted": "30:01.742",
       "position": 21,
       "laps_completed": 9,
       "score_breakdown": {
         "base_score": 65392.71,
-        "crash_penalty_percent": 2.0,
+        "crash_penalty_percent": 2,
         "crash_factor": 0.98,
         "position_factor": 0.333,
         "speed_factor": 0.916,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -15,
       "best_lap": 173.859,
@@ -902,18 +1107,28 @@
       "overtakes_made": 14,
       "total_score": 19574,
       "lap_times": [
-        285.753, 175.854, 179.505, 289.377, 174.468, 174.858, 173.985, 174.084,
+        285.753,
+        175.854,
+        179.505,
+        289.377,
+        174.468,
+        174.858,
+        173.985,
+        174.084,
         173.859
       ]
     },
     "Shawn Cachamai": {
       "average_lap": 203.423,
       "crashes": {
-        "total_crash_intensity": 1261.1,
-        "crash_intensities_g": [625.94, 627.12, 8.04],
-        "average_crash_g": 420.37,
+        "total_crash_intensity": 1253.06,
         "worst_crash_g": 627.12,
-        "total_crashes": 3
+        "total_crashes": 2,
+        "average_crash_g": 626.53,
+        "crash_intensities_g": [
+          625.94,
+          627.12
+        ]
       },
       "total_time_formatted": "30:30.807",
       "position": 7,
@@ -924,7 +1139,7 @@
         "crash_factor": 0.979,
         "position_factor": 0.8,
         "speed_factor": 0.947,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": 17,
       "best_lap": 168.234,
@@ -940,39 +1155,34 @@
       "overtakes_made": 29,
       "total_score": 48508,
       "lap_times": [
-        233.634, 168.831, 174.168, 290.028, 171.423, 172.845, 176.172, 275.472,
+        233.634,
+        168.831,
+        174.168,
+        290.028,
+        171.423,
+        172.845,
+        176.172,
+        275.472,
         168.234
       ]
     },
     "Pablin": {
       "average_lap": 193.85,
       "crashes": {
-        "total_crash_intensity": 3212.28,
-        "crash_intensities_g": [
-          30.72, 11.28, 7.44, 6.78, 14.83, 4.23, 11.42, 5.19, 6.86, 34.13, 6.53,
-          21.45, 9.23, 10.02, 37.73, 18.23, 9.74, 5.47, 37.48, 100.69, 88.72,
-          6.78, 15.96, 22.18, 7.04, 21.41, 6.69, 6.95, 6.73, 4.8, 31.7, 14.82,
-          10.24, 5.28, 35.82, 5.35, 17.18, 7.54, 4.46, 8.99, 40.41, 21.25,
-          10.39, 9.98, 4.44, 64.91, 30.3, 12.02, 20.46, 6.48, 5.52, 20.64, 6.05,
-          7.07, 28.51, 4.86, 10.94, 5.37, 4.09, 49.82, 36.27, 36.28, 26.7, 9.19,
-          6.29, 6.97, 28.45, 4.33, 11.36, 5.67, 4.63, 4.48, 4.24, 7.17, 7.36,
-          9.37, 5.82, 6.28, 25.36, 11.75, 6.77, 5.74, 5.38, 4.09, 11.67, 7.7,
-          7.19, 4.55, 7.05, 6.7, 5.53, 53.95, 4.35, 21.73, 12.95, 8.37, 4.24,
-          40.06, 21.43, 8.96, 4.13, 4.09, 6.44, 5.27, 10.38, 4.89, 4.95, 17.27,
-          4.17, 8.45, 16.52, 36.77, 39.53, 18.21, 6.75, 4.61, 7.76, 15.16, 5.13,
-          4.46, 4.55, 44.1, 22.77, 15.12, 4.16, 5.08, 22.95, 23.71, 6.61, 4.19,
-          4.6, 22.22, 4.22, 10.19, 6.39, 5.12, 15.65, 4.22, 20.18, 37.78, 37.27,
-          16.17, 10.7, 5.03, 16.86, 5.04, 143.49, 151.87, 7.64, 8.43, 4.27,
-          10.18, 7.22, 7.88, 6.03, 11.62, 62.06, 62.93, 5.57, 5.26, 12.59,
-          13.47, 16.33, 13.12, 14.81, 10.78, 8.35, 5.09, 10.18, 6.45, 9.12,
-          27.02, 9.23, 12.87, 4.03, 46.69, 46.3, 4.7, 6.84, 5.03, 12.72, 4.16,
-          5.52, 6.7, 5.51, 8.34, 7.78, 5.7, 5.07, 16.1, 4.11, 6.05, 6.4, 4.98,
-          4.7, 5.87, 18.85, 8.01, 6.87, 6.05, 11.78, 6.25, 7.62, 11.16, 14.78,
-          4.03, 5.08, 7.15, 15.07, 14.61
-        ],
-        "average_crash_g": 15.3,
+        "total_crash_intensity": 728.62,
         "worst_crash_g": 151.87,
-        "total_crashes": 210
+        "total_crashes": 8,
+        "average_crash_g": 91.08,
+        "crash_intensities_g": [
+          100.69,
+          88.72,
+          64.91,
+          53.95,
+          143.49,
+          151.87,
+          62.06,
+          62.93
+        ]
       },
       "total_time_formatted": "29:04.653",
       "position": 1,
@@ -981,8 +1191,8 @@
         "base_score": 65392.71,
         "crash_penalty_percent": 31.16,
         "crash_factor": 0.688,
-        "position_factor": 1.0,
-        "speed_factor": 1.0,
+        "position_factor": 1,
+        "speed_factor": 1,
         "fastest_lap_bonus": 2250.74
       },
       "net_positions_gained": 29,
@@ -999,7 +1209,14 @@
       "overtakes_made": 37,
       "total_score": 47266,
       "lap_times": [
-        222.237, 172.941, 161.13, 164.217, 160.704, 159.306, 372.882, 160.68,
+        222.237,
+        172.941,
+        161.13,
+        164.217,
+        160.704,
+        159.306,
+        372.882,
+        160.68,
         170.556
       ]
     },
@@ -1007,21 +1224,26 @@
       "average_lap": 191.251,
       "crashes": {
         "total_crash_intensity": 2661.43,
-        "crash_intensities_g": [664.36, 665.49, 665.22, 666.36],
-        "average_crash_g": 665.36,
         "worst_crash_g": 666.36,
-        "total_crashes": 4
+        "total_crashes": 4,
+        "average_crash_g": 665.36,
+        "crash_intensities_g": [
+          664.36,
+          665.49,
+          665.22,
+          666.36
+        ]
       },
       "total_time_formatted": "31:52.509",
       "position": 18,
       "laps_completed": 10,
       "score_breakdown": {
         "base_score": 72658.56,
-        "crash_penalty_percent": 4.0,
+        "crash_penalty_percent": 4,
         "crash_factor": 0.96,
         "position_factor": 0.433,
         "speed_factor": 0.92,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -9,
       "best_lap": 173.091,
@@ -1037,18 +1259,29 @@
       "overtakes_made": 17,
       "total_score": 27819,
       "lap_times": [
-        196.866, 176.445, 180.204, 185.607, 293.457, 178.011, 176.904, 174.78,
-        173.091, 177.144
+        196.866,
+        176.445,
+        180.204,
+        185.607,
+        293.457,
+        178.011,
+        176.904,
+        174.78,
+        173.091,
+        177.144
       ]
     },
     "Dieter Von Heil": {
       "average_lap": 197.52,
       "crashes": {
-        "total_crash_intensity": 1382.15,
-        "crash_intensities_g": [28.4, 7.64, 7.09, 6.19, 665.85, 666.98],
-        "average_crash_g": 230.36,
+        "total_crash_intensity": 1332.83,
         "worst_crash_g": 666.98,
-        "total_crashes": 6
+        "total_crashes": 2,
+        "average_crash_g": 666.42,
+        "crash_intensities_g": [
+          665.85,
+          666.98
+        ]
       },
       "total_time_formatted": "26:20.160",
       "position": 29,
@@ -1059,7 +1292,7 @@
         "crash_factor": 0.975,
         "position_factor": 0.067,
         "speed_factor": 0.89,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -1,
       "best_lap": 179.052,
@@ -1075,28 +1308,35 @@
       "overtakes_made": 26,
       "total_score": 3362,
       "lap_times": [
-        196.845, 181.599, 181.806, 183.045, 185.979, 287.013, 179.052, 184.821
+        196.845,
+        181.599,
+        181.806,
+        183.045,
+        185.979,
+        287.013,
+        179.052,
+        184.821
       ]
     },
     "Trump Miranda": {
       "average_lap": 196.001,
       "crashes": {
         "total_crash_intensity": 0,
-        "crash_intensities_g": [],
-        "average_crash_g": 0.0,
-        "worst_crash_g": 0.0,
-        "total_crashes": 0
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "total_time_formatted": "32:40.010",
       "position": 25,
       "laps_completed": 10,
       "score_breakdown": {
         "base_score": 72658.56,
-        "crash_penalty_percent": 0.0,
-        "crash_factor": 1.0,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
         "position_factor": 0.2,
         "speed_factor": 0.913,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -24,
       "best_lap": 174.528,
@@ -1112,18 +1352,26 @@
       "overtakes_made": 6,
       "total_score": 13265,
       "lap_times": [
-        295.368, 177.63, 177.807, 176.664, 176.232, 175.326, 179.472, 247.737,
-        174.528, 179.247
+        295.368,
+        177.63,
+        177.807,
+        176.664,
+        176.232,
+        175.326,
+        179.472,
+        247.737,
+        174.528,
+        179.247
       ]
     },
     "Billy Lampazzo": {
       "average_lap": 187.329,
       "crashes": {
-        "total_crash_intensity": 50.71,
-        "crash_intensities_g": [28.76, 6.93, 4.65, 5.98, 4.38],
-        "average_crash_g": 10.14,
-        "worst_crash_g": 28.76,
-        "total_crashes": 5
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "total_time_formatted": "28:05.963",
       "position": 8,
@@ -1134,7 +1382,7 @@
         "crash_factor": 0.995,
         "position_factor": 0.767,
         "speed_factor": 0.947,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -5,
       "best_lap": 168.264,
@@ -1150,18 +1398,28 @@
       "overtakes_made": 22,
       "total_score": 47225,
       "lap_times": [
-        241.35, 171.285, 169.293, 168.264, 173.889, 248.508, 170.661, 169.497,
+        241.35,
+        171.285,
+        169.293,
+        168.264,
+        173.889,
+        248.508,
+        170.661,
+        169.497,
         173.217
       ]
     },
     "Mark Fullthrottle": {
       "average_lap": 200.418,
       "crashes": {
-        "total_crash_intensity": 1357.4,
-        "crash_intensities_g": [4.4, 9.66, 11.72, 4.81, 662.84, 663.97],
-        "average_crash_g": 226.23,
+        "total_crash_intensity": 1326.81,
         "worst_crash_g": 663.97,
-        "total_crashes": 6
+        "total_crashes": 2,
+        "average_crash_g": 663.41,
+        "crash_intensities_g": [
+          662.84,
+          663.97
+        ]
       },
       "total_time_formatted": "30:03.765",
       "position": 19,
@@ -1172,7 +1430,7 @@
         "crash_factor": 0.977,
         "position_factor": 0.4,
         "speed_factor": 0.918,
-        "fastest_lap_bonus": 0.0
+        "fastest_lap_bonus": 0
       },
       "net_positions_gained": -6,
       "best_lap": 173.562,
@@ -1188,7 +1446,14 @@
       "overtakes_made": 19,
       "total_score": 23455,
       "lap_times": [
-        214.44, 177.18, 180.903, 270.474, 175.308, 173.859, 177.6, 260.439,
+        214.44,
+        177.18,
+        180.903,
+        270.474,
+        175.308,
+        173.859,
+        177.6,
+        260.439,
         173.562
       ]
     }

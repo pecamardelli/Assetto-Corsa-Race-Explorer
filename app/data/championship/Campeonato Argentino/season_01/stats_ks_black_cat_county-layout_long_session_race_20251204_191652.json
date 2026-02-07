@@ -22,14 +22,11 @@
     "Poppy Larrauri": {
       "distance_covered_miles": 43.1,
       "crashes": {
-        "worst_crash_g": 45.93,
-        "total_crashes": 15,
-        "crash_intensities_g": [
-          4.24, 5.48, 4.55, 4.38, 9.35, 4.24, 7.27, 8.14, 5.41, 7.51, 9.62,
-          5.85, 45.93, 42.92, 4.44
-        ],
-        "total_crash_intensity": 169.33,
-        "average_crash_g": 11.29
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 155.26,
       "times_overtaken": 14,
@@ -41,7 +38,13 @@
       "distance_covered_km": 69.36,
       "total_time_formatted": "26:48.167",
       "car_name": "sfa_fiat_125_coupe_se78",
-      "lap_times": [359.352, 333.765, 309.234, 302.649, 303.168],
+      "lap_times": [
+        359.352,
+        333.765,
+        309.234,
+        302.649,
+        303.168
+      ],
       "average_lap": 321.634,
       "retired": false,
       "average_speed_mph": 96.48,
@@ -60,11 +63,11 @@
     "Esteban Tuero": {
       "distance_covered_miles": 36.83,
       "crashes": {
+        "total_crash_intensity": 0,
         "worst_crash_g": 0,
         "total_crashes": 0,
-        "crash_intensities_g": [],
-        "total_crash_intensity": 0,
-        "average_crash_g": 0
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 115.16,
       "times_overtaken": 12,
@@ -76,7 +79,13 @@
       "distance_covered_km": 59.28,
       "total_time_formatted": "30:53.060",
       "car_name": "atcc_ford_falcon_xl_grpe",
-      "lap_times": [392.064, 365.139, 365.997, 365.289, 364.572],
+      "lap_times": [
+        392.064,
+        365.139,
+        365.997,
+        365.289,
+        364.572
+      ],
       "average_lap": 370.612,
       "retired": false,
       "average_speed_mph": 71.56,
@@ -95,11 +104,11 @@
     "Sakon Matraka": {
       "distance_covered_miles": 36.77,
       "crashes": {
+        "total_crash_intensity": 0,
         "worst_crash_g": 0,
         "total_crashes": 0,
-        "crash_intensities_g": [],
-        "total_crash_intensity": 0,
-        "average_crash_g": 0
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 114.63,
       "times_overtaken": 14,
@@ -111,7 +120,13 @@
       "distance_covered_km": 59.18,
       "total_time_formatted": "30:58.596",
       "car_name": "atcc_ford_falcon_xl_grpe",
-      "lap_times": [392.439, 366.465, 367.26, 366.309, 366.123],
+      "lap_times": [
+        392.439,
+        366.465,
+        367.26,
+        366.309,
+        366.123
+      ],
       "average_lap": 371.719,
       "retired": false,
       "average_speed_mph": 71.23,
@@ -130,11 +145,11 @@
     "Norberto Fontana": {
       "distance_covered_miles": 43.78,
       "crashes": {
-        "worst_crash_g": 11.58,
-        "total_crashes": 4,
-        "crash_intensities_g": [4.01, 5.9, 5.49, 11.58],
-        "total_crash_intensity": 26.96,
-        "average_crash_g": 6.74
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 158,
       "times_overtaken": 2,
@@ -146,7 +161,13 @@
       "distance_covered_km": 70.46,
       "total_time_formatted": "26:45.516",
       "car_name": "rpm_falcon_sprint",
-      "lap_times": [339.429, 317.526, 316.023, 316.308, 316.23],
+      "lap_times": [
+        339.429,
+        317.526,
+        316.023,
+        316.308,
+        316.23
+      ],
       "average_lap": 321.103,
       "retired": false,
       "average_speed_mph": 98.18,
@@ -165,11 +186,11 @@
     "Piero Campioni": {
       "distance_covered_miles": 43.37,
       "crashes": {
-        "worst_crash_g": 10.88,
-        "total_crashes": 4,
-        "crash_intensities_g": [10.88, 4.12, 8.89, 5.88],
-        "total_crash_intensity": 29.77,
-        "average_crash_g": 7.44
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 154.87,
       "times_overtaken": 11,
@@ -181,7 +202,13 @@
       "distance_covered_km": 69.79,
       "total_time_formatted": "27:02.252",
       "car_name": "rpm_falcon_sprint",
-      "lap_times": [361.701, 318.006, 312.372, 314.964, 315.21],
+      "lap_times": [
+        361.701,
+        318.006,
+        312.372,
+        314.964,
+        315.21
+      ],
       "average_lap": 324.451,
       "retired": false,
       "average_speed_mph": 96.23,
@@ -200,11 +227,11 @@
     "Fernando Camardelli": {
       "distance_covered_miles": 42.84,
       "crashes": {
-        "worst_crash_g": 8.41,
-        "total_crashes": 1,
-        "crash_intensities_g": [8.41],
-        "total_crash_intensity": 8.41,
-        "average_crash_g": 8.41
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 146.75,
       "times_overtaken": 12,
@@ -216,7 +243,13 @@
       "distance_covered_km": 68.95,
       "total_time_formatted": "28:11.430",
       "car_name": "asw-renault-fuego-gtx",
-      "lap_times": [345.024, 339.027, 334.401, 339.018, 333.96],
+      "lap_times": [
+        345.024,
+        339.027,
+        334.401,
+        339.018,
+        333.96
+      ],
       "average_lap": 338.286,
       "retired": false,
       "average_speed_mph": 91.19,
@@ -235,11 +268,11 @@
     "Nico Varrone": {
       "distance_covered_miles": 38.9,
       "crashes": {
-        "worst_crash_g": 8.19,
-        "total_crashes": 5,
-        "crash_intensities_g": [8.19, 6.67, 4.9, 6.68, 4.9],
-        "total_crash_intensity": 31.34,
-        "average_crash_g": 6.27
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 130.9,
       "times_overtaken": 6,
@@ -251,7 +284,13 @@
       "distance_covered_km": 62.61,
       "total_time_formatted": "28:41.972",
       "car_name": "rpm_chevy_s2_1974",
-      "lap_times": [363.03, 344.883, 342.477, 335.016, 336.567],
+      "lap_times": [
+        363.03,
+        344.883,
+        342.477,
+        335.016,
+        336.567
+      ],
       "average_lap": 344.395,
       "retired": false,
       "average_speed_mph": 81.34,
@@ -270,11 +309,11 @@
     "Mario Ravioli": {
       "distance_covered_miles": 44.41,
       "crashes": {
+        "total_crash_intensity": 0,
         "worst_crash_g": 0,
         "total_crashes": 0,
-        "crash_intensities_g": [],
-        "total_crash_intensity": 0,
-        "average_crash_g": 0
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 162.66,
       "times_overtaken": 0,
@@ -286,7 +325,13 @@
       "distance_covered_km": 71.47,
       "total_time_formatted": "26:21.846",
       "car_name": "iame_justicialista_gran_sport",
-      "lap_times": [326.394, 312.111, 312.963, 314.382, 315.996],
+      "lap_times": [
+        326.394,
+        312.111,
+        312.963,
+        314.382,
+        315.996
+      ],
       "average_lap": 316.369,
       "retired": false,
       "average_speed_mph": 101.07,
@@ -305,11 +350,11 @@
     "Marcos Di Palma": {
       "distance_covered_miles": 42.87,
       "crashes": {
+        "total_crash_intensity": 0,
         "worst_crash_g": 0,
         "total_crashes": 0,
-        "crash_intensities_g": [],
-        "total_crash_intensity": 0,
-        "average_crash_g": 0
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 149.56,
       "times_overtaken": 6,
@@ -321,7 +366,13 @@
       "distance_covered_km": 68.99,
       "total_time_formatted": "27:40.671",
       "car_name": "set_fiat_147",
-      "lap_times": [344.82, 330.363, 329.655, 327.957, 327.876],
+      "lap_times": [
+        344.82,
+        330.363,
+        329.655,
+        327.957,
+        327.876
+      ],
       "average_lap": 332.134,
       "retired": false,
       "average_speed_mph": 92.93,
@@ -340,11 +391,11 @@
     "Felipe Massa": {
       "distance_covered_miles": 38.68,
       "crashes": {
-        "worst_crash_g": 20.2,
-        "total_crashes": 6,
-        "crash_intensities_g": [7.93, 5.36, 20.2, 5.87, 8, 4.17],
-        "total_crash_intensity": 51.53,
-        "average_crash_g": 8.59
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 127.89,
       "times_overtaken": 22,
@@ -356,7 +407,13 @@
       "distance_covered_km": 62.24,
       "total_time_formatted": "29:12.105",
       "car_name": "atcc_60-64_appendix_j_peugeot_404_saloon",
-      "lap_times": [371.439, 361.782, 339.147, 339.399, 340.338],
+      "lap_times": [
+        371.439,
+        361.782,
+        339.147,
+        339.399,
+        340.338
+      ],
       "average_lap": 350.421,
       "retired": false,
       "average_speed_mph": 79.46,
@@ -375,11 +432,14 @@
     "Matt LaPallita": {
       "distance_covered_miles": 44,
       "crashes": {
+        "total_crash_intensity": 1357.35,
         "worst_crash_g": 679.07,
         "total_crashes": 2,
-        "crash_intensities_g": [678.28, 679.07],
-        "total_crash_intensity": 1357.36,
-        "average_crash_g": 678.68
+        "average_crash_g": 678.68,
+        "crash_intensities_g": [
+          678.28,
+          679.07
+        ]
       },
       "average_speed_kmh": 160.8,
       "times_overtaken": 3,
@@ -391,7 +451,13 @@
       "distance_covered_km": 70.81,
       "total_time_formatted": "26:25.275",
       "car_name": "sfa_fiat_125_coupe_se78",
-      "lap_times": [344.115, 313.401, 308.388, 308.733, 310.638],
+      "lap_times": [
+        344.115,
+        313.401,
+        308.388,
+        308.733,
+        310.638
+      ],
       "average_lap": 317.055,
       "retired": false,
       "average_speed_mph": 99.92,
@@ -410,11 +476,11 @@
     "Rubens Barrichello": {
       "distance_covered_miles": 42.83,
       "crashes": {
-        "worst_crash_g": 6.35,
-        "total_crashes": 2,
-        "crash_intensities_g": [4.18, 6.35],
-        "total_crash_intensity": 10.53,
-        "average_crash_g": 5.27
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 147.32,
       "times_overtaken": 12,
@@ -426,7 +492,13 @@
       "distance_covered_km": 68.93,
       "total_time_formatted": "28:04.520",
       "car_name": "peugeot_504_tn",
-      "lap_times": [357.12, 332.025, 331.437, 332.568, 331.371],
+      "lap_times": [
+        357.12,
+        332.025,
+        331.437,
+        332.568,
+        331.371
+      ],
       "average_lap": 336.904,
       "retired": false,
       "average_speed_mph": 91.54,
@@ -445,14 +517,11 @@
     "Chuck Tornado": {
       "distance_covered_miles": 42.85,
       "crashes": {
-        "worst_crash_g": 31.21,
-        "total_crashes": 14,
-        "crash_intensities_g": [
-          8.3, 7.38, 26.28, 5.42, 10.22, 8.81, 31.21, 5.23, 15.93, 5.63, 6.91,
-          12.15, 5.68, 7.63
-        ],
-        "total_crash_intensity": 156.79,
-        "average_crash_g": 11.2
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 145.38,
       "times_overtaken": 14,
@@ -464,7 +533,13 @@
       "distance_covered_km": 68.96,
       "total_time_formatted": "28:27.567",
       "car_name": "gd_ford_sierra_csw",
-      "lap_times": [369.669, 335.274, 323.952, 329.232, 349.44],
+      "lap_times": [
+        369.669,
+        335.274,
+        323.952,
+        329.232,
+        349.44
+      ],
       "average_lap": 341.513,
       "retired": false,
       "average_speed_mph": 90.34,
@@ -483,11 +558,11 @@
     "Tarso Marquez": {
       "distance_covered_miles": 42.63,
       "crashes": {
-        "worst_crash_g": 28.48,
-        "total_crashes": 2,
-        "crash_intensities_g": [24.89, 28.48],
-        "total_crash_intensity": 53.37,
-        "average_crash_g": 26.69
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 143.79,
       "times_overtaken": 17,
@@ -499,7 +574,13 @@
       "distance_covered_km": 68.61,
       "total_time_formatted": "28:37.785",
       "car_name": "atcc_60-64_appendix_j_peugeot_404_saloon",
-      "lap_times": [359.385, 339.9, 339.624, 339.969, 338.907],
+      "lap_times": [
+        359.385,
+        339.9,
+        339.624,
+        339.969,
+        338.907
+      ],
       "average_lap": 343.557,
       "retired": false,
       "average_speed_mph": 89.35,
@@ -518,11 +599,11 @@
     "Gaston Mazzacane": {
       "distance_covered_miles": 42.85,
       "crashes": {
+        "total_crash_intensity": 0,
         "worst_crash_g": 0,
         "total_crashes": 0,
-        "crash_intensities_g": [],
-        "total_crash_intensity": 0,
-        "average_crash_g": 0
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 148.04,
       "times_overtaken": 3,
@@ -534,7 +615,13 @@
       "distance_covered_km": 68.96,
       "total_time_formatted": "27:57.105",
       "car_name": "renault_12_gordini",
-      "lap_times": [353.223, 330.108, 330.489, 331.758, 331.527],
+      "lap_times": [
+        353.223,
+        330.108,
+        330.489,
+        331.758,
+        331.527
+      ],
       "average_lap": 335.421,
       "retired": false,
       "average_speed_mph": 91.99,
@@ -553,14 +640,11 @@
     "Michael Birulo": {
       "distance_covered_miles": 43.74,
       "crashes": {
-        "worst_crash_g": 19.14,
-        "total_crashes": 14,
-        "crash_intensities_g": [
-          4.23, 7.14, 8.13, 12.18, 19.14, 6.56, 4.03, 7.48, 6.95, 12.1, 17.75,
-          8.97, 6.85, 5.64
-        ],
-        "total_crash_intensity": 127.16,
-        "average_crash_g": 9.08
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 158.29,
       "times_overtaken": 0,
@@ -572,7 +656,13 @@
       "distance_covered_km": 70.39,
       "total_time_formatted": "26:40.911",
       "car_name": "iame_justicialista_gran_sport",
-      "lap_times": [344.301, 316.785, 314.292, 314.334, 311.199],
+      "lap_times": [
+        344.301,
+        316.785,
+        314.292,
+        314.334,
+        311.199
+      ],
       "average_lap": 320.182,
       "retired": false,
       "average_speed_mph": 98.36,
@@ -591,14 +681,11 @@
     "Rigo Leau": {
       "distance_covered_miles": 42.48,
       "crashes": {
-        "worst_crash_g": 37.74,
-        "total_crashes": 13,
-        "crash_intensities_g": [
-          4.65, 4.35, 5.23, 4.44, 5.06, 32.15, 5.19, 37.74, 5.34, 24.88, 16.73,
-          5.24, 8.45
-        ],
-        "total_crash_intensity": 159.45,
-        "average_crash_g": 12.27
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 144.43,
       "times_overtaken": 19,
@@ -610,7 +697,13 @@
       "distance_covered_km": 68.37,
       "total_time_formatted": "28:24.237",
       "car_name": "set_fiat_147",
-      "lap_times": [370.275, 347.343, 329.499, 328.137, 328.983],
+      "lap_times": [
+        370.275,
+        347.343,
+        329.499,
+        328.137,
+        328.983
+      ],
       "average_lap": 340.847,
       "retired": false,
       "average_speed_mph": 89.74,
@@ -629,11 +722,11 @@
     "Mette Sakka": {
       "distance_covered_miles": 42.86,
       "crashes": {
+        "total_crash_intensity": 0,
         "worst_crash_g": 0,
         "total_crashes": 0,
-        "crash_intensities_g": [],
-        "total_crash_intensity": 0,
-        "average_crash_g": 0
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 147.65,
       "times_overtaken": 15,
@@ -645,7 +738,13 @@
       "distance_covered_km": 68.98,
       "total_time_formatted": "28:01.863",
       "car_name": "gd_ford_sierra_csw",
-      "lap_times": [368.238, 331.731, 327.192, 330.243, 324.459],
+      "lap_times": [
+        368.238,
+        331.731,
+        327.192,
+        330.243,
+        324.459
+      ],
       "average_lap": 336.373,
       "retired": false,
       "average_speed_mph": 91.74,
@@ -664,11 +763,11 @@
     "Franco Colapinto": {
       "distance_covered_miles": 42.63,
       "crashes": {
-        "worst_crash_g": 13.92,
-        "total_crashes": 3,
-        "crash_intensities_g": [13.92, 6.12, 4.06],
-        "total_crash_intensity": 24.1,
-        "average_crash_g": 8.03
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 145.21,
       "times_overtaken": 6,
@@ -680,7 +779,13 @@
       "distance_covered_km": 68.61,
       "total_time_formatted": "28:20.981",
       "car_name": "renault_12_gordini",
-      "lap_times": [367.338, 339.642, 332.685, 331.152, 330.165],
+      "lap_times": [
+        367.338,
+        339.642,
+        332.685,
+        331.152,
+        330.165
+      ],
       "average_lap": 340.196,
       "retired": false,
       "average_speed_mph": 90.23,
@@ -699,11 +804,11 @@
     "Flaco Traverso": {
       "distance_covered_miles": 42.83,
       "crashes": {
-        "worst_crash_g": 4.68,
-        "total_crashes": 2,
-        "crash_intensities_g": [4.31, 4.68],
-        "total_crash_intensity": 8.99,
-        "average_crash_g": 4.5
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 146.28,
       "times_overtaken": 8,
@@ -715,7 +820,13 @@
       "distance_covered_km": 68.93,
       "total_time_formatted": "28:16.490",
       "car_name": "asw-renault-fuego-gtx",
-      "lap_times": [348.735, 332.967, 336.207, 339.525, 339.057],
+      "lap_times": [
+        348.735,
+        332.967,
+        336.207,
+        339.525,
+        339.057
+      ],
       "average_lap": 339.298,
       "retired": false,
       "average_speed_mph": 90.89,
@@ -734,25 +845,13 @@
     "Pablin": {
       "distance_covered_miles": 36.24,
       "crashes": {
+        "total_crash_intensity": 50.24,
         "worst_crash_g": 50.24,
-        "total_crashes": 139,
+        "total_crashes": 1,
+        "average_crash_g": 50.24,
         "crash_intensities_g": [
-          6.29, 4.54, 8.97, 6.81, 30.4, 9.01, 5.9, 15.48, 7.15, 8.64, 4.68,
-          5.29, 7.91, 6.12, 5.91, 19.62, 9.14, 5.51, 5.03, 26.93, 28.14, 18.79,
-          8.8, 6.06, 10.31, 4.32, 4.64, 4.93, 4.07, 10.01, 4.05, 8.88, 11.93,
-          20.74, 18, 12, 5.73, 12.47, 6.72, 8.59, 19.97, 4.49, 5.9, 11.57, 4.49,
-          10.83, 4.73, 4.97, 8.15, 7.35, 4.23, 4.89, 4.91, 17.09, 5.04, 14.34,
-          34.3, 17.49, 9.25, 4.29, 29.61, 14.64, 12.78, 8.22, 4.38, 5.49, 10.26,
-          28.09, 16.2, 7.83, 4.1, 4.49, 21.52, 21.46, 7.09, 8.35, 4.56, 5.28,
-          13.19, 5.53, 17.63, 11.44, 50.24, 41.53, 6.35, 4.9, 4.99, 8.47, 7.88,
-          18.9, 8.75, 9.28, 5.88, 5.99, 8.81, 4.45, 6.5, 5.7, 6.22, 7.54, 4.79,
-          4.68, 4.15, 4.43, 6.21, 6.22, 13.49, 6.9, 22.8, 21.27, 5.6, 6.94,
-          4.07, 8.59, 4.01, 7.19, 5.45, 13.61, 6.2, 9.4, 38.32, 10.02, 10.12,
-          15.88, 8.74, 5.03, 4.34, 32.86, 4.84, 33, 31.56, 11.93, 10.03, 4.75,
-          6.71, 4.08, 12.38, 25, 31.78
-        ],
-        "total_crash_intensity": 1548.61,
-        "average_crash_g": 11.14
+          50.24
+        ]
       },
       "average_speed_kmh": 117.52,
       "times_overtaken": 5,
@@ -764,7 +863,13 @@
       "distance_covered_km": 58.33,
       "total_time_formatted": "29:46.875",
       "car_name": "atcc_chrysler_valiant_s-series",
-      "lap_times": [366.432, 374.244, 350.523, 345.546, 350.13],
+      "lap_times": [
+        366.432,
+        374.244,
+        350.523,
+        345.546,
+        350.13
+      ],
       "average_lap": 357.375,
       "retired": false,
       "average_speed_mph": 73.02,
@@ -783,16 +888,14 @@
     "Cochito Lopez": {
       "distance_covered_miles": 10.22,
       "crashes": {
+        "total_crash_intensity": 125.16,
         "worst_crash_g": 62.63,
-        "total_crashes": 42,
+        "total_crashes": 2,
+        "average_crash_g": 62.58,
         "crash_intensities_g": [
-          21.08, 18.8, 5.67, 5.19, 6.81, 7.19, 8.92, 7.51, 8.35, 9.76, 10.27,
-          4.84, 25.26, 25.42, 10.92, 4.61, 6.02, 5.6, 7.23, 9.01, 8.53, 4.08,
-          20.85, 18.93, 4.64, 31.09, 15.75, 8.73, 4.14, 20.49, 16.6, 18.55,
-          10.95, 10.01, 15.58, 4.73, 10.76, 4.66, 16, 10.03, 62.53, 62.63
-        ],
-        "total_crash_intensity": 588.69,
-        "average_crash_g": 14.02
+          62.53,
+          62.63
+        ]
       },
       "average_speed_kmh": 161.41,
       "times_overtaken": 26,
@@ -804,7 +907,9 @@
       "distance_covered_km": 16.45,
       "total_time_formatted": "06:06.983",
       "car_name": "peugeot_504_tn",
-      "lap_times": [366.984],
+      "lap_times": [
+        366.984
+      ],
       "average_lap": 366.984,
       "retired": true,
       "average_speed_mph": 100.3,
@@ -823,11 +928,11 @@
     "Pechito Lopez": {
       "distance_covered_miles": 43.55,
       "crashes": {
-        "worst_crash_g": 8.75,
-        "total_crashes": 4,
-        "crash_intensities_g": [8.45, 8.21, 8.17, 8.75],
-        "total_crash_intensity": 33.58,
-        "average_crash_g": 8.4
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 155.75,
       "times_overtaken": 4,
@@ -839,7 +944,13 @@
       "distance_covered_km": 70.08,
       "total_time_formatted": "26:59.798",
       "car_name": "rpm_chevy_s2_1974",
-      "lap_times": [340.599, 320.091, 319.53, 319.572, 320.007],
+      "lap_times": [
+        340.599,
+        320.091,
+        319.53,
+        319.572,
+        320.007
+      ],
       "average_lap": 323.96,
       "retired": false,
       "average_speed_mph": 96.78,
@@ -858,11 +969,11 @@
     "Bruno Senna": {
       "distance_covered_miles": 38.67,
       "crashes": {
-        "worst_crash_g": 10.82,
-        "total_crashes": 4,
-        "crash_intensities_g": [10.82, 8.7, 7.03, 5.32],
-        "total_crash_intensity": 31.87,
-        "average_crash_g": 7.97
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "average_speed_kmh": 129.65,
       "times_overtaken": 13,
@@ -874,7 +985,13 @@
       "distance_covered_km": 62.23,
       "total_time_formatted": "28:47.963",
       "car_name": "atcc_chrysler_valiant_s-series",
-      "lap_times": [361.158, 345.315, 344.142, 339.138, 338.211],
+      "lap_times": [
+        361.158,
+        345.315,
+        344.142,
+        339.138,
+        338.211
+      ],
       "average_lap": 345.593,
       "retired": false,
       "average_speed_mph": 80.56,

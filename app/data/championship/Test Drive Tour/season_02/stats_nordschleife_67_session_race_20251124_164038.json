@@ -26,19 +26,13 @@
       "average_speed_kmh": 0,
       "partial_lap_completion": 0.011,
       "crashes": {
-        "total_crashes": 73,
+        "total_crash_intensity": 59.17,
         "worst_crash_g": 59.17,
-        "total_crash_intensity": 891.58,
+        "total_crashes": 1,
+        "average_crash_g": 59.17,
         "crash_intensities_g": [
-          4.1, 6.79, 4.63, 15.78, 15.84, 7.62, 7.54, 5.18, 5.69, 8.65, 8.5,
-          20.12, 14.08, 4.34, 15.47, 11.8, 5.08, 10.3, 5.95, 5.68, 4.22, 26.53,
-          24.95, 12.68, 13.87, 9.09, 10.14, 11.05, 14.29, 14.55, 5.49, 10.9,
-          6.44, 6.03, 35.16, 26.63, 34.95, 24.66, 10.79, 9.38, 4.8, 4.78, 9.4,
-          5.3, 7.92, 8.44, 6.43, 4.02, 5.65, 4.6, 4.35, 4.49, 4.71, 4.86, 4.53,
-          4.95, 10.2, 10.28, 4.49, 59.17, 35.41, 14.61, 8.81, 42.48, 9.26,
-          22.45, 10.09, 7.92, 10.97, 9.61, 24.28, 9.84, 17.57
-        ],
-        "average_crash_g": 12.21
+          59.17
+        ]
       },
       "net_positions_gained": -6,
       "distance_covered_km": 23.97
@@ -47,7 +41,11 @@
       "times_overtaken": 6,
       "average_speed_mph": 121.76,
       "overtakes_made": 26,
-      "lap_times": [573.216, 570.726, 568.818],
+      "lap_times": [
+        573.216,
+        570.726,
+        568.818
+      ],
       "average_lap": 570.92,
       "total_time_seconds": 1712.76,
       "car_name": "porsche_911_turbo",
@@ -69,11 +67,11 @@
       "average_speed_kmh": 195.95,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 1,
-        "worst_crash_g": 4.11,
-        "total_crash_intensity": 4.11,
-        "crash_intensities_g": [4.11],
-        "average_crash_g": 4.11
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": 20,
       "distance_covered_km": 93.23
@@ -82,7 +80,11 @@
       "times_overtaken": 1,
       "average_speed_mph": 113.82,
       "overtakes_made": 8,
-      "lap_times": [639.48, 595.068, 594.141],
+      "lap_times": [
+        639.48,
+        595.068,
+        594.141
+      ],
       "average_lap": 609.563,
       "total_time_seconds": 1828.689,
       "car_name": "chevrolet_63vette",
@@ -104,11 +106,11 @@
       "average_speed_kmh": 183.18,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 0,
-        "worst_crash_g": 0,
         "total_crash_intensity": 0,
-        "crash_intensities_g": [],
-        "average_crash_g": 0
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": 7,
       "distance_covered_km": 93.05
@@ -117,7 +119,11 @@
       "times_overtaken": 3,
       "average_speed_mph": 120.47,
       "overtakes_made": 15,
-      "lap_times": [590.82, 575.421, 561.21],
+      "lap_times": [
+        590.82,
+        575.421,
+        561.21
+      ],
       "average_lap": 575.817,
       "total_time_seconds": 1727.451,
       "car_name": "chevy_camaro_1969_zl1",
@@ -139,14 +145,11 @@
       "average_speed_kmh": 193.87,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 12,
-        "worst_crash_g": 18.46,
-        "total_crash_intensity": 138.85,
-        "crash_intensities_g": [
-          5.85, 17.08, 11.39, 16.99, 10.95, 13.39, 18.46, 9.56, 8.54, 4.85,
-          16.29, 5.5
-        ],
-        "average_crash_g": 11.57
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": 12,
       "distance_covered_km": 93.03
@@ -155,7 +158,11 @@
       "times_overtaken": 6,
       "average_speed_mph": 119.04,
       "overtakes_made": 6,
-      "lap_times": [590.823, 580.32, 577.374],
+      "lap_times": [
+        590.823,
+        580.32,
+        577.374
+      ],
       "average_lap": 582.839,
       "total_time_seconds": 1748.517,
       "car_name": "rs_testarossa_84",
@@ -177,14 +184,13 @@
       "average_speed_kmh": 191.58,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 12,
+        "total_crash_intensity": 57.61,
         "worst_crash_g": 57.61,
-        "total_crash_intensity": 176.95,
+        "total_crashes": 1,
+        "average_crash_g": 57.61,
         "crash_intensities_g": [
-          9.09, 6.58, 14.47, 19.14, 4.58, 57.61, 25.24, 14.99, 7.11, 6.54, 6.4,
-          5.21
-        ],
-        "average_crash_g": 14.75
+          57.61
+        ]
       },
       "net_positions_gained": 0,
       "distance_covered_km": 93.05
@@ -193,7 +199,11 @@
       "times_overtaken": 11,
       "average_speed_mph": 120.38,
       "overtakes_made": 5,
-      "lap_times": [588.171, 581.511, 612.267],
+      "lap_times": [
+        588.171,
+        581.511,
+        612.267
+      ],
       "average_lap": 593.983,
       "total_time_seconds": 1781.949,
       "car_name": "jf_porsche_959",
@@ -215,11 +225,14 @@
       "average_speed_kmh": 193.74,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 2,
-        "worst_crash_g": 747.36,
         "total_crash_intensity": 1494.03,
-        "crash_intensities_g": [746.67, 747.36],
-        "average_crash_g": 747.02
+        "worst_crash_g": 747.36,
+        "total_crashes": 2,
+        "average_crash_g": 747.02,
+        "crash_intensities_g": [
+          746.67,
+          747.36
+        ]
       },
       "net_positions_gained": -6,
       "distance_covered_km": 95.9
@@ -228,7 +241,11 @@
       "times_overtaken": 7,
       "average_speed_mph": 120.26,
       "overtakes_made": 15,
-      "lap_times": [592.809, 575.313, 562.089],
+      "lap_times": [
+        592.809,
+        575.313,
+        562.089
+      ],
       "average_lap": 576.737,
       "total_time_seconds": 1730.211,
       "car_name": "ferrari_f40",
@@ -250,11 +267,13 @@
       "average_speed_kmh": 193.54,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 6,
+        "total_crash_intensity": 76.43,
         "worst_crash_g": 76.43,
-        "total_crash_intensity": 149.9,
-        "crash_intensities_g": [76.43, 33.64, 20.07, 10.13, 5.04, 4.6],
-        "average_crash_g": 24.98
+        "total_crashes": 1,
+        "average_crash_g": 76.43,
+        "crash_intensities_g": [
+          76.43
+        ]
       },
       "net_positions_gained": 8,
       "distance_covered_km": 93.02
@@ -263,7 +282,11 @@
       "times_overtaken": 1,
       "average_speed_mph": 122.9,
       "overtakes_made": 11,
-      "lap_times": [586.638, 554.094, 553.431],
+      "lap_times": [
+        586.638,
+        554.094,
+        553.431
+      ],
       "average_lap": 564.721,
       "total_time_seconds": 1694.163,
       "car_name": "ks_lamborghini_countach",
@@ -285,11 +308,11 @@
       "average_speed_kmh": 197.78,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 0,
-        "worst_crash_g": 0,
         "total_crash_intensity": 0,
-        "crash_intensities_g": [],
-        "average_crash_g": 0
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": 10,
       "distance_covered_km": 93.08
@@ -298,7 +321,11 @@
       "times_overtaken": 0,
       "average_speed_mph": 129.77,
       "overtakes_made": 12,
-      "lap_times": [557.598, 535.293, 535.425],
+      "lap_times": [
+        557.598,
+        535.293,
+        535.425
+      ],
       "average_lap": 542.772,
       "total_time_seconds": 1628.316,
       "car_name": "ruf_yellowbird",
@@ -320,11 +347,11 @@
       "average_speed_kmh": 208.84,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 0,
-        "worst_crash_g": 0,
         "total_crash_intensity": 0,
-        "crash_intensities_g": [],
-        "average_crash_g": 0
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": 12,
       "distance_covered_km": 94.46
@@ -333,7 +360,11 @@
       "times_overtaken": 19,
       "average_speed_mph": 121.26,
       "overtakes_made": 11,
-      "lap_times": [603.165, 567.309, 571.896],
+      "lap_times": [
+        603.165,
+        567.309,
+        571.896
+      ],
       "average_lap": 580.79,
       "total_time_seconds": 1742.37,
       "car_name": "ks_lamborghini_countach",
@@ -355,11 +386,11 @@
       "average_speed_kmh": 195.15,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 3,
-        "worst_crash_g": 8.72,
-        "total_crash_intensity": 24.1,
-        "crash_intensities_g": [8.72, 7.53, 7.85],
-        "average_crash_g": 8.03
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": -8,
       "distance_covered_km": 94.45
@@ -368,7 +399,11 @@
       "times_overtaken": 22,
       "average_speed_mph": 79.95,
       "overtakes_made": 3,
-      "lap_times": [883.113, 651.048, 653.904],
+      "lap_times": [
+        883.113,
+        651.048,
+        653.904
+      ],
       "average_lap": 729.355,
       "total_time_seconds": 2188.065,
       "car_name": "j8_shelby_gt500_67",
@@ -390,11 +425,14 @@
       "average_speed_kmh": 128.67,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 5,
+        "total_crash_intensity": 158.48,
         "worst_crash_g": 79.57,
-        "total_crash_intensity": 182.38,
-        "crash_intensities_g": [78.91, 79.57, 12.18, 5.07, 6.66],
-        "average_crash_g": 36.48
+        "total_crashes": 2,
+        "average_crash_g": 79.24,
+        "crash_intensities_g": [
+          78.91,
+          79.57
+        ]
       },
       "net_positions_gained": -19,
       "distance_covered_km": 78.2
@@ -403,7 +441,10 @@
       "times_overtaken": 5,
       "average_speed_mph": 87.5,
       "overtakes_made": 9,
-      "lap_times": [605.379, 1322.931],
+      "lap_times": [
+        605.379,
+        1322.931
+      ],
       "average_lap": 964.155,
       "total_time_seconds": 1928.31,
       "car_name": "pb_pontiac_gto_65",
@@ -425,20 +466,16 @@
       "average_speed_kmh": 140.82,
       "partial_lap_completion": 0.013,
       "crashes": {
-        "total_crashes": 81,
+        "total_crash_intensity": 285.15,
         "worst_crash_g": 100.26,
-        "total_crash_intensity": 1239.08,
+        "total_crashes": 4,
+        "average_crash_g": 71.29,
         "crash_intensities_g": [
-          42.94, 43.24, 22.75, 12.38, 4.07, 12.08, 6.88, 4.15, 7.78, 6.03, 6.13,
-          4.1, 5.18, 9.46, 6.24, 46.1, 40.62, 4.06, 27.28, 13.8, 8.7, 22.14,
-          12.24, 12.08, 8.5, 4.74, 4.66, 21.9, 4.2, 4.59, 12, 4.19, 4.18, 5.57,
-          7.06, 4.89, 6.07, 100.26, 78.21, 7.11, 9.77, 8.34, 6.05, 8.41, 27.6,
-          26.42, 50.83, 14.24, 13.23, 5.11, 28.59, 4.36, 25.18, 9.05, 6, 7.08,
-          6.13, 6.4, 21.76, 5.88, 8.27, 55.85, 31.22, 11.44, 18.16, 12.17, 6.49,
-          7.17, 8.91, 4.11, 4.51, 7.03, 4.06, 15.68, 15.65, 12.35, 8.07, 19.34,
-          13.12, 15.58, 10.91
-        ],
-        "average_crash_g": 15.3
+          100.26,
+          78.21,
+          50.83,
+          55.85
+        ]
       },
       "net_positions_gained": 4,
       "distance_covered_km": 75.43
@@ -447,7 +484,11 @@
       "times_overtaken": 14,
       "average_speed_mph": 102.39,
       "overtakes_made": 6,
-      "lap_times": [652.323, 585.246, 611.91],
+      "lap_times": [
+        652.323,
+        585.246,
+        611.91
+      ],
       "average_lap": 616.493,
       "total_time_seconds": 1849.479,
       "car_name": "lotus_esprit80",
@@ -469,11 +510,14 @@
       "average_speed_kmh": 164.78,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 2,
-        "worst_crash_g": 747.55,
         "total_crash_intensity": 1494.56,
-        "crash_intensities_g": [747.01, 747.55],
-        "average_crash_g": 747.28
+        "worst_crash_g": 747.55,
+        "total_crashes": 2,
+        "average_crash_g": 747.28,
+        "crash_intensities_g": [
+          747.01,
+          747.55
+        ]
       },
       "net_positions_gained": -8,
       "distance_covered_km": 84.66
@@ -504,16 +548,15 @@
       "average_speed_kmh": 0,
       "partial_lap_completion": 0.01,
       "crashes": {
-        "total_crashes": 40,
+        "total_crash_intensity": 252.41,
         "worst_crash_g": 104.95,
-        "total_crash_intensity": 690.32,
+        "total_crashes": 3,
+        "average_crash_g": 84.14,
         "crash_intensities_g": [
-          22, 13.05, 11.8, 10.17, 17.6, 16.25, 5.98, 7.05, 7.83, 8.18, 5.75,
-          5.27, 5.9, 8.97, 12.2, 4.02, 31.46, 17.91, 9.16, 7.65, 104.95, 91.75,
-          11.47, 10.79, 9.3, 7.08, 4.75, 43.28, 12.01, 16.14, 15.32, 15.46,
-          8.88, 6.15, 55.71, 10.32, 17.46, 11.38, 5.86, 4.04
-        ],
-        "average_crash_g": 17.26
+          104.95,
+          91.75,
+          55.71
+        ]
       },
       "net_positions_gained": -6,
       "distance_covered_km": 24.03
@@ -522,7 +565,11 @@
       "times_overtaken": 11,
       "average_speed_mph": 123.54,
       "overtakes_made": 6,
-      "lap_times": [588.45, 561.48, 562.002],
+      "lap_times": [
+        588.45,
+        561.48,
+        562.002
+      ],
       "average_lap": 570.644,
       "total_time_seconds": 1711.932,
       "car_name": "a3dr_lambo_diablo_vt",
@@ -544,11 +591,11 @@
       "average_speed_kmh": 198.82,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 2,
-        "worst_crash_g": 5.92,
-        "total_crash_intensity": 10.07,
-        "crash_intensities_g": [5.92, 4.15],
-        "average_crash_g": 5.04
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": -5,
       "distance_covered_km": 94.55
@@ -579,13 +626,14 @@
       "average_speed_kmh": 0,
       "partial_lap_completion": 0.012,
       "crashes": {
-        "total_crashes": 10,
+        "total_crash_intensity": 234.55,
         "worst_crash_g": 142.82,
-        "total_crash_intensity": 377.19,
+        "total_crashes": 2,
+        "average_crash_g": 117.28,
         "crash_intensities_g": [
-          142.82, 91.73, 33.3, 17.45, 34.82, 14.72, 10.96, 14.5, 10.19, 6.7
-        ],
-        "average_crash_g": 37.72
+          142.82,
+          91.73
+        ]
       },
       "net_positions_gained": -3,
       "distance_covered_km": 23.93
@@ -594,7 +642,11 @@
       "times_overtaken": 9,
       "average_speed_mph": 120.09,
       "overtakes_made": 14,
-      "lap_times": [584.604, 572.742, 576.357],
+      "lap_times": [
+        584.604,
+        572.742,
+        576.357
+      ],
       "average_lap": 577.901,
       "total_time_seconds": 1733.703,
       "car_name": "rs_testarossa_84",
@@ -616,11 +668,11 @@
       "average_speed_kmh": 193.27,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 2,
-        "worst_crash_g": 13.29,
-        "total_crash_intensity": 18.23,
-        "crash_intensities_g": [13.29, 4.94],
-        "average_crash_g": 9.11
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": 5,
       "distance_covered_km": 93.08
@@ -629,7 +681,11 @@
       "times_overtaken": 0,
       "average_speed_mph": 124.15,
       "overtakes_made": 21,
-      "lap_times": [572.091, 555.054, 551.058],
+      "lap_times": [
+        572.091,
+        555.054,
+        551.058
+      ],
       "average_lap": 559.401,
       "total_time_seconds": 1678.203,
       "car_name": "chevrolet_corvette_c4_1989",
@@ -651,11 +707,11 @@
       "average_speed_kmh": 199.81,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 0,
-        "worst_crash_g": 0,
         "total_crash_intensity": 0,
-        "crash_intensities_g": [],
-        "average_crash_g": 0
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": 21,
       "distance_covered_km": 93.14
@@ -664,7 +720,11 @@
       "times_overtaken": 1,
       "average_speed_mph": 122.37,
       "overtakes_made": 18,
-      "lap_times": [591.837, 559.545, 550.56],
+      "lap_times": [
+        591.837,
+        559.545,
+        550.56
+      ],
       "average_lap": 567.314,
       "total_time_seconds": 1701.942,
       "car_name": "chevy_camaro_1969_zl1",
@@ -686,11 +746,11 @@
       "average_speed_kmh": 196.94,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 5,
-        "worst_crash_g": 7.75,
-        "total_crash_intensity": 28.25,
-        "crash_intensities_g": [6.44, 4.61, 4.9, 7.75, 4.55],
-        "average_crash_g": 5.65
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": 17,
       "distance_covered_km": 93.1
@@ -699,7 +759,11 @@
       "times_overtaken": 21,
       "average_speed_mph": 120.23,
       "overtakes_made": 6,
-      "lap_times": [589.932, 566.151, 630.936],
+      "lap_times": [
+        589.932,
+        566.151,
+        630.936
+      ],
       "average_lap": 595.673,
       "total_time_seconds": 1787.019,
       "car_name": "a3dr_lambo_diablo_vt",
@@ -721,15 +785,16 @@
       "average_speed_kmh": 193.49,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 32,
+        "total_crash_intensity": 1502.65,
         "worst_crash_g": 671.71,
-        "total_crash_intensity": 1859.75,
+        "total_crashes": 4,
+        "average_crash_g": 375.66,
         "crash_intensities_g": [
-          14.2, 5.52, 5, 9, 6.63, 6.8, 33.84, 10.03, 10.72, 4.65, 7.37, 4.19,
-          5.46, 4.21, 60.83, 28.86, 12.94, 7.12, 7.05, 5.27, 28.68, 19.03, 9.52,
-          99.4, 46.39, 29.38, 7.18, 10.78, 6.28, 10.99, 670.71, 671.71
-        ],
-        "average_crash_g": 58.12
+          60.83,
+          99.4,
+          670.71,
+          671.71
+        ]
       },
       "net_positions_gained": -15,
       "distance_covered_km": 96.05
@@ -738,7 +803,11 @@
       "times_overtaken": 22,
       "average_speed_mph": 80.08,
       "overtakes_made": 3,
-      "lap_times": [880.236, 653.382, 651.696],
+      "lap_times": [
+        880.236,
+        653.382,
+        651.696
+      ],
       "average_lap": 728.438,
       "total_time_seconds": 2185.314,
       "car_name": "j8_shelby_gt500_67",
@@ -760,14 +829,14 @@
       "average_speed_kmh": 128.88,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 16,
+        "total_crash_intensity": 255.32,
         "worst_crash_g": 150.21,
-        "total_crash_intensity": 505.48,
+        "total_crashes": 2,
+        "average_crash_g": 127.66,
         "crash_intensities_g": [
-          15.37, 5.22, 4.48, 5.71, 14.8, 5.85, 8.05, 5.09, 4.77, 150.21, 105.11,
-          44.43, 33.5, 34.32, 26.07, 42.51
-        ],
-        "average_crash_g": 31.59
+          150.21,
+          105.11
+        ]
       },
       "net_positions_gained": -19,
       "distance_covered_km": 78.24
@@ -776,7 +845,11 @@
       "times_overtaken": 1,
       "average_speed_mph": 119.84,
       "overtakes_made": 12,
-      "lap_times": [594.792, 574.926, 567.804],
+      "lap_times": [
+        594.792,
+        574.926,
+        567.804
+      ],
       "average_lap": 579.174,
       "total_time_seconds": 1737.522,
       "car_name": "chevrolet_corvette_c4_1989",
@@ -798,11 +871,11 @@
       "average_speed_kmh": 192.86,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 5,
-        "worst_crash_g": 6.83,
-        "total_crash_intensity": 27.1,
-        "crash_intensities_g": [4.17, 5.85, 4.96, 6.83, 5.28],
-        "average_crash_g": 5.42
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": 11,
       "distance_covered_km": 93.08
@@ -811,7 +884,11 @@
       "times_overtaken": 3,
       "average_speed_mph": 121.56,
       "overtakes_made": 12,
-      "lap_times": [591.147, 568.746, 553.11],
+      "lap_times": [
+        591.147,
+        568.746,
+        553.11
+      ],
       "average_lap": 571.001,
       "total_time_seconds": 1713.003,
       "car_name": "ferrari_f40",
@@ -833,16 +910,15 @@
       "average_speed_kmh": 195.63,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 35,
+        "total_crash_intensity": 240.37,
         "worst_crash_g": 93.65,
-        "total_crash_intensity": 615.29,
+        "total_crashes": 3,
+        "average_crash_g": 80.12,
         "crash_intensities_g": [
-          18.29, 7.78, 6.75, 11.89, 12.29, 9.27, 4.47, 12.68, 9.25, 19.53,
-          26.96, 6.36, 11.25, 10.72, 5.25, 5.97, 5.04, 4.23, 4.33, 5.25, 18.07,
-          33.02, 7.72, 19.02, 11.88, 13.47, 65.43, 32.29, 11.36, 4.18, 9.99,
-          5.69, 93.65, 81.29, 10.68
-        ],
-        "average_crash_g": 17.58
+          65.43,
+          93.65,
+          81.29
+        ]
       },
       "net_positions_gained": 9,
       "distance_covered_km": 93.09
@@ -873,11 +949,11 @@
       "average_speed_kmh": 0,
       "partial_lap_completion": 0.071,
       "crashes": {
-        "total_crashes": 6,
-        "worst_crash_g": 31.13,
-        "total_crash_intensity": 91.32,
-        "crash_intensities_g": [31.13, 12.08, 21.3, 18, 4.37, 4.44],
-        "average_crash_g": 15.22
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": -20,
       "distance_covered_km": 11.7
@@ -886,7 +962,11 @@
       "times_overtaken": 12,
       "average_speed_mph": 120.05,
       "overtakes_made": 3,
-      "lap_times": [592.578, 581.193, 613.284],
+      "lap_times": [
+        592.578,
+        581.193,
+        613.284
+      ],
       "average_lap": 595.685,
       "total_time_seconds": 1787.055,
       "car_name": "jf_porsche_959",
@@ -908,11 +988,11 @@
       "average_speed_kmh": 193.2,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 0,
-        "worst_crash_g": 0,
         "total_crash_intensity": 0,
-        "crash_intensities_g": [],
-        "average_crash_g": 0
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": -9,
       "distance_covered_km": 95.9
@@ -921,7 +1001,11 @@
       "times_overtaken": 11,
       "average_speed_mph": 121.38,
       "overtakes_made": 6,
-      "lap_times": [589.536, 579.732, 572.292],
+      "lap_times": [
+        589.536,
+        579.732,
+        572.292
+      ],
       "average_lap": 580.52,
       "total_time_seconds": 1741.56,
       "car_name": "porsche_911_turbo",
@@ -943,13 +1027,11 @@
       "average_speed_kmh": 195.33,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 10,
-        "worst_crash_g": 37.47,
-        "total_crash_intensity": 105.23,
-        "crash_intensities_g": [
-          5.38, 4.48, 37.47, 11.63, 12.37, 5.15, 4.06, 8.4, 8.15, 8.14
-        ],
-        "average_crash_g": 10.52
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": -5,
       "distance_covered_km": 94.5
@@ -958,7 +1040,11 @@
       "times_overtaken": 16,
       "average_speed_mph": 112.38,
       "overtakes_made": 6,
-      "lap_times": [656.184, 585.015, 609.369],
+      "lap_times": [
+        656.184,
+        585.015,
+        609.369
+      ],
       "average_lap": 616.856,
       "total_time_seconds": 1850.568,
       "car_name": "lotus_esprit80",
@@ -980,11 +1066,16 @@
       "average_speed_kmh": 180.86,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 6,
+        "total_crash_intensity": 2991.12,
         "worst_crash_g": 748.44,
-        "total_crash_intensity": 3000.63,
-        "crash_intensities_g": [4.83, 4.68, 747.88, 748.44, 747.03, 747.77],
-        "average_crash_g": 500.11
+        "total_crashes": 4,
+        "average_crash_g": 747.78,
+        "crash_intensities_g": [
+          747.88,
+          748.44,
+          747.03,
+          747.77
+        ]
       },
       "net_positions_gained": -10,
       "distance_covered_km": 92.97
@@ -993,7 +1084,11 @@
       "times_overtaken": 1,
       "average_speed_mph": 129.6,
       "overtakes_made": 4,
-      "lap_times": [560.367, 535.401, 535.38],
+      "lap_times": [
+        560.367,
+        535.401,
+        535.38
+      ],
       "average_lap": 543.716,
       "total_time_seconds": 1631.148,
       "car_name": "ruf_yellowbird",
@@ -1015,11 +1110,11 @@
       "average_speed_kmh": 208.58,
       "partial_lap_completion": 0,
       "crashes": {
-        "total_crashes": 0,
-        "worst_crash_g": 0,
         "total_crash_intensity": 0,
-        "crash_intensities_g": [],
-        "average_crash_g": 0
+        "worst_crash_g": 0,
+        "total_crashes": 0,
+        "average_crash_g": 0,
+        "crash_intensities_g": []
       },
       "net_positions_gained": 3,
       "distance_covered_km": 94.51
