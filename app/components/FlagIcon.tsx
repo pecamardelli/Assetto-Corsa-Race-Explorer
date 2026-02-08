@@ -13,10 +13,14 @@ const countryCodeMap: Record<string, string> = {
   // 3-letter codes
   'AFG': 'AF', // Afghanistan
   'ARG': 'AR', // Argentina
+  'AUT': 'AT', // Austria
+  'BEL': 'BE', // Belgium
   'BGD': 'BD', // Bangladesh
   'BOL': 'BO', // Bolivia
   'BRA': 'BR', // Brazil
   'CAN': 'CA', // Canada
+  'CHE': 'CH', // Switzerland
+  'CHL': 'CL', // Chile
   'CHN': 'CN', // China
   'CRO': 'HR', // Croatia
   'HRV': 'HR', // Croatia (alternative code)
@@ -64,6 +68,7 @@ const countryCodeMap: Record<string, string> = {
   'GREAT BRITAIN': 'GB',
   'SCOTLAND': 'GB-SCT',
   'SPAIN': 'ES',
+  'SWITZERLAND': 'CH',
   'AUSTRIA': 'AT',
   'MONACO': 'MC',
 };
