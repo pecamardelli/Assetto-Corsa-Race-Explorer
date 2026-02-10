@@ -1,0 +1,1278 @@
+{
+  "session_info": {
+    "race_laps": 5,
+    "track_length_km": 12.453,
+    "track_length_meters": 12453.47,
+    "track_config": "",
+    "session_duration_seconds": 2338.92,
+    "total_cars": 36,
+    "date": "2026-02-10 00:42:50",
+    "track": "battenbergring",
+    "best_lap_time_seconds": 343.407,
+    "track_length_miles": 7.738,
+    "crash_penalty_config": {
+      "penalty_percent_per_g": 0.01,
+      "max_penalty_per_crash_g": 100
+    },
+    "session_duration_formatted": "38:58.920",
+    "session_type": "race",
+    "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)"
+  },
+  "driver_statistics": {
+    "Carlo Salamano": {
+      "max_speed_kmh": 185.74,
+      "times_overtaken": 2,
+      "position": 10,
+      "total_score": 44324,
+      "crashes": {
+        "total_crashes": 1,
+        "crash_intensities_g": [
+          107.35
+        ],
+        "total_crash_intensity": 107.35,
+        "average_crash_g": 107.35,
+        "worst_crash_g": 107.35
+      },
+      "total_time_seconds": 1821.066,
+      "total_time_formatted": "30:21.066",
+      "car_name": "fiat_805",
+      "lap_times": [
+        384.576,
+        358.209,
+        359.544,
+        358.59,
+        360.147
+      ],
+      "average_lap": 364.213,
+      "retired": false,
+      "overtakes_made": 5,
+      "score_breakdown": {
+        "speed_factor": 0.959,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.75,
+        "crash_penalty_percent": 1,
+        "crash_factor": 0.99,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 3,
+      "best_lap": 358.209
+    },
+    "Victor Hémery": {
+      "max_speed_kmh": 183.92,
+      "times_overtaken": 0,
+      "position": 7,
+      "total_score": 50086,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 1806.861,
+      "total_time_formatted": "30:06.861",
+      "car_name": "rolland_pilain_a22_b",
+      "lap_times": [
+        380.298,
+        356.553,
+        357.354,
+        355.779,
+        356.877
+      ],
+      "average_lap": 361.372,
+      "retired": false,
+      "overtakes_made": 5,
+      "score_breakdown": {
+        "speed_factor": 0.965,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.833,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 5,
+      "best_lap": 355.779
+    },
+    "Albert Divo": {
+      "max_speed_kmh": 185.82,
+      "times_overtaken": 1,
+      "position": 3,
+      "total_score": 57041,
+      "crashes": {
+        "total_crashes": 1,
+        "crash_intensities_g": [
+          63.18
+        ],
+        "total_crash_intensity": 63.18,
+        "average_crash_g": 63.18,
+        "worst_crash_g": 63.18
+      },
+      "total_time_seconds": 1778.442,
+      "total_time_formatted": "29:38.442",
+      "car_name": "sunbeam_2l",
+      "lap_times": [
+        367.941,
+        352.842,
+        352.782,
+        351.81,
+        353.067
+      ],
+      "average_lap": 355.688,
+      "retired": false,
+      "overtakes_made": 3,
+      "score_breakdown": {
+        "speed_factor": 0.976,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.944,
+        "crash_penalty_percent": 0.63,
+        "crash_factor": 0.994,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 2,
+      "best_lap": 351.81
+    },
+    "Hans Matti": {
+      "max_speed_kmh": 186.97,
+      "times_overtaken": 16,
+      "position": 20,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 2,
+        "crash_intensities_g": [
+          170.09,
+          70.01
+        ],
+        "total_crash_intensity": 240.09,
+        "average_crash_g": 120.05,
+        "worst_crash_g": 170.09
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "delage_2lcv",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.472,
+        "crash_penalty_percent": 1.7,
+        "crash_factor": 0.983,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": -16,
+      "best_lap": 0
+    },
+    "Pablin": {
+      "max_speed_kmh": 185.8,
+      "times_overtaken": 0,
+      "position": 1,
+      "total_score": 61850,
+      "crashes": {
+        "total_crashes": 1,
+        "crash_intensities_g": [
+          63.3
+        ],
+        "total_crash_intensity": 63.3,
+        "average_crash_g": 63.3,
+        "worst_crash_g": 63.3
+      },
+      "total_time_seconds": 1748.007,
+      "total_time_formatted": "29:08.007",
+      "car_name": "sunbeam_2l",
+      "lap_times": [
+        359.214,
+        345.636,
+        345.525,
+        354.093,
+        343.539
+      ],
+      "average_lap": 349.601,
+      "retired": false,
+      "overtakes_made": 1,
+      "score_breakdown": {
+        "speed_factor": 1,
+        "fastest_lap_bonus": 0,
+        "position_factor": 1,
+        "crash_penalty_percent": 0.63,
+        "crash_factor": 0.994,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 1,
+      "best_lap": 343.539
+    },
+    "André Lefèbvre": {
+      "max_speed_kmh": 164.97,
+      "times_overtaken": 1,
+      "position": 18,
+      "total_score": 12302,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 784.743,
+      "total_time_formatted": "13:04.743",
+      "car_name": "voisin_c6_laboratoire",
+      "lap_times": [
+        417.78,
+        366.963
+      ],
+      "average_lap": 392.372,
+      "retired": true,
+      "overtakes_made": 16,
+      "score_breakdown": {
+        "speed_factor": 0.936,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.528,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 24906.95
+      },
+      "laps_completed": 2,
+      "net_positions_gained": 15,
+      "best_lap": 366.963
+    },
+    "Henry Seagrave": {
+      "max_speed_kmh": 174.84,
+      "times_overtaken": 13,
+      "position": 21,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 1,
+        "crash_intensities_g": [
+          98.13
+        ],
+        "total_crash_intensity": 98.13,
+        "average_crash_g": 98.13,
+        "worst_crash_g": 98.13
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "sunbeam_2l",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.444,
+        "crash_penalty_percent": 0.98,
+        "crash_factor": 0.99,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": -13,
+      "best_lap": 0
+    },
+    "Ernest Friderich": {
+      "max_speed_kmh": 170.98,
+      "times_overtaken": 3,
+      "position": 28,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 2,
+        "crash_intensities_g": [
+          76.6,
+          235.97
+        ],
+        "total_crash_intensity": 312.57,
+        "average_crash_g": 156.28,
+        "worst_crash_g": 235.97
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "hss_1924_bugatti_t35",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.25,
+        "crash_penalty_percent": 1.77,
+        "crash_factor": 0.982,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": -3,
+      "best_lap": 0
+    },
+    "Robert Senechal": {
+      "max_speed_kmh": 198.32,
+      "times_overtaken": 2,
+      "position": 19,
+      "total_score": 5209,
+      "crashes": {
+        "total_crashes": 2,
+        "crash_intensities_g": [
+          70.39,
+          55.12
+        ],
+        "total_crash_intensity": 125.51,
+        "average_crash_g": 62.75,
+        "worst_crash_g": 70.39
+      },
+      "total_time_seconds": 405.426,
+      "total_time_formatted": "06:45.425",
+      "car_name": "delage_15s8",
+      "lap_times": [
+        405.426
+      ],
+      "average_lap": 405.426,
+      "retired": true,
+      "overtakes_made": 13,
+      "score_breakdown": {
+        "speed_factor": 0.847,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.5,
+        "crash_penalty_percent": 1.26,
+        "crash_factor": 0.987,
+        "base_score": 12453.47
+      },
+      "laps_completed": 1,
+      "net_positions_gained": 11,
+      "best_lap": 405.426
+    },
+    "Enzo Ferrari": {
+      "max_speed_kmh": 171.56,
+      "times_overtaken": 3,
+      "position": 25,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 1,
+        "crash_intensities_g": [
+          138.14
+        ],
+        "total_crash_intensity": 138.14,
+        "average_crash_g": 138.14,
+        "worst_crash_g": 138.14
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "hss_1924_alfa_romeo_p2",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.333,
+        "crash_penalty_percent": 1,
+        "crash_factor": 0.99,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": -3,
+      "best_lap": 0
+    },
+    "Maurice Béquet": {
+      "max_speed_kmh": 188.1,
+      "times_overtaken": 14,
+      "position": 17,
+      "total_score": 13514,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 716.616,
+      "total_time_formatted": "11:56.615",
+      "car_name": "delage_2lcv",
+      "lap_times": [
+        364.983,
+        351.633
+      ],
+      "average_lap": 358.308,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.977,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.556,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 24906.95
+      },
+      "laps_completed": 2,
+      "net_positions_gained": -14,
+      "best_lap": 351.633
+    },
+    "Pietro Bordino": {
+      "max_speed_kmh": 178.24,
+      "times_overtaken": 2,
+      "position": 33,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "fiat_805",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.111,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": -2,
+      "best_lap": 0
+    },
+    "Meo Constantini": {
+      "max_speed_kmh": 170.11,
+      "times_overtaken": 3,
+      "position": 26,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "hss_1924_bugatti_t35",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.306,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": -3,
+      "best_lap": 0
+    },
+    "Ettore Bugatti": {
+      "max_speed_kmh": 188.88,
+      "times_overtaken": 2,
+      "position": 13,
+      "total_score": 39925,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 1830.465,
+      "total_time_formatted": "30:30.464",
+      "car_name": "bugatti_type_32",
+      "lap_times": [
+        396.582,
+        357.06,
+        359.457,
+        359.163,
+        358.203
+      ],
+      "average_lap": 366.093,
+      "retired": false,
+      "overtakes_made": 7,
+      "score_breakdown": {
+        "speed_factor": 0.962,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.667,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 5,
+      "best_lap": 357.06
+    },
+    "Kenelm Lee Guiness": {
+      "max_speed_kmh": 185.82,
+      "times_overtaken": 2,
+      "position": 4,
+      "total_score": 55614,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 1791.684,
+      "total_time_formatted": "29:51.683",
+      "car_name": "sunbeam_2l",
+      "lap_times": [
+        378.378,
+        354.063,
+        354.33,
+        352.452,
+        352.461
+      ],
+      "average_lap": 358.337,
+      "retired": false,
+      "overtakes_made": 4,
+      "score_breakdown": {
+        "speed_factor": 0.974,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.917,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 2,
+      "best_lap": 352.452
+    },
+    "René Thomas": {
+      "max_speed_kmh": 181.36,
+      "times_overtaken": 13,
+      "position": 22,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 1,
+        "crash_intensities_g": [
+          77.9
+        ],
+        "total_crash_intensity": 77.9,
+        "average_crash_g": 77.9,
+        "worst_crash_g": 77.9
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "delage_2lcv",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.417,
+        "crash_penalty_percent": 0.78,
+        "crash_factor": 0.992,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": -13,
+      "best_lap": 0
+    },
+    "Fernando Camardelli": {
+      "max_speed_kmh": 181.71,
+      "times_overtaken": 7,
+      "position": 23,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 2,
+        "crash_intensities_g": [
+          50.52,
+          69.36
+        ],
+        "total_crash_intensity": 119.89,
+        "average_crash_g": 59.94,
+        "worst_crash_g": 69.36
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "bugatti_type_32",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.389,
+        "crash_penalty_percent": 1.2,
+        "crash_factor": 0.988,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": -7,
+      "best_lap": 0
+    },
+    "Edmond Bourlier": {
+      "max_speed_kmh": 197.77,
+      "times_overtaken": 0,
+      "position": 2,
+      "total_score": 59961,
+      "crashes": {
+        "total_crashes": 1,
+        "crash_intensities_g": [
+          70.9
+        ],
+        "total_crash_intensity": 70.9,
+        "average_crash_g": 70.9,
+        "worst_crash_g": 70.9
+      },
+      "total_time_seconds": 1755.456,
+      "total_time_formatted": "29:15.455",
+      "car_name": "delage_15s8",
+      "lap_times": [
+        370.206,
+        346.005,
+        348.222,
+        346.767,
+        344.256
+      ],
+      "average_lap": 351.091,
+      "retired": false,
+      "overtakes_made": 5,
+      "score_breakdown": {
+        "speed_factor": 0.998,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.972,
+        "crash_penalty_percent": 0.71,
+        "crash_factor": 0.993,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 5,
+      "best_lap": 344.256
+    },
+    "Enrico Giaccone": {
+      "max_speed_kmh": 185.92,
+      "times_overtaken": 0,
+      "position": 9,
+      "total_score": 46684,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 1817.934,
+      "total_time_formatted": "30:17.933",
+      "car_name": "fiat_805",
+      "lap_times": [
+        388.884,
+        356.295,
+        358.23,
+        358.266,
+        356.259
+      ],
+      "average_lap": 363.587,
+      "retired": false,
+      "overtakes_made": 11,
+      "score_breakdown": {
+        "speed_factor": 0.964,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.778,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 11,
+      "best_lap": 356.259
+    },
+    "Louis Wagner": {
+      "max_speed_kmh": 188.57,
+      "times_overtaken": 1,
+      "position": 15,
+      "total_score": 36145,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 1871.58,
+      "total_time_formatted": "31:11.579",
+      "car_name": "hss_1924_alfa_romeo_p2",
+      "lap_times": [
+        419.607,
+        364.683,
+        362.652,
+        361.536,
+        363.102
+      ],
+      "average_lap": 374.316,
+      "retired": false,
+      "overtakes_made": 18,
+      "score_breakdown": {
+        "speed_factor": 0.95,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.611,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 17,
+      "best_lap": 361.536
+    },
+    "Giuseppe Campari": {
+      "max_speed_kmh": 172.5,
+      "times_overtaken": 3,
+      "position": 27,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 1,
+        "crash_intensities_g": [
+          66.49
+        ],
+        "total_crash_intensity": 66.49,
+        "average_crash_g": 66.49,
+        "worst_crash_g": 66.49
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "hss_1924_alfa_romeo_p2",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.278,
+        "crash_penalty_percent": 0.66,
+        "crash_factor": 0.993,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": -3,
+      "best_lap": 0
+    },
+    "Prince de Cystria": {
+      "max_speed_kmh": 173.33,
+      "times_overtaken": 3,
+      "position": 30,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 1,
+        "crash_intensities_g": [
+          52.68
+        ],
+        "total_crash_intensity": 52.68,
+        "average_crash_g": 52.68,
+        "worst_crash_g": 52.68
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "bugatti_type_32",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.194,
+        "crash_penalty_percent": 0.53,
+        "crash_factor": 0.995,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": -3,
+      "best_lap": 0
+    },
+    "Pierre de Vizcaya": {
+      "max_speed_kmh": 171.25,
+      "times_overtaken": 3,
+      "position": 24,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "hss_1924_bugatti_t35",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.361,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": -3,
+      "best_lap": 0
+    },
+    "Gaston Delalande": {
+      "max_speed_kmh": 186.46,
+      "times_overtaken": 0,
+      "position": 8,
+      "total_score": 48386,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 1807.938,
+      "total_time_formatted": "30:07.938",
+      "car_name": "rolland_pilain_a22_b",
+      "lap_times": [
+        382.446,
+        356.829,
+        356.001,
+        356.22,
+        356.442
+      ],
+      "average_lap": 361.588,
+      "retired": false,
+      "overtakes_made": 6,
+      "score_breakdown": {
+        "speed_factor": 0.965,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.806,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 6,
+      "best_lap": 356.001
+    },
+    "Albert Guyot": {
+      "max_speed_kmh": 179.89,
+      "times_overtaken": 0,
+      "position": 34,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 1,
+        "crash_intensities_g": [
+          95.4
+        ],
+        "total_crash_intensity": 95.4,
+        "average_crash_g": 95.4,
+        "worst_crash_g": 95.4
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "rolland_pilain_a22_b",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.083,
+        "crash_penalty_percent": 0.95,
+        "crash_factor": 0.99,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": 0,
+      "best_lap": 0
+    },
+    "Robert Benoist": {
+      "max_speed_kmh": 197.03,
+      "times_overtaken": 15,
+      "position": 16,
+      "total_score": 15162,
+      "crashes": {
+        "total_crashes": 1,
+        "crash_intensities_g": [
+          61.34
+        ],
+        "total_crash_intensity": 61.34,
+        "average_crash_g": 61.34,
+        "worst_crash_g": 61.34
+      },
+      "total_time_seconds": 693.363,
+      "total_time_formatted": "11:33.363",
+      "car_name": "delage_15s8",
+      "lap_times": [
+        349.956,
+        343.407
+      ],
+      "average_lap": 346.682,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 1,
+        "fastest_lap_bonus": 722,
+        "position_factor": 0.583,
+        "crash_penalty_percent": 0.61,
+        "crash_factor": 0.994,
+        "base_score": 24906.95
+      },
+      "laps_completed": 2,
+      "net_positions_gained": -15,
+      "best_lap": 343.407
+    },
+    "Arthur Duray": {
+      "max_speed_kmh": 164.29,
+      "times_overtaken": 3,
+      "position": 14,
+      "total_score": 38039,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 1836.762,
+      "total_time_formatted": "30:36.761",
+      "car_name": "voisin_c6_laboratoire",
+      "lap_times": [
+        393.501,
+        359.463,
+        362.736,
+        361.911,
+        359.151
+      ],
+      "average_lap": 367.352,
+      "retired": false,
+      "overtakes_made": 6,
+      "score_breakdown": {
+        "speed_factor": 0.956,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.639,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 3,
+      "best_lap": 359.151
+    },
+    "Nigel Arnold-Forster": {
+      "max_speed_kmh": 173.36,
+      "times_overtaken": 3,
+      "position": 31,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 1,
+        "crash_intensities_g": [
+          133.08
+        ],
+        "total_crash_intensity": 133.08,
+        "average_crash_g": 133.08,
+        "worst_crash_g": 133.08
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "delage_2lcv",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.167,
+        "crash_penalty_percent": 1,
+        "crash_factor": 0.99,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": -3,
+      "best_lap": 0
+    },
+    "André Rossignol": {
+      "max_speed_kmh": 164.73,
+      "times_overtaken": 1,
+      "position": 11,
+      "total_score": 43269,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 1823.604,
+      "total_time_formatted": "30:23.604",
+      "car_name": "voisin_c6_laboratoire",
+      "lap_times": [
+        390.294,
+        358.251,
+        359.235,
+        356.922,
+        358.902
+      ],
+      "average_lap": 364.721,
+      "retired": false,
+      "overtakes_made": 9,
+      "score_breakdown": {
+        "speed_factor": 0.962,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.722,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 8,
+      "best_lap": 356.922
+    },
+    "Felice Nazzaro": {
+      "max_speed_kmh": 185.68,
+      "times_overtaken": 1,
+      "position": 5,
+      "total_score": 53490,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 1803.699,
+      "total_time_formatted": "30:03.699",
+      "car_name": "fiat_805",
+      "lap_times": [
+        377.556,
+        355.344,
+        357.21,
+        355.791,
+        357.798
+      ],
+      "average_lap": 360.74,
+      "retired": false,
+      "overtakes_made": 6,
+      "score_breakdown": {
+        "speed_factor": 0.966,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.889,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 5,
+      "best_lap": 355.344
+    },
+    "Pierre Marco": {
+      "max_speed_kmh": 175.39,
+      "times_overtaken": 3,
+      "position": 29,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "bugatti_type_32",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.222,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": -3,
+      "best_lap": 0
+    },
+    "Jules Goux": {
+      "max_speed_kmh": 184.67,
+      "times_overtaken": 0,
+      "position": 6,
+      "total_score": 51651,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 1806.639,
+      "total_time_formatted": "30:06.638",
+      "car_name": "rolland_pilain_a22_b",
+      "lap_times": [
+        379.824,
+        356.616,
+        356.493,
+        356.601,
+        357.105
+      ],
+      "average_lap": 361.328,
+      "retired": false,
+      "overtakes_made": 5,
+      "score_breakdown": {
+        "speed_factor": 0.963,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.861,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 5,
+      "best_lap": 356.493
+    },
+    "Jean Chassagne": {
+      "max_speed_kmh": 185.67,
+      "times_overtaken": 2,
+      "position": 12,
+      "total_score": 41504,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 1827.309,
+      "total_time_formatted": "30:27.308",
+      "car_name": "hss_1924_bugatti_t35",
+      "lap_times": [
+        387.81,
+        363.687,
+        359.745,
+        358.284,
+        357.783
+      ],
+      "average_lap": 365.462,
+      "retired": false,
+      "overtakes_made": 5,
+      "score_breakdown": {
+        "speed_factor": 0.96,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.694,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 62267.37
+      },
+      "laps_completed": 5,
+      "net_positions_gained": 3,
+      "best_lap": 357.783
+    },
+    "André Morel": {
+      "max_speed_kmh": 190.36,
+      "times_overtaken": 0,
+      "position": 36,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 1,
+        "crash_intensities_g": [
+          80.46
+        ],
+        "total_crash_intensity": 80.46,
+        "average_crash_g": 80.46,
+        "worst_crash_g": 80.46
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "delage_15s8",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.028,
+        "crash_penalty_percent": 0.8,
+        "crash_factor": 0.992,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": 0,
+      "best_lap": 0
+    },
+    "Antonio Ascari": {
+      "max_speed_kmh": 173.19,
+      "times_overtaken": 3,
+      "position": 32,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "hss_1924_alfa_romeo_p2",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.139,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": -3,
+      "best_lap": 0
+    },
+    "Henri Rougier": {
+      "max_speed_kmh": 163.32,
+      "times_overtaken": 0,
+      "position": 35,
+      "total_score": 0,
+      "crashes": {
+        "total_crashes": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "average_crash_g": 0,
+        "worst_crash_g": 0
+      },
+      "total_time_seconds": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "voisin_c6_laboratoire",
+      "lap_times": [],
+      "average_lap": 0,
+      "retired": true,
+      "overtakes_made": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.056,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1,
+        "base_score": 0
+      },
+      "laps_completed": 0,
+      "net_positions_gained": 0,
+      "best_lap": 0
+    }
+  }
+}

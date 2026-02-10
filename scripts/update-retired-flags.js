@@ -2,13 +2,13 @@ const fs = require("fs");
 const path = require("path");
 
 // CONFIGURATION - Modify these variables
-const RACE_FILE = "stats_nordschleife_67_session_race_20260207_144716.json";
-const MIN_LAPS_THRESHOLD = 3;
+const RACE_FILE = "stats_battenbergring_session_race_20260210_004250.json";
+const MIN_LAPS_THRESHOLD = 5;
 
 // File path construction
 const filePath = path.join(
   __dirname,
-  "../app/data/championship/Le Mans Classic/season_01",
+  "../app/data/championship/Le Mans Series 1923/season_01",
   RACE_FILE,
 );
 
