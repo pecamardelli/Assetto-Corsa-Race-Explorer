@@ -11,6 +11,8 @@ type DriverProfile = {
   placeOfBirth: string;
   features: string;
   gender: string;
+  isFictional?: boolean;
+  bio?: string;
 };
 
 async function getDriverProfile(driverName: string): Promise<DriverProfile | null> {
@@ -38,6 +40,8 @@ export default async function EditDriverPage({ params }: { params: Promise<{ dri
       placeOfBirth: 'Unknown',
       features: 'athletic build, confident features',
       gender: 'male',
+      isFictional: true,
+      bio: '',
     };
 
     // Save the default profile

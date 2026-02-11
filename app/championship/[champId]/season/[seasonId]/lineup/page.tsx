@@ -17,6 +17,8 @@ type DriverProfile = {
   placeOfBirth: string;
   features: string;
   gender: string;
+  isFictional?: boolean;
+  bio?: string;
 };
 
 async function getDriverProfile(
@@ -282,6 +284,15 @@ export default async function LineupPage({
                             {driver.profile?.name || driver.name}
                           </h3>
                           <FlagIcon nation={driver.nation} />
+                          {driver.profile && (
+                            <span className={`inline-flex items-center px-1.5 py-0.5 text-[10px] font-semibold rounded ${
+                              driver.profile.isFictional === false
+                                ? 'bg-emerald-500/20 text-emerald-400'
+                                : 'bg-purple-500/20 text-purple-400'
+                            }`}>
+                              {driver.profile.isFictional === false ? 'REAL' : 'AI'}
+                            </span>
+                          )}
                         </div>
                         <div className="flex flex-col gap-1 text-sm">
                           {age !== null && (

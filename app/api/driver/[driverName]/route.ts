@@ -9,6 +9,8 @@ type DriverProfile = {
   placeOfBirth: string;
   features: string;
   gender: string;
+  isFictional?: boolean;
+  bio?: string;
 };
 
 export async function PUT(
@@ -36,6 +38,8 @@ export async function PUT(
       placeOfBirth: body.placeOfBirth,
       features: body.features,
       gender: body.gender,
+      isFictional: body.isFictional ?? true,
+      bio: body.bio || '',
     };
 
     // Write to file

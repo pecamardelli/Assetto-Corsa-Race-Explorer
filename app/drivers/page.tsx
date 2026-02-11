@@ -4,6 +4,23 @@ import { calculateAllTimeStats } from '../lib/standings';
 import BackButton from '../components/BackButton';
 import FlagIcon from '../components/FlagIcon';
 import DriverPortrait from '../components/DriverPortrait';
+import { promises as fs } from 'fs';
+import path from 'path';
+
+async function getDriverFictionalMap(driverNames: string[]): Promise<Map<string, boolean>> {
+  const map = new Map<string, boolean>();
+  for (const name of driverNames) {
+    try {
+      const profilePath = path.join(process.cwd(), 'app/lib/driver-profiles', `${name.replace(/ /g, '_').toLowerCase()}.json`);
+      const fileContents = await fs.readFile(profilePath, 'utf8');
+      const profile = JSON.parse(fileContents);
+      map.set(name, profile.isFictional ?? true);
+    } catch {
+      map.set(name, true);
+    }
+  }
+  return map;
+}
 
 export default async function DriversPage() {
   const [sessions, championships] = await Promise.all([
@@ -18,6 +35,7 @@ export default async function DriversPage() {
   ];
 
   const driverStats = calculateAllTimeStats(allSessions, championships);
+  const fictionalMap = await getDriverFictionalMap(driverStats.map(d => d.name));
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
@@ -155,7 +173,12 @@ export default async function DriversPage() {
                             href={`/driver/${encodeURIComponent(driver.name)}`}
                             className="block hover:text-amber-400 transition-colors"
                           >
-                            <div className="text-white font-medium">{driver.name}</div>
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-white font-medium">{driver.name}</span>
+                              {fictionalMap.get(driver.name) === false && (
+                                <span className="inline-flex w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0" title="Real Driver" />
+                              )}
+                            </div>
                             <div className="text-xs text-zinc-500 mt-1">
                               {driver.podiums} podium{driver.podiums !== 1 ? 's' : ''}
                             </div>

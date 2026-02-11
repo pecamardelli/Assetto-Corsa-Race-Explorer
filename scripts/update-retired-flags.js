@@ -2,8 +2,8 @@ const fs = require("fs");
 const path = require("path");
 
 // CONFIGURATION - Modify these variables
-const RACE_FILE = "stats_battenbergring_session_race_20260210_004250.json";
-const MIN_LAPS_THRESHOLD = 5;
+const RACE_FILE = "stats_rj_lemans_1967-54_session_race_20260211_000406.json";
+const MIN_LAPS_THRESHOLD = 6;
 
 // File path construction
 const filePath = path.join(

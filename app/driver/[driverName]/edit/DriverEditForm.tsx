@@ -10,6 +10,8 @@ type DriverProfile = {
   placeOfBirth: string;
   features: string;
   gender: string;
+  isFictional?: boolean;
+  bio?: string;
 };
 
 interface DriverEditFormProps {
@@ -23,6 +25,8 @@ export default function DriverEditForm({ profile, driverName }: DriverEditFormPr
   const [isGeneratingPortrait, setIsGeneratingPortrait] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [portraitSuccess, setPortraitSuccess] = useState<string | null>(null);
+
+  const [isFictional, setIsFictional] = useState(profile.isFictional ?? true);
 
   // Portrait generation options
   const [portraitExpression, setPortraitExpression] = useState('random');
@@ -44,6 +48,8 @@ export default function DriverEditForm({ profile, driverName }: DriverEditFormPr
       placeOfBirth: formData.get('placeOfBirth') as string,
       gender: formData.get('gender') as string,
       features: formData.get('features') as string,
+      isFictional,
+      bio: formData.get('bio') as string,
     };
 
     try {
@@ -382,6 +388,53 @@ export default function DriverEditForm({ profile, driverName }: DriverEditFormPr
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
+      </div>
+
+      {/* Fictional Driver Toggle */}
+      <div>
+        <label className="block text-sm font-medium text-zinc-300 mb-2">
+          Driver Type
+        </label>
+        <button
+          type="button"
+          onClick={() => setIsFictional(!isFictional)}
+          className={`flex items-center gap-3 w-full px-4 py-3 rounded-lg border transition-colors ${
+            isFictional
+              ? 'bg-purple-500/10 border-purple-500/50 hover:border-purple-400'
+              : 'bg-emerald-500/10 border-emerald-500/50 hover:border-emerald-400'
+          }`}
+        >
+          <div className={`w-10 h-6 rounded-full relative transition-colors ${
+            isFictional ? 'bg-purple-600' : 'bg-emerald-600'
+          }`}>
+            <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${
+              isFictional ? 'left-1' : 'left-5'
+            }`} />
+          </div>
+          <span className={`font-medium ${isFictional ? 'text-purple-400' : 'text-emerald-400'}`}>
+            {isFictional ? 'Fictional Driver' : 'Real Driver'}
+          </span>
+        </button>
+        <p className="mt-1 text-xs text-zinc-500">
+          {isFictional
+            ? 'This is a fictional/AI driver created for the game'
+            : 'This is a real person (historical or contemporary driver)'}
+        </p>
+      </div>
+
+      {/* Bio */}
+      <div>
+        <label htmlFor="bio" className="block text-sm font-medium text-zinc-300 mb-2">
+          Biography
+        </label>
+        <textarea
+          id="bio"
+          name="bio"
+          rows={4}
+          defaultValue={profile.bio || ''}
+          className="w-full px-4 py-2 bg-zinc-900/50 border border-zinc-700 rounded-lg text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
+          placeholder="Write a short biography for this driver..."
+        />
       </div>
 
       {/* Portrait Generation */}
