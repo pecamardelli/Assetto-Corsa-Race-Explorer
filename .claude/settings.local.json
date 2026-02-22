@@ -42,7 +42,9 @@
       "Bash(netstat:*)",
       "Bash(taskkill /PID 9408 /F)",
       "Bash(taskkill:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(git verify-pack:*)",
+      "Bash(git fetch:*)"
     ],
     "deny": [],
     "ask": []
