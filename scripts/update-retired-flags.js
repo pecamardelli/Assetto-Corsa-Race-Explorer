@@ -2,13 +2,13 @@ const fs = require("fs");
 const path = require("path");
 
 // CONFIGURATION - Modify these variables
-const RACE_FILE = "stats_monaco_1966_session_race_20260213_225938.json";
-const MIN_LAPS_THRESHOLD = 14;
+const RACE_FILE = "stats_rj_spa_34_66-66_session_race_20260221_224917.json";
+const MIN_LAPS_THRESHOLD = 7;
 
 // File path construction
 const filePath = path.join(
   __dirname,
-  "../app/data/championship/Le Mans Series 1923/season_01",
+  "../app/data/championship/Supercars Trophy/season_01",
   RACE_FILE,
 );
 
