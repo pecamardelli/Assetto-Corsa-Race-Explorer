@@ -1,0 +1,19 @@
+{
+  "name": "Auto Union Type C",
+  "brand": "Auto Union",
+  "description": "Auto Union Type C<br><br>Grand Prix 750 kg<br>Design: Ferdinand Porsche<br>Engine: V16 45&#176;, 75 x 85 mm = 6006 cc, Roots supercharger, 520 bhp @ 5000 rpm<br>Transmission: 5 speed<br>Suspension: front: trailing links with torsion bars, rear: swing axles with transverse leaf spring<br>Dimensions: wheelbase 2909 mm, track 1397 mm, 315 km/h<br>Years: 1936-1937<br><br>The last and largest of Porsche&#39;s mid-engined V16s, the bore taken out to 75 mm for 6006 cc - the biggest engine anyone ran under the 750 kg formula. The fuel sat between the driver and the engine, so the balance shifted as the tank emptied, which is a large part of why these cars were so feared. In 1936 it hardly mattered: Auto Union won six of the twelve major races and Bernd Rosemeyer, who took five of them, was crowned European Champion. It was still winning in 1937 - the Eifelrennen, Coppa Acerbo, Donington and the Vanderbilt Cup - but by then the Mercedes W125 had moved the standard out of reach.",
+  "class": "Grand Prix 750kg",
+  "specs": {
+    "bhp": "520 hp",
+    "torque": "853 Nm",
+    "weight": "919 kg",
+    "topspeed": "315km/h",
+    "acceleration": "--s 0-100",
+    "pwratio": "1.77 kg/hp"
+  },
+  "country": "Germany",
+  "author": "Gary Paterson",
+  "version": "v0.5",
+  "url": null,
+  "year": 1937
+}

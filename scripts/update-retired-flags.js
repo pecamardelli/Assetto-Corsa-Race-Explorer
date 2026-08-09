@@ -2,8 +2,9 @@ const fs = require("fs");
 const path = require("path");
 
 // CONFIGURATION - Modify these variables
-const RACE_FILE = "stats_nordschleife_67_session_race_20260807_201718.json";
-const MIN_LAPS_THRESHOLD = 2;
+const RACE_FILE =
+  "stats_rt_misty_loch-normal_session_race_20260808_170702.json";
+const MIN_LAPS_THRESHOLD = 5;
 
 // File path construction
 const filePath = path.join(

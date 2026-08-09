@@ -145,8 +145,8 @@ tracks.forEach(({ trackName, trackConfig, identifier }) => {
     trackDataSkipped++;
   } else if (fs.existsSync(uiTrackJsonPath)) {
     try {
-      // Read the ui_track.json file
-      let rawContent = fs.readFileSync(uiTrackJsonPath, 'utf8');
+      // Read the ui_track.json file (some tracks ship it with a UTF-8 BOM)
+      let rawContent = fs.readFileSync(uiTrackJsonPath, 'utf8').replace(/^\uFEFF/, ''); // Remove BOM
 
       // Try to parse as-is first
       let trackData;

@@ -1,0 +1,51 @@
+# PRE-WAR GRAND PRIX SERIES
+# =========================
+#
+# 20 single-seaters, 1934-1939. Sanitized and balanced onto one physics baseline:
+# standard AC tyre model, DY_REF/DX_REF 1.22, FZ0 1107/1385, ULTRA_GRIP 1.2,
+# ai.ini VERSION 4. Power is the period flywheel figure, mass is the period weight
+# plus a 75 kg driver.
+#
+# The five classes below are not interchangeable - a 646 hp W125 and a 151 hp
+# Maserati 4CM never raced each other. Run them as separate grids.
+#
+# GRAND PRIX  -  750 kg formula  (1934-1937)
+# ------------------------------------------
+
+Mercedes W125 (ACB)						| 592 hp | 879 kg | 0.67 hp/kg | Rudolf Caracciola		-	Manfred von Brauchitsch
+Mercedes W125							| 591 hp | 910 kg | 0.65 hp/kg | Hermann Lang			-	Richard Seaman
+Alfa Romeo 12C 1937						| 430 hp | 800 kg | 0.54 hp/kg | Tazio Nuvolari			-	Giuseppe Farina
+Alfa Romeo 12C-36						| 359 hp | 850 kg | 0.42 hp/kg | Antonio Brivio			-	Carlo Felice Trossi
+Alfa Romeo 8C-35						| 327 hp | 838 kg | 0.39 hp/kg | Tazio Nuvolari			-	Rene Dreyfus
+Alfa Romeo Tipo B 'P3'					| 265 hp | 776 kg | 0.34 hp/kg | Louis Chiron			-	Guy Moll
+Alfa Romeo P3 1934						| 255 hp | 775 kg | 0.33 hp/kg | Attilio Marinoni		-	Eugenio Siena
+Alfa Romeo Tipo B Monoposto				| 255 hp | 776 kg | 0.33 hp/kg | Achille Varzi			-	Marco Zampieri
+1934 Maserati 8CM						| 240 hp | 825 kg | 0.29 hp/kg | Philippe Etancelin		-	Goffredo Zehender
+
+# GRAND PRIX  -  3-litre formula  (1938-1939)
+# -------------------------------------------
+
+Auto Union Type D						| 485 hp | 925 kg | 0.52 hp/kg | Tazio Nuvolari			-	Hermann Muller
+Mercedes Benz W154						| 468 hp | 1055 kg | 0.44 hp/kg | Rudolf Caracciola		-	Hermann Lang
+Maserati 8CTF							| 365 hp | 855 kg | 0.43 hp/kg | Luigi Villoresi			-	Carlo Felice Trossi
+
+# AVUS  -  high-speed and streamlined bodywork  (1937)
+# ----------------------------------------------------
+
+Mercedes W125 M125 Hochgeschwindigkeit	| 646 hp | 879 kg | 0.73 hp/kg | Hermann Lang			-	Rudolf Caracciola
+Auto Union Type C Hochgeschwindigkeit	| 520 hp | 919 kg | 0.57 hp/kg | Bernd Rosemeyer			-	Hans Stuck
+Auto Union Type C Stromlinie			| 519 hp | 1000 kg | 0.52 hp/kg | Ernst von Delius		-	Rudolf Hasse
+
+# VOITURETTE  -  1.5 litre  (1936-1939)
+# -------------------------------------
+
+Alfa Romeo 158/39						| 225 hp | 700 kg | 0.32 hp/kg | Giuseppe Farina			-	Emilio Villoresi
+Delage 15S8 "Dick Seaman Special"		| 185 hp | 710 kg | 0.26 hp/kg | Richard Seaman			-	Dick Shuttleworth
+Maserati 6CM							| 175 hp | 725 kg | 0.24 hp/kg | Luigi Villoresi			-	Franco Cortese
+Maserati 4CM Special					| 151 hp | 660 kg | 0.23 hp/kg | Giovanni Rocco			-	Piero Taruffi
+
+# INDIANAPOLIS  (1939-1940)
+# -------------------------
+
+Maserati 8CTF Indianapolis				| 374 hp | 880 kg | 0.42 hp/kg | Wilbur Shaw				-	Ted Horn
+
