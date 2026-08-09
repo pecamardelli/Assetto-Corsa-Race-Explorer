@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import BackButton from '../../components/BackButton';
 import FlagIcon from '../../components/FlagIcon';
 import DriverImage from '../../components/DriverImage';
+import { getDriverProfile, resolveDriverPortrait, profileAge } from '../../lib/driver-assets';
 import { getChampionships } from '../../lib/race-data';
 import { calculateStandings } from '../../lib/standings';
 import Link from 'next/link';
@@ -33,46 +34,14 @@ type DriverData = {
   }>;
 };
 
-type DriverProfile = {
-  name: string;
-  nationality: string;
-  dateOfBirth: string;
-  placeOfBirth: string;
-  features: string;
-  gender: string;
-  isFictional?: boolean;
-  bio?: string;
-};
-
-async function getDriverProfile(driverName: string): Promise<DriverProfile | null> {
-  try {
-    const profilePath = path.join(process.cwd(), 'app/lib/driver-profiles', `${driverName.replace(/ /g, '_').toLowerCase()}.json`);
-    const fileContents = await fs.readFile(profilePath, 'utf8');
-    return JSON.parse(fileContents);
-  } catch (error) {
-    return null;
-  }
-}
-
-function calculateAge(dateOfBirth: string): number {
-  const today = new Date();
-  const birthDate = new Date(dateOfBirth);
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const monthDiff = today.getMonth() - birthDate.getMonth();
-
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
-
-  return age;
-}
-
 export default async function DriverPage({ params }: { params: Promise<{ driverName: string }> }) {
   const { driverName } = await params;
   const decodedDriverName = decodeURIComponent(driverName);
 
   // Load driver profile
   const profile = await getDriverProfile(decodedDriverName);
+  // Global page: no championship, so this is the base portrait.
+  const portrait = await resolveDriverPortrait(decodedDriverName);
 
   // Get all championships to find driver data
   const championships = await getChampionships();
@@ -185,7 +154,7 @@ export default async function DriverPage({ params }: { params: Promise<{ driverN
             <div className="flex items-start gap-6 mb-6">
               {/* Profile Picture */}
               <div className="flex-shrink-0">
-                <DriverImage driverName={driverData.name} />
+                <DriverImage driverName={driverData.name} src={portrait} />
               </div>
 
               {/* Driver Info */}
@@ -217,7 +186,7 @@ export default async function DriverPage({ params }: { params: Promise<{ driverN
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-zinc-500" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
                       </svg>
-                      <span>Age: {calculateAge(profile.dateOfBirth)}</span>
+                      <span>Age: {profileAge(profile)}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-zinc-500" viewBox="0 0 20 20" fill="currentColor">

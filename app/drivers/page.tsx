@@ -4,6 +4,7 @@ import { calculateAllTimeStats } from '../lib/standings';
 import BackButton from '../components/BackButton';
 import FlagIcon from '../components/FlagIcon';
 import DriverPortrait from '../components/DriverPortrait';
+import { resolveDriverPortraits } from '../lib/driver-assets';
 import { promises as fs } from 'fs';
 import path from 'path';
 
@@ -36,6 +37,8 @@ export default async function DriversPage() {
 
   const driverStats = calculateAllTimeStats(allSessions, championships);
   const fictionalMap = await getDriverFictionalMap(driverStats.map(d => d.name));
+  // Global list: no championship, so these are the base portraits.
+  const portraits = await resolveDriverPortraits(driverStats.map(d => d.name));
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
@@ -164,7 +167,7 @@ export default async function DriversPage() {
                         <td className="px-4 py-4 text-center hidden md:table-cell">
                           <div className="flex justify-center">
                             <div className="w-12 h-12 overflow-hidden rounded-full border-2 border-zinc-700">
-                              <DriverPortrait driverName={driver.name} size={48} />
+                              <DriverPortrait driverName={driver.name} size={48} src={portraits.get(driver.name) ?? null} />
                             </div>
                           </div>
                         </td>

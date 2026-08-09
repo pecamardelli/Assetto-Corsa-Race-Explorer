@@ -6,6 +6,7 @@ import { getCarName } from '../../../lib/car-data';
 import BackButton from '../../../components/BackButton';
 import FlagIcon from '../../../components/FlagIcon';
 import DriverPortrait from '../../../components/DriverPortrait';
+import { resolveDriverPortraits } from '../../../lib/driver-assets';
 
 export default async function StandingsPage({ params }: { params: Promise<{ champId: string }> }) {
   const { champId } = await params;
@@ -17,6 +18,7 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
   }
 
   const standings = calculateStandings(championship);
+  const portraits = await resolveDriverPortraits(standings.map(d => d.name), decodedChampId);
   const { data } = championship;
 
   return (
@@ -114,7 +116,7 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
                       <td className="px-4 py-4 text-center hidden md:table-cell">
                         <div className="flex justify-center">
                           <div className="w-12 h-12 overflow-hidden rounded-full border-2 border-zinc-700">
-                            <DriverPortrait driverName={driver.name} size={48} />
+                            <DriverPortrait driverName={driver.name} size={48} src={portraits.get(driver.name) ?? null} />
                           </div>
                         </div>
                       </td>

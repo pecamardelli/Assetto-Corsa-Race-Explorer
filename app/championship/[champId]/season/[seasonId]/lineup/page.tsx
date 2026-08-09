@@ -7,51 +7,12 @@ import { calculateStandings } from "../../../../../lib/standings";
 import BackButton from "../../../../../components/BackButton";
 import FlagIcon from "../../../../../components/FlagIcon";
 import DriverImage from "../../../../../components/DriverImage";
-import { promises as fs } from "fs";
-import path from "path";
-
-type DriverProfile = {
-  name: string;
-  nationality: string;
-  dateOfBirth: string;
-  placeOfBirth: string;
-  features: string;
-  gender: string;
-  isFictional?: boolean;
-  bio?: string;
-};
-
-async function getDriverProfile(
-  driverName: string
-): Promise<DriverProfile | null> {
-  try {
-    const profilePath = path.join(
-      process.cwd(),
-      "app/lib/driver-profiles",
-      `${driverName.replace(/ /g, "_").toLowerCase()}.json`
-    );
-    const fileContents = await fs.readFile(profilePath, "utf8");
-    return JSON.parse(fileContents);
-  } catch (error) {
-    return null;
-  }
-}
-
-function calculateAge(dateOfBirth: string): number {
-  const today = new Date();
-  const birthDate = new Date(dateOfBirth);
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const monthDiff = today.getMonth() - birthDate.getMonth();
-
-  if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < birthDate.getDate())
-  ) {
-    age--;
-  }
-
-  return age;
-}
+import {
+  getDriverProfiles,
+  resolveDriverPortraits,
+  profileAge,
+  type DriverProfile,
+} from "../../../../../lib/driver-assets";
 
 export default async function LineupPage({
   params,
@@ -132,18 +93,25 @@ export default async function LineupPage({
     }
   }
 
-  // Group drivers by car
+  // Group drivers by car. Profiles and portraits resolve against this championship,
+  // so a series that ships its own overrides wins over the global versions.
+  const opponentNames = data.opponents.map(o => o.name);
+  const [profiles, portraits] = await Promise.all([
+    getDriverProfiles(opponentNames, decodedChampId),
+    resolveDriverPortraits(opponentNames, decodedChampId),
+  ]);
+
   const carDriverMap = new Map<
     string,
-    Array<{ name: string; nation: string; profile: DriverProfile | null; championshipWins: number; isReigningChampion: boolean }>
+    Array<{ name: string; nation: string; profile: DriverProfile | null; portrait: string | null; championshipWins: number; isReigningChampion: boolean }>
   >();
 
   for (const opponent of data.opponents) {
-    const profile = await getDriverProfile(opponent.name);
     const driverInfo = {
       name: opponent.name,
       nation: opponent.nation,
-      profile,
+      profile: profiles.get(opponent.name) ?? null,
+      portrait: portraits.get(opponent.name) ?? null,
       championshipWins: championWins.get(opponent.name) || 0,
       isReigningChampion: opponent.name === reigningChampion,
     };
@@ -229,9 +197,7 @@ export default async function LineupPage({
               {/* Drivers List */}
               <div className="space-y-4">
                 {drivers.map((driver) => {
-                  const age = driver.profile?.dateOfBirth
-                    ? calculateAge(driver.profile.dateOfBirth)
-                    : null;
+                  const age = driver.profile ? profileAge(driver.profile) : null;
 
                   return (
                     <Link
@@ -274,7 +240,7 @@ export default async function LineupPage({
 
                       {/* Driver Photo */}
                       <div className="flex-shrink-0">
-                        <DriverImage driverName={driver.name} />
+                        <DriverImage driverName={driver.name} src={driver.portrait} />
                       </div>
 
                       {/* Driver Info */}

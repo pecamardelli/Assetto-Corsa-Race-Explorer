@@ -5,6 +5,7 @@ import { calculateAllTimeStats } from '../../../lib/standings';
 import BackButton from '../../../components/BackButton';
 import FlagIcon from '../../../components/FlagIcon';
 import DriverPortrait from '../../../components/DriverPortrait';
+import { resolveDriverPortraits } from '../../../lib/driver-assets';
 
 export default async function AllTimeStandingsPage({ params }: { params: Promise<{ champId: string }> }) {
   const { champId } = await params;
@@ -19,6 +20,7 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
 
   // Calculate all-time stats for this championship only
   const driverStats = calculateAllTimeStats(championship.sessions, [championship]);
+  const portraits = await resolveDriverPortraits(driverStats.map(d => d.name), decodedChampId);
 
   // Count race sessions only
   const totalRaces = championship.sessions.filter(session => {
@@ -180,7 +182,7 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
                         <td className="px-4 py-4 text-center hidden md:table-cell">
                           <div className="flex justify-center">
                             <div className="w-12 h-12 overflow-hidden rounded-full border-2 border-zinc-700">
-                              <DriverPortrait driverName={driver.name} size={48} />
+                              <DriverPortrait driverName={driver.name} size={48} src={portraits.get(driver.name) ?? null} />
                             </div>
                           </div>
                         </td>

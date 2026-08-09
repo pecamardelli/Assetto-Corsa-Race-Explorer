@@ -7,6 +7,7 @@ import { getTrackDetails } from '../../lib/track-data';
 import BackButton from '../../components/BackButton';
 import FlagIcon from '../../components/FlagIcon';
 import DriverPortrait from '../../components/DriverPortrait';
+import { resolveDriverPortraits } from '../../lib/driver-assets';
 
 export default async function FastestLapPage({ params }: { params: Promise<{ filename: string }> }) {
   const { filename } = await params;
@@ -50,6 +51,12 @@ export default async function FastestLapPage({ params }: { params: Promise<{ fil
     });
 
   // Get fastest lap for gap calculation
+  // Portraits resolve against the session's championship, so a series with its own
+  // driver portraits uses them here too.
+  const portraits = await resolveDriverPortraits(
+    driversByFastestLap.map(d => d.name || 'Unknown'),
+    session.championship
+  );
   const fastestLap = driversByFastestLap.length > 0 ? safeNumber(driversByFastestLap[0].best_lap) : 0;
 
   return (
@@ -188,7 +195,7 @@ export default async function FastestLapPage({ params }: { params: Promise<{ fil
                         <td className="px-6 py-4 text-center hidden md:table-cell">
                           <div className="flex justify-center">
                             <div className="w-12 h-12 overflow-hidden rounded-full border-2 border-zinc-700">
-                              <DriverPortrait driverName={driver.name} size={48} />
+                              <DriverPortrait driverName={driver.name} size={48} src={portraits.get(driver.name) ?? null} />
                             </div>
                           </div>
                         </td>

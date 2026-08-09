@@ -7,6 +7,7 @@ import { getTrackDetails } from '../../lib/track-data';
 import BackButton from '../../components/BackButton';
 import FlagIcon from '../../components/FlagIcon';
 import DriverPortrait from '../../components/DriverPortrait';
+import { resolveDriverPortraits } from '../../lib/driver-assets';
 import LapTimesDialog from '../../components/LapTimesDialog';
 
 export default async function RacePage({ params }: { params: Promise<{ filename: string }> }) {
@@ -57,6 +58,12 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
       }));
 
   // Get winner data for gap calculation (for race mode)
+  // Portraits resolve against the session's championship, so a series with its own
+  // driver portraits uses them here too.
+  const portraits = await resolveDriverPortraits(
+    drivers.map(d => d.name || 'Unknown'),
+    session.championship
+  );
   const winner = !isPracticeOrQualifying && drivers.length > 0 ? drivers[0] : null;
   const winnerLaps = winner ? safeNumber(winner.laps_completed, 0) : 0;
   const winnerTime = winner ? safeNumber(winner.total_time_seconds, 0) : 0;
@@ -271,7 +278,7 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                         <td className="px-4 py-4 text-center hidden md:table-cell">
                           <div className="flex justify-center">
                             <div className="w-12 h-12 overflow-hidden rounded-full border-2 border-zinc-700">
-                              <DriverPortrait driverName={driver.name || 'Unknown'} size={48} />
+                              <DriverPortrait driverName={driver.name || 'Unknown'} size={48} src={portraits.get(driver.name || 'Unknown') ?? null} />
                             </div>
                           </div>
                         </td>
