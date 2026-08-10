@@ -157,21 +157,34 @@ async function sanitizeCarFolder(carFolder) {
     fs.unlinkSync(conflict);
   }
 
-  // Perform renames
+  // Perform renames in two phases: sources and targets can overlap when a
+  // 00-numbered file shifts every other file up by one, and renaming
+  // directly in sequence would overwrite files still waiting for their turn.
   const renamedFiles = [];
+  const pendingRenames = []; // [tempPath, finalTarget, originalSource]
   for (const [source, target] of renameMap.entries()) {
     if (source === target) {
       renamedFiles.push(target);
       console.log(`    ✓ Already correct: ${path.basename(target)}`);
     } else {
+      const temp = `${target}.renaming`;
       try {
-        fs.renameSync(source, target);
-        renamedFiles.push(target);
-        console.log(`    Renamed: ${path.basename(source)} → ${path.basename(target)}`);
+        fs.renameSync(source, temp);
+        pendingRenames.push([temp, target, source]);
       } catch (err) {
         console.error(`    ✗ Error renaming ${path.basename(source)}:`, err.message);
         renamedFiles.push(source);
       }
+    }
+  }
+  for (const [temp, target, source] of pendingRenames) {
+    try {
+      fs.renameSync(temp, target);
+      renamedFiles.push(target);
+      console.log(`    Renamed: ${path.basename(source)} → ${path.basename(target)}`);
+    } catch (err) {
+      console.error(`    ✗ Error renaming ${path.basename(temp)}:`, err.message);
+      renamedFiles.push(temp);
     }
   }
 
