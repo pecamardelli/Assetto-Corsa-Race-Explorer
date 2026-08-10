@@ -47,3 +47,6 @@ next-env.d.ts
 *.pkg
 *.deb
 *.rpm
+
+# Python bytecode from the Assetto Corsa app scripts
+__pycache__/

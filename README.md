@@ -33,7 +33,7 @@ The `scripts/racestats.py` file is a custom Assetto Corsa app that automatically
 
 **Installation:**
 
-1. Copy `racestats.py` to: `Documents\Assetto Corsa\apps\python\racestats\racestats.py`
+1. Copy `racestats.py` to: `[Assetto Corsa]\apps\python\racestats\racestats.py`
 2. Enable in Assetto Corsa: Settings > General > UI Modules > Check "Race Statistics"
 
 **Usage:**
@@ -43,6 +43,47 @@ The `scripts/racestats.py` file is a custom Assetto Corsa app that automatically
 3. On session end, JSON file auto-saves to: `Documents\Assetto Corsa\out\race_statistics\`
 
 The app tracks: lap times, overtakes, crashes (with G-force detection), distance covered, speeds, and calculates performance scores.
+
+It reads AC's shared memory (via the bundled `sim_info.py`, which must sit beside
+`racestats.py`) to label each save with the session that was actually running, and to
+record whether that session ran to its end:
+
+- `session_info.session_type` — `practice`, `qualifying` or `race`
+- `session_info.finished` — `false` when the game was closed or the session restarted
+  part-way through, so a partial record is never mistaken for a real result
+
+## Launching Sessions
+
+Each round on a season page has two buttons. They write
+`Documents\Assetto Corsa\cfg\race.ini` from the championship's own specs and start
+`acs.exe` directly — Content Manager is not involved.
+
+| Button | Sessions |
+| --- | --- |
+| **Start Race** | A full weekend: qualifying for the `rules.qualifying` minutes in the `.champ`, then the race over the round's lap count. AC builds the race grid from its own qualifying result. |
+| **Free Run** | Untimed solo practice at the round's track — no AI. |
+
+Track grip, weather, lap count, penalties and jump-start rules all come from the
+`.champ` round. AI drivers race at level 100 with aggression randomised between 80
+and 100; give a driver profile a `skill` number to change their level.
+
+**When the game closes**, every result file the racestats app wrote during the launch
+is renamed to the season's convention and moved into
+`app/data/championship/[name]/season_[XX]/`, so the round fills itself in. A weekend
+therefore files two sessions. Anything marked unfinished shows an **Unfinished** badge
+next to it on the season page.
+
+Only one session can run at a time, and the route refuses requests that did not come
+from this machine. The `race.ini` that was in place beforehand is kept as
+`race.ini.bak` — one rolling copy, overwritten each launch.
+
+**Environment overrides** (all optional):
+
+| Variable | Default |
+| --- | --- |
+| `AC_ROOT` | `C:\GAMES\Assetto Corsa` |
+| `AC_DOCUMENTS` | `%USERPROFILE%\Documents\Assetto Corsa` |
+| `AC_PLAYER_NAME` | the `name` in `app/lib/driver-profiles/player.json` |
 
 ## Adding Race Data
 

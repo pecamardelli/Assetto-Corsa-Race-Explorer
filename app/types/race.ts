@@ -61,6 +61,9 @@ export interface SessionInfo {
   session_duration_formatted?: string;
   scoring_formula?: string;
   session_type?: 'practice' | 'qualifying' | 'race';
+  // False when the driver quit before the session ran its course, so the stats are
+  // a partial record. Absent on sessions recorded before this was tracked.
+  finished?: boolean;
 }
 
 export interface CarData {

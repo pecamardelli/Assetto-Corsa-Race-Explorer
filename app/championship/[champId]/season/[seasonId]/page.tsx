@@ -5,9 +5,31 @@ import { getChampionship } from "../../../../lib/race-data";
 import { getTrackDetails } from "../../../../lib/track-data";
 import { getCarName } from "../../../../lib/car-data";
 import { calculateStandings } from "../../../../lib/standings";
-import { Championship } from "../../../../types/race";
+import { Championship, RaceSession } from "../../../../types/race";
 import BackButton from "../../../../components/BackButton";
 import FlagIcon from "../../../../components/FlagIcon";
+import RoundLaunchButtons, {
+  LaunchProvider,
+  LaunchStatusBanner,
+} from "../../../../components/RaceLauncher";
+
+/**
+ * Marks a session the driver left before it ran its course, so a partial result is
+ * not mistaken for a real one. Sessions recorded before this was tracked carry no
+ * flag at all and stay unmarked.
+ */
+function UnfinishedBadge({ session }: { session: RaceSession | null }) {
+  if (!session || session.data.session_info.finished !== false) return null;
+
+  return (
+    <span
+      className="inline-flex items-center px-2 py-1.5 rounded-lg bg-orange-500/20 text-orange-400 text-xs font-semibold"
+      title="Assetto Corsa was closed before this session ended"
+    >
+      Unfinished
+    </span>
+  );
+}
 
 export default async function SeasonPage({
   params,
@@ -312,6 +334,11 @@ export default async function SeasonPage({
         </div>
 
         {/* Rounds List */}
+        <LaunchProvider
+          champId={decodedChampId}
+          seasonId={decodedSeasonId}
+        >
+        <LaunchStatusBanner />
         <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg overflow-hidden">
           <div className="p-6 border-b border-zinc-700">
             <h2 className="text-2xl font-bold text-white">
@@ -342,23 +369,30 @@ export default async function SeasonPage({
                     })
                   : null;
 
+                // A round that already has a race behind it has nothing left to
+                // launch. One the driver quit out of still does.
+                const raceCompleted =
+                  !!race && race.data.session_info.finished !== false;
+
                 return (
                   <div key={roundNumber} className="p-6">
                     <div className="flex items-start gap-4">
-                      {/* Track Info and Sessions */}
-                      <div className="flex-1">
-                        <div className="flex items-start gap-3 mb-2">
-                          {/* Round Number Badge */}
-                          <div
-                            className={`rounded px-3 py-1 text-xs font-bold ${
-                              hasAnySessions
-                                ? "bg-amber-500/20 text-amber-400"
-                                : "bg-zinc-700/50 text-zinc-500"
-                            }`}
-                          >
-                            R{roundNumber}
-                          </div>
+                      {/* Track Info and Sessions.
+                          Two columns: markers on the left (round badge, flag,
+                          status icon) all sharing one edge, text on the right. */}
+                      <div className="flex-1 grid grid-cols-[auto_1fr] items-center justify-items-start gap-x-3 gap-y-3">
+                        {/* Round Number Badge */}
+                        <div
+                          className={`rounded px-3 py-1 text-xs font-bold ${
+                            hasAnySessions
+                              ? "bg-amber-500/20 text-amber-400"
+                              : "bg-zinc-700/50 text-zinc-500"
+                          }`}
+                        >
+                          R{roundNumber}
+                        </div>
 
+                        <div className="flex w-full items-center gap-3">
                           {/* Track Name */}
                           <div
                             className={`font-semibold text-lg flex-1 ${
@@ -368,6 +402,12 @@ export default async function SeasonPage({
                             {trackDetails.name}
                           </div>
 
+                          {/* Launch controls */}
+                          <RoundLaunchButtons
+                            round={roundNumber}
+                            raceCompleted={raceCompleted}
+                          />
+
                           {/* Race Date */}
                           {raceDate && (
                             <div className="text-xs text-zinc-400 bg-zinc-900/50 px-2 py-1 rounded">
@@ -376,18 +416,22 @@ export default async function SeasonPage({
                           )}
                         </div>
 
+                        {/* Country Flag */}
+                        <div>
+                          {trackDetails.country && (
+                            <FlagIcon nation={trackDetails.country} />
+                          )}
+                        </div>
+
                         <div
-                          className={`flex items-center gap-3 mb-3 text-sm ${
+                          className={`flex w-full items-center gap-3 text-sm ${
                             hasAnySessions ? "text-zinc-400" : "text-zinc-500"
                           }`}
                         >
                           {trackDetails.country && (
-                            <div className="flex items-center gap-2">
-                              <FlagIcon nation={trackDetails.country} />
-                              <span>
-                                {trackDetails.city || trackDetails.country}
-                              </span>
-                            </div>
+                            <span>
+                              {trackDetails.city || trackDetails.country}
+                            </span>
                           )}
                           {trackDetails.length && (
                             <>
@@ -401,9 +445,12 @@ export default async function SeasonPage({
                           </span>
                         </div>
 
-                        {/* Session Links */}
+                        {/* Session Links. Nothing sits in the marker column when
+                            the round has been run, so it stays empty. */}
                         {hasAnySessions ? (
-                          <div className="flex flex-wrap gap-2">
+                          <>
+                            <div />
+                            <div className="flex w-full flex-wrap items-center gap-2">
                             {practice && (
                               <Link
                                 href={`/race/${encodeURIComponent(
@@ -450,6 +497,7 @@ export default async function SeasonPage({
                                 Qualifying
                               </Link>
                             )}
+                            <UnfinishedBadge session={qualifying} />
                             {race &&
                               (() => {
                                 // Find the race winner (position 1)
@@ -486,6 +534,7 @@ export default async function SeasonPage({
                                       </svg>
                                       Race
                                     </Link>
+                                    <UnfinishedBadge session={race} />
                                     <Link
                                       href={`/fastest-lap/${encodeURIComponent(
                                         race.filename
@@ -529,11 +578,12 @@ export default async function SeasonPage({
                                   </>
                                 );
                               })()}
-                          </div>
+                            </div>
+                          </>
                         ) : (
-                          <div className="flex items-center gap-2 text-zinc-500 text-sm">
+                          <>
                             <svg
-                              className="w-5 h-5"
+                              className="w-5 h-5 text-zinc-500"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                             >
@@ -543,8 +593,10 @@ export default async function SeasonPage({
                                 clipRule="evenodd"
                               />
                             </svg>
-                            <span className="font-medium">Not Started</span>
-                          </div>
+                            <span className="text-zinc-500 text-sm font-medium">
+                              Not Started
+                            </span>
+                          </>
                         )}
                       </div>
 
@@ -566,6 +618,7 @@ export default async function SeasonPage({
             )}
           </div>
         </div>
+        </LaunchProvider>
       </div>
     </div>
   );

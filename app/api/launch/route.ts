@@ -1,0 +1,69 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { buildLaunchPlan, LaunchPlanError } from '../../lib/launch/plan';
+import { currentLaunch, launch, LaunchError } from '../../lib/launch/launcher';
+import { LAUNCH_MODES, LaunchMode } from '../../lib/launch/race-ini';
+
+/**
+ * Starting a session runs an executable on this machine, so the route only answers
+ * requests that came from the same box. Set RACE_EXPLORER_ALLOW_REMOTE_LAUNCH=1 to
+ * lift that if you know what you are exposing.
+ */
+function isLocalRequest(request: NextRequest): boolean {
+  if (process.env.RACE_EXPLORER_ALLOW_REMOTE_LAUNCH === '1') return true;
+
+  const host = request.headers.get('host') ?? '';
+  const hostname = host.replace(/:\d+$/, '').replace(/^\[|\]$/g, '');
+
+  return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
+}
+
+export async function GET() {
+  return NextResponse.json({ launch: currentLaunch() });
+}
+
+export async function POST(request: NextRequest) {
+  if (!isLocalRequest(request)) {
+    return NextResponse.json({ error: 'Launching is only available locally' }, { status: 403 });
+  }
+
+  let body: { champId?: string; seasonId?: string; round?: number; mode?: string };
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: 'Expected a JSON body' }, { status: 400 });
+  }
+
+  const { champId, seasonId, round, mode } = body;
+
+  if (!champId || !seasonId || typeof round !== 'number') {
+    return NextResponse.json(
+      { error: 'champId, seasonId and round are required' },
+      { status: 400 }
+    );
+  }
+
+  if (!mode || !LAUNCH_MODES.includes(mode as LaunchMode)) {
+    return NextResponse.json(
+      { error: `mode must be one of ${LAUNCH_MODES.join(', ')}` },
+      { status: 400 }
+    );
+  }
+
+  try {
+    const plan = await buildLaunchPlan(champId, seasonId, round, mode as LaunchMode);
+    const state = await launch(plan, champId, seasonId);
+
+    return NextResponse.json({ launch: state });
+  } catch (error) {
+    if (error instanceof LaunchPlanError) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
+
+    if (error instanceof LaunchError) {
+      return NextResponse.json({ error: error.message }, { status: 409 });
+    }
+
+    console.error('Launch failed:', error);
+    return NextResponse.json({ error: 'Failed to launch Assetto Corsa' }, { status: 500 });
+  }
+}

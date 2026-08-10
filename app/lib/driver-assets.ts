@@ -13,6 +13,10 @@ export type DriverProfile = {
   // Reference date for age display. Set on a championship override so a driver
   // in a period series reads their in-era age instead of one measured from today.
   ageAsOf?: string;
+  // AI strength this driver races at when a session is launched from the app.
+  // Absent means 100. Set it on a championship override to make one driver a
+  // sharper opponent in that series without touching their base profile.
+  skill?: number;
 };
 
 const PORTRAIT_DIR = 'driver-portraits';
