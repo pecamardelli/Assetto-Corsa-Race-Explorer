@@ -51,8 +51,16 @@ champFiles.forEach(filePath => {
       // Split track identifier to separate name and config
       // e.g., "rj_lemans_1967-54" -> trackName: "rj_lemans_1967", config: "54"
       const parts = trackName.split('-');
-      const trackConfig = parts.length > 1 ? parts[parts.length - 1] : undefined;
-      const baseTrackName = parts.length > 1 ? parts.slice(0, -1).join('-') : trackName;
+      let trackConfig = parts.length > 1 ? parts[parts.length - 1] : undefined;
+      let baseTrackName = parts.length > 1 ? parts.slice(0, -1).join('-') : trackName;
+
+      // Some track folder names contain a hyphen without being a config
+      // (e.g. "monza_faux_pre-war"). If the split base folder doesn't exist,
+      // treat the whole name as the folder and drop the config.
+      if (trackConfig && !fs.existsSync(path.join(tracksSourceDir, baseTrackName))) {
+        baseTrackName = trackName;
+        trackConfig = undefined;
+      }
 
       const identifier = trackName; // Use the full identifier as-is
       trackConfigs.add(JSON.stringify({ trackName: baseTrackName, trackConfig, identifier }));

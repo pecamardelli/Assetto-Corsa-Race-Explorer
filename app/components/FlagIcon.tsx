@@ -32,6 +32,8 @@ const countryCodeMap: Record<string, string> = {
   'GBR': 'GB', // Great Britain
   'GEO': 'GE', // Georgia
   'GRC': 'GR', // Greece
+  'ENG': 'GB-ENG', // England
+  'HUN': 'HU', // Hungary
   'IRA': 'IR', // Iran
   'IRE': 'IE', // Ireland (alternative code)
   'IRL': 'IE', // Ireland
@@ -39,6 +41,9 @@ const countryCodeMap: Record<string, string> = {
   'JOR': 'JO', // Jordan
   'JPN': 'JP', // Japan
   'KEN': 'KE', // Kenya
+  'LBY': 'LY', // Libya
+  'MCO': 'MC', // Monaco
+  'MON': 'MC', // Monaco (alternative code)
   'MEX': 'MX', // Mexico
   'NGA': 'NG', // Nigeria
   'NLD': 'NL', // Netherlands
@@ -67,6 +72,9 @@ const countryCodeMap: Record<string, string> = {
   'UNITED KINGDOM': 'GB',
   'GREAT BRITAIN': 'GB',
   'SCOTLAND': 'GB-SCT',
+  'ENGLAND': 'GB-ENG',
+  'HUNGARY': 'HU',
+  'LIBYA': 'LY',
   'SPAIN': 'ES',
   'SWITZERLAND': 'CH',
   'AUSTRIA': 'AT',
@@ -89,9 +97,9 @@ export default function FlagIcon({ nation }: FlagIconProps) {
           src={`/flags/${countryCode}.svg`}
           alt={nation}
           title={nation}
-          width={24}
-          height={16}
-          className="h-6 rounded shadow-sm"
+          width={36}
+          height={24}
+          className="h-6 w-auto rounded shadow-sm"
           unoptimized
         />
       </div>
