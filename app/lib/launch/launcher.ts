@@ -32,6 +32,8 @@ export interface LaunchState {
   error?: string;
   /** Result files moved into the season folder once AC quit. */
   ingested?: string[];
+  /** Sessions AC wrote that were left unfinished, and so not filed. */
+  skipped?: number;
 }
 
 // Held on globalThis so a dev-server hot reload does not lose track of a race that
@@ -95,7 +97,9 @@ async function finish(state: LaunchState, plan: LaunchPlan, exitCode: number | n
   state.finishedAt = Date.now();
 
   try {
-    state.ingested = await ingestResults(plan, state.startedAt);
+    const outcome = await ingestResults(plan, state.startedAt);
+    state.ingested = outcome.filed;
+    state.skipped = outcome.skipped;
     state.status = 'completed';
   } catch (error) {
     state.status = 'failed';

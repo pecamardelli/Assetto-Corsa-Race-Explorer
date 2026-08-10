@@ -25,6 +25,7 @@ interface LaunchState {
   trackLabel: string;
   error?: string;
   ingested?: string[];
+  skipped?: number;
 }
 
 interface LauncherContextValue {
@@ -200,14 +201,23 @@ export function LaunchStatusBanner() {
   }
 
   const filed = launch.ingested?.length ?? 0;
+  const skipped = launch.skipped ?? 0;
+
+  const outcome: string[] = [];
+  if (filed > 0) {
+    outcome.push(`${filed} result file${filed === 1 ? '' : 's'} added to this season`);
+  }
+  if (skipped > 0) {
+    outcome.push(
+      `${skipped} session${skipped === 1 ? '' : 's'} left unfinished and not recorded`
+    );
+  }
+  if (outcome.length === 0) outcome.push('no new result files were found');
 
   return (
     <div className="mb-4 flex items-center justify-between gap-4 rounded-lg border border-zinc-600 bg-zinc-700/30 px-4 py-3 text-sm text-zinc-300">
       <span>
-        {MODE_LABELS[launch.mode]} at {launch.trackLabel} finished —{' '}
-        {filed > 0
-          ? `${filed} result file${filed === 1 ? '' : 's'} added to this season.`
-          : 'no new result files were found.'}
+        {MODE_LABELS[launch.mode]} at {launch.trackLabel} ended — {outcome.join(', ')}.
       </span>
       <button onClick={dismiss} className="text-zinc-400 hover:text-zinc-200">
         Dismiss

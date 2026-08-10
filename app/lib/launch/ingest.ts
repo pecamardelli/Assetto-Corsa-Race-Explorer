@@ -58,16 +58,27 @@ async function uniquePath(dir: string, base: string): Promise<string> {
   return candidate;
 }
 
+export interface IngestOutcome {
+  /** Names filed into the season folder, in the order they were found. */
+  filed: string[];
+  /** Sessions left where they were because they never ran to their end. */
+  skipped: number;
+}
+
 /**
- * Move every result written since `since` into the season folder.
- * Returns the names it filed, in the order it found them.
+ * Move the results written since `since` into the season folder.
+ *
+ * Only sessions that ended of their own accord are taken. Quitting mid-session
+ * still leaves a file in AC's out folder, but a partial record is not a result, so
+ * it stays there rather than joining the season — and it is left on disk rather
+ * than deleted, in case it is wanted.
  */
-export async function ingestResults(plan: LaunchPlan, since: number): Promise<string[]> {
+export async function ingestResults(plan: LaunchPlan, since: number): Promise<IngestOutcome> {
   let entries: string[];
   try {
     entries = await fs.readdir(AC_RESULTS_DIR);
   } catch {
-    return [];
+    return { filed: [], skipped: 0 };
   }
 
   const expectedSessions = MODE_SESSIONS[plan.spec.mode];
@@ -92,16 +103,24 @@ export async function ingestResults(plan: LaunchPlan, since: number): Promise<st
     candidates.push({ source, mtime: stats.mtimeMs });
   }
 
-  if (candidates.length === 0) return [];
+  if (candidates.length === 0) return { filed: [], skipped: 0 };
 
   candidates.sort((a, b) => a.mtime - b.mtime);
   await fs.mkdir(seasonDir, { recursive: true });
 
   const filed: string[] = [];
+  let skipped = 0;
 
   for (const [index, { source, mtime }] of candidates.entries()) {
     try {
       const data = JSON.parse(await fs.readFile(source, 'utf8')) as RaceData;
+
+      // Anything the driver walked out of is a partial record, so it is not a
+      // result this season should carry.
+      if (data.session_info.finished !== true) {
+        skipped += 1;
+        continue;
+      }
 
       // The AC app reads the live session out of shared memory, so its own label is
       // the one to trust. Falling back on the launch's session order covers a run
@@ -114,8 +133,6 @@ export async function ingestResults(plan: LaunchPlan, since: number): Promise<st
       data.session_info = {
         ...data.session_info,
         session_type: sessionType,
-        // A session the driver quit out of is kept, but never passes as complete.
-        finished: data.session_info.finished ?? false,
       };
 
       // Name from the round, not from the file: the season page pairs sessions to
@@ -135,5 +152,5 @@ export async function ingestResults(plan: LaunchPlan, since: number): Promise<st
     }
   }
 
-  return filed;
+  return { filed, skipped };
 }

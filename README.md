@@ -67,11 +67,19 @@ Track grip, weather, lap count, penalties and jump-start rules all come from the
 `.champ` round. AI drivers race at level 100 with aggression randomised between 80
 and 100; give a driver profile a `skill` number to change their level.
 
-**When the game closes**, every result file the racestats app wrote during the launch
-is renamed to the season's convention and moved into
+**When the game closes**, the result files the racestats app wrote during the launch
+are renamed to the season's convention and moved into
 `app/data/championship/[name]/season_[XX]/`, so the round fills itself in. A weekend
-therefore files two sessions. Anything marked unfinished shows an **Unfinished** badge
-next to it on the season page.
+run to its end therefore files two sessions.
+
+Only sessions that ended on their own are taken. Close the game part-way through and
+that session is left in `Documents\Assetto Corsa\out\race_statistics\` instead of
+joining the season — the file is kept rather than deleted, in case you want it. Quit
+during the race of a weekend and the qualifying that already finished is still filed.
+
+A session carrying `finished: false` that reaches a season folder anyway — one added
+by hand, or filed before this rule existed — shows an **Unfinished** badge beside it
+on the season page, and leaves that round's **Start Race** button in place.
 
 Only one session can run at a time, and the route refuses requests that did not come
 from this machine. The `race.ini` that was in place beforehand is kept as
