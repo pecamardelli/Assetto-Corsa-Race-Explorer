@@ -52,6 +52,15 @@ For a session Race Explorer launched, the app reads
 - `session_info.finished` — whether the session reached its natural end. A race
   counts once the leader completes the round's lap count; a qualifying once its
   clock runs out. Close the game before either and the file records `false`.
+- `driver_statistics[*].retired` — set on any driver in a race whose total time is
+  under the winner's, since they stopped before the end. Being lapped does not
+  trigger it: AC lets a car finish the lap it is on when the leader takes the flag,
+  so anyone still running banks that last lap after the winner and ends up above
+  the winner's total. Practice and qualifying never mark anyone retired.
+
+To apply that rule to races recorded earlier, run
+`node scripts/update-retired-flags.js` for a dry run, then add `--write`. Pass a
+path fragment (e.g. `"Le Mans"`) to limit it to one championship.
 
 Both come from the launch handshake rather than from AC itself: AC's live session
 state lives in shared memory, which needs `ctypes`, and AC's embedded Python 3.3 has

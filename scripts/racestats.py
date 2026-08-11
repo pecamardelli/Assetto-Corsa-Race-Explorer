@@ -300,12 +300,23 @@ def save_current_session():
         # Sort drivers by position
         sorted_drivers = sorted(car_stats.items(), key=lambda x: x[1].final_position)
 
+        # Anyone with less race time on the clock than the winner stopped before the
+        # end, so they did not finish. Being lapped does not count: AC lets a car
+        # finish the lap it is on when the leader takes the flag, so a driver still
+        # running banks that last lap after the winner and lands above their total.
+        # Races only -- no other session type has a winner to measure against.
+        retired_below_seconds = 0.0
+        if session_type == 'race' and sorted_drivers:
+            retired_below_seconds = sorted_drivers[0][1].total_time
+
         # Add statistics for each driver
         total_cars_count = len(car_stats)
         for car_id, stats in sorted_drivers:
             has_fastest_lap = (car_id == fastest_lap_driver_id)
-            session_data['driver_statistics'][stats.driver_name] = stats.to_dict(
+            driver = stats.to_dict(
                 stats.final_position, total_cars_count, track_length_m, race_laps, best_lap_time, has_fastest_lap)
+            driver['retired'] = stats.total_time < retired_below_seconds
+            session_data['driver_statistics'][stats.driver_name] = driver
 
         # Determine output directory
         documents_path = os.path.expanduser("~\\Documents")
