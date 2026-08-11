@@ -10,7 +10,6 @@ import BackButton from "../../../../components/BackButton";
 import FlagIcon from "../../../../components/FlagIcon";
 import RoundLaunchButtons, {
   LaunchProvider,
-  LaunchStatusBanner,
 } from "../../../../components/RaceLauncher";
 
 /**
@@ -338,7 +337,6 @@ export default async function SeasonPage({
           champId={decodedChampId}
           seasonId={decodedSeasonId}
         >
-        <LaunchStatusBanner />
         <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg overflow-hidden">
           <div className="p-6 border-b border-zinc-700">
             <h2 className="text-2xl font-bold text-white">

@@ -17,33 +17,23 @@ const MODES: LaunchMode[] = ['weekend', 'freerun'];
 
 type LaunchStatus = 'running' | 'completed' | 'failed';
 
+/** Only the fields the buttons need; /api/launch reports more than this. */
 interface LaunchState {
   id: string;
   status: LaunchStatus;
   mode: LaunchMode;
   roundNumber: number;
-  trackLabel: string;
-  error?: string;
-  ingested?: string[];
-  skipped?: number;
 }
 
 interface LauncherContextValue {
   launch: LaunchState | null;
-  error: string | null;
   pending: boolean;
   start: (round: number, mode: LaunchMode) => void;
-  dismiss: () => void;
 }
 
 const LauncherContext = createContext<LauncherContextValue | null>(null);
 
 const POLL_INTERVAL_MS = 3000;
-
-const MODE_LABELS: Record<LaunchMode, string> = {
-  weekend: 'Race weekend',
-  freerun: 'Free run',
-};
 
 /**
  * Owns the one-at-a-time launch state for a season page. Kept above the round list
@@ -59,7 +49,6 @@ export function LaunchProvider({
   children: ReactNode;
 }) {
   const [launch, setLaunch] = useState<LaunchState | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const router = useRouter();
 
@@ -107,7 +96,6 @@ export function LaunchProvider({
 
   const start = useCallback(
     async (round: number, mode: LaunchMode) => {
-      setError(null);
       setPending(true);
 
       try {
@@ -120,13 +108,14 @@ export function LaunchProvider({
         const body = (await response.json()) as { launch?: LaunchState; error?: string };
 
         if (!response.ok) {
-          setError(body.error ?? 'Failed to launch Assetto Corsa');
+          // Nothing on the page reports this, so leave a trace in the console.
+          console.error('Launch refused:', body.error ?? response.statusText);
           return;
         }
 
         if (body.launch) applyLaunch(body.launch);
-      } catch {
-        setError('Could not reach the launch service');
+      } catch (cause) {
+        console.error('Could not reach the launch service:', cause);
       } finally {
         setPending(false);
       }
@@ -134,20 +123,9 @@ export function LaunchProvider({
     [applyLaunch, champId, seasonId]
   );
 
-  const dismiss = useCallback(() => {
-    setError(null);
-    if (launch && launch.status !== 'running') setLaunch(null);
-  }, [launch]);
-
   return (
     <LauncherContext.Provider
-      value={{
-        launch,
-        error,
-        pending,
-        start: (round, mode) => void start(round, mode),
-        dismiss,
-      }}
+      value={{ launch, pending, start: (round, mode) => void start(round, mode) }}
     >
       {children}
     </LauncherContext.Provider>
@@ -158,72 +136,6 @@ function useLauncher(): LauncherContextValue {
   const context = useContext(LauncherContext);
   if (!context) throw new Error('useLauncher must be used inside a LaunchProvider');
   return context;
-}
-
-/** Banner reporting whatever the launcher is doing, or how the last session went. */
-export function LaunchStatusBanner() {
-  const { launch, error, dismiss } = useLauncher();
-
-  if (error) {
-    return (
-      <div className="mb-4 flex items-center justify-between gap-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-        <span>{error}</span>
-        <button onClick={dismiss} className="text-red-400/70 hover:text-red-300">
-          Dismiss
-        </button>
-      </div>
-    );
-  }
-
-  if (!launch) return null;
-
-  if (launch.status === 'running') {
-    return (
-      <div className="mb-4 flex items-center gap-3 rounded-lg border border-green-500/30 bg-green-500/10 px-4 py-3 text-sm text-green-300">
-        <span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
-        <span>
-          {MODE_LABELS[launch.mode]} running at {launch.trackLabel} — R{launch.roundNumber}. Results
-          are filed automatically when Assetto Corsa closes.
-        </span>
-      </div>
-    );
-  }
-
-  if (launch.status === 'failed') {
-    return (
-      <div className="mb-4 flex items-center justify-between gap-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
-        <span>{launch.error ?? 'The session ended with an error.'}</span>
-        <button onClick={dismiss} className="text-red-400/70 hover:text-red-300">
-          Dismiss
-        </button>
-      </div>
-    );
-  }
-
-  const filed = launch.ingested?.length ?? 0;
-  const skipped = launch.skipped ?? 0;
-
-  const outcome: string[] = [];
-  if (filed > 0) {
-    outcome.push(`${filed} result file${filed === 1 ? '' : 's'} added to this season`);
-  }
-  if (skipped > 0) {
-    outcome.push(
-      `${skipped} session${skipped === 1 ? '' : 's'} left unfinished and not recorded`
-    );
-  }
-  if (outcome.length === 0) outcome.push('no new result files were found');
-
-  return (
-    <div className="mb-4 flex items-center justify-between gap-4 rounded-lg border border-zinc-600 bg-zinc-700/30 px-4 py-3 text-sm text-zinc-300">
-      <span>
-        {MODE_LABELS[launch.mode]} at {launch.trackLabel} ended — {outcome.join(', ')}.
-      </span>
-      <button onClick={dismiss} className="text-zinc-400 hover:text-zinc-200">
-        Dismiss
-      </button>
-    </div>
-  );
 }
 
 const BUTTON_STYLES: Record<LaunchMode, string> = {
