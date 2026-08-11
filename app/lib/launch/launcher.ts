@@ -75,13 +75,17 @@ async function backupRaceIni(): Promise<void> {
 }
 
 /**
- * Tells racestats.py which round it is recording. The session list is a fallback
- * for labelling each save in order — the AC app prefers what shared memory reports.
+ * Tells racestats.py what it is recording. `sessions` names each save in the order
+ * AC runs them, and the two targets are how the app decides whether a session
+ * reached its natural end — AC's own session state is only in shared memory, which
+ * its embedded Python cannot reach for want of a ctypes module.
  */
 async function writeLaunchContext(plan: LaunchPlan, id: string): Promise<void> {
   const context = {
     launch_id: id,
     sessions: MODE_SESSIONS[plan.spec.mode],
+    laps: plan.spec.laps,
+    qualifying_minutes: plan.spec.qualifyingMinutes,
     championship: plan.championshipName,
     season: plan.seasonFolder,
     round: plan.roundNumber,

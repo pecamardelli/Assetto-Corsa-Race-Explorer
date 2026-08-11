@@ -16,26 +16,9 @@ try:
 except Exception as e:
     ac.log("Race Stats ERROR importing math/datetime: " + str(e))
 
-# Shared memory tells us which session is live and when it ends. Optional: without
-# it the app still records everything, it just cannot label a session as finished.
-try:
-    from sim_info import info as sim_info
-except Exception as e:
-    sim_info = None
-    ac.log("Race Stats WARNING: sim_info unavailable, session state will be guessed: " + str(e))
-
-# Values from sim_info's enums, repeated here so this file reads on its own.
-AC_LIVE = 2
-AC_PRACTICE = 0
-AC_QUALIFY = 1
-AC_RACE = 2
-AC_CHECKERED_FLAG = 5
-
-SESSION_TYPE_NAMES = {
-    AC_PRACTICE: 'practice',
-    AC_QUALIFY: 'qualifying',
-    AC_RACE: 'race',
-}
+# Grace on the qualifying clock, in seconds. Our own timer starts a moment before
+# AC's does, so it should never be the reason a session reads as unfinished.
+QUALIFYING_TOLERANCE_SECONDS = 5.0
 
 appWindow = 0
 
@@ -57,18 +40,6 @@ session_total_time = 0.0
 current_session_number = 0
 previous_session_time = 0.0
 
-# Whether the live session actually ran to its end. Quitting out mid-race still
-# saves the stats, but they are marked unfinished so partial results are obvious.
-session_finished = False
-
-# Session type as last seen while the sim was live. Read continuously rather than
-# at save time, because shared memory is no longer trustworthy once AC is closing.
-detected_session_type = ''
-
-# What we were recording when the current stats block started. Restarting a race
-# resets lap counts exactly like moving on to the next session does, and this is
-# what tells the two apart.
-session_type_at_start = ''
 
 # Crash detection threshold (G-force)
 CRASH_G_FORCE_THRESHOLD = 50.0            # Only count crashes above 50G
@@ -217,58 +188,15 @@ def read_launch_context():
         ac.log("Race Stats WARNING reading launch context: " + str(e))
         return {}
 
-def update_session_state():
-    """
-    Track, every frame, which session is running and whether it has ended.
-
-    Both readings are taken live because shared memory stops being reliable once
-    AC starts shutting down, which is exactly when the last save happens.
-    """
-    global session_finished, detected_session_type
-
-    if sim_info is None:
-        return
-
-    try:
-        graphics = sim_info.graphics
-
-        if graphics.status != AC_LIVE:
-            return
-
-        session_name = SESSION_TYPE_NAMES.get(graphics.session)
-        if session_name:
-            detected_session_type = session_name
-
-        if session_finished:
-            return
-
-        # The checkered flag is AC's own "session over" signal, and it covers a
-        # completed race as well as a timed session running out of clock.
-        if graphics.flag == AC_CHECKERED_FLAG:
-            session_finished = True
-            return
-
-        # A race is also done once the leader has covered the distance, which we
-        # see first whenever the player is a lap or more down.
-        if graphics.session == AC_RACE and graphics.numberOfLaps > 0:
-            leader_laps = max([len(s.lap_times) for s in car_stats.values()]) if car_stats else 0
-            if leader_laps >= graphics.numberOfLaps:
-                session_finished = True
-    except Exception as e:
-        ac.log("Race Stats WARNING reading sim info: " + str(e))
-
-
 def resolve_session_type(launch_context):
     """
-    Name the session that is being saved.
+    Name the session being saved.
 
-    Shared memory is the authority. The launch context is the fallback, and it
-    lists a launch's sessions in order so a weekend's second save still reads as
-    the race even if shared memory was unavailable.
+    The launch context lists a launch's sessions in the order AC will run them,
+    so the session counter picks out the right one. Nothing else here can tell a
+    qualifying apart from a race: AC's own session state lives in shared memory,
+    which needs ctypes, and AC's embedded Python has no _ctypes module.
     """
-    if detected_session_type:
-        return detected_session_type
-
     sessions = launch_context.get('sessions', [])
     if current_session_number < len(sessions):
         return sessions[current_session_number]
@@ -276,12 +204,39 @@ def resolve_session_type(launch_context):
     return launch_context.get('session_type', '')
 
 
-def save_current_session(finished=None):
-    """Save current session data to individual JSON file"""
+def session_ran_its_course(launch_context, session_type, leader_laps):
+    """
+    Whether this session reached its natural end rather than being walked out of.
+
+    Measured against the targets Race Explorer recorded when it launched: a race
+    ends when the leader completes the distance, a qualifying when its clock runs
+    out. A session started outside Race Explorer has no targets to check, so it
+    is never claimed as finished.
+    """
+    if session_type == 'race':
+        target_laps = launch_context.get('laps', 0)
+        return target_laps > 0 and leader_laps >= target_laps
+
+    if session_type == 'qualifying':
+        target_seconds = launch_context.get('qualifying_minutes', 0) * 60
+        return (target_seconds > 0 and
+                session_total_time >= target_seconds - QUALIFYING_TOLERANCE_SECONDS)
+
+    # A free run has no end of its own to reach.
+    return False
+
+
+def save_current_session():
+    """
+    Save current session data to individual JSON file.
+
+    Returns True when the session that was saved had run its course, which is what
+    tells a genuine move to the next session apart from a restart of this one.
+    """
     global car_stats, session_total_time
 
     if not car_stats:
-        return
+        return False
 
     try:
         # Get track length
@@ -302,14 +257,14 @@ def save_current_session(finished=None):
 
         # Session context from Race Explorer, when it was the one that launched us
         launch_context = read_launch_context()
-
-        session_completed = session_finished if finished is None else finished
+        session_type = resolve_session_type(launch_context)
+        completed = session_ran_its_course(launch_context, session_type, race_laps)
 
         # Prepare session data
         session_data = {
             'session_info': {
-                'session_type': resolve_session_type(launch_context),
-                'finished': session_completed,
+                'session_type': session_type,
+                'finished': completed,
                 'date': datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 'track': ac.getTrackName(0),
                 'track_config': ac.getTrackConfiguration(0),
@@ -384,9 +339,12 @@ def save_current_session(finished=None):
         with open(filepath, 'w') as f:
             json.dump(session_data, f, indent=2)
 
+        return completed
+
     except Exception as e:
         ac.log("Race Stats ERROR in save_current_session: " + str(e))
         ac.log("Race Stats TRACEBACK: " + traceback.format_exc())
+        return False
 
 def acMain(ac_version):
     global appWindow
@@ -409,11 +367,8 @@ def acUpdate(deltaT):
     """Called every frame - track all statistics"""
     global car_stats, prev_positions, prev_lap_counts, total_cars, session_active, prev_g_forces, session_total_time
     global current_session_number, previous_session_time, last_crash_times
-    global session_finished, detected_session_type, session_type_at_start
 
     try:
-        update_session_state()
-
         # Detect session change by monitoring if lap counts reset or session time goes backwards
         session_changed = False
         if session_active and total_cars > 0:
@@ -433,14 +388,14 @@ def acUpdate(deltaT):
 
         # If session changed, save current session and reset
         if session_changed:
-            # Moving on to a different session means the one ending here ran its
-            # course. Landing back on the same one is a restart, which does not.
-            advanced = (detected_session_type != '' and
-                        detected_session_type != session_type_at_start)
-            save_current_session(finished=session_finished or advanced)
+            # Lap counts reset both when AC moves on to the next session and when
+            # the driver restarts this one. Only a session that finished can have
+            # been moved on from, so only then does the session counter advance —
+            # a restart keeps its place and stays correctly named.
+            if save_current_session():
+                current_session_number += 1
 
             # Reset for new session
-            current_session_number += 1
             session_total_time = 0.0
             car_stats = {}
             prev_positions = {}
@@ -448,13 +403,10 @@ def acUpdate(deltaT):
             prev_g_forces = {}
             last_crash_times = {}
             session_active = False
-            session_finished = False
-            detected_session_type = ''
 
         # Initialize on first update
         if not session_active:
             session_active = True
-            session_type_at_start = detected_session_type
             total_cars = ac.getCarsCount()
 
             # Initialize car stats

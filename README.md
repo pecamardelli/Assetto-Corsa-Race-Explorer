@@ -44,13 +44,19 @@ The `scripts/racestats.py` file is a custom Assetto Corsa app that automatically
 
 The app tracks: lap times, overtakes, crashes (with G-force detection), distance covered, speeds, and calculates performance scores.
 
-It reads AC's shared memory (via the bundled `sim_info.py`, which must sit beside
-`racestats.py`) to label each save with the session that was actually running, and to
-record whether that session ran to its end:
+For a session Race Explorer launched, the app reads
+`Documents\Assetto Corsa\out\race_explorer_launch.json` and labels each save from it:
 
-- `session_info.session_type` — `practice`, `qualifying` or `race`
-- `session_info.finished` — `false` when the game was closed or the session restarted
-  part-way through, so a partial record is never mistaken for a real result
+- `session_info.session_type` — `practice`, `qualifying` or `race`, taken from the
+  launch's session order
+- `session_info.finished` — whether the session reached its natural end. A race
+  counts once the leader completes the round's lap count; a qualifying once its
+  clock runs out. Close the game before either and the file records `false`.
+
+Both come from the launch handshake rather than from AC itself: AC's live session
+state lives in shared memory, which needs `ctypes`, and AC's embedded Python 3.3 has
+no `_ctypes` module. A session started outside Race Explorer therefore has no targets
+to check and is never claimed as finished.
 
 ## Launching Sessions
 
@@ -76,6 +82,9 @@ Only sessions that ended on their own are taken. Close the game part-way through
 that session is left in `Documents\Assetto Corsa\out\race_statistics\` instead of
 joining the season — the file is kept rather than deleted, in case you want it. Quit
 during the race of a weekend and the qualifying that already finished is still filed.
+
+Because a race is judged finished on the leader's lap count, retiring your own car
+does not make the session partial: the race still ran, and it is still recorded.
 
 A session carrying `finished: false` that reaches a season folder anyway — one added
 by hand, or filed before this rule existed — shows an **Unfinished** badge beside it
