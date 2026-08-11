@@ -11,6 +11,11 @@
  * leader takes the flag, so a driver who was still running banks that final lap
  * after the winner's finish and lands above the winner's total.
  *
+ * The flag is only ever set, never cleared. A driver above the winner's time has
+ * not necessarily finished — lap times count the wall clock, so someone who
+ * crashed and sat there can bank one enormous lap and land above the winner — so
+ * an existing retirement is always left alone.
+ *
  * Usage:
  *   node scripts/update-retired-flags.js                  # every race, dry run
  *   node scripts/update-retired-flags.js --write          # every race, applied
@@ -53,6 +58,40 @@ function isRace(data, file) {
   return path.basename(file).includes("_session_race_");
 }
 
+/**
+ * Flip one driver's retired flag in the raw file text.
+ *
+ * Re-serialising the whole file would rewrite it top to bottom: these results were
+ * written by Python, which keeps a trailing ".0" on whole floats where
+ * JSON.stringify does not. Same data, but it churns every line of a file for the
+ * sake of one field, so the value is patched where it sits instead.
+ */
+function setRetiredInText(text, driverName) {
+  // Python wrote these with ensure_ascii on, so a name like "André Lefèbvre" sits
+  // in the file as "André Lefèbvre". Try the literal key first, then the
+  // escaped one.
+  const escaped = [...driverName]
+    .map((char) =>
+      char.charCodeAt(0) > 0x7f
+        ? "\\u" + char.charCodeAt(0).toString(16).padStart(4, "0")
+        : char,
+    )
+    .join("");
+
+  let driverAt = text.indexOf(`"${driverName}":`);
+  if (driverAt === -1) driverAt = text.indexOf(`"${escaped}":`);
+  if (driverAt === -1) return null;
+
+  const flagAt = text.indexOf('"retired":', driverAt);
+  if (flagAt === -1) return null;
+
+  const valueAt = text.indexOf("false", flagAt);
+  // Guard against running past this driver's block into the next one.
+  if (valueAt === -1 || valueAt > flagAt + 20) return null;
+
+  return text.slice(0, valueAt) + "true" + text.slice(valueAt + "false".length);
+}
+
 let filesChanged = 0;
 let driversChanged = 0;
 
@@ -61,9 +100,11 @@ const candidates = collectJsonFiles(dataDir).filter(
 );
 
 for (const file of candidates) {
+  let text;
   let data;
   try {
-    data = JSON.parse(fs.readFileSync(file, "utf8"));
+    text = fs.readFileSync(file, "utf8");
+    data = JSON.parse(text);
   } catch {
     continue; // not a result file
   }
@@ -84,11 +125,20 @@ for (const file of candidates) {
     const time = stats.total_time_seconds;
     if (typeof time !== "number") continue;
 
-    const retired = time < winnerTime;
-    if (stats.retired === retired) continue;
+    // Only ever set the flag. Being above the winner's time does not prove a
+    // driver finished: total_time counts the wall clock of each lap, so someone
+    // who crashed and sat there can bank a single enormous lap and land above
+    // the winner. Clearing on that basis would throw away real retirements.
+    if (time >= winnerTime || stats.retired === true) continue;
 
-    changes.push(`${name}: ${stats.retired} -> ${retired} (${stats.laps_completed} laps, ${time.toFixed(1)}s)`);
-    stats.retired = retired;
+    const patched = setRetiredInText(text, name);
+    if (!patched) {
+      console.warn(`  ! could not locate the retired flag for ${name} in ${file}`);
+      continue;
+    }
+
+    text = patched;
+    changes.push(`${name}: retired (${stats.laps_completed} laps, ${time.toFixed(1)}s)`);
   }
 
   if (changes.length === 0) continue;
@@ -99,7 +149,7 @@ for (const file of candidates) {
   console.log(`\n${path.relative(dataDir, file)}  (winner ${winner[0]}, ${winnerTime.toFixed(1)}s)`);
   for (const change of changes) console.log(`  ${change}`);
 
-  if (write) fs.writeFileSync(file, JSON.stringify(data, null, 2));
+  if (write) fs.writeFileSync(file, text);
 }
 
 console.log(
