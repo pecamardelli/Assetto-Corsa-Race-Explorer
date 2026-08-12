@@ -10,6 +10,8 @@ import {
 } from '../../types/race';
 import { AC_CONTENT_TRACKS, AC_CONTENT_WEATHER } from './paths';
 import { GridEntry, LaunchMode, RaceIniSpec } from './race-ini';
+import { resolveAssists } from './assists';
+import { AssistsConfig, AssistsSource } from '../../types/assists';
 
 /** Falls back to the folder AC ships when a round's weather index is out of range. */
 const DEFAULT_WEATHER = '3_clear';
@@ -25,6 +27,10 @@ const DEFAULT_AI_LEVEL = 100;
 
 export interface LaunchPlan {
   spec: RaceIniSpec;
+  /** Game presets to write into cfg/assists.ini alongside race.ini. */
+  assists: AssistsConfig;
+  /** Whether the assists came from the season's own file or the global config. */
+  assistsSource: AssistsSource;
   championshipName: string;
   seasonNumber: number;
   seasonFolder: string;
@@ -178,6 +184,12 @@ export async function buildLaunchPlan(
   const { track, trackConfig } = await resolveTrack(round.track);
   const weather = await resolveWeather(round.weather);
 
+  const seasonFolder = `season_${String(season.seasonNumber).padStart(2, '0')}`;
+  const { assists, source: assistsSource } = await resolveAssists(
+    championship.folderName,
+    seasonFolder
+  );
+
   const spec: RaceIniSpec = {
     mode,
     track,
@@ -194,9 +206,11 @@ export async function buildLaunchPlan(
 
   return {
     spec,
+    assists,
+    assistsSource,
     championshipName: championship.folderName,
     seasonNumber: season.seasonNumber,
-    seasonFolder: `season_${String(season.seasonNumber).padStart(2, '0')}`,
+    seasonFolder,
     roundNumber,
     roundTrack: round.track,
     trackLabel: trackConfig ? `${track} (${trackConfig})` : track,

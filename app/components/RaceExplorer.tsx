@@ -53,6 +53,12 @@ export default function RaceExplorer({ quickRaces, championships, championshipSt
           >
             All-Time Standings
           </Link>
+          <Link
+            href="/presets"
+            className="px-6 py-3 rounded-lg font-semibold transition-all bg-zinc-800 text-zinc-400 hover:bg-cyan-600 hover:text-white hover:shadow-lg hover:shadow-cyan-500/30"
+          >
+            Game Presets
+          </Link>
         </div>
 
         {/* Quick Race View */}

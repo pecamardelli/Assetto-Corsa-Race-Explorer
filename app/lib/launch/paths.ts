@@ -22,6 +22,12 @@ export const RACE_INI = path.join(AC_CFG_DIR, 'race.ini');
 /** Single rolling backup of whatever race.ini held before the last launch. */
 export const RACE_INI_BACKUP = path.join(AC_CFG_DIR, 'race.ini.bak');
 
+/** Driving aids and realism settings; AC reads this next to race.ini at launch. */
+export const ASSISTS_INI = path.join(AC_CFG_DIR, 'assists.ini');
+
+/** Same one-deep backup policy as race.ini. */
+export const ASSISTS_INI_BACKUP = path.join(AC_CFG_DIR, 'assists.ini.bak');
+
 export const AC_OUT_DIR = path.join(AC_DOCUMENTS, 'out');
 
 /** Where the racestats AC app drops one JSON per finished session. */

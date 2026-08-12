@@ -2,6 +2,7 @@ import { spawn, execFile } from 'child_process';
 import { randomUUID } from 'crypto';
 import { promises as fs } from 'fs';
 import { promisify } from 'util';
+import { buildAssistsIni, pinSeasonAssists } from './assists';
 import { ingestResults } from './ingest';
 import { LaunchPlan } from './plan';
 import { buildRaceIni, LaunchMode, MODE_SESSIONS } from './race-ini';
@@ -9,6 +10,8 @@ import {
   AC_EXE,
   AC_OUT_DIR,
   AC_ROOT,
+  ASSISTS_INI,
+  ASSISTS_INI_BACKUP,
   LAUNCH_CONTEXT_FILE,
   RACE_INI,
   RACE_INI_BACKUP,
@@ -63,10 +66,10 @@ async function assettoCorsaIsRunning(): Promise<boolean> {
   }
 }
 
-/** Keep exactly one backup: whatever race.ini held before this launch. */
-async function backupRaceIni(): Promise<void> {
+/** Keep exactly one backup: whatever the file held before this launch. */
+async function backupCfgFile(source: string, backup: string): Promise<void> {
   try {
-    await fs.copyFile(RACE_INI, RACE_INI_BACKUP);
+    await fs.copyFile(source, backup);
   } catch (error) {
     const code = (error as NodeJS.ErrnoException).code;
     // Nothing to preserve on a machine that has never run a race.
@@ -90,6 +93,8 @@ async function writeLaunchContext(plan: LaunchPlan, id: string): Promise<void> {
     season: plan.seasonFolder,
     round: plan.roundNumber,
     track: plan.roundTrack,
+    // Recorded so the session stats can carry the presets they were driven with.
+    assists: plan.assists,
   };
 
   await fs.mkdir(AC_OUT_DIR, { recursive: true });
@@ -132,8 +137,16 @@ export async function launch(
 
   const id = randomUUID();
 
-  await backupRaceIni();
+  await backupCfgFile(RACE_INI, RACE_INI_BACKUP);
   await fs.writeFile(RACE_INI, buildRaceIni(plan.spec), 'utf8');
+
+  await backupCfgFile(ASSISTS_INI, ASSISTS_INI_BACKUP);
+  await fs.writeFile(ASSISTS_INI, buildAssistsIni(plan.assists), 'utf8');
+
+  // A season launching on the global config gets its own copy filed away, so the
+  // data folder always records what each season was driven with.
+  await pinSeasonAssists(plan.championshipName, plan.seasonFolder, plan.assists);
+
   await writeLaunchContext(plan, id);
 
   const state: LaunchState = {
