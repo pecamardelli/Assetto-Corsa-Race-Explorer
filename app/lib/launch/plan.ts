@@ -33,6 +33,11 @@ export interface LaunchPlan {
   /** Track with its layout re-joined, matching how rounds are keyed elsewhere. */
   roundTrack: string;
   trackLabel: string;
+  /**
+   * Whether whatever AC writes belongs in the season. False for a round driven
+   * again after it was raced: the session runs, but nothing is filed.
+   */
+  record: boolean;
 }
 
 async function isDirectory(target: string): Promise<boolean> {
@@ -122,7 +127,8 @@ export async function buildLaunchPlan(
   champId: string,
   seasonId: string,
   roundNumber: number,
-  mode: LaunchMode
+  mode: LaunchMode,
+  record = true
 ): Promise<LaunchPlan> {
   const championship = await getChampionship(champId);
   if (!championship) throw new LaunchPlanError(`Unknown championship "${champId}"`);
@@ -198,5 +204,6 @@ export async function buildLaunchPlan(
     roundNumber,
     roundTrack: round.track,
     trackLabel: trackConfig ? `${track} (${trackConfig})` : track,
+    record,
   };
 }

@@ -8,16 +8,15 @@ import {
   useEffect,
   useRef,
   useState,
+  useSyncExternalStore,
   type ReactNode,
 } from 'react';
 
 export type LaunchMode = 'weekend' | 'freerun';
 
-const MODES: LaunchMode[] = ['weekend', 'freerun'];
-
 type LaunchStatus = 'running' | 'completed' | 'failed';
 
-/** Only the fields the buttons need; /api/launch reports more than this. */
+/** Only the fields the round menus need; /api/launch reports more than this. */
 interface LaunchState {
   id: string;
   status: LaunchStatus;
@@ -25,10 +24,13 @@ interface LaunchState {
   roundNumber: number;
 }
 
-interface LauncherContextValue {
+export interface LauncherContextValue {
   launch: LaunchState | null;
   pending: boolean;
-  start: (round: number, mode: LaunchMode) => void;
+  /** Whether this browser is sitting on the machine that runs the game. */
+  isLocal: boolean;
+  /** `record: false` runs the session for its own sake and files nothing away. */
+  start: (round: number, mode: LaunchMode, record?: boolean) => void;
 }
 
 const LauncherContext = createContext<LauncherContextValue | null>(null);
@@ -36,8 +38,30 @@ const LauncherContext = createContext<LauncherContextValue | null>(null);
 const POLL_INTERVAL_MS = 3000;
 
 /**
+ * Launching starts an executable on the machine serving the page, so the controls
+ * are only any use to a browser on that same machine — /api/launch turns everyone
+ * else away. Read through useSyncExternalStore because the same markup is served to
+ * local and remote viewers alike: the server has no answer, so it says no, and the
+ * client settles it after hydration without tripping over its own HTML.
+ */
+const subscribeToNothing = () => () => {};
+
+function servedLocally(): boolean {
+  const { hostname } = window.location;
+  return hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1';
+}
+
+function servedRemotely(): boolean {
+  return false;
+}
+
+function useIsLocal(): boolean {
+  return useSyncExternalStore(subscribeToNothing, servedLocally, servedRemotely);
+}
+
+/**
  * Owns the one-at-a-time launch state for a season page. Kept above the round list
- * so a single poller serves every round's buttons.
+ * so a single poller serves every round's menu.
  */
 export function LaunchProvider({
   champId,
@@ -50,6 +74,7 @@ export function LaunchProvider({
 }) {
   const [launch, setLaunch] = useState<LaunchState | null>(null);
   const [pending, setPending] = useState(false);
+  const isLocal = useIsLocal();
   const router = useRouter();
 
   // Tracked in a ref so the poller can spot the running -> finished edge without
@@ -71,6 +96,9 @@ export function LaunchProvider({
   );
 
   useEffect(() => {
+    // Nothing can be launched from a remote browser, so spare it the polling.
+    if (!isLocal) return;
+
     let cancelled = false;
 
     const poll = async () => {
@@ -92,17 +120,17 @@ export function LaunchProvider({
       cancelled = true;
       clearInterval(timer);
     };
-  }, [applyLaunch]);
+  }, [applyLaunch, isLocal]);
 
   const start = useCallback(
-    async (round: number, mode: LaunchMode) => {
+    async (round: number, mode: LaunchMode, record: boolean) => {
       setPending(true);
 
       try {
         const response = await fetch('/api/launch', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ champId, seasonId, round, mode }),
+          body: JSON.stringify({ champId, seasonId, round, mode, record }),
         });
 
         const body = (await response.json()) as { launch?: LaunchState; error?: string };
@@ -125,78 +153,20 @@ export function LaunchProvider({
 
   return (
     <LauncherContext.Provider
-      value={{ launch, pending, start: (round, mode) => void start(round, mode) }}
+      value={{
+        launch,
+        pending,
+        isLocal,
+        start: (round, mode, record = true) => void start(round, mode, record),
+      }}
     >
       {children}
     </LauncherContext.Provider>
   );
 }
 
-function useLauncher(): LauncherContextValue {
+export function useLauncher(): LauncherContextValue {
   const context = useContext(LauncherContext);
   if (!context) throw new Error('useLauncher must be used inside a LaunchProvider');
   return context;
-}
-
-const BUTTON_STYLES: Record<LaunchMode, string> = {
-  weekend: 'bg-red-500/20 hover:bg-red-500/30 text-red-400',
-  freerun: 'bg-blue-500/20 hover:bg-blue-500/30 text-blue-400',
-};
-
-const ICONS: Record<LaunchMode, ReactNode> = {
-  weekend: (
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3l14 9-14 9V3z" />
-  ),
-  freerun: (
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M13 10V3L4 14h7v7l9-11h-7z"
-    />
-  ),
-};
-
-const BUTTON_LABELS: Record<LaunchMode, string> = {
-  weekend: 'Start Race',
-  freerun: 'Free Run',
-};
-
-const BUTTON_HINTS: Record<LaunchMode, string> = {
-  weekend: 'Launch qualifying then the race — the grid comes out of qualifying',
-  freerun: 'Launch an untimed solo run at this track',
-};
-
-/** The launch buttons for one round. */
-export default function RoundLaunchButtons({
-  round,
-  raceCompleted = false,
-}: {
-  round: number;
-  /** Drops the weekend button once the round has a race on the books. */
-  raceCompleted?: boolean;
-}) {
-  const { launch, pending, start } = useLauncher();
-  const busy = pending || launch?.status === 'running';
-  const modes = raceCompleted ? MODES.filter(mode => mode !== 'weekend') : MODES;
-
-  return (
-    // shrink-0 so the buttons keep their size and the track name gives way instead.
-    <div className="flex shrink-0 flex-wrap gap-2">
-      {modes.map(mode => (
-        <button
-          key={mode}
-          onClick={() => start(round, mode)}
-          disabled={busy}
-          title={busy ? 'A session is already running' : BUTTON_HINTS[mode]}
-          className={`inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium transition-all disabled:cursor-not-allowed disabled:opacity-40 ${BUTTON_STYLES[mode]}`}
-        >
-          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {ICONS[mode]}
-          </svg>
-          {BUTTON_LABELS[mode]}
-        </button>
-      ))}
-    </div>
-  );
 }

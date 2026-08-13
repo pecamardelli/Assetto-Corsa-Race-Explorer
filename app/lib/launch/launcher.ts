@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto';
 import { promises as fs } from 'fs';
 import { promisify } from 'util';
 import { buildAssistsIni, pinSeasonAssists } from './assists';
-import { ingestResults } from './ingest';
+import { ingestResults, listResultFiles } from './ingest';
 import { LaunchPlan } from './plan';
 import { buildRaceIni, LaunchMode, MODE_SESSIONS } from './race-ini';
 import {
@@ -33,6 +33,8 @@ export interface LaunchState {
   finishedAt?: number;
   exitCode?: number | null;
   error?: string;
+  /** False for a run driven for its own sake, whose sessions are never filed. */
+  recorded: boolean;
   /** Result files moved into the season folder once AC quit. */
   ingested?: string[];
   /** Sessions AC wrote that were left unfinished, and so not filed. */
@@ -101,12 +103,26 @@ async function writeLaunchContext(plan: LaunchPlan, id: string): Promise<void> {
   await fs.writeFile(LAUNCH_CONTEXT_FILE, JSON.stringify(context, null, 2), 'utf8');
 }
 
-async function finish(state: LaunchState, plan: LaunchPlan, exitCode: number | null) {
+async function finish(
+  state: LaunchState,
+  plan: LaunchPlan,
+  exitCode: number | null,
+  preexisting: Set<string>
+) {
   state.exitCode = exitCode;
   state.finishedAt = Date.now();
 
+  if (!plan.record) {
+    // Whatever AC wrote is left in its out folder rather than deleted, the same
+    // way an unfinished session is — it is simply not this season's business.
+    state.ingested = [];
+    state.status = 'completed';
+    await fs.rm(LAUNCH_CONTEXT_FILE, { force: true }).catch(() => {});
+    return;
+  }
+
   try {
-    const outcome = await ingestResults(plan, state.startedAt);
+    const outcome = await ingestResults(plan, state.startedAt, preexisting);
     state.ingested = outcome.filed;
     state.skipped = outcome.skipped;
     state.status = 'completed';
@@ -149,6 +165,10 @@ export async function launch(
 
   await writeLaunchContext(plan, id);
 
+  // Whatever is sitting in AC's out folder now was not written by this launch, so
+  // it is off limits when the results are filed away afterwards.
+  const preexisting = await listResultFiles();
+
   const state: LaunchState = {
     id,
     status: 'running',
@@ -157,6 +177,7 @@ export async function launch(
     seasonId,
     roundNumber: plan.roundNumber,
     trackLabel: plan.trackLabel,
+    recorded: plan.record,
     startedAt: Date.now(),
   };
 
@@ -171,7 +192,7 @@ export async function launch(
   });
 
   child.on('exit', code => {
-    void finish(state, plan, code);
+    void finish(state, plan, code, preexisting);
   });
 
   return state;

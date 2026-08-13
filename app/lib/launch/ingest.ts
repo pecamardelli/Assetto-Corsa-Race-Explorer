@@ -58,6 +58,21 @@ async function uniquePath(dir: string, base: string): Promise<string> {
   return candidate;
 }
 
+/**
+ * What AC's out folder already held before a launch. Anything named here is
+ * somebody else's — a session left behind unfinished, or one from a run that was
+ * asked not to record — and the mtime window alone is too blunt to tell them
+ * apart from what this launch is about to write.
+ */
+export async function listResultFiles(): Promise<Set<string>> {
+  try {
+    const entries = await fs.readdir(AC_RESULTS_DIR);
+    return new Set(entries.filter(entry => entry.endsWith('.json')));
+  } catch {
+    return new Set();
+  }
+}
+
 export interface IngestOutcome {
   /** Names filed into the season folder, in the order they were found. */
   filed: string[];
@@ -73,7 +88,12 @@ export interface IngestOutcome {
  * it stays there rather than joining the season — and it is left on disk rather
  * than deleted, in case it is wanted.
  */
-export async function ingestResults(plan: LaunchPlan, since: number): Promise<IngestOutcome> {
+export async function ingestResults(
+  plan: LaunchPlan,
+  since: number,
+  /** Files the out folder already held when the launch started. */
+  preexisting: Set<string> = new Set()
+): Promise<IngestOutcome> {
   let entries: string[];
   try {
     entries = await fs.readdir(AC_RESULTS_DIR);
@@ -95,6 +115,7 @@ export async function ingestResults(plan: LaunchPlan, since: number): Promise<In
 
   for (const entry of entries) {
     if (!entry.endsWith('.json')) continue;
+    if (preexisting.has(entry)) continue;
 
     const source = path.join(AC_RESULTS_DIR, entry);
     const stats = await fs.stat(source).catch(() => null);

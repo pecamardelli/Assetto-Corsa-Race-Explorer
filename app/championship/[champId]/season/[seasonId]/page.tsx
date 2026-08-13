@@ -10,10 +10,8 @@ import { Championship, RaceSession } from "../../../../types/race";
 import { trackConditionLabel, weatherLabel } from "../../../../types/race-spec";
 import BackButton from "../../../../components/BackButton";
 import FlagIcon from "../../../../components/FlagIcon";
-import RaceSpecEditor from "../../../../components/RaceSpecEditor";
-import RoundLaunchButtons, {
-  LaunchProvider,
-} from "../../../../components/RaceLauncher";
+import { LaunchProvider } from "../../../../components/RaceLauncher";
+import RoundMenu from "../../../../components/RoundMenu";
 
 // The round cards show settings this page's own editor writes, so never serve a
 // build-time copy of them.
@@ -388,7 +386,8 @@ export default async function SeasonPage({
           champId={decodedChampId}
           seasonId={decodedSeasonId}
         >
-        <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg overflow-hidden">
+        {/* No overflow clipping here: a round's menu opens out of its own card. */}
+        <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg">
           <div className="p-6 border-b border-zinc-700">
             <h2 className="text-2xl font-bold text-white">
               Championship Rounds
@@ -451,17 +450,12 @@ export default async function SeasonPage({
                             {trackDetails.name}
                           </div>
 
-                          {/* Race settings for this round */}
-                          <RaceSpecEditor
-                            champId={championship.folderName}
-                            seasonId={seasonFolder}
+                          {/* Settings and launch controls, behind one button */}
+                          <RoundMenu
+                            specChampId={championship.folderName}
+                            specSeasonId={seasonFolder}
                             round={roundNumber}
                             trackName={trackDetails.name}
-                          />
-
-                          {/* Launch controls */}
-                          <RoundLaunchButtons
-                            round={roundNumber}
                             raceCompleted={raceCompleted}
                           />
 

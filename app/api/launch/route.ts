@@ -26,7 +26,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Launching is only available locally' }, { status: 403 });
   }
 
-  let body: { champId?: string; seasonId?: string; round?: number; mode?: string };
+  let body: {
+    champId?: string;
+    seasonId?: string;
+    round?: number;
+    mode?: string;
+    record?: boolean;
+  };
   try {
     body = await request.json();
   } catch {
@@ -34,6 +40,10 @@ export async function POST(request: NextRequest) {
   }
 
   const { champId, seasonId, round, mode } = body;
+
+  // A launch files its results away unless it is asked not to — which is how a
+  // round that has already been raced gets driven again without disturbing it.
+  const record = body.record !== false;
 
   if (!champId || !seasonId || typeof round !== 'number') {
     return NextResponse.json(
@@ -50,7 +60,7 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const plan = await buildLaunchPlan(champId, seasonId, round, mode as LaunchMode);
+    const plan = await buildLaunchPlan(champId, seasonId, round, mode as LaunchMode, record);
     const state = await launch(plan, champId, seasonId);
 
     return NextResponse.json({ launch: state });
