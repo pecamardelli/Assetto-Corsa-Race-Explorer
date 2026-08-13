@@ -87,8 +87,8 @@ async function writeLaunchContext(plan: LaunchPlan, id: string): Promise<void> {
   const context = {
     launch_id: id,
     sessions: MODE_SESSIONS[plan.spec.mode],
-    laps: plan.spec.laps,
-    qualifying_minutes: plan.spec.qualifyingMinutes,
+    laps: plan.spec.race.laps,
+    qualifying_minutes: plan.spec.race.qualifyingMinutes,
     championship: plan.championshipName,
     season: plan.seasonFolder,
     round: plan.roundNumber,

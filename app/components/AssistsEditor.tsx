@@ -8,6 +8,7 @@ import {
   AssistsConfig,
   AssistsSource,
 } from '../types/assists';
+import { Group, Slider, Toggle } from './SettingControls';
 
 /**
  * Edit form for the game presets AC reads at launch. Without a scope it edits the
@@ -25,39 +26,6 @@ const LEVEL_LABELS: Record<AssistLevel, string> = {
   factory: 'Factory',
   on: 'On',
 };
-
-function Toggle({
-  label,
-  hint,
-  value,
-  onChange,
-}: {
-  label: string;
-  hint?: string;
-  value: boolean;
-  onChange: (next: boolean) => void;
-}) {
-  return (
-    <label className="flex items-center justify-between gap-4 py-2" title={hint}>
-      <span className="text-sm text-zinc-300">{label}</span>
-      <button
-        type="button"
-        role="switch"
-        aria-checked={value}
-        onClick={() => onChange(!value)}
-        className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
-          value ? 'bg-green-500/80' : 'bg-zinc-600'
-        }`}
-      >
-        <span
-          className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition-all ${
-            value ? 'left-[22px]' : 'left-0.5'
-          }`}
-        />
-      </button>
-    </label>
-  );
-}
 
 function LevelPicker({
   label,
@@ -89,51 +57,6 @@ function LevelPicker({
           </button>
         ))}
       </div>
-    </div>
-  );
-}
-
-function Slider({
-  label,
-  hint,
-  value,
-  onChange,
-  max,
-  step,
-  format,
-}: {
-  label: string;
-  hint?: string;
-  value: number;
-  onChange: (next: number) => void;
-  max: number;
-  step: number;
-  format: (value: number) => string;
-}) {
-  return (
-    <div className="py-2" title={hint}>
-      <div className="mb-1 flex items-center justify-between gap-4">
-        <span className="text-sm text-zinc-300">{label}</span>
-        <span className="text-xs font-mono text-zinc-400">{format(value)}</span>
-      </div>
-      <input
-        type="range"
-        min={0}
-        max={max}
-        step={step}
-        value={value}
-        onChange={event => onChange(Number(event.target.value))}
-        className="w-full accent-green-500"
-      />
-    </div>
-  );
-}
-
-function Group({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="rounded-lg border border-zinc-700 bg-zinc-800/50 p-5">
-      <h3 className="mb-2 text-sm font-bold uppercase tracking-wide text-zinc-400">{title}</h3>
-      <div className="divide-y divide-zinc-700/50">{children}</div>
     </div>
   );
 }

@@ -8,16 +8,11 @@ import {
   ChampionshipRound,
   Season,
 } from '../../types/race';
-import { AC_CONTENT_TRACKS, AC_CONTENT_WEATHER } from './paths';
+import { AC_CONTENT_TRACKS } from './paths';
 import { GridEntry, LaunchMode, RaceIniSpec } from './race-ini';
 import { resolveAssists } from './assists';
+import { listWeathers, resolveRaceSpec, rollRaceSpec } from './race-spec';
 import { AssistsConfig, AssistsSource } from '../../types/assists';
-
-/** Falls back to the folder AC ships when a round's weather index is out of range. */
-const DEFAULT_WEATHER = '3_clear';
-
-/** Used when a .champ has no qualifying length but the user asks to qualify anyway. */
-const DEFAULT_QUALIFYING_MINUTES = 15;
 
 const AI_AGGRESSION_MIN = 80;
 const AI_AGGRESSION_MAX = 100;
@@ -67,23 +62,6 @@ export async function resolveTrack(
   if (cut === -1) return { track: roundTrack, trackConfig: '' };
 
   return { track: roundTrack.slice(0, cut), trackConfig: roundTrack.slice(cut + 1) };
-}
-
-/**
- * Map a round's weather index onto an installed weather folder. AC orders these
- * by folder name, which is why they all carry a numeric prefix.
- */
-export async function resolveWeather(index: number): Promise<string> {
-  try {
-    const entries = await fs.readdir(AC_CONTENT_WEATHER, { withFileTypes: true });
-    const weathers = entries
-      .filter(entry => entry.isDirectory())
-      .map(entry => entry.name)
-      .sort();
-    return weathers[index] ?? weathers[0] ?? DEFAULT_WEATHER;
-  } catch {
-    return DEFAULT_WEATHER;
-  }
 }
 
 /**
@@ -182,7 +160,6 @@ export async function buildLaunchPlan(
     );
 
   const { track, trackConfig } = await resolveTrack(round.track);
-  const weather = await resolveWeather(round.weather);
 
   const seasonFolder = `season_${String(season.seasonNumber).padStart(2, '0')}`;
   const { assists, source: assistsSource } = await resolveAssists(
@@ -190,16 +167,23 @@ export async function buildLaunchPlan(
     seasonFolder
   );
 
+  // The round's own settings if it has been edited, the championship's otherwise.
+  const weathers = await listWeathers();
+  const resolved = await resolveRaceSpec(
+    championship.folderName,
+    seasonFolder,
+    data,
+    roundNumber
+  );
+  if (!resolved) throw new LaunchPlanError(`Round ${roundNumber} is not in this season`);
+
   const spec: RaceIniSpec = {
     mode,
     track,
     trackConfig,
-    laps: round.laps,
-    qualifyingMinutes: data.rules.qualifying || DEFAULT_QUALIFYING_MINUTES,
-    penalties: data.rules.penalties,
-    jumpStartPenalty: data.rules.jumpstart,
-    weather,
-    grip: round.surface,
+    // Anything the round leaves to chance is drawn here, so race.ini only ever
+    // carries settled conditions.
+    race: rollRaceSpec(resolved.spec, weathers),
     player: toGridEntry(playerEntry, DEFAULT_AI_LEVEL, AI_AGGRESSION_MAX),
     opponents,
   };

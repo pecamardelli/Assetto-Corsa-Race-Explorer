@@ -5,12 +5,19 @@ import { getChampionship } from "../../../../lib/race-data";
 import { getTrackDetails } from "../../../../lib/track-data";
 import { getCarName } from "../../../../lib/car-data";
 import { calculateStandings } from "../../../../lib/standings";
+import { resolveSeasonRaceSpecs } from "../../../../lib/launch/race-spec";
 import { Championship, RaceSession } from "../../../../types/race";
+import { trackConditionLabel, weatherLabel } from "../../../../types/race-spec";
 import BackButton from "../../../../components/BackButton";
 import FlagIcon from "../../../../components/FlagIcon";
+import RaceSpecEditor from "../../../../components/RaceSpecEditor";
 import RoundLaunchButtons, {
   LaunchProvider,
 } from "../../../../components/RaceLauncher";
+
+// The round cards show settings this page's own editor writes, so never serve a
+// build-time copy of them.
+export const dynamic = "force-dynamic";
 
 /**
  * Marks a session the driver left before it ran its course, so a partial result is
@@ -112,6 +119,17 @@ export default async function SeasonPage({
     endDate = formatDate(lastSession.data.session_info.date);
   }
 
+  // The folder the season's files live under, which also names its settings files.
+  const seasonFolder = `season_${String(season.seasonNumber).padStart(2, "0")}`;
+
+  // What each round would be raced with: its own settings where the editor has
+  // saved them, the championship file's everywhere else.
+  const raceSpecs = await resolveSeasonRaceSpecs(
+    championship.folderName,
+    seasonFolder,
+    data
+  );
+
   // Match rounds with sessions based on track name and session type
   const roundsWithSessions = data.rounds.map((round, index) => {
     // Match by track name (the full round.track includes config, e.g., "ks_brands_hatch-indy")
@@ -151,6 +169,7 @@ export default async function SeasonPage({
     return {
       round,
       roundNumber: index + 1,
+      raceSpec: raceSpecs[index],
       trackDetails,
       practice: practiceSessions.length > 0 ? practiceSessions[0] : null,
       qualifying: qualifyingSessions.length > 0 ? qualifyingSessions[0] : null,
@@ -274,33 +293,6 @@ export default async function SeasonPage({
                   </svg>
                   Constructor Standings
                 </Link>
-                <Link
-                  href={`/championship/${encodeURIComponent(
-                    decodedChampId
-                  )}/season/${encodeURIComponent(decodedSeasonId)}/presets`}
-                  className="px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-cyan-500/20 flex items-center gap-2"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  Game Presets
-                </Link>
               </div>
             </div>
             <h1 className="text-4xl font-bold text-white mb-2">{data.name}</h1>
@@ -311,50 +303,82 @@ export default async function SeasonPage({
               )}
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 text-sm items-center">
-              <div>
-                <span className="text-zinc-500 block mb-1">Total Rounds</span>
-                <span className="text-white font-medium">
-                  {data.rounds.length}
-                </span>
-              </div>
-              <div>
-                <span className="text-zinc-500 block mb-1">Drivers</span>
-                <span className="text-white font-medium">
-                  {data.opponents.length}
-                </span>
-              </div>
-              <div>
-                <span className="text-zinc-500 block mb-1">Completed</span>
-                <span className="text-white font-medium">
-                  {completedRaces}/{data.rounds.length}
-                </span>
-              </div>
-              <div>
-                <span className="text-zinc-500 block mb-1">Qualifying</span>
-                <span className="text-white font-medium">
-                  {data.rules.qualifying} min
-                </span>
-              </div>
-              {isCompleted && champion && (
-                <div className="col-span-2 md:col-span-1">
-                  <div className="flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2">
-                    <Image
-                      src="/trophy.svg"
-                      alt="Champion"
-                      width={24}
-                      height={24}
-                      className="drop-shadow-lg"
-                    />
-                    <div className="text-sm">
-                      <div className="text-yellow-500 font-semibold">
-                        {champion}
+            {/* Season stats, with the presets link riding the same row on its
+                right-hand edge. */}
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="grid flex-1 grid-cols-2 md:grid-cols-5 gap-4 text-sm items-center">
+                <div>
+                  <span className="text-zinc-500 block mb-1">Total Rounds</span>
+                  <span className="text-white font-medium">
+                    {data.rounds.length}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-zinc-500 block mb-1">Drivers</span>
+                  <span className="text-white font-medium">
+                    {data.opponents.length}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-zinc-500 block mb-1">Completed</span>
+                  <span className="text-white font-medium">
+                    {completedRaces}/{data.rounds.length}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-zinc-500 block mb-1">Qualifying</span>
+                  <span className="text-white font-medium">
+                    {data.rules.qualifying} min
+                  </span>
+                </div>
+                {isCompleted && champion && (
+                  <div className="col-span-2 md:col-span-1">
+                    <div className="flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2">
+                      <Image
+                        src="/trophy.svg"
+                        alt="Champion"
+                        width={24}
+                        height={24}
+                        className="drop-shadow-lg"
+                      />
+                      <div className="text-sm">
+                        <div className="text-yellow-500 font-semibold">
+                          {champion}
+                        </div>
+                        <div className="text-yellow-400/70 text-xs">Champion</div>
                       </div>
-                      <div className="text-yellow-400/70 text-xs">Champion</div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
+
+              <Link
+                href={`/championship/${encodeURIComponent(
+                  decodedChampId
+                )}/season/${encodeURIComponent(decodedSeasonId)}/presets`}
+                className="ml-auto shrink-0 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-cyan-500/20 flex items-center gap-2"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                Game Presets
+              </Link>
             </div>
           </div>
         </div>
@@ -374,8 +398,8 @@ export default async function SeasonPage({
           <div className="divide-y divide-zinc-700">
             {roundsWithSessions.map(
               ({
-                round,
                 roundNumber,
+                raceSpec,
                 trackDetails,
                 practice,
                 qualifying,
@@ -427,6 +451,14 @@ export default async function SeasonPage({
                             {trackDetails.name}
                           </div>
 
+                          {/* Race settings for this round */}
+                          <RaceSpecEditor
+                            champId={championship.folderName}
+                            seasonId={seasonFolder}
+                            round={roundNumber}
+                            trackName={trackDetails.name}
+                          />
+
                           {/* Launch controls */}
                           <RoundLaunchButtons
                             round={roundNumber}
@@ -466,8 +498,12 @@ export default async function SeasonPage({
                           )}
                           <span>•</span>
                           <span>
-                            {round.laps} {round.laps === 1 ? "lap" : "laps"}
+                            {raceSpec.laps} {raceSpec.laps === 1 ? "lap" : "laps"}
                           </span>
+                          <span>•</span>
+                          <span>{weatherLabel(raceSpec.weather)}</span>
+                          <span>•</span>
+                          <span>{trackConditionLabel(raceSpec.grip)}</span>
                         </div>
 
                         {/* Session Links. Nothing sits in the marker column when
