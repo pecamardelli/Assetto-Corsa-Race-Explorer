@@ -65,9 +65,13 @@ class CarStats:
         self.final_position = 999  # Final race position (999 = DNF/not finished)
         self.max_speed_ms = 0.0  # maximum speed in m/s
 
+    def racing_time(self):
+        """Seconds this driver spent racing: the sum of the laps they completed."""
+        return sum(self.lap_times) / 1000.0
+
     def to_dict(self, position=0, total_cars=1, track_length_m=0, race_laps=1, best_lap_time=0.0, has_fastest_lap=False):
         # Calculate total_time as sum of all completed lap times (convert ms to seconds)
-        self.total_time = sum(self.lap_times) / 1000.0
+        self.total_time = self.racing_time()
 
         # Calculate score: base_score × position_factor × speed_factor
         laps_completed = len(self.lap_times)
@@ -307,7 +311,7 @@ def save_current_session():
         # Races only -- no other session type has a winner to measure against.
         retired_below_seconds = 0.0
         if session_type == 'race' and sorted_drivers:
-            retired_below_seconds = sorted_drivers[0][1].total_time
+            retired_below_seconds = sorted_drivers[0][1].racing_time()
 
         # Add statistics for each driver
         total_cars_count = len(car_stats)
@@ -315,7 +319,7 @@ def save_current_session():
             has_fastest_lap = (car_id == fastest_lap_driver_id)
             driver = stats.to_dict(
                 stats.final_position, total_cars_count, track_length_m, race_laps, best_lap_time, has_fastest_lap)
-            driver['retired'] = stats.total_time < retired_below_seconds
+            driver['retired'] = stats.racing_time() < retired_below_seconds
             session_data['driver_statistics'][stats.driver_name] = driver
 
         # Determine output directory
