@@ -457,6 +457,7 @@ export default async function SeasonPage({
                             round={roundNumber}
                             trackName={trackDetails.name}
                             raceCompleted={raceCompleted}
+                            qualifyingRecorded={!!qualifying}
                           />
 
                           {/* Race Date */}

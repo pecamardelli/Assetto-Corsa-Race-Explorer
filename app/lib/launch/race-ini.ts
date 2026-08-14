@@ -1,19 +1,24 @@
 import { DEFAULT_GRIP, GRIP_PRESETS, SettledRace, sunAngle } from '../../types/race-spec';
 import { nationName } from './nations';
 
-export type LaunchMode = 'weekend' | 'freerun';
+export type LaunchMode = 'weekend' | 'race' | 'freerun';
 
 export type SessionType = 'practice' | 'qualifying' | 'race';
 
-export const LAUNCH_MODES: LaunchMode[] = ['weekend', 'freerun'];
+export const LAUNCH_MODES: LaunchMode[] = ['weekend', 'race', 'freerun'];
 
 /**
  * The sessions each mode runs, in order. A weekend qualifies and then races, which
  * lets AC build the grid from its own qualifying result instead of us reconstructing
  * one from a previous session's JSON.
+ *
+ * `race` is for the round whose qualifying is already on the books: it runs the race
+ * alone, and the grid it would otherwise have inherited is handed to it through
+ * `RaceIniSpec.gridOrder`.
  */
 export const MODE_SESSIONS: Record<LaunchMode, SessionType[]> = {
   weekend: ['qualifying', 'race'],
+  race: ['race'],
   freerun: ['practice'],
 };
 
@@ -37,6 +42,11 @@ export interface RaceIniSpec {
   player: GridEntry;
   /** AI opponents. Ignored for a free run. */
   opponents: GridEntry[];
+  /**
+   * Driver names in grid order, pole first. Only set for a race launched on its own,
+   * which has no qualifying of its own to line the field up from.
+   */
+  gridOrder?: string[];
 }
 
 /** AC session TYPE values used in [SESSION_n]. */
@@ -73,11 +83,49 @@ function carSection(index: number, entry: GridEntry, isPlayer: boolean): string 
   return section(`CAR_${index}`, rows);
 }
 
+/** Where the field starts when a recorded qualifying is standing in for a live one. */
+interface StartingGrid {
+  /** Opponents in qualifying order, filling CAR_1 upwards. */
+  opponents: GridEntry[];
+  /** The player's own slot, counting from 1. */
+  playerPosition: number;
+}
+
+/**
+ * Rebuild a grid from a qualifying that was run earlier.
+ *
+ * AC always reads CAR_0 as the player, so the field is expressed the way Content
+ * Manager expresses it: the AI fill CAR_1 upwards in the order they qualified, and
+ * the player is dropped in among them by [SESSION_n] STARTING_POSITION. A weekend
+ * needs none of this — it races off its own qualifying result and grids itself.
+ *
+ * Counting who is actually ahead of the player, rather than reading their qualifying
+ * position off directly, keeps the grid honest when the roster has moved on since:
+ * a driver who has left the season no longer holds a slot in front of anybody.
+ */
+function rebuildGrid(
+  opponents: GridEntry[],
+  playerName: string,
+  gridOrder: string[]
+): StartingGrid {
+  const rank = new Map(gridOrder.map((name, index) => [name, index]));
+
+  // Anyone the qualifying never classified sorts to the back, and a stable sort
+  // leaves them there in roster order.
+  const unclassified = Number.MAX_SAFE_INTEGER;
+  const place = (entry: GridEntry) => rank.get(entry.name) ?? unclassified;
+
+  const sorted = [...opponents].sort((a, b) => place(a) - place(b));
+  const playerPlace = rank.get(playerName) ?? unclassified;
+
+  return {
+    opponents: sorted,
+    playerPosition: sorted.filter(entry => place(entry) < playerPlace).length + 1,
+  };
+}
+
 /**
  * Render a complete race.ini for one launch, which may hold several sessions.
- *
- * Entry order carries no weight here: a weekend's race grid comes out of its own
- * qualifying session, so the player simply takes CAR_0.
  */
 export function buildRaceIni(spec: RaceIniSpec): string {
   const race = spec.race;
@@ -85,7 +133,13 @@ export function buildRaceIni(spec: RaceIniSpec): string {
   const sessions = MODE_SESSIONS[spec.mode];
 
   // A free run is the player alone on track.
-  const opponents = spec.mode === 'freerun' ? [] : spec.opponents;
+  const entered = spec.mode === 'freerun' ? [] : spec.opponents;
+
+  const startingGrid = spec.gridOrder?.length
+    ? rebuildGrid(entered, spec.player.name, spec.gridOrder)
+    : null;
+
+  const opponents = startingGrid ? startingGrid.opponents : entered;
 
   const grid: Array<{ entry: GridEntry; isPlayer: boolean }> = [
     { entry: spec.player, isPlayer: true },
@@ -205,6 +259,10 @@ export function buildRaceIni(spec: RaceIniSpec): string {
 
     if (sessionType === 'race') {
       rows.push(['LAPS', race.laps], ['DURATION_MINUTES', 0]);
+
+      // Only ever written for a race standing on its own — a weekend grids itself
+      // off the qualifying it just ran, and would ignore this anyway.
+      if (startingGrid) rows.push(['STARTING_POSITION', startingGrid.playerPosition]);
     } else if (sessionType === 'qualifying') {
       rows.push(['DURATION_MINUTES', race.qualifyingMinutes]);
     } else {

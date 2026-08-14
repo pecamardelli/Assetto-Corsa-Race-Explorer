@@ -6,6 +6,7 @@ import {
   ChampionshipData,
   ChampionshipOpponent,
   ChampionshipRound,
+  RaceSession,
   Season,
 } from '../../types/race';
 import { AC_CONTENT_TRACKS } from './paths';
@@ -117,6 +118,32 @@ function findSeason(seasons: Season[], seasonId: string): Season | undefined {
   );
 }
 
+/**
+ * The qualifying a round would take its grid from.
+ *
+ * Sessions are paired to rounds by track exactly as the season page does it — the
+ * round's track string appears in the filename the result was filed under. Where a
+ * round has been qualified more than once the last one wins, since a season's
+ * sessions arrive oldest first and the newest run is the one that settled the grid.
+ */
+export function findRoundQualifying(season: Season, roundTrack: string): RaceSession | null {
+  const qualifying = season.sessions.filter(session => {
+    const name = session.filename.split('/').pop() ?? '';
+    const type = session.data.session_type ?? session.data.session_info.session_type;
+    return name.includes(roundTrack) && type === 'qualifying';
+  });
+
+  return qualifying.at(-1) ?? null;
+}
+
+/** Drivers from a session's classification, pole first; the unclassified left out. */
+function classificationOrder(session: RaceSession): string[] {
+  return Object.entries(session.data.driver_statistics)
+    .filter(([, stats]) => typeof stats.position === 'number')
+    .sort(([, a], [, b]) => (a.position as number) - (b.position as number))
+    .map(([name]) => name);
+}
+
 export class LaunchPlanError extends Error {}
 
 /**
@@ -183,6 +210,21 @@ export async function buildLaunchPlan(
   );
   if (!resolved) throw new LaunchPlanError(`Round ${roundNumber} is not in this season`);
 
+  // A race on its own has no qualifying ahead of it to line the field up, so the
+  // one already filed for this round stands in for it.
+  let gridOrder: string[] | undefined;
+
+  if (mode === 'race') {
+    const qualifying = findRoundQualifying(season, round.track);
+    if (!qualifying) {
+      throw new LaunchPlanError(
+        `Round ${roundNumber} has no qualifying result to build a grid from — race the weekend instead`
+      );
+    }
+
+    gridOrder = classificationOrder(qualifying);
+  }
+
   const spec: RaceIniSpec = {
     mode,
     track,
@@ -192,6 +234,7 @@ export async function buildLaunchPlan(
     race: rollRaceSpec(resolved.spec, weathers),
     player: toGridEntry(playerEntry, DEFAULT_AI_LEVEL, AI_AGGRESSION_MAX),
     opponents,
+    gridOrder,
   };
 
   return {

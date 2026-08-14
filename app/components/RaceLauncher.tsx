@@ -12,7 +12,7 @@ import {
   type ReactNode,
 } from 'react';
 
-export type LaunchMode = 'weekend' | 'freerun';
+export type LaunchMode = 'weekend' | 'race' | 'freerun';
 
 type LaunchStatus = 'running' | 'completed' | 'failed';
 

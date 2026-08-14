@@ -69,14 +69,25 @@ to check and is never claimed as finished.
 
 ## Launching Sessions
 
-Each round on a season page has two buttons. They write
+Each round on a season page carries its actions in one menu. They write
 `Documents\Assetto Corsa\cfg\race.ini` from the championship's own specs and start
 `acs.exe` directly — Content Manager is not involved.
 
-| Button | Sessions |
+| Entry | Sessions |
 | --- | --- |
 | **Start Race** | A full weekend: qualifying for the `rules.qualifying` minutes in the `.champ`, then the race over the round's lap count. AC builds the race grid from its own qualifying result. |
+| **Race Only** | The race alone, over the round's lap count. Offered when the round has a qualifying filed and no race yet. |
 | **Free Run** | Untimed solo practice at the round's track — no AI. |
+| **Race Again** | Replaces **Start Race** once the round has been raced: the same weekend, with nothing recorded. |
+
+**Race Only** rebuilds the grid from the qualifying already in the season folder,
+since AC has no live qualifying result to line the field up from. The AI take
+`CAR_1` upwards in the order they qualified and the player is placed among them with
+`[SESSION_0] STARTING_POSITION`, which is how Content Manager grids a quick race —
+AC always reads `CAR_0` as the player, whatever position they start from. A driver
+the qualifying never classified, added to the roster since it ran, lines up at the
+back in roster order. Where a round has been qualified more than once, the last one
+sets the grid.
 
 Track grip, weather, lap count, penalties and jump-start rules all come from the
 `.champ` round. AI drivers race at level 100 with aggression randomised between 80
@@ -97,7 +108,7 @@ does not make the session partial: the race still ran, and it is still recorded.
 
 A session carrying `finished: false` that reaches a season folder anyway — one added
 by hand, or filed before this rule existed — shows an **Unfinished** badge beside it
-on the season page, and leaves that round's **Start Race** button in place.
+on the season page, and leaves that round's **Start Race** entry in place.
 
 Only one session can run at a time, and the route refuses requests that did not come
 from this machine. The `race.ini` that was in place beforehand is kept as

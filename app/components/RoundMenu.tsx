@@ -24,12 +24,13 @@ interface LaunchEntry {
 }
 
 const ICON_RACE = 'M5 3l14 9-14 9V3z';
+const ICON_RACE_ONLY = 'M13 5l7 7-7 7M5 5l7 7-7 7';
 const ICON_FREE_RUN = 'M13 10V3L4 14h7v7l9-11h-7z';
 const ICON_RERUN =
   'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15';
 
 /** Roughly how tall the menu gets, for deciding which way it should open. */
-const MENU_HEIGHT_PX = 160;
+const MENU_HEIGHT_PX = 200;
 
 export default function RoundMenu({
   specChampId,
@@ -37,6 +38,7 @@ export default function RoundMenu({
   round,
   trackName,
   raceCompleted = false,
+  qualifyingRecorded = false,
 }: {
   /** Championship folder, as it is named under app/data. */
   specChampId: string;
@@ -46,6 +48,8 @@ export default function RoundMenu({
   trackName: string;
   /** A round with a finished race behind it is only ever re-run, never recorded. */
   raceCompleted?: boolean;
+  /** Whether a qualifying for this round is already filed, so a race can grid off it. */
+  qualifyingRecorded?: boolean;
 }) {
   const { launch, pending, isLocal, start } = useLauncher();
   const [open, setOpen] = useState(false);
@@ -97,6 +101,22 @@ export default function RoundMenu({
 
   const launches: LaunchEntry[] = isLocal
     ? [
+        // With qualifying already on the books there is nothing left to run but the
+        // race itself, and its grid is rebuilt from that result rather than driven
+        // for a second time.
+        ...(qualifyingRecorded && !raceCompleted
+          ? [
+              {
+                key: 'race',
+                label: 'Race Only',
+                hint: 'Skip straight to the race — the grid comes from the qualifying already run here',
+                icon: ICON_RACE_ONLY,
+                tone: 'text-green-400',
+                mode: 'race' as const,
+                record: true,
+              },
+            ]
+          : []),
         raceCompleted
           ? {
               key: 'rerun',
