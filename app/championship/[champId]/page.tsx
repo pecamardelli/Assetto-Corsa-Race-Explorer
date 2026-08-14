@@ -95,7 +95,7 @@ export default async function ChampionshipPage({
             className="absolute inset-0 -z-10 h-full w-full object-cover [-webkit-mask-image:linear-gradient(to_right,transparent_40%,black_85%)] [mask-image:linear-gradient(to_right,transparent_40%,black_85%)]"
           />
         )}
-        <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
+        <div className="w-full px-4 pt-4 pb-8 sm:px-6 lg:px-8 xl:px-12">
           <BackButton fallbackUrl="/">Back</BackButton>
 
           <div className="flex items-center gap-2 mb-3">
