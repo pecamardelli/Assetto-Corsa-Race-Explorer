@@ -1,4 +1,4 @@
-import { promises as fs } from 'fs';
+import { promises as fs, Dirent } from 'fs';
 import path from 'path';
 import { RaceData, RaceSession, Championship, ChampionshipData, Season } from '../types/race';
 
@@ -105,6 +105,15 @@ export async function getRaceSession(filename: string): Promise<RaceSession | nu
 
 // Re-export client-safe utilities
 export { formatTrackName, formatLapTime, formatCarName, getSortedDrivers, safeNumber, safeString } from './format-utils';
+
+// Where the championship's banner can be fetched from, or undefined when its
+// folder holds no banner.webp.
+function bannerUrlFor(champName: string, folderEntries: Dirent[]): string | undefined {
+  const hasBanner = folderEntries.some(entry => entry.isFile() && entry.name === 'banner.webp');
+  return hasBanner
+    ? `/api/championship/${encodeURIComponent(champName)}/banner`
+    : undefined;
+}
 
 export async function getChampionships(): Promise<Championship[]> {
   const championshipDirectory = path.join(process.cwd(), 'app', 'data', 'championship');
@@ -217,6 +226,7 @@ export async function getChampionships(): Promise<Championship[]> {
             folderName: champName,
             sessions: allSessions,
             seasons,
+            bannerUrl: bannerUrlFor(champName, seasonEntries),
           });
         }
       } catch (error) {
@@ -337,6 +347,7 @@ export async function getChampionship(champId: string): Promise<Championship | n
       folderName: champId,
       sessions: allSessions,
       seasons,
+      bannerUrl: bannerUrlFor(champId, seasonEntries),
     };
   } catch (error) {
     console.error('Error reading championship:', error);

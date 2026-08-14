@@ -1,8 +1,21 @@
+import { promises as fs } from 'fs';
+import path from 'path';
 import { getRaceSessions, getChampionships } from './lib/race-data';
 import { getTrackDetails } from './lib/track-data';
+import { resolveDriverPortrait } from './lib/driver-assets';
 import { calculateStandings, calculateConstructorStandings } from './lib/standings';
 import { Championship } from './types/race';
 import RaceExplorer from './components/RaceExplorer';
+
+// The brand badge a car races under, or null when we don't have that badge.
+async function resolveCarBadge(carName: string): Promise<string | null> {
+  try {
+    await fs.access(path.join(process.cwd(), 'public', 'badges', `${carName}.png`));
+    return `/badges/${encodeURIComponent(carName)}.png`;
+  } catch {
+    return null;
+  }
+}
 
 export default async function Home() {
   const quickRaces = await getRaceSessions();
@@ -20,10 +33,12 @@ export default async function Home() {
   // Calculate championship stats
   const championshipStats = new Map();
 
-  championships.forEach(championship => {
+  for (const championship of championships) {
     // Find the latest completed season (all races finished)
     let currentChampion = '-';
     let currentConstructorChampion = '-';
+    let currentChampionPortrait: string | null = null;
+    let currentConstructorBadge: string | null = null;
 
     const latestCompletedSeason = [...championship.seasons]
       .reverse()
@@ -53,63 +68,24 @@ export default async function Home() {
       const standings = calculateStandings(seasonChampionship);
       if (standings.length > 0) {
         currentChampion = standings[0].name;
+        currentChampionPortrait = await resolveDriverPortrait(currentChampion, championship.id);
       }
 
       // Calculate constructor champion
       const constructorStandings = calculateConstructorStandings(seasonChampionship);
       if (constructorStandings.length > 0) {
         currentConstructorChampion = constructorStandings[0].brand;
+        currentConstructorBadge = await resolveCarBadge(constructorStandings[0].carName);
       }
     }
 
-    // Calculate total unique champions across all seasons
-    const allChampions = new Set<string>();
-    championship.seasons.forEach(season => {
-      if (season.sessions.length === 0) return;
-
-      // Count completed race sessions
-      const completedRaces = season.sessions.filter(session => {
-        const filename = session.filename.split('/').pop() || '';
-        return filename.includes('session_race');
-      }).length;
-
-      // Only count champions from completed seasons (all rounds have been raced)
-      if (completedRaces !== season.data.rounds.length) return;
-
-      const seasonChampionship: Championship = {
-        id: championship.id,
-        data: season.data,
-        folderName: championship.folderName,
-        sessions: season.sessions,
-        seasons: [season],
-      };
-      const standings = calculateStandings(seasonChampionship);
-      if (standings.length > 0) {
-        allChampions.add(standings[0].name);
-      }
-    });
-    const totalChampions = allChampions.size;
-
-    // Calculate total unique race winners
-    const allWinners = new Set<string>();
-    championship.sessions
-      .filter(session => session.data.session_info.session_type === 'race')
-      .forEach(session => {
-        const drivers = Object.entries(session.data.driver_statistics);
-        const winner = drivers.find(([_, stats]) => stats.position === 1);
-        if (winner) {
-          allWinners.add(winner[0]);
-        }
-      });
-    const totalRaceWinners = allWinners.size;
-
     championshipStats.set(championship.id, {
       currentChampion,
+      currentChampionPortrait,
       currentConstructorChampion,
-      totalChampions,
-      totalRaceWinners,
+      currentConstructorBadge,
     });
-  });
+  }
 
   return <RaceExplorer quickRaces={enrichedQuickRaces} championships={championships} championshipStats={championshipStats} />;
 }

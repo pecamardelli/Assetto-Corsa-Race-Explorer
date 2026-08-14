@@ -6,9 +6,10 @@ import { RaceSession, Championship } from '../types/race';
 
 interface ChampionshipStats {
   currentChampion: string;
+  // Null when the champion has no portrait on disk, or there's no champion yet.
+  currentChampionPortrait: string | null;
   currentConstructorChampion: string;
-  totalChampions: number;
-  totalRaceWinners: number;
+  currentConstructorBadge: string | null;
 }
 
 interface RaceExplorerProps {
@@ -166,17 +167,19 @@ export default function RaceExplorer({ quickRaces, championships, championshipSt
                 // Get pre-calculated stats
                 const stats = championshipStats.get(championship.id) || {
                   currentChampion: '-',
+                  currentChampionPortrait: null,
                   currentConstructorChampion: '-',
-                  totalChampions: 0,
-                  totalRaceWinners: 0,
+                  currentConstructorBadge: null,
                 };
 
                 return (
                   <Link
                     key={championship.id}
                     href={`/championship/${encodeURIComponent(championship.id)}/seasons`}
-                    className="group block bg-zinc-800/50 border border-zinc-700 rounded-lg p-6 transition-all hover:bg-zinc-800 hover:border-amber-600 hover:shadow-lg hover:shadow-amber-500/10"
+                    className="group block overflow-hidden bg-zinc-800/50 border border-zinc-700 rounded-lg transition-all hover:bg-zinc-800 hover:border-amber-600 hover:shadow-lg hover:shadow-amber-500/10"
                   >
+                  <div className="flex flex-col lg:flex-row">
+                  <div className="w-full p-6 lg:w-2/5">
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <h2 className="text-3xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
@@ -191,32 +194,70 @@ export default function RaceExplorer({ quickRaces, championships, championshipSt
                           <span>•</span>
                           <span>{totalRaces} {totalRaces === 1 ? 'race' : 'races'}</span>
                         </div>
+                      </div>
+                      <div className="text-zinc-500 group-hover:text-amber-400 transition-colors">
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
                     </div>
-                    <div className="text-zinc-500 group-hover:text-amber-400 transition-colors">
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
+
+                    {/* Championship Info Grid */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-zinc-900/50 rounded-lg px-5 py-6 flex items-center gap-4">
+                        {stats.currentChampionPortrait ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img
+                            src={stats.currentChampionPortrait}
+                            alt=""
+                            aria-hidden="true"
+                            className="h-20 w-20 shrink-0 rounded-full border border-zinc-700 object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full border border-zinc-700 bg-zinc-800 text-2xl font-semibold text-zinc-500">
+                            {stats.currentChampion.charAt(0)}
+                          </div>
+                        )}
+                        <div className="min-w-0">
+                          <div className="text-zinc-500 text-xs mb-1">Current Champion</div>
+                          <div className="text-white font-semibold truncate">{stats.currentChampion}</div>
+                        </div>
+                      </div>
+                      <div className="bg-zinc-900/50 rounded-lg px-5 py-6 flex items-center gap-4">
+                        {stats.currentConstructorBadge ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img
+                            src={stats.currentConstructorBadge}
+                            alt=""
+                            aria-hidden="true"
+                            className="h-20 w-20 shrink-0 object-contain"
+                          />
+                        ) : (
+                          <div className="h-20 w-20 shrink-0" />
+                        )}
+                        <div className="min-w-0">
+                          <div className="text-zinc-500 text-xs mb-1">Constructor Champion</div>
+                          <div className="text-white font-semibold truncate">{stats.currentConstructorChampion}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Championship Info Grid */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="bg-zinc-900/50 rounded-lg p-4">
-                      <div className="text-zinc-500 text-xs mb-1">Current Champion</div>
-                      <div className="text-white font-semibold truncate">{stats.currentChampion}</div>
-                    </div>
-                    <div className="bg-zinc-900/50 rounded-lg p-4">
-                      <div className="text-zinc-500 text-xs mb-1">Constructor Champion</div>
-                      <div className="text-white font-semibold truncate">{stats.currentConstructorChampion}</div>
-                    </div>
-                    <div className="bg-zinc-900/50 rounded-lg p-4">
-                      <div className="text-zinc-500 text-xs mb-1">Total Champions</div>
-                      <div className="text-white font-semibold">{stats.totalChampions}</div>
-                    </div>
-                    <div className="bg-zinc-900/50 rounded-lg p-4">
-                      <div className="text-zinc-500 text-xs mb-1">Race Winners</div>
-                      <div className="text-white font-semibold">{stats.totalRaceWinners}</div>
-                    </div>
+                  {/* The photo fills this column; the column stays even when there's no banner. */}
+                  <div className={`relative w-full lg:w-3/5 ${championship.bannerUrl ? 'min-h-40 lg:min-h-0' : ''}`}>
+                    {championship.bannerUrl && (
+                      /* Masked rather than covered by a tinted overlay, so the photo
+                         fades into the card's own background — including on hover —
+                         and the seam with the text column disappears. */
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={championship.bannerUrl}
+                        alt=""
+                        aria-hidden="true"
+                        className="absolute inset-0 h-full w-full object-cover [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_40%)] [mask-image:linear-gradient(to_right,transparent_0%,black_40%)]"
+                      />
+                    )}
+                  </div>
                   </div>
                 </Link>
                 );

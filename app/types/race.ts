@@ -141,6 +141,8 @@ export interface Championship {
   folderName: string;
   sessions: RaceSession[];
   seasons: Season[];
+  // Set only when a banner.webp has been dropped into the championship's folder.
+  bannerUrl?: string;
 }
 
 export interface DriverStanding {
