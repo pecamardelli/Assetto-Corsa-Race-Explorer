@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { getRaceSession, getChampionship } from '../../lib/race-data';
 import { formatLapTime, getSortedDrivers, safeNumber } from '../../lib/format-utils';
 import { getCarName } from '../../lib/car-data';
-import { getTrackDetails } from '../../lib/track-data';
+import { getTrackDetails, getTrackPreviewUrl } from '../../lib/track-data';
 import BackButton from '../../components/BackButton';
 import FlagIcon from '../../components/FlagIcon';
 import DriverPortrait from '../../components/DriverPortrait';
@@ -21,6 +21,7 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
 
   const { session_info, driver_statistics } = session.data;
   const trackDetails = getTrackDetails(session_info.track, session_info.track_config);
+  const trackPreview = getTrackPreviewUrl(session_info.track, session_info.track_config);
   const sessionType = session_info.session_type || 'race';
   const isPracticeOrQualifying = sessionType === 'practice' || sessionType === 'qualifying';
 
@@ -70,95 +71,105 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
-      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
-        {/* Header */}
-        <div className="mb-8">
+      {/* Header. The track's preview photo is the section's own background, running
+          the full width of the window and fading in over the first 40% of it. */}
+      <section className="relative isolate overflow-hidden border-b border-zinc-700">
+        {trackPreview && (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={trackPreview}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 -z-10 h-full w-full object-cover [-webkit-mask-image:linear-gradient(to_right,transparent_40%,black_85%)] [mask-image:linear-gradient(to_right,transparent_40%,black_85%)]"
+          />
+        )}
+        <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
           <BackButton fallbackUrl="/">Back</BackButton>
 
-          <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-            <div className="flex items-center gap-2 mb-3 flex-wrap">
-              <span className={`text-xs font-semibold px-2 py-1 rounded uppercase ${
-                sessionType === 'practice' ? 'bg-blue-500/20 text-blue-400' :
-                sessionType === 'qualifying' ? 'bg-yellow-500/20 text-yellow-400' :
-                'bg-red-500/20 text-red-400'
-              }`}>
-                {sessionType}
+          <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <span className={`text-xs font-semibold px-2 py-1 rounded uppercase ${
+              sessionType === 'practice' ? 'bg-blue-500/20 text-blue-400' :
+              sessionType === 'qualifying' ? 'bg-yellow-500/20 text-yellow-400' :
+              'bg-red-500/20 text-red-400'
+            }`}>
+              {sessionType}
+            </span>
+            {session.championship && (
+              <span className="text-xs font-semibold px-2 py-1 rounded bg-amber-500/20 text-amber-400">
+                {session.championship}
               </span>
-              {session.championship && (
-                <span className="text-xs font-semibold px-2 py-1 rounded bg-amber-500/20 text-amber-400">
-                  {session.championship}
-                </span>
-              )}
-              {session_info.date && (
-                <span className="text-xs text-zinc-400">
+            )}
+            {session_info.date && (
+              <span className="text-xs text-zinc-400">
+                {new Date(session_info.date).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric',
+                })}
+              </span>
+            )}
+          </div>
+          <h1 className="text-4xl font-bold text-white mb-2 drop-shadow-lg">
+            {trackDetails.name}
+          </h1>
+          {trackDetails.city && trackDetails.country && (
+            <p className="text-zinc-400 mb-4">
+              {trackDetails.city}, {trackDetails.country}
+              {trackDetails.length && <> • {trackDetails.length}</>}
+            </p>
+          )}
+
+          <div className="grid max-w-3xl grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            {session_info.track_config && (
+              <div>
+                <span className="text-zinc-500 block mb-1">Configuration</span>
+                <span className="text-white font-medium">{session_info.track_config}</span>
+              </div>
+            )}
+            {session_info.date && (
+              <div>
+                <span className="text-zinc-500 block mb-1">Date</span>
+                <span className="text-white font-medium font-mono">
                   {new Date(session_info.date).toLocaleDateString('en-US', {
                     month: 'short',
                     day: 'numeric',
                     year: 'numeric',
                   })}
                 </span>
-              )}
-            </div>
-            <h1 className="text-4xl font-bold text-white mb-4">
-              {trackDetails.name}
-            </h1>
-            {trackDetails.city && trackDetails.country && (
-              <p className="text-zinc-400 mb-4">
-                {trackDetails.city}, {trackDetails.country}
-                {trackDetails.length && <> • {trackDetails.length}</>}
-              </p>
+              </div>
             )}
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              {session_info.track_config && (
-                <div>
-                  <span className="text-zinc-500 block mb-1">Configuration</span>
-                  <span className="text-white font-medium">{session_info.track_config}</span>
-                </div>
-              )}
-              {session_info.date && (
-                <div>
-                  <span className="text-zinc-500 block mb-1">Date</span>
-                  <span className="text-white font-medium font-mono">
-                    {new Date(session_info.date).toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric',
-                    })}
-                  </span>
-                </div>
-              )}
-              {session_info.track_length_km && (
-                <div>
-                  <span className="text-zinc-500 block mb-1">Track Length</span>
-                  <span className="text-white font-medium">{session_info.track_length_km.toFixed(2)} km</span>
-                </div>
-              )}
-              {session_info.race_laps && (
-                <div>
-                  <span className="text-zinc-500 block mb-1">Race Length</span>
-                  <span className="text-white font-medium">{session_info.race_laps} {session_info.race_laps === 1 ? 'lap' : 'laps'}</span>
-                </div>
-              )}
-            </div>
-
-            {/* Quick Actions */}
-            {sessionType === 'race' && (
-              <div className="mt-4 flex flex-wrap gap-2">
-                <Link
-                  href={`/fastest-lap/${encodeURIComponent(decodedFilename)}`}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-semibold transition-all"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                  View Fastest Lap Standings
-                </Link>
+            {session_info.track_length_km && (
+              <div>
+                <span className="text-zinc-500 block mb-1">Track Length</span>
+                <span className="text-white font-medium">{session_info.track_length_km.toFixed(2)} km</span>
+              </div>
+            )}
+            {session_info.race_laps && (
+              <div>
+                <span className="text-zinc-500 block mb-1">Race Length</span>
+                <span className="text-white font-medium">{session_info.race_laps} {session_info.race_laps === 1 ? 'lap' : 'laps'}</span>
               </div>
             )}
           </div>
-        </div>
 
+          {/* Quick Actions */}
+          {sessionType === 'race' && (
+            <div className="mt-6 flex flex-wrap items-center gap-2">
+              <Link
+                href={`/fastest-lap/${encodeURIComponent(decodedFilename)}`}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-semibold transition-all"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                View Fastest Lap Standings
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
         {/* Results Table */}
         {drivers.length === 0 ? (
           <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-12 text-center">

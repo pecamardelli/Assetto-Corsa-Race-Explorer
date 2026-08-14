@@ -80,6 +80,31 @@ export function getTrackName(trackName: string, trackConfig?: string): string {
   return formatted;
 }
 
+const previewsDir = path.join(process.cwd(), 'public', 'track-previews');
+
+// Only a fraction of the tracks have a preview copied over, and pages that use one
+// as a banner need to know before they lay the header out.
+const previewCache = new Map<string, string | null>();
+
+/**
+ * Where a track's preview image can be loaded from, or null when none was copied.
+ * @param trackName - The track folder name
+ * @param trackConfig - The track configuration (optional)
+ */
+export function getTrackPreviewUrl(trackName: string, trackConfig?: string): string | null {
+  const identifier = getTrackIdentifier(trackName, trackConfig);
+
+  if (previewCache.has(identifier)) {
+    return previewCache.get(identifier)!;
+  }
+
+  const url = fs.existsSync(path.join(previewsDir, `${identifier}.png`))
+    ? `/track-previews/${identifier}.png`
+    : null;
+  previewCache.set(identifier, url);
+  return url;
+}
+
 /**
  * Get track details including location and metadata
  * @param trackName - The track folder name
