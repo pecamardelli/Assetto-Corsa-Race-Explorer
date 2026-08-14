@@ -1,6 +1,7 @@
 import { Championship, DriverStanding, ChampionshipOpponent, RaceSession } from '../types/race';
 import { safeNumber } from './format-utils';
 import { getCarDetails } from './car-data';
+import { mergeGroupedRounds } from './round-groups';
 
 export interface ConstructorStanding {
   carName: string;
@@ -49,9 +50,12 @@ export interface AllTimeConstructorStats {
 }
 
 export function calculateAllTimeStats(
-  sessions: RaceSession[],
+  allSessions: RaceSession[],
   championships: Championship[]
 ): AllTimeDriverStats[] {
+  // A round run in groups scores once, as the one race it was.
+  const sessions = mergeGroupedRounds(allSessions);
+
   const statsMap = new Map<string, AllTimeDriverStats>();
 
   // Create a map of opponent data from all championships and all seasons
@@ -209,7 +213,9 @@ export function calculateAllTimeStats(
 }
 
 export function calculateStandings(championship: Championship): DriverStanding[] {
-  const { data, sessions } = championship;
+  const { data } = championship;
+  // A round run in groups scores once, as the one race it was.
+  const sessions = mergeGroupedRounds(championship.sessions);
   const pointsTable = data.rules.points;
 
   // Initialize standings map - we'll populate it from session data
@@ -337,7 +343,8 @@ export function calculateStandings(championship: Championship): DriverStanding[]
 }
 
 export function calculateConstructorStandings(championship: Championship): ConstructorStanding[] {
-  const { sessions } = championship;
+  // A round run in groups scores once, as the one race it was.
+  const sessions = mergeGroupedRounds(championship.sessions);
 
   // Map to store constructor standings
   const constructorsMap = new Map<string, ConstructorStanding>();
@@ -502,9 +509,12 @@ export function calculateConstructorStandings(championship: Championship): Const
 }
 
 export function calculateAllTimeConstructorStats(
-  sessions: RaceSession[],
+  allSessions: RaceSession[],
   championships: Championship[]
 ): AllTimeConstructorStats[] {
+  // A round run in groups scores once, as the one race it was.
+  const sessions = mergeGroupedRounds(allSessions);
+
   const statsMap = new Map<string, AllTimeConstructorStats>();
   const constructorDriversMap = new Map<string, Set<string>>();
   const raceSessionsMap = new Map<string, Set<string>>(); // Track which races each constructor participated in

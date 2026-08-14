@@ -21,6 +21,19 @@ const AI_AGGRESSION_MAX = 100;
 /** Every driver races at full strength unless their profile says otherwise. */
 const DEFAULT_AI_LEVEL = 100;
 
+/**
+ * One batch of a round that is too big for its track.
+ *
+ * The groups of a round are raced one after another and classified together, so the
+ * label is what ties them back into a single result — see `mergeGroupedRounds`.
+ */
+export interface LaunchGroup {
+  /** Short and stable: "A", "B", "Over 1500cc". Shown on the round's results. */
+  label: string;
+  /** Roster names racing in this batch. */
+  drivers: string[];
+}
+
 export interface LaunchPlan {
   spec: RaceIniSpec;
   /** Game presets to write into cfg/assists.ini alongside race.ini. */
@@ -34,6 +47,14 @@ export interface LaunchPlan {
   /** Track with its layout re-joined, matching how rounds are keyed elsewhere. */
   roundTrack: string;
   trackLabel: string;
+  /** Set only when this launch is one batch of a round split across several. */
+  group?: string;
+  /**
+   * True when the seat at CAR_0 belongs to somebody other than the player, which
+   * happens for a group they are not entered in. The session still has to be
+   * started by hand, so the caller is told to hand the car over to the AI.
+   */
+  aiSeat?: boolean;
   /**
    * Whether whatever AC writes belongs in the season. False for a round driven
    * again after it was raced: the session runs, but nothing is filed.
@@ -126,11 +147,20 @@ function findSeason(seasons: Season[], seasonId: string): Season | undefined {
  * round has been qualified more than once the last one wins, since a season's
  * sessions arrive oldest first and the newest run is the one that settled the grid.
  */
-export function findRoundQualifying(season: Season, roundTrack: string): RaceSession | null {
+export function findRoundQualifying(
+  season: Season,
+  roundTrack: string,
+  /** When the race is one batch of a split round, only that batch's own grid will do. */
+  group?: string
+): RaceSession | null {
   const qualifying = season.sessions.filter(session => {
     const name = session.filename.split('/').pop() ?? '';
     const type = session.data.session_type ?? session.data.session_info.session_type;
-    return name.includes(roundTrack) && type === 'qualifying';
+    if (!name.includes(roundTrack) || type !== 'qualifying') return false;
+
+    // Groups qualify separately, so a group's race must not inherit the order another
+    // group set. A round raced whole ignores any group qualifying that came before.
+    return (session.data.session_info.group ?? undefined) === group;
   });
 
   return qualifying.at(-1) ?? null;
@@ -150,12 +180,43 @@ export class LaunchPlanError extends Error {}
  * Turn a round on a season page into everything needed to write race.ini and to
  * file the results away afterwards.
  */
+/**
+ * The batch of the roster that is going out, in roster order.
+ *
+ * Every name has to be one of the season's own, and a batch of one is not a race —
+ * a typo that quietly dropped half the field would otherwise only show up in the
+ * results.
+ */
+function restrictToGroup(
+  opponents: ChampionshipOpponent[],
+  group: LaunchGroup
+): ChampionshipOpponent[] {
+  const wanted = new Set(group.drivers);
+  const field = opponents.filter(opponent => wanted.has(opponent.name));
+
+  const known = new Set(opponents.map(opponent => opponent.name));
+  const strangers = group.drivers.filter(name => !known.has(name));
+  if (strangers.length) {
+    throw new LaunchPlanError(
+      `Group "${group.label}" names drivers who are not in this season: ${strangers.join(', ')}`
+    );
+  }
+
+  if (field.length < 2) {
+    throw new LaunchPlanError(`Group "${group.label}" needs at least two drivers`);
+  }
+
+  return field;
+}
+
 export async function buildLaunchPlan(
   champId: string,
   seasonId: string,
   roundNumber: number,
   mode: LaunchMode,
-  record = true
+  record = true,
+  /** Omitted for a round raced whole, which is every round that fits its track. */
+  group?: LaunchGroup
 ): Promise<LaunchPlan> {
   const championship = await getChampionship(champId);
   if (!championship) throw new LaunchPlanError(`Unknown championship "${champId}"`);
@@ -168,21 +229,33 @@ export async function buildLaunchPlan(
   if (!round) throw new LaunchPlanError(`Round ${roundNumber} is not in this season`);
 
   const playerName = await resolvePlayerName();
-  const playerEntry = data.opponents.find(
+  const seasonEntry = data.opponents.find(
     opponent => opponent.name === playerName || opponent.name === 'PLAYER'
   );
-  if (!playerEntry) {
+  if (!seasonEntry) {
     throw new LaunchPlanError(
       `No entry for "${playerName}" in this season — set AC_PLAYER_NAME or add them to the .champ`
     );
   }
+
+  const field = group ? restrictToGroup(data.opponents, group) : data.opponents;
+
+  /**
+   * AC gives CAR_0 to whoever is at the keyboard and offers no way to leave it
+   * empty, so a group the player is not entered in still has to put one of its own
+   * drivers in that seat — otherwise the batch would either race a car short or
+   * carry a driver who does not belong to it. The first of the group takes it, and
+   * the session is handed straight to the AI with the Activate AI control.
+   */
+  const playerEntry = field.includes(seasonEntry) ? seasonEntry : field[0];
+  const aiSeat = playerEntry !== seasonEntry;
 
   const profiles = await getDriverProfiles(
     data.opponents.map(opponent => opponent.name),
     data.name
   );
 
-  const opponents = data.opponents
+  const opponents = field
     .filter(entry => entry.name !== playerEntry.name)
     .map(entry =>
       toGridEntry(
@@ -215,10 +288,12 @@ export async function buildLaunchPlan(
   let gridOrder: string[] | undefined;
 
   if (mode === 'race') {
-    const qualifying = findRoundQualifying(season, round.track);
+    const qualifying = findRoundQualifying(season, round.track, group?.label);
     if (!qualifying) {
       throw new LaunchPlanError(
-        `Round ${roundNumber} has no qualifying result to build a grid from — race the weekend instead`
+        group
+          ? `Group "${group.label}" of round ${roundNumber} has no qualifying result to build a grid from — race the weekend instead`
+          : `Round ${roundNumber} has no qualifying result to build a grid from — race the weekend instead`
       );
     }
 
@@ -247,6 +322,8 @@ export async function buildLaunchPlan(
     roundNumber,
     roundTrack: round.track,
     trackLabel: trackConfig ? `${track} (${trackConfig})` : track,
+    group: group?.label,
+    aiSeat,
     record,
   };
 }

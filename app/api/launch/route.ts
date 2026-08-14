@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { buildLaunchPlan, LaunchPlanError } from '../../lib/launch/plan';
+import { buildLaunchPlan, LaunchGroup, LaunchPlanError } from '../../lib/launch/plan';
 import { currentLaunch, launch, LaunchError } from '../../lib/launch/launcher';
 import { LAUNCH_MODES, LaunchMode } from '../../lib/launch/race-ini';
 
@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
     round?: number;
     mode?: string;
     record?: boolean;
+    group?: { label?: unknown; drivers?: unknown };
   };
   try {
     body = await request.json();
@@ -59,8 +60,34 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  // A round too big for its track is raced in batches; each launch runs one of them
+  // and the standings put them back together.
+  let group: LaunchGroup | undefined;
+  if (body.group !== undefined) {
+    const label = typeof body.group?.label === 'string' ? body.group.label.trim() : '';
+    const drivers = Array.isArray(body.group?.drivers)
+      ? body.group.drivers.filter((name): name is string => typeof name === 'string')
+      : null;
+
+    if (!label || !drivers?.length) {
+      return NextResponse.json(
+        { error: 'group needs a label and a non-empty drivers array' },
+        { status: 400 }
+      );
+    }
+
+    group = { label, drivers };
+  }
+
   try {
-    const plan = await buildLaunchPlan(champId, seasonId, round, mode as LaunchMode, record);
+    const plan = await buildLaunchPlan(
+      champId,
+      seasonId,
+      round,
+      mode as LaunchMode,
+      record,
+      group
+    );
     const state = await launch(plan, champId, seasonId);
 
     return NextResponse.json({ launch: state });

@@ -36,6 +36,11 @@ function timestampFrom(date: string | undefined, fallback: Date): string {
   );
 }
 
+/** A group label as it can safely appear in a file name. */
+function slug(label: string): string {
+  return label.trim().replace(/[^A-Za-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'x';
+}
+
 async function exists(target: string): Promise<boolean> {
   try {
     await fs.access(target);
@@ -154,14 +159,22 @@ export async function ingestResults(
       data.session_info = {
         ...data.session_info,
         session_type: sessionType,
+        // The round is what the standings score, and a group only ever means
+        // something alongside it — a batch of round four is not a batch of round
+        // five. Both are stamped here because the AC app has no idea it is racing
+        // a championship at all.
+        round: plan.roundNumber,
+        ...(plan.group ? { group: plan.group } : {}),
       };
 
       // Name from the round, not from the file: the season page pairs sessions to
-      // rounds by looking for the round's track string in the filename.
+      // rounds by looking for the round's track string in the filename. A group is
+      // named too, so a split round's folder can be read without opening anything.
       const stamp = timestampFrom(data.session_info.date, new Date(mtime));
+      const groupPart = plan.group ? `_group_${slug(plan.group)}` : '';
       const target = await uniquePath(
         seasonDir,
-        `stats_${plan.roundTrack}_session_${sessionType}_${stamp}`
+        `stats_${plan.roundTrack}_session_${sessionType}${groupPart}_${stamp}`
       );
 
       await fs.writeFile(target, JSON.stringify(data, null, 2), 'utf8');

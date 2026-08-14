@@ -24,13 +24,25 @@ interface LaunchState {
   roundNumber: number;
 }
 
+/** One batch of a round too big to race at its track in a single go. */
+export interface LaunchGroup {
+  label: string;
+  drivers: string[];
+}
+
 export interface LauncherContextValue {
   launch: LaunchState | null;
   pending: boolean;
   /** Whether this browser is sitting on the machine that runs the game. */
   isLocal: boolean;
   /** `record: false` runs the session for its own sake and files nothing away. */
-  start: (round: number, mode: LaunchMode, record?: boolean) => void;
+  start: (
+    round: number,
+    mode: LaunchMode,
+    record?: boolean,
+    /** Omitted for a round that fits its track and so races whole. */
+    group?: LaunchGroup
+  ) => void;
 }
 
 const LauncherContext = createContext<LauncherContextValue | null>(null);
@@ -123,14 +135,14 @@ export function LaunchProvider({
   }, [applyLaunch, isLocal]);
 
   const start = useCallback(
-    async (round: number, mode: LaunchMode, record: boolean) => {
+    async (round: number, mode: LaunchMode, record: boolean, group?: LaunchGroup) => {
       setPending(true);
 
       try {
         const response = await fetch('/api/launch', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ champId, seasonId, round, mode, record }),
+          body: JSON.stringify({ champId, seasonId, round, mode, record, group }),
         });
 
         const body = (await response.json()) as { launch?: LaunchState; error?: string };
@@ -157,7 +169,8 @@ export function LaunchProvider({
         launch,
         pending,
         isLocal,
-        start: (round, mode, record = true) => void start(round, mode, record),
+        start: (round, mode, record = true, group) =>
+          void start(round, mode, record, group),
       }}
     >
       {children}

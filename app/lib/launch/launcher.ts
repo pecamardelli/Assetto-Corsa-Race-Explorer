@@ -29,6 +29,13 @@ export interface LaunchState {
   seasonId: string;
   roundNumber: number;
   trackLabel: string;
+  /** The batch of the round this launch is running, when it is running one. */
+  group?: string;
+  /**
+   * True when CAR_0 is a driver the player is standing in for, because this group
+   * is not one they are entered in. Hand the car to the AI once the session loads.
+   */
+  aiSeat?: boolean;
   startedAt: number;
   finishedAt?: number;
   exitCode?: number | null;
@@ -94,6 +101,7 @@ async function writeLaunchContext(plan: LaunchPlan, id: string): Promise<void> {
     championship: plan.championshipName,
     season: plan.seasonFolder,
     round: plan.roundNumber,
+    group: plan.group ?? null,
     track: plan.roundTrack,
     // Recorded so the session stats can carry the presets they were driven with.
     assists: plan.assists,
@@ -177,6 +185,8 @@ export async function launch(
     seasonId,
     roundNumber: plan.roundNumber,
     trackLabel: plan.trackLabel,
+    group: plan.group,
+    aiSeat: plan.aiSeat,
     recorded: plan.record,
     startedAt: Date.now(),
   };

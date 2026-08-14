@@ -64,6 +64,16 @@ export interface SessionInfo {
   // False when the driver quit before the session ran its course, so the stats are
   // a partial record. Absent on sessions recorded before this was tracked.
   finished?: boolean;
+  // The round this session was run for, stamped when the result is filed. Absent on
+  // results filed before rounds were recorded.
+  round?: number;
+  // Set only when the round was too big for its track and had to be run in batches,
+  // in which case this names the batch. Every group of a round shares its `round`,
+  // and the standings classify them as one race.
+  group?: string;
+  // The groups a merged round was assembled from. Only ever set on the synthetic
+  // session the standings build; never written to disk.
+  groups?: string[];
 }
 
 export interface CarData {
