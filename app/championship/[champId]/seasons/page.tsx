@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
 import { getChampionship } from '../../../lib/race-data';
 import { calculateStandings } from '../../../lib/standings';
+import { resolveDriverPortrait } from '../../../lib/driver-assets';
 import { Championship, Season } from '../../../types/race';
 import BackButton from '../../../components/BackButton';
+import ChampionBadge from '../../../components/ChampionBadge';
 
 // Helper function to calculate the champion for a specific season
 function getSeasonChampion(season: Season): string | null {
@@ -33,6 +34,31 @@ export default async function SeasonsPage({ params }: { params: Promise<{ champI
   }
 
   const { data, seasons } = championship;
+
+  // The champion's portrait has to be resolved off disk, so each season's summary
+  // is worked out up front rather than inside the grid below.
+  const seasonSummaries = await Promise.all(
+    seasons.map(async (season) => {
+      // Count race sessions only
+      const completedRaces = season.sessions.filter(session => {
+        const sessionType = session.data.session_type || session.data.session_info.session_type;
+        return sessionType === 'race';
+      }).length;
+
+      const isCompleted = completedRaces === season.data.rounds.length;
+      const champion = isCompleted ? getSeasonChampion(season) : null;
+
+      return {
+        season,
+        completedRaces,
+        isCompleted,
+        champion,
+        championPortrait: champion
+          ? await resolveDriverPortrait(champion, decodedChampId)
+          : null,
+      };
+    })
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
@@ -90,19 +116,7 @@ export default async function SeasonsPage({ params }: { params: Promise<{ champI
       <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
         {/* Seasons Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {seasons.map((season) => {
-            // Count race sessions only
-            const completedRaces = season.sessions.filter(session => {
-              const sessionType = session.data.session_type || session.data.session_info.session_type;
-      return sessionType === 'race';
-            }).length;
-
-            // Check if season is completed
-            const isCompleted = completedRaces === season.data.rounds.length;
-
-            // Get champion name if season is completed
-            const champion = isCompleted ? getSeasonChampion(season) : null;
-
+          {seasonSummaries.map(({ season, completedRaces, isCompleted, champion, championPortrait }) => {
             // Create season ID from season name (e.g., "Season 01" -> "season_01")
             const seasonId = season.seasonName.toLowerCase().replace(' ', '_');
 
@@ -123,19 +137,7 @@ export default async function SeasonsPage({ params }: { params: Promise<{ champI
                   </div>
 
                   {isCompleted && champion && (
-                    <div className="flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2">
-                      <Image
-                        src="/trophy.svg"
-                        alt="Champion"
-                        width={24}
-                        height={24}
-                        className="drop-shadow-lg"
-                      />
-                      <div className="text-sm">
-                        <div className="text-yellow-500 font-semibold">{champion}</div>
-                        <div className="text-yellow-400/70 text-xs">Champion</div>
-                      </div>
-                    </div>
+                    <ChampionBadge name={champion} portrait={championPortrait} />
                   )}
                 </div>
 

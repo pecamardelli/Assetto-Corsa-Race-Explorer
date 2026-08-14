@@ -8,7 +8,9 @@ import { calculateStandings } from "../../../../lib/standings";
 import { resolveSeasonRaceSpecs } from "../../../../lib/launch/race-spec";
 import { Championship, RaceSession } from "../../../../types/race";
 import { trackConditionLabel, weatherLabel } from "../../../../types/race-spec";
+import { resolveDriverPortrait } from "../../../../lib/driver-assets";
 import BackButton from "../../../../components/BackButton";
+import ChampionBadge from "../../../../components/ChampionBadge";
 import FlagIcon from "../../../../components/FlagIcon";
 import { LaunchProvider } from "../../../../components/RaceLauncher";
 import RoundMenu from "../../../../components/RoundMenu";
@@ -87,6 +89,10 @@ export default async function SeasonPage({
     const standings = calculateStandings(seasonChampionship);
     champion = standings.length > 0 ? standings[0].name : null;
   }
+
+  const championPortrait = champion
+    ? await resolveDriverPortrait(champion, decodedChampId)
+    : null;
 
   // Get season start and end dates from race sessions
   let startDate: string | null = null;
@@ -253,21 +259,7 @@ export default async function SeasonPage({
             </div>
 
             {isCompleted && champion && (
-              <div className="flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2">
-                <Image
-                  src="/trophy.svg"
-                  alt="Champion"
-                  width={24}
-                  height={24}
-                  className="drop-shadow-lg"
-                />
-                <div className="text-sm">
-                  <div className="text-yellow-500 font-semibold">
-                    {champion}
-                  </div>
-                  <div className="text-yellow-400/70 text-xs">Champion</div>
-                </div>
-              </div>
+              <ChampionBadge name={champion} portrait={championPortrait} />
             )}
           </div>
 
