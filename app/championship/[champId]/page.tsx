@@ -82,136 +82,146 @@ export default async function ChampionshipPage({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
-      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
-        {/* Header */}
-        <div className="mb-8">
+      {/* Header. The banner is the section's own background rather than a card's
+          right-hand column, so it runs the full width of the window and fades in
+          over the first 40% of it. */}
+      <section className="relative isolate overflow-hidden border-b border-zinc-700">
+        {championship.bannerUrl && (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={championship.bannerUrl}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 -z-10 h-full w-full object-cover [-webkit-mask-image:linear-gradient(to_right,transparent_40%,black_85%)] [mask-image:linear-gradient(to_right,transparent_40%,black_85%)]"
+          />
+        )}
+        <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
           <BackButton fallbackUrl="/">Back</BackButton>
 
-          <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold px-2 py-1 rounded bg-amber-500/20 text-amber-400 uppercase">
-                  Championship
-                </span>
-              </div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <Link
-                  href={`/championship/${encodeURIComponent(
-                    decodedChampId
-                  )}/seasons`}
-                  className="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-green-500/20 flex items-center gap-2"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                  Seasons
-                </Link>
-                <Link
-                  href={`/championship/${encodeURIComponent(
-                    decodedChampId
-                  )}/standings`}
-                  className="px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-amber-500/20 flex items-center gap-2"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
-                  Driver Standings
-                </Link>
-                <Link
-                  href={`/championship/${encodeURIComponent(
-                    decodedChampId
-                  )}/constructors`}
-                  className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-blue-500/20 flex items-center gap-2"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                    />
-                  </svg>
-                  Constructor Standings
-                </Link>
-                <Link
-                  href={`/championship/${encodeURIComponent(
-                    decodedChampId
-                  )}/all-time`}
-                  className="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-purple-500/20 flex items-center gap-2"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                    />
-                  </svg>
-                  All-Time Standings
-                </Link>
-              </div>
-            </div>
-            <h1 className="text-4xl font-bold text-white mb-4">{data.name}</h1>
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-semibold px-2 py-1 rounded bg-amber-500/20 text-amber-400 uppercase">
+              Championship
+            </span>
+          </div>
+          <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">{data.name}</h1>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div>
-                <span className="text-zinc-500 block mb-1">Total Rounds</span>
-                <span className="text-white font-medium">
-                  {data.rounds.length}
-                </span>
-              </div>
-              <div>
-                <span className="text-zinc-500 block mb-1">Drivers</span>
-                <span className="text-white font-medium">
-                  {data.opponents.length}
-                </span>
-              </div>
-              <div>
-                <span className="text-zinc-500 block mb-1">Completed</span>
-                <span className="text-white font-medium">
-                  {completedRaces}/{data.rounds.length}
-                </span>
-              </div>
-              <div>
-                <span className="text-zinc-500 block mb-1">Qualifying</span>
-                <span className="text-white font-medium">
-                  {data.rules.qualifying} min
-                </span>
-              </div>
+          <div className="grid max-w-3xl grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            <div>
+              <span className="text-zinc-500 block mb-1">Total Rounds</span>
+              <span className="text-white font-medium">
+                {data.rounds.length}
+              </span>
+            </div>
+            <div>
+              <span className="text-zinc-500 block mb-1">Drivers</span>
+              <span className="text-white font-medium">
+                {data.opponents.length}
+              </span>
+            </div>
+            <div>
+              <span className="text-zinc-500 block mb-1">Completed</span>
+              <span className="text-white font-medium">
+                {completedRaces}/{data.rounds.length}
+              </span>
+            </div>
+            <div>
+              <span className="text-zinc-500 block mb-1">Qualifying</span>
+              <span className="text-white font-medium">
+                {data.rules.qualifying} min
+              </span>
             </div>
           </div>
-        </div>
 
+          <div className="mt-6 flex items-center gap-2 flex-wrap">
+            <Link
+              href={`/championship/${encodeURIComponent(
+                decodedChampId
+              )}/seasons`}
+              className="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-green-500/20 flex items-center gap-2"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              Seasons
+            </Link>
+            <Link
+              href={`/championship/${encodeURIComponent(
+                decodedChampId
+              )}/standings`}
+              className="px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-amber-500/20 flex items-center gap-2"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+              Driver Standings
+            </Link>
+            <Link
+              href={`/championship/${encodeURIComponent(
+                decodedChampId
+              )}/constructors`}
+              className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-blue-500/20 flex items-center gap-2"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                />
+              </svg>
+              Constructor Standings
+            </Link>
+            <Link
+              href={`/championship/${encodeURIComponent(
+                decodedChampId
+              )}/all-time`}
+              className="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-purple-500/20 flex items-center gap-2"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                />
+              </svg>
+              All-Time Standings
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
         {/* Rounds List */}
         <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg overflow-hidden">
           <div className="p-6 border-b border-zinc-700">

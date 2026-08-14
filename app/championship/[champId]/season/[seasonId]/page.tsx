@@ -181,9 +181,20 @@ export default async function SeasonPage({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
-      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
-        {/* Header */}
-        <div className="mb-8">
+      {/* Header. The banner is the section's own background rather than a card's
+          right-hand column, so it runs the full width of the window and fades in
+          over the first 40% of it. */}
+      <section className="relative isolate overflow-hidden border-b border-zinc-700">
+        {championship.bannerUrl && (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={championship.bannerUrl}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 -z-10 h-full w-full object-cover [-webkit-mask-image:linear-gradient(to_right,transparent_40%,black_85%)] [mask-image:linear-gradient(to_right,transparent_40%,black_85%)]"
+          />
+        )}
+        <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
           <BackButton
             fallbackUrl={`/championship/${encodeURIComponent(
               decodedChampId
@@ -192,195 +203,193 @@ export default async function SeasonPage({
             Back to Seasons
           </BackButton>
 
-          <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-semibold px-2 py-1 rounded bg-green-500/20 text-green-400 uppercase">
-                  {season.seasonName}
-                </span>
-                {startDate && endDate && (
-                  <span className="text-xs text-zinc-400">
-                    {startDate} - {endDate}
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <Link
-                  href={`/championship/${encodeURIComponent(
-                    decodedChampId
-                  )}/seasons`}
-                  className="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-green-500/20 flex items-center gap-2"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                  All Seasons
-                </Link>
-                <Link
-                  href={`/championship/${encodeURIComponent(
-                    decodedChampId
-                  )}/season/${encodeURIComponent(decodedSeasonId)}/lineup`}
-                  className="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-purple-500/20 flex items-center gap-2"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                    />
-                  </svg>
-                  Drivers Lineup
-                </Link>
-                <Link
-                  href={`/championship/${encodeURIComponent(
-                    decodedChampId
-                  )}/season/${encodeURIComponent(decodedSeasonId)}/standings`}
-                  className="px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-amber-500/20 flex items-center gap-2"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    />
-                  </svg>
-                  Driver Standings
-                </Link>
-                <Link
-                  href={`/championship/${encodeURIComponent(
-                    decodedChampId
-                  )}/season/${encodeURIComponent(
-                    decodedSeasonId
-                  )}/constructors`}
-                  className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-blue-500/20 flex items-center gap-2"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-                    />
-                  </svg>
-                  Constructor Standings
-                </Link>
-              </div>
-            </div>
-            <h1 className="text-4xl font-bold text-white mb-2">{data.name}</h1>
-            <div className="text-xl text-green-400 mb-4">
+          <div className="flex items-center gap-2 flex-wrap mb-3">
+            <span className="text-xs font-semibold px-2 py-1 rounded bg-green-500/20 text-green-400 uppercase">
               {season.seasonName}
-              {isCompleted && (
-                <span className="ml-2 text-sm text-green-400">• Completed</span>
-              )}
-            </div>
+            </span>
+            {startDate && endDate && (
+              <span className="text-xs text-zinc-400">
+                {startDate} - {endDate}
+              </span>
+            )}
+          </div>
 
-            {/* Season stats, with the presets link riding the same row on its
-                right-hand edge. */}
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="grid flex-1 grid-cols-2 md:grid-cols-5 gap-4 text-sm items-center">
-                <div>
-                  <span className="text-zinc-500 block mb-1">Total Rounds</span>
-                  <span className="text-white font-medium">
-                    {data.rounds.length}
-                  </span>
-                </div>
-                <div>
-                  <span className="text-zinc-500 block mb-1">Drivers</span>
-                  <span className="text-white font-medium">
-                    {data.opponents.length}
-                  </span>
-                </div>
-                <div>
-                  <span className="text-zinc-500 block mb-1">Completed</span>
-                  <span className="text-white font-medium">
-                    {completedRaces}/{data.rounds.length}
-                  </span>
-                </div>
-                <div>
-                  <span className="text-zinc-500 block mb-1">Qualifying</span>
-                  <span className="text-white font-medium">
-                    {data.rules.qualifying} min
-                  </span>
-                </div>
-                {isCompleted && champion && (
-                  <div className="col-span-2 md:col-span-1">
-                    <div className="flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2">
-                      <Image
-                        src="/trophy.svg"
-                        alt="Champion"
-                        width={24}
-                        height={24}
-                        className="drop-shadow-lg"
-                      />
-                      <div className="text-sm">
-                        <div className="text-yellow-500 font-semibold">
-                          {champion}
-                        </div>
-                        <div className="text-yellow-400/70 text-xs">Champion</div>
-                      </div>
-                    </div>
-                  </div>
-                )}
+          <h1 className="text-4xl font-bold text-white mb-2 drop-shadow-lg">
+            {data.name}
+          </h1>
+          <div className="text-xl text-green-400 mb-4">
+            {season.seasonName}
+            {isCompleted && (
+              <span className="ml-2 text-sm text-green-400">• Completed</span>
+            )}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-sm">
+              <div>
+                <span className="text-zinc-500 block mb-1">Total Rounds</span>
+                <span className="text-white font-medium">
+                  {data.rounds.length}
+                </span>
               </div>
-
-              <Link
-                href={`/championship/${encodeURIComponent(
-                  decodedChampId
-                )}/season/${encodeURIComponent(decodedSeasonId)}/presets`}
-                className="ml-auto shrink-0 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-cyan-500/20 flex items-center gap-2"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                Game Presets
-              </Link>
+              <div>
+                <span className="text-zinc-500 block mb-1">Drivers</span>
+                <span className="text-white font-medium">
+                  {data.opponents.length}
+                </span>
+              </div>
+              <div>
+                <span className="text-zinc-500 block mb-1">Completed</span>
+                <span className="text-white font-medium">
+                  {completedRaces}/{data.rounds.length}
+                </span>
+              </div>
+              <div>
+                <span className="text-zinc-500 block mb-1">Qualifying</span>
+                <span className="text-white font-medium">
+                  {data.rules.qualifying} min
+                </span>
+              </div>
             </div>
+
+            {isCompleted && champion && (
+              <div className="flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 rounded-lg px-3 py-2">
+                <Image
+                  src="/trophy.svg"
+                  alt="Champion"
+                  width={24}
+                  height={24}
+                  className="drop-shadow-lg"
+                />
+                <div className="text-sm">
+                  <div className="text-yellow-500 font-semibold">
+                    {champion}
+                  </div>
+                  <div className="text-yellow-400/70 text-xs">Champion</div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="mt-6 flex items-center gap-2 flex-wrap">
+            <Link
+              href={`/championship/${encodeURIComponent(
+                decodedChampId
+              )}/seasons`}
+              className="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-green-500/20 flex items-center gap-2"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              All Seasons
+            </Link>
+            <Link
+              href={`/championship/${encodeURIComponent(
+                decodedChampId
+              )}/season/${encodeURIComponent(decodedSeasonId)}/lineup`}
+              className="px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-purple-500/20 flex items-center gap-2"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+              Drivers Lineup
+            </Link>
+            <Link
+              href={`/championship/${encodeURIComponent(
+                decodedChampId
+              )}/season/${encodeURIComponent(decodedSeasonId)}/standings`}
+              className="px-4 py-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-amber-500/20 flex items-center gap-2"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+              Driver Standings
+            </Link>
+            <Link
+              href={`/championship/${encodeURIComponent(
+                decodedChampId
+              )}/season/${encodeURIComponent(
+                decodedSeasonId
+              )}/constructors`}
+              className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-blue-500/20 flex items-center gap-2"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                />
+              </svg>
+              Constructor Standings
+            </Link>
+            <Link
+              href={`/championship/${encodeURIComponent(
+                decodedChampId
+              )}/season/${encodeURIComponent(decodedSeasonId)}/presets`}
+              className="px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-cyan-500/20 flex items-center gap-2"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+              Game Presets
+            </Link>
           </div>
         </div>
+      </section>
 
+      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
         {/* Rounds List */}
         <LaunchProvider
           champId={decodedChampId}
