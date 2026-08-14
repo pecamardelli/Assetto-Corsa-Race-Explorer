@@ -49,51 +49,68 @@ export default async function SeasonStandingsPage({ params }: { params: Promise<
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
-      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
-        {/* Header */}
-        <div className="mb-8">
+      {/* Header. The banner is the section's own background rather than a card's
+          right-hand column, so it runs the full width of the window and fades in
+          over the first 40% of it. */}
+      <section className="relative isolate overflow-hidden border-b border-zinc-700">
+        {championship.bannerUrl && (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={championship.bannerUrl}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 -z-10 h-full w-full object-cover [-webkit-mask-image:linear-gradient(to_right,transparent_40%,black_85%)] [mask-image:linear-gradient(to_right,transparent_40%,black_85%)]"
+          />
+        )}
+        <div className="w-full px-4 pt-4 pb-8 sm:px-6 lg:px-8 xl:px-12">
           <BackButton fallbackUrl={`/championship/${encodeURIComponent(decodedChampId)}/season/${encodeURIComponent(decodedSeasonId)}`}>
             Back to {season.seasonName}
           </BackButton>
 
-          <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6 mb-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-semibold px-2 py-1 rounded bg-amber-500/20 text-amber-400 uppercase">
-                Driver Standings
-              </span>
-              <span className="text-xs font-semibold px-2 py-1 rounded bg-green-500/20 text-green-400 uppercase">
-                {season.seasonName}
-              </span>
-            </div>
-            <h1 className="text-4xl font-bold text-white mb-4">
-              {data.name}
-            </h1>
+          <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <span className="text-xs font-semibold px-2 py-1 rounded bg-amber-500/20 text-amber-400 uppercase">
+              Driver Standings
+            </span>
+            <span className="text-xs font-semibold px-2 py-1 rounded bg-green-500/20 text-green-400 uppercase">
+              {season.seasonName}
+            </span>
+          </div>
+          <h1 className="text-4xl font-bold text-white mb-2 drop-shadow-lg">
+            {data.name}
+          </h1>
 
-            <div className="flex flex-wrap gap-4 text-sm text-zinc-400">
-              <span>
-                {completedRaces} of {data.rounds.length} rounds completed
-              </span>
-              <span>•</span>
-              <span>{data.opponents.length} drivers</span>
-            </div>
+          <div className="flex flex-wrap gap-4 text-sm text-zinc-400">
+            <span>
+              {completedRaces} of {data.rounds.length} rounds completed
+            </span>
+            <span>•</span>
+            <span>{data.opponents.length} drivers</span>
           </div>
 
-          <div className="flex gap-3">
+          <div className="mt-6 flex flex-wrap items-center gap-2">
             <Link
               href={`/championship/${encodeURIComponent(decodedChampId)}/season/${encodeURIComponent(decodedSeasonId)}`}
-              className="inline-flex items-center text-zinc-400 hover:text-amber-400 transition-colors text-sm"
+              className="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-green-500/20 flex items-center gap-2"
             >
-              View Season Rounds →
+              Season Rounds
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </Link>
             <Link
               href={`/championship/${encodeURIComponent(decodedChampId)}/season/${encodeURIComponent(decodedSeasonId)}/constructors`}
-              className="inline-flex items-center text-zinc-400 hover:text-blue-400 transition-colors text-sm"
+              className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg text-sm font-semibold transition-all hover:shadow-lg hover:shadow-blue-500/20 flex items-center gap-2"
             >
-              Constructor Standings →
+              Constructor Standings
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </Link>
           </div>
         </div>
+      </section>
 
+      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
         {/* Standings Table */}
         <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg overflow-hidden">
           <div className="overflow-x-auto">

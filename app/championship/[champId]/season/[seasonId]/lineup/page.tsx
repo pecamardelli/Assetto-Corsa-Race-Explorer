@@ -133,9 +133,20 @@ export default async function LineupPage({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
-      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
-        {/* Header */}
-        <div className="mb-8">
+      {/* Header. The banner is the section's own background rather than a card's
+          right-hand column, so it runs the full width of the window and fades in
+          over the first 40% of it. */}
+      <section className="relative isolate overflow-hidden border-b border-zinc-700">
+        {championship.bannerUrl && (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={championship.bannerUrl}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 -z-10 h-full w-full object-cover [-webkit-mask-image:linear-gradient(to_right,transparent_40%,black_85%)] [mask-image:linear-gradient(to_right,transparent_40%,black_85%)]"
+          />
+        )}
+        <div className="w-full px-4 pt-4 pb-8 sm:px-6 lg:px-8 xl:px-12">
           <BackButton
             fallbackUrl={`/championship/${encodeURIComponent(
               decodedChampId
@@ -144,19 +155,24 @@ export default async function LineupPage({
             Back to Season
           </BackButton>
 
-          <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-            <h1 className="text-4xl font-bold text-white mb-2">
+          <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <span className="text-xs font-semibold px-2 py-1 rounded bg-purple-500/20 text-purple-400 uppercase">
               Drivers Lineup
-            </h1>
-            <div className="text-xl text-purple-400 mb-4">
-              {data.name} - {season.seasonName}
-            </div>
-            <div className="text-sm text-zinc-400">
-              {data.opponents.length} drivers competing in {carsWithDrivers.length} different cars
-            </div>
+            </span>
+            <span className="text-xs font-semibold px-2 py-1 rounded bg-green-500/20 text-green-400 uppercase">
+              {season.seasonName}
+            </span>
+          </div>
+          <h1 className="text-4xl font-bold text-white mb-2 drop-shadow-lg">
+            {data.name}
+          </h1>
+          <div className="text-sm text-zinc-400">
+            {data.opponents.length} drivers competing in {carsWithDrivers.length} different cars
           </div>
         </div>
+      </section>
 
+      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
         {/* Cars and Drivers Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {carsWithDrivers.map(({ carName, carDetails, drivers }) => (

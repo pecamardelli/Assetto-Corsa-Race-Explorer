@@ -41,8 +41,20 @@ export default async function SeasonPresetsPage({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
-      <div className="w-full max-w-4xl px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
-        <div className="mb-8">
+      {/* Header. The banner is the section's own background rather than a card's
+          right-hand column, so it runs the full width of the window and fades in
+          over the first 40% of it. */}
+      <section className="relative isolate overflow-hidden border-b border-zinc-700">
+        {championship.bannerUrl && (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={championship.bannerUrl}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 -z-10 h-full w-full object-cover [-webkit-mask-image:linear-gradient(to_right,transparent_40%,black_85%)] [mask-image:linear-gradient(to_right,transparent_40%,black_85%)]"
+          />
+        )}
+        <div className="w-full max-w-4xl px-4 pt-4 pb-8 sm:px-6 lg:px-8 xl:px-12">
           <BackButton
             fallbackUrl={`/championship/${encodeURIComponent(
               decodedChampId
@@ -51,20 +63,25 @@ export default async function SeasonPresetsPage({
             Back to Season
           </BackButton>
 
-          <div className="rounded-lg border border-zinc-700 bg-zinc-800/50 p-6">
+          <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <span className="text-xs font-semibold px-2 py-1 rounded bg-cyan-500/20 text-cyan-400 uppercase">
+              Game Presets
+            </span>
             <span className="text-xs font-semibold px-2 py-1 rounded bg-green-500/20 text-green-400 uppercase">
               {season.seasonName}
             </span>
-            <h1 className="mt-3 mb-2 text-4xl font-bold text-white">
-              {season.data.name}
-            </h1>
-            <p className="text-zinc-400">
-              Game presets for this season&apos;s launches — driving aids and
-              realism settings.
-            </p>
           </div>
+          <h1 className="mb-2 text-4xl font-bold text-white drop-shadow-lg">
+            {season.data.name}
+          </h1>
+          <p className="text-zinc-400">
+            Game presets for this season&apos;s launches — driving aids and
+            realism settings.
+          </p>
         </div>
+      </section>
 
+      <div className="w-full max-w-4xl px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
         <AssistsEditor
           initial={assists}
           initialSource={source}
