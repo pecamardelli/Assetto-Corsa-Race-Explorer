@@ -27,35 +27,46 @@ export default async function AllTimeConstructorStandingsPage({ params }: { para
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
-      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
-        {/* Header */}
-        <div className="mb-8">
+      {/* Header. The banner is the section's own background rather than a card's
+          right-hand column, so it runs the full width of the window and fades in
+          over the first 40% of it. */}
+      <section className="relative isolate overflow-hidden border-b border-zinc-700">
+        {championship.bannerUrl && (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={championship.bannerUrl}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 -z-10 h-full w-full object-cover [-webkit-mask-image:linear-gradient(to_right,transparent_40%,black_85%)] [mask-image:linear-gradient(to_right,transparent_40%,black_85%)]"
+          />
+        )}
+        <div className="w-full px-4 pt-4 pb-8 sm:px-6 lg:px-8 xl:px-12">
           <BackButton fallbackUrl={`/championship/${encodeURIComponent(decodedChampId)}`}>Back to Championship</BackButton>
 
-          <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6 mb-4">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-semibold px-2 py-1 rounded bg-blue-500/20 text-blue-400 uppercase">
-                All-Time Constructor Standings
-              </span>
-            </div>
-            <h1 className="text-4xl font-bold text-white mb-4">
-              {data.name}
-            </h1>
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-xs font-semibold px-2 py-1 rounded bg-blue-500/20 text-blue-400 uppercase">
+              All-Time Constructor Standings
+            </span>
+          </div>
+          <h1 className="text-4xl font-bold text-white mb-2 drop-shadow-lg">
+            {data.name}
+          </h1>
 
-            <p className="text-zinc-400 mb-4">
-              Constructor statistics across all seasons of this championship
-            </p>
+          <p className="text-zinc-400 mb-4">
+            Constructor statistics across all seasons of this championship
+          </p>
 
-            <div className="flex flex-wrap gap-4 text-sm text-zinc-400">
-              <span>{totalRaces} total races</span>
-              <span>•</span>
-              <span>{championship.seasons.length} {championship.seasons.length === 1 ? 'season' : 'seasons'}</span>
-              <span>•</span>
-              <span>{constructorStats.length} constructors</span>
-            </div>
+          <div className="flex flex-wrap gap-4 text-sm text-zinc-400">
+            <span>{totalRaces} total races</span>
+            <span>•</span>
+            <span>{championship.seasons.length} {championship.seasons.length === 1 ? 'season' : 'seasons'}</span>
+            <span>•</span>
+            <span>{constructorStats.length} constructors</span>
           </div>
         </div>
+      </section>
 
+      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
         {/* Statistics Summary */}
         {constructorStats.length > 0 && (() => {
           // Calculate total unique race winners
