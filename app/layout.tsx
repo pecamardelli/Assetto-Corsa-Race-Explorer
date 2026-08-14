@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <header className="bg-zinc-900 border-b border-zinc-800">
-          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <div className="w-full px-4 py-6 sm:px-6 lg:px-8 xl:px-12">
             <Link href="/" className="flex items-center gap-6 hover:opacity-90 transition-opacity">
               <Image
                 src="/assetto_corsa_logo.png"

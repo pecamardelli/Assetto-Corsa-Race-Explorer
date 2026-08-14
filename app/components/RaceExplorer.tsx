@@ -24,7 +24,7 @@ export default function RaceExplorer({ quickRaces, championships, championshipSt
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <div className="w-full px-4 py-12 sm:px-6 lg:px-8 xl:px-12">
         {/* Toggle Buttons */}
         <div className="mb-8 flex flex-wrap gap-4">
           <button

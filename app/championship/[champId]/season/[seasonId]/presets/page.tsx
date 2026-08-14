@@ -41,7 +41,7 @@ export default async function SeasonPresetsPage({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
-      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="w-full max-w-4xl px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
         <div className="mb-8">
           <BackButton
             fallbackUrl={`/championship/${encodeURIComponent(
