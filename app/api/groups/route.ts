@@ -8,6 +8,7 @@ import {
   planGroups,
   seasonHasForm,
 } from '../../lib/launch/groups';
+import { readSeasonGridCaps } from '../../lib/launch/assists';
 import { Championship } from '../../types/race';
 
 /**
@@ -44,7 +45,13 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: `Round ${round} is not in this season` }, { status: 404 });
   }
 
-  const capacity = await pitCapacityFor(roundData.track);
+  // The track's pit boxes are the ceiling; a season may set a lower one per round in
+  // its presets file, for a paddock whose boxes are not all far enough apart.
+  const pitboxes = await pitCapacityFor(roundData.track);
+  const caps = await readSeasonGridCaps(championship.folderName, seasonId.toLowerCase());
+  const cap = caps[roundData.track];
+  const capacity =
+    cap === undefined ? pitboxes : Math.min(cap, pitboxes ?? Number.POSITIVE_INFINITY);
   const field = season.data.opponents;
 
   // Standings are a season's business, so ask this season rather than the whole
@@ -74,6 +81,9 @@ export async function GET(request: NextRequest) {
   return NextResponse.json({
     track: roundData.track,
     capacity,
+    // What the track actually has, when the season has asked for fewer.
+    pitboxes,
+    capped: cap !== undefined,
     entries: field.length,
     // True when the round cannot be raced whole and has to go out in batches.
     splitRequired: capacity !== null && field.length > capacity,

@@ -40,9 +40,50 @@ async function readConfigFile(target: string): Promise<AssistsConfig | null> {
 }
 
 async function writeConfigFile(target: string, assists: AssistsConfig): Promise<void> {
+  // Merge rather than replace. A presets file holds an `assists` key so later preset
+  // kinds can join it, and rewriting the whole object would quietly delete them -
+  // `grid`, the per-round cap on how many cars go out at once, lives here too.
+  let existing: Record<string, unknown> = {};
+  try {
+    existing = JSON.parse((await fs.readFile(target, 'utf8')).replace(/^﻿/, ''));
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code;
+    if (code !== 'ENOENT') console.error(`Could not read presets file ${target}:`, error);
+  }
+
   await fs.mkdir(path.dirname(target), { recursive: true });
-  await fs.writeFile(target, JSON.stringify({ assists }, null, 2) + '\n', 'utf8');
+  await fs.writeFile(target, JSON.stringify({ ...existing, assists }, null, 2) + '\n', 'utf8');
 }
+
+/**
+ * How many cars a given round of this season may send out at once, by round id.
+ *
+ * A track's pit box count is the hard ceiling but not always the sensible one:
+ * Trento-Bondone has sixteen boxes and only the eight in its paddock stand far enough
+ * apart for the biggest cars in a pre-war field. This is where a season says so.
+ */
+export async function readSeasonGridCaps(
+  champFolder: string,
+  seasonFolder: string
+): Promise<Record<string, number>> {
+  try {
+    const raw = await fs.readFile(seasonAssistsPath(champFolder, seasonFolder), 'utf8');
+    const parsed = JSON.parse(raw.replace(/^﻿/, '')) as { grid?: unknown };
+    if (!parsed.grid || typeof parsed.grid !== 'object') return {};
+
+    const caps: Record<string, number> = {};
+    for (const [track, value] of Object.entries(parsed.grid as Record<string, unknown>)) {
+      const cars = Number(value);
+      if (Number.isFinite(cars) && cars >= 2) caps[track] = Math.floor(cars);
+    }
+    return caps;
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code;
+    if (code !== 'ENOENT') console.error('Could not read grid caps:', error);
+    return {};
+  }
+}
+
 
 export async function readGlobalAssists(): Promise<AssistsConfig> {
   return (await readConfigFile(GAME_CONFIG_FILE)) ?? DEFAULT_ASSISTS;
