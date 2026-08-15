@@ -30,6 +30,11 @@ interface RoundGroups {
   capacity: number | null;
   entries: number;
   splitRequired: boolean;
+  /**
+   * A hillclimb, a stage, a run down a coast road: nothing that can be lapped, and
+   * so nothing that can be qualified on. These rounds go straight to the race.
+   */
+  pointToPoint: boolean;
   /** What the batches were seeded on: the season's table, or an opening-round draw. */
   seededOn: 'standings' | 'random';
   groups: LaunchGroup[];
@@ -41,6 +46,8 @@ const ICON_FREE_RUN = 'M13 10V3L4 14h7v7l9-11h-7z';
 const ICON_RERUN =
   'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15';
 const ICON_GROUP = 'M17 20h5v-2a3 3 0 00-5.36-1.9M17 20H7m10 0v-2c0-.66-.13-1.3-.36-1.9m0 0a5 5 0 00-9.28 0M7 20H2v-2a3 3 0 015.36-1.9M7 20v-2c0-.66.13-1.3.36-1.9m0 0a5 5 0 019.28 0M15 7a3 3 0 11-6 0 3 3 0 016 0z';
+/** A climb: the road going up to a summit. Marks a round raced start to finish. */
+const ICON_CLIMB = 'M3 20h18L14 6l-3.5 7L8 9l-5 11z';
 
 /** Roughly how tall the menu gets, for deciding which way it should open. */
 const MENU_HEIGHT_PX = 200;
@@ -154,13 +161,24 @@ export default function RoundMenu({
 
   const split = groups?.splitRequired && groups.groups.length > 0 ? groups.groups : null;
 
+  // A point-to-point round never qualifies: the race is the whole of it, and the
+  // grid is the championship table. Everything below launches it as a race alone.
+  const pointToPoint = groups?.pointToPoint ?? false;
+  const raceMode: LaunchMode = pointToPoint ? 'race' : 'weekend';
+
+  /** How a batch of a split round says where its running order came from. */
+  const seeding =
+    groups?.seededOn === 'random'
+      ? 'drawn at random for the opening round'
+      : 'seeded on the championship';
+
   const launches: LaunchEntry[] = isLocal
     ? [
         // With qualifying already on the books there is nothing left to run but the
         // race itself, and its grid is rebuilt from that result rather than driven
         // for a second time. A round going out in batches qualifies each of them as
         // it goes, so the shortcut is not offered there.
-        ...(qualifyingRecorded && !raceCompleted && !split
+        ...(qualifyingRecorded && !raceCompleted && !split && !pointToPoint
           ? [
               {
                 key: 'race',
@@ -181,14 +199,12 @@ export default function RoundMenu({
               label: group.label,
               hint: raceCompleted
                 ? `Run this batch again for the fun of it (${group.drivers.length} cars) — no result is recorded`
-                : `Qualify and race ${group.label} (${group.drivers.length} cars, ${
-                    groups?.seededOn === 'random'
-                      ? 'drawn at random for the opening round'
-                      : 'seeded on the championship'
-                  }) — the round is classified once every batch has run`,
+                : pointToPoint
+                  ? `Race ${group.label} (${group.drivers.length} cars, ${seeding}) — no qualifying, so they line up in championship order`
+                  : `Qualify and race ${group.label} (${group.drivers.length} cars, ${seeding}) — the round is classified once every batch has run`,
               icon: ICON_GROUP,
               tone: raceCompleted ? 'text-amber-400' : 'text-red-400',
-              mode: 'weekend' as const,
+              mode: raceMode,
               record: !raceCompleted,
               group,
             }))
@@ -197,21 +213,33 @@ export default function RoundMenu({
                 ? {
                     key: 'rerun',
                     label: 'Race Again',
-                    hint: 'Run the weekend again for the fun of it — no result is recorded',
+                    hint: pointToPoint
+                      ? 'Run it again for the fun of it — no result is recorded'
+                      : 'Run the weekend again for the fun of it — no result is recorded',
                     icon: ICON_RERUN,
                     tone: 'text-amber-400',
-                    mode: 'weekend' as const,
+                    mode: raceMode,
                     record: false,
                   }
-                : {
-                    key: 'weekend',
-                    label: 'Start Race',
-                    hint: 'Launch qualifying then the race — the grid comes out of qualifying',
-                    icon: ICON_RACE,
-                    tone: 'text-red-400',
-                    mode: 'weekend' as const,
-                    record: true,
-                  },
+                : pointToPoint
+                  ? {
+                      key: 'climb',
+                      label: 'Start Race',
+                      hint: 'Launch the race alone — nothing to qualify on here, so the field lines up in championship order',
+                      icon: ICON_CLIMB,
+                      tone: 'text-red-400',
+                      mode: 'race' as const,
+                      record: true,
+                    }
+                  : {
+                      key: 'weekend',
+                      label: 'Start Race',
+                      hint: 'Launch qualifying then the race — the grid comes out of qualifying',
+                      icon: ICON_RACE,
+                      tone: 'text-red-400',
+                      mode: 'weekend' as const,
+                      record: true,
+                    },
             ]),
         {
           key: 'freerun',

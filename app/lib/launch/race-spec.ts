@@ -12,6 +12,7 @@ import {
   sanitizeRaceSpec,
 } from '../../types/race-spec';
 import { AC_CONTENT_WEATHER } from './paths';
+import { isPointToPointTrack } from '../track-data';
 
 /**
  * Per-round race settings resolve in two layers: the .champ file the championship
@@ -91,8 +92,13 @@ export function rollRaceSpec(spec: RaceSpec, weathers: string[]): SettledRace {
     roadTempTo,
     timeOfDayFrom,
     timeOfDayTo,
+    pointToPoint,
     ...rest
   } = spec;
+
+  // Whether the round qualifies at all decides which sessions a launch runs, not
+  // what goes into race.ini, so it is dropped here rather than settled.
+  void pointToPoint;
 
   return {
     ...rest,
@@ -125,6 +131,10 @@ export function championshipSpec(
 ): RaceSpec {
   return {
     laps: round.laps,
+    // What the track's own tags say it is. A round whose track is tagged as a
+    // circuit but raced as a stage — the Targa Florio cuts, say — is set straight
+    // in the round's own settings.
+    pointToPoint: isPointToPointTrack(round.track),
     weather: RANDOM_WEATHER,
     grip: RANDOM_GRIP,
     // Ranges whose ends meet, so temperature and time are not left to chance.

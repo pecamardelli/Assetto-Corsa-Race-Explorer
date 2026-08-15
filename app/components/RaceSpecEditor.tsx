@@ -317,6 +317,12 @@ export default function RaceSpecEditor({
 
               <div className="grid gap-4 md:grid-cols-2">
                 <Group title="Distance">
+                  <Toggle
+                    label="Point to point"
+                    hint="A course with its finish somewhere else — no qualifying is run, and the field lines up in championship order"
+                    value={spec.pointToPoint}
+                    onChange={value => set('pointToPoint', value)}
+                  />
                   <NumberInput
                     label="Race laps"
                     hint="Ignored by a free run, which never reaches the race"
@@ -328,6 +334,11 @@ export default function RaceSpecEditor({
                   />
                   <Slider
                     label="Qualifying"
+                    hint={
+                      spec.pointToPoint
+                        ? 'Not used: a point-to-point round goes straight to its race'
+                        : undefined
+                    }
                     value={spec.qualifyingMinutes}
                     onChange={value => set('qualifyingMinutes', value)}
                     min={1}

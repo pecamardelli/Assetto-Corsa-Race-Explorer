@@ -140,3 +140,52 @@ export function getTrackDetails(trackName: string, trackConfig?: string): {
     length: trackData.length || ''
   };
 }
+
+/**
+ * Tags that mark a course run from one place to another rather than round a lap.
+ *
+ * Matched whole against a track's own tags, never as a substring: "a b" turns up
+ * inside ordinary prose often enough that a loose match calls half of Scotland a
+ * hillclimb.
+ */
+const POINT_TO_POINT_TAGS = new Set([
+  'a2b',
+  'a-b',
+  'a b',
+  'ab',
+  'point to point',
+  'point-to-point',
+  'pointtopoint',
+  'hillclimb',
+  'hill climb',
+  'uphill',
+  'downhill',
+]);
+
+/**
+ * The same idea in a track's own words. Only these two families are distinctive
+ * enough to look for in free text — "uphill" says nothing on its own, since every
+ * circuit worth driving has an uphill section somewhere.
+ */
+const POINT_TO_POINT_PHRASES = ['point to point', 'point-to-point', 'hillclimb', 'hill climb'];
+
+/**
+ * Whether a track is driven from a start to a finish somewhere else — a hillclimb,
+ * a stage, a run down a coast road.
+ *
+ * A round on one of these is raced without qualifying, since a course that cannot
+ * be lapped cannot be qualified on in the ordinary way. The guess is only a
+ * starting point: a round's own settings override it either way, which is how the
+ * Targa Florio stages — tagged "circuit" by their author, being cuts of a circuit —
+ * are marked up.
+ */
+export function isPointToPointTrack(trackName: string, trackConfig?: string): boolean {
+  const data = getTrackData(trackName, trackConfig);
+  if (!data) return false;
+
+  const tags = Array.isArray(data.tags) ? data.tags : [];
+  if (tags.some(tag => POINT_TO_POINT_TAGS.has(String(tag).toLowerCase().trim()))) return true;
+
+  const text = `${data.description ?? ''} ${data.name ?? ''}`.toLowerCase();
+  return POINT_TO_POINT_PHRASES.some(phrase => text.includes(phrase));
+}

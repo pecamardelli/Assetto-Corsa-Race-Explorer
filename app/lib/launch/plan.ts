@@ -12,6 +12,7 @@ import {
 import { AC_CONTENT_TRACKS } from './paths';
 import { GridEntry, LaunchMode, RaceIniSpec } from './race-ini';
 import { resolveAssists } from './assists';
+import { fieldOrder } from './field-order';
 import { listWeathers, resolveRaceSpec, rollRaceSpec } from './race-spec';
 import { AssistsConfig, AssistsSource } from '../../types/assists';
 
@@ -49,6 +50,11 @@ export interface LaunchPlan {
   trackLabel: string;
   /** Set only when this launch is one batch of a round split across several. */
   group?: string;
+  /**
+   * True when the round is run from a start to a finish somewhere else, and so is
+   * raced without a qualifying — the grid came out of the championship table.
+   */
+  pointToPoint: boolean;
   /**
    * True when the seat at CAR_0 belongs to somebody other than the player, which
    * happens for a group they are not entered in. The session still has to be
@@ -283,21 +289,33 @@ export async function buildLaunchPlan(
   );
   if (!resolved) throw new LaunchPlanError(`Round ${roundNumber} is not in this season`);
 
-  // A race on its own has no qualifying ahead of it to line the field up, so the
-  // one already filed for this round stands in for it.
+  // A race on its own has no qualifying ahead of it to line the field up, so
+  // something else has to.
   let gridOrder: string[] | undefined;
+  const pointToPoint = resolved.spec.pointToPoint;
 
   if (mode === 'race') {
-    const qualifying = findRoundQualifying(season, round.track, group?.label);
-    if (!qualifying) {
-      throw new LaunchPlanError(
-        group
-          ? `Group "${group.label}" of round ${roundNumber} has no qualifying result to build a grid from — race the weekend instead`
-          : `Round ${roundNumber} has no qualifying result to build a grid from — race the weekend instead`
-      );
-    }
+    if (pointToPoint) {
+      // A course that cannot be lapped cannot be qualified on, so the championship
+      // table is the grid: leader on pole, down the table from there, and the batch
+      // takes the slice of that order it is made of. It is the same order the
+      // batches were seeded from, so Group A lines up in the order it was drawn up.
+      const { order } = fieldOrder(championship, season, roundNumber);
+      const entered = new Set(field.map(entry => entry.name));
 
-    gridOrder = classificationOrder(qualifying);
+      gridOrder = order.filter(entry => entered.has(entry.name)).map(entry => entry.name);
+    } else {
+      const qualifying = findRoundQualifying(season, round.track, group?.label);
+      if (!qualifying) {
+        throw new LaunchPlanError(
+          group
+            ? `Group "${group.label}" of round ${roundNumber} has no qualifying result to build a grid from — race the weekend instead`
+            : `Round ${roundNumber} has no qualifying result to build a grid from — race the weekend instead`
+        );
+      }
+
+      gridOrder = classificationOrder(qualifying);
+    }
   }
 
   const spec: RaceIniSpec = {
@@ -323,6 +341,7 @@ export async function buildLaunchPlan(
     roundTrack: round.track,
     trackLabel: trackConfig ? `${track} (${trackConfig})` : track,
     group: group?.label,
+    pointToPoint,
     aiSeat,
     record,
   };

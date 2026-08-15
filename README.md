@@ -79,6 +79,34 @@ Each round on a season page carries its actions in one menu. They write
 | **Race Only** | The race alone, over the round's lap count. Offered when the round has a qualifying filed and no race yet. |
 | **Free Run** | Untimed solo practice at the round's track — no AI. |
 | **Race Again** | Replaces **Start Race** once the round has been raced: the same weekend, with nothing recorded. |
+| **Group A / B / …** | One batch of a round too big for its track. Each batch is a session of its own; the standings classify the round on all of them together. |
+
+### Point-to-point rounds
+
+A hillclimb, a stage or a run down a coast road cannot be lapped, so there is
+nothing to qualify on. Those rounds skip qualifying altogether: **Start Race** runs
+the race by itself and the grid is the championship table, leader on pole. Before a
+season has a race behind it there is no table to sort by, so the order is drawn from
+the round's own name — the same draw every time, so the order shown in the menu is
+the order that goes out.
+
+A round is taken to be point-to-point when its track says so — an `A2B`, `hillclimb`,
+`uphill` or `downhill` tag, or "point to point" in its description. Tracks that are
+cuts of a circuit are tagged as circuits by their authors (the Targa Florio stages,
+for instance), so **Race Setup** carries a **Point to point** switch to say so by
+hand; it also turns the guess off for a track tagged as a climb that you want to
+qualify on.
+
+Nothing about the batches changes: a point-to-point round is split when its field
+will not fit the track, exactly as any other round is, and each batch starts in
+championship order. Trento-Bondone has sixteen pit boxes but only eight usable ones,
+which is what the season's `grid` cap is for:
+
+```json
+{ "grid": { "trento-bondone-ep-uphill_summer": 8 } }
+```
+
+in `app/data/championship/[name]/season_[XX].presets.json`.
 
 **Race Only** rebuilds the grid from the qualifying already in the season folder,
 since AC has no live qualifying result to line the field up from. The AI take

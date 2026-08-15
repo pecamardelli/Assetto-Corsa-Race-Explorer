@@ -1,19 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getChampionship } from '../../lib/race-data';
-import { calculateStandings } from '../../lib/standings';
-import {
-  orderAtRandom,
-  orderByStandings,
-  pitCapacityFor,
-  planGroups,
-  seasonHasForm,
-} from '../../lib/launch/groups';
+import { pitCapacityFor, planGroups } from '../../lib/launch/groups';
+import { fieldOrder } from '../../lib/launch/field-order';
 import { readSeasonGridCaps } from '../../lib/launch/assists';
-import { Championship } from '../../types/race';
+import { resolveRaceSpec } from '../../lib/launch/race-spec';
 
 /**
- * How a round would have to be split to fit its track, and who would be in each
- * batch. Read-only: racing a batch is a POST to /api/launch with the group on it.
+ * How a round would have to be split to fit its track, who would be in each batch,
+ * and whether it is a round that qualifies at all. Read-only: racing a batch is a
+ * POST to /api/launch with the group on it.
  */
 export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams;
@@ -54,25 +49,20 @@ export async function GET(request: NextRequest) {
     cap === undefined ? pitboxes : Math.min(cap, pitboxes ?? Number.POSITIVE_INFINITY);
   const field = season.data.opponents;
 
-  // Standings are a season's business, so ask this season rather than the whole
-  // championship — the same season-scoped view the standings page builds.
-  const seasonChampionship: Championship = {
-    id: championship.id,
-    data: season.data,
-    folderName: championship.folderName,
-    sessions: season.sessions,
-    seasons: [season],
-  };
-  const standings = calculateStandings(seasonChampionship);
+  // The championship table seeds the batches, and on a point-to-point round it is
+  // the grid as well. Drawn from the round's own name before a season has any form
+  // to seed on, so the draw survives a reload and the batch shown in the menu is
+  // the batch that gets raced.
+  const { order, seededOn, standings } = fieldOrder(championship, season, round);
 
-  // Seed on the table once there is one. The opening round has nothing to sort by, so
-  // it is drawn — from the round's own name, so the draw survives a reload and the
-  // batch shown in the menu is the batch that gets raced.
-  const seededOn = seasonHasForm(standings) ? 'standings' : 'random';
-  const order =
-    seededOn === 'standings'
-      ? orderByStandings(field, standings)
-      : orderAtRandom(field, `${championship.id}|${season.seasonName}|${round}`);
+  // A round run from a start to a finish somewhere else is raced without qualifying,
+  // so the menu offers the race itself rather than a weekend.
+  const spec = await resolveRaceSpec(
+    championship.folderName,
+    seasonId.toLowerCase(),
+    season.data,
+    round
+  );
 
   // Without the track's data there is no telling what fits, so nothing is proposed
   // rather than a split guessed at.
@@ -87,6 +77,7 @@ export async function GET(request: NextRequest) {
     entries: field.length,
     // True when the round cannot be raced whole and has to go out in batches.
     splitRequired: capacity !== null && field.length > capacity,
+    pointToPoint: spec?.spec.pointToPoint ?? false,
     seededOn,
     groups,
     order: order.map((entry, index) => ({

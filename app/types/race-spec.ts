@@ -93,6 +93,17 @@ export interface SettledRace {
  */
 export interface RaceSpec
   extends Omit<SettledRace, 'ambientTemp' | 'roadTemp' | 'timeOfDay'> {
+  /**
+   * A course run from a start to a finish somewhere else: a hillclimb, a stage, a
+   * road down a coast. There is no lapping one, so there is no qualifying on one
+   * either — the round goes straight to its race and takes its grid from the
+   * championship table instead. Defaults to what the track's own tags say, and is
+   * settled here for the rounds whose tags do not say it.
+   *
+   * Not part of SettledRace: it decides which sessions a launch runs, not what
+   * goes into race.ini.
+   */
+  pointToPoint: boolean;
   /** Weather folder name, or RANDOM_WEATHER to draw one per launch. */
   weather: string;
   /** Index into GRIP_PRESETS, or RANDOM_GRIP to draw one per launch. */
@@ -197,6 +208,7 @@ export function sanitizeRaceSpec(input: unknown, base: RaceSpec): RaceSpec {
 
   return {
     laps: clamp(raw.laps, base.laps, 1, 500),
+    pointToPoint: bool(raw.pointToPoint, base.pointToPoint),
     weather: typeof raw.weather === 'string' && raw.weather ? raw.weather : base.weather,
     grip: clamp(raw.grip, base.grip, RANDOM_GRIP, GRIP_PRESETS.length - 1),
     ambientTempFrom,
