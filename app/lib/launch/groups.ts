@@ -51,6 +51,7 @@ export function planGroups(order: ChampionshipOpponent[], capacity: number): Lau
 
   return Array.from({ length: count }, (_, index) => ({
     label: LABELS[index] ?? `Group ${index + 1}`,
+    of: count,
     drivers: order.slice(index * per, (index + 1) * per).map(entry => entry.name),
   }));
 }

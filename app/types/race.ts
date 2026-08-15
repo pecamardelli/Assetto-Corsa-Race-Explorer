@@ -71,6 +71,12 @@ export interface SessionInfo {
   // in which case this names the batch. Every group of a round shares its `round`,
   // and the standings classify them as one race.
   group?: string;
+  // How many batches the round was divided into when this one ran, so a round can
+  // be told from the outside whether every batch of it is in yet. Absent on results
+  // filed before the count was recorded, where two batches are taken to be all of
+  // them. Never trust it to be the number of results on file: a batch raced twice
+  // leaves two.
+  group_count?: number;
   // The groups a merged round was assembled from. Only ever set on the synthetic
   // session the standings build; never written to disk.
   groups?: string[];

@@ -165,6 +165,8 @@ export async function ingestResults(
         // a championship at all.
         round: plan.roundNumber,
         ...(plan.group ? { group: plan.group } : {}),
+        // Filed with the batch so the standings know how many more to wait for.
+        ...(plan.group && plan.groupCount ? { group_count: plan.groupCount } : {}),
       };
 
       // Name from the round, not from the file: the season page pairs sessions to

@@ -31,6 +31,12 @@ const DEFAULT_AI_LEVEL = 100;
 export interface LaunchGroup {
   /** Short and stable: "A", "B", "Over 1500cc". Shown on the round's results. */
   label: string;
+  /**
+   * How many batches the round was divided into, this one included. Recorded with
+   * the result so the standings can tell a round that has finished from one that is
+   * still going out — a round is not scored until every batch of it has run.
+   */
+  of?: number;
   /** Roster names racing in this batch. */
   drivers: string[];
 }
@@ -50,6 +56,8 @@ export interface LaunchPlan {
   trackLabel: string;
   /** Set only when this launch is one batch of a round split across several. */
   group?: string;
+  /** How many batches that round was divided into. Set alongside `group`. */
+  groupCount?: number;
   /**
    * True when the round is run from a start to a finish somewhere else, and so is
    * raced without a qualifying — the grid came out of the championship table.
@@ -341,6 +349,7 @@ export async function buildLaunchPlan(
     roundTrack: round.track,
     trackLabel: trackConfig ? `${track} (${trackConfig})` : track,
     group: group?.label,
+    groupCount: group?.of,
     pointToPoint,
     aiSeat,
     record,

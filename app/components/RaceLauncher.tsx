@@ -27,6 +27,8 @@ interface LaunchState {
 /** One batch of a round too big to race at its track in a single go. */
 export interface LaunchGroup {
   label: string;
+  /** How many batches the round was divided into, sent back with the result. */
+  of?: number;
   drivers: string[];
 }
 

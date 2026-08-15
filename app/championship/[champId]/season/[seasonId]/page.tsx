@@ -5,6 +5,7 @@ import { getChampionship } from "../../../../lib/race-data";
 import { getTrackDetails } from "../../../../lib/track-data";
 import { getCarName } from "../../../../lib/car-data";
 import { calculateStandings } from "../../../../lib/standings";
+import { roundFullyRaced } from "../../../../lib/round-groups";
 import { resolveSeasonRaceSpecs } from "../../../../lib/launch/race-spec";
 import { Championship, RaceSession } from "../../../../types/race";
 import { trackConditionLabel, weatherLabel } from "../../../../types/race-spec";
@@ -178,6 +179,9 @@ export default async function SeasonPage({
       practice: practiceSessions.length > 0 ? practiceSessions[0] : null,
       qualifying: qualifyingSessions.length > 0 ? qualifyingSessions[0] : null,
       race: raceSessions.length > 0 ? raceSessions[0] : null,
+      // A round raced in batches is only over once every batch has run: until then
+      // the ones still to go out have to be offered as sessions that count.
+      raceCompleted: roundFullyRaced(raceSessions),
       hasAnySessions:
         practiceSessions.length > 0 ||
         qualifyingSessions.length > 0 ||
@@ -404,6 +408,7 @@ export default async function SeasonPage({
                 practice,
                 qualifying,
                 race,
+                raceCompleted,
                 hasAnySessions,
               }) => {
                 // Get the race date (prefer race session, fall back to qualifying, then practice)
@@ -417,11 +422,6 @@ export default async function SeasonPage({
                       year: "numeric",
                     })
                   : null;
-
-                // A round that already has a race behind it has nothing left to
-                // launch. One the driver quit out of still does.
-                const raceCompleted =
-                  !!race && race.data.session_info.finished !== false;
 
                 return (
                   <div key={roundNumber} className="p-6">

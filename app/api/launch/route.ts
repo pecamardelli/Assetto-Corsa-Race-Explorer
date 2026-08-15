@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     round?: number;
     mode?: string;
     record?: boolean;
-    group?: { label?: unknown; drivers?: unknown };
+    group?: { label?: unknown; of?: unknown; drivers?: unknown };
   };
   try {
     body = await request.json();
@@ -76,7 +76,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    group = { label, drivers };
+    // How many batches the round was divided into. A round only splits into two or
+    // more, so anything else is no answer at all and is left off rather than filed.
+    const of = Number(body.group?.of);
+    group = { label, drivers, ...(Number.isInteger(of) && of > 1 ? { of } : {}) };
   }
 
   try {

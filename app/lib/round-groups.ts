@@ -16,6 +16,15 @@ import { safeNumber } from './format-utils';
  * Merging happens on the way into the standings rather than on the way in from disk,
  * so the season page still lists each group as its own race and you can open one and
  * read it. What the championship counts, though, is the round.
+ *
+ * And it counts nothing until the round is over. A batch on its own is not a result:
+ * the winner of the first eight cars up a hill has not won anything until the other
+ * twenty-four have had their run and the clock has put them all in one order. So the
+ * groups of a round that is still going out are withheld from the standings
+ * altogether — no points, no win, no start — and the round appears the moment its
+ * last batch is filed. Holding them back also keeps the round's own draw still:
+ * batches are seeded on the table, and a table that moved half way through a round
+ * would deal the remaining batches a different set of drivers.
  */
 
 /** Sessions are only ever merged with others carrying the same label here. */
@@ -36,6 +45,63 @@ function groupKey(session: RaceSession): string | null {
   const season = session.filename.split('/').slice(0, -1).join('/');
 
   return `${season}|${round}|${sessionType}`;
+}
+
+/**
+ * How many batches the round these sessions came from was divided into, as they
+ * themselves report it, or null when none of them says.
+ *
+ * The largest answer wins: a round raced before the count was recorded leaves
+ * batches that cannot say, and one of them saying four is enough to know.
+ */
+function declaredGroupCount(members: RaceSession[]): number | null {
+  const counts = members
+    .map(member => safeNumber(member.data.session_info.group_count, 0))
+    .filter(count => count > 1);
+
+  return counts.length ? Math.max(...counts) : null;
+}
+
+/** Batches of a round that have run, counted by name so a re-run is not two. */
+function groupsRun(members: RaceSession[]): number {
+  return new Set(
+    members.map(member => String(member.data.session_info.group ?? '').trim())
+  ).size;
+}
+
+/**
+ * Whether every batch of a round is in.
+ *
+ * Results filed before the count was recorded cannot say how many there were, so
+ * two batches are taken to be the whole round — which is what the standings assumed
+ * of them before this, and the most that can be made of a result that never wrote
+ * the number down. Every launch records it now.
+ */
+function groupsComplete(members: RaceSession[]): boolean {
+  const declared = declaredGroupCount(members);
+  return declared === null ? groupsRun(members) >= 2 : groupsRun(members) >= declared;
+}
+
+/**
+ * Whether the race sessions filed for one round add up to a round that was run.
+ *
+ * The season page asks this to decide whether a round still has racing left in it:
+ * a round part way through its batches must go on offering the rest of them as
+ * sessions that count, rather than as re-runs for the fun of it.
+ */
+export function roundFullyRaced(sessions: RaceSession[]): boolean {
+  // A session the driver quit out of is a partial record, and leaves the round open.
+  const finished = sessions.filter(session => session.data.session_info.finished !== false);
+  if (finished.length === 0) return false;
+
+  const batches = finished.filter(session =>
+    String(session.data.session_info.group ?? '').trim()
+  );
+
+  // Anything filed without a batch name is the round raced whole, and settles it.
+  if (batches.length < finished.length) return true;
+
+  return groupsComplete(batches);
 }
 
 /** Laps a driver got round, counting the part-lap a retirement stopped on. */
@@ -141,12 +207,17 @@ export function mergeGroupedRounds(sessions: RaceSession[]): RaceSession[] {
     else grouped.set(key, [session]);
   }
 
-  // One group is a round that happened to be labelled, not a round that was split.
+  // A round still going out scores nothing at all: its batches are set aside here
+  // and come back as one round once the last of them has run.
+  const withheld = new Set<RaceSession>();
   for (const [key, members] of grouped) {
-    if (members.length < 2) grouped.delete(key);
+    if (groupsComplete(members)) continue;
+
+    for (const member of members) withheld.add(member);
+    grouped.delete(key);
   }
 
-  if (grouped.size === 0) return sessions;
+  if (grouped.size === 0 && withheld.size === 0) return sessions;
 
   const merged = new Set<RaceSession>();
   for (const members of grouped.values()) {
@@ -157,6 +228,9 @@ export function mergeGroupedRounds(sessions: RaceSession[]): RaceSession[] {
   const output: RaceSession[] = [];
 
   for (const session of sessions) {
+    // A batch of a round that is not finished yet is no part of anything scored.
+    if (withheld.has(session)) continue;
+
     if (!merged.has(session)) {
       output.push(session);
       continue;

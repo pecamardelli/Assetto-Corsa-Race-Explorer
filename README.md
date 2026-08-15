@@ -81,6 +81,18 @@ Each round on a season page carries its actions in one menu. They write
 | **Race Again** | Replaces **Start Race** once the round has been raced: the same weekend, with nothing recorded. |
 | **Group A / B / …** | One batch of a round too big for its track. Each batch is a session of its own; the standings classify the round on all of them together. |
 
+A round raced in batches scores nothing until the last of them is filed. A batch on
+its own is not a result — the winner of the first eight cars up a hill has won
+nothing until the other twenty-four have run and the clock has put them all in one
+order — so the batches of a round still going out are held back from the standings
+entirely: no points, no win, no start recorded. The round appears complete the moment
+its final batch lands. Each result records how many batches the round was divided
+into (`session_info.group_count`), which is how the standings know how many they are
+waiting for; results filed before that was recorded take two batches to be all of
+them. Holding a part-raced round back also keeps its own draw still, since batches
+are seeded on the table and a table that moved mid-round would deal the remaining
+batches a different set of drivers.
+
 ### Point-to-point rounds
 
 A hillclimb, a stage or a run down a coast road cannot be lapped, so there is
