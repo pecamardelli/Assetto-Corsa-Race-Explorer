@@ -1,5 +1,4 @@
-import { ChampionshipOpponent } from '../../types/race';
-import { CAR_CLASSES, CarClass, classOfCar, displacementOf } from '../car-classes';
+import { ChampionshipOpponent, DriverStanding } from '../../types/race';
 import { getTrackData } from '../track-data';
 import { LaunchGroup, resolveTrack } from './plan';
 
@@ -7,16 +6,19 @@ import { LaunchGroup, resolveTrack } from './plan';
  * Splitting a round that will not fit its track.
  *
  * A pass with sixteen pit boxes cannot take a thirty-two car championship, and the
- * period answer was not to leave half the field at home: the entry was divided by
- * engine size and each class ran its own batch, all of them classified together on
- * the clock afterwards. That is what this builds — the batches. Putting them back
- * together is `mergeGroupedRounds`.
+ * answer is not to leave half the field at home: it goes out in batches, each racing
+ * on its own, all of them classified together on the clock afterwards. That is what
+ * this builds — the batches. Putting them back together is `mergeGroupedRounds`.
  *
- * Classes come out in ascending order, smallest engines first, the way an entry list
- * was printed. Neighbouring classes share a batch when they fit in one, because a
- * two-car race is not worth loading the game for; a class too big for the track on
- * its own is split by engine size, so even then the batches mean something.
+ * The batches are seeded on the championship, best-placed first, so the sharp end of
+ * the table runs together and a driver meets the people they are actually fighting.
+ * Before a season has a result to seed on there is nothing to sort by, so the first
+ * round is drawn at random — from the round's own name, so the same round always
+ * draws the same way and the batch you were shown is the batch you race.
  */
+
+/** Batch names, in the order they go out. */
+const LABELS = ['Group A', 'Group B', 'Group C', 'Group D', 'Group E', 'Group F'];
 
 /** Pit boxes the round's track has, or null when its data is not on file. */
 export function pitCapacity(roundTrack: string, track: string, trackConfig: string): number | null {
@@ -32,127 +34,91 @@ export async function pitCapacityFor(roundTrack: string): Promise<number | null>
   return pitCapacity(roundTrack, track, trackConfig);
 }
 
-interface Bucket {
-  carClass: CarClass;
-  entries: ChampionshipOpponent[];
-}
-
-/** Smallest engine a class admits: whatever the class below it stopped at. */
-function lowerLimit(carClass: CarClass): number {
-  const index = CAR_CLASSES.indexOf(carClass);
-  return index > 0 ? CAR_CLASSES[index - 1].limit : 0;
-}
-
-/**
- * What to call a batch, written the way an entry list would write it.
- *
- * Several classes sharing a batch are named as the one bracket they span — "up to
- * 3000cc" rather than a string of every class inside it, which is both how it would
- * have been printed and short enough to read in a menu.
- */
-function rangeLabel(buckets: Bucket[], smallest?: CarClass): string {
-  // Nothing in the field runs below the smallest class entered, so the batch holding
-  // it reads as an open bracket rather than one bounded from underneath by a class
-  // no one is in: "up to 3000cc", not "750–3000cc".
-  const from = buckets[0].carClass === smallest ? 0 : lowerLimit(buckets[0].carClass);
-  const to = buckets[buckets.length - 1].carClass.limit;
-
-  if (to === Infinity) return from > 0 ? `over ${from}cc` : 'all classes';
-  if (from === 0) return `up to ${to}cc`;
-
-  return `${from}–${to}cc`;
-}
-
-/** The field by class, smallest engines first, empty classes left out. */
-function bucketByClass(opponents: ChampionshipOpponent[]): Bucket[] {
-  const byLabel = new Map<string, ChampionshipOpponent[]>();
-
-  for (const opponent of opponents) {
-    const label = classOfCar(opponent.car).label;
-    const existing = byLabel.get(label);
-    if (existing) existing.push(opponent);
-    else byLabel.set(label, [opponent]);
+/** mulberry32, seeded off a string: same seed, same shuffle, run after run. */
+function randomFrom(seed: string): () => number {
+  let hash = 0x811c9dc5;
+  for (let index = 0; index < seed.length; index += 1) {
+    hash = Math.imul(hash ^ seed.charCodeAt(index), 0x01000193) >>> 0;
   }
 
-  return CAR_CLASSES.filter(carClass => byLabel.has(carClass.label)).map(carClass => ({
-    carClass,
-    entries: byLabel.get(carClass.label) as ChampionshipOpponent[],
-  }));
+  return () => {
+    hash = (hash + 0x6d2b79f5) >>> 0;
+    let value = Math.imul(hash ^ (hash >>> 15), 1 | hash);
+    value = (value + Math.imul(value ^ (value >>> 7), 61 | value)) ^ value;
+    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** Fisher-Yates, drawing from `next`. */
+function shuffled<T>(items: T[], next: () => number): T[] {
+  const out = [...items];
+  for (let i = out.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(next() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
 }
 
 /**
- * Break a class that will not fit the track into batches that will.
+ * Has this season produced anything to seed on?
  *
- * Sorted by engine size, biggest first, so the split still falls somewhere sensible
- * rather than wherever the roster happened to list people. Batches are evened out —
- * eighteen cars into sixteen boxes goes as nine and nine, not sixteen and two.
+ * Qualifying alone does not count. Standings exist the moment any session is on file,
+ * but until a race has been classified every driver sits on nothing and the order is
+ * whatever the tie-break fell back to — which is alphabetical, not a championship.
  */
-function splitClass(bucket: Bucket, capacity: number, smallest?: CarClass): LaunchGroup[] {
-  const count = Math.ceil(bucket.entries.length / capacity);
-  const ordered = [...bucket.entries].sort((a, b) => {
-    const sizeA = displacementOf(a.car) ?? 0;
-    const sizeB = displacementOf(b.car) ?? 0;
-    if (sizeA !== sizeB) return sizeB - sizeA;
-    return a.name.localeCompare(b.name);
+export function seasonHasForm(standings: DriverStanding[]): boolean {
+  return standings.some(entry => entry.racesCompleted > 0);
+}
+
+/**
+ * The field in running order: championship leader first, then down the table.
+ *
+ * A driver the standings have never seen — a mid-season entry, or anyone who has yet
+ * to take a start — keeps their roster order and goes to the back, behind everyone
+ * who has actually scored.
+ */
+export function orderByStandings(
+  opponents: ChampionshipOpponent[],
+  standings: DriverStanding[]
+): ChampionshipOpponent[] {
+  const position = new Map(standings.map((entry, index) => [entry.name, index]));
+
+  return [...opponents].sort((a, b) => {
+    const rankA = position.get(a.name) ?? Infinity;
+    const rankB = position.get(b.name) ?? Infinity;
+    if (rankA !== rankB) return rankA - rankB;
+    return opponents.indexOf(a) - opponents.indexOf(b);
   });
+}
 
-  const per = Math.ceil(ordered.length / count);
-
-  return Array.from({ length: count }, (_, index) => ({
-    label: `${rangeLabel([bucket], smallest)} (${index + 1} of ${count})`,
-    drivers: ordered.slice(index * per, (index + 1) * per).map(entry => entry.name),
-  }));
+/** The field drawn at random, the same way every time for a given `seed`. */
+export function orderAtRandom(
+  opponents: ChampionshipOpponent[],
+  seed: string
+): ChampionshipOpponent[] {
+  return shuffled(opponents, randomFrom(seed));
 }
 
 /**
  * How a round should be divided to fit `capacity` cars at a time.
  *
+ * `order` is the field already in running order — see `orderByStandings` and
+ * `orderAtRandom`. Batches are evened out rather than filled to the brim: twenty-one
+ * cars into sixteen boxes goes as eleven and ten, not sixteen and five, because a
+ * five-car race is not worth loading the game for.
+ *
  * Returns an empty list when the field already fits, which is the ordinary case and
  * the caller's signal to race the round whole.
  */
-export function planClassGroups(
-  opponents: ChampionshipOpponent[],
-  capacity: number
-): LaunchGroup[] {
+export function planGroups(order: ChampionshipOpponent[], capacity: number): LaunchGroup[] {
   if (capacity < 2) return [];
-  if (opponents.length <= capacity) return [];
+  if (order.length <= capacity) return [];
 
-  const buckets = bucketByClass(opponents);
-  const smallest = buckets[0]?.carClass;
+  const count = Math.ceil(order.length / capacity);
+  const per = Math.ceil(order.length / count);
 
-  const groups: LaunchGroup[] = [];
-
-  let pending: Bucket[] = [];
-  let pendingSize = 0;
-
-  const flush = () => {
-    if (!pending.length) return;
-
-    groups.push({
-      label: rangeLabel(pending, smallest),
-      drivers: pending.flatMap(bucket => bucket.entries.map(entry => entry.name)),
-    });
-
-    pending = [];
-    pendingSize = 0;
-  };
-
-  for (const bucket of buckets) {
-    // A class bigger than the track has to be broken up, and nothing can share a
-    // batch with it, so whatever was waiting goes out first.
-    if (bucket.entries.length > capacity) {
-      flush();
-      groups.push(...splitClass(bucket, capacity, smallest));
-      continue;
-    }
-
-    if (pendingSize + bucket.entries.length > capacity) flush();
-
-    pending.push(bucket);
-    pendingSize += bucket.entries.length;
-  }
-
-  flush();
-
-  return groups;
+  return Array.from({ length: count }, (_, index) => ({
+    label: LABELS[index] ?? `Group ${index + 1}`,
+    drivers: order.slice(index * per, (index + 1) * per).map(entry => entry.name),
+  }));
 }

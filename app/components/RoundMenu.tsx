@@ -21,7 +21,7 @@ interface LaunchEntry {
   mode: LaunchMode;
   /** Whether the sessions this entry runs belong in the season. */
   record: boolean;
-  /** Set on the entries of a round being raced a class at a time. */
+  /** Set on the entries of a round being raced a batch at a time. */
   group?: LaunchGroup;
 }
 
@@ -30,6 +30,8 @@ interface RoundGroups {
   capacity: number | null;
   entries: number;
   splitRequired: boolean;
+  /** What the batches were seeded on: the season's table, or an opening-round draw. */
+  seededOn: 'standings' | 'random';
   groups: LaunchGroup[];
 }
 
@@ -43,7 +45,7 @@ const ICON_GROUP = 'M17 20h5v-2a3 3 0 00-5.36-1.9M17 20H7m10 0v-2c0-.66-.13-1.3-
 /** Roughly how tall the menu gets, for deciding which way it should open. */
 const MENU_HEIGHT_PX = 200;
 
-/** Added to that for each extra row a round split into classes contributes. */
+/** Added to that for each extra row a round split into batches contributes. */
 const MENU_ROW_PX = 36;
 
 export default function RoundMenu({
@@ -156,7 +158,7 @@ export default function RoundMenu({
     ? [
         // With qualifying already on the books there is nothing left to run but the
         // race itself, and its grid is rebuilt from that result rather than driven
-        // for a second time. A round going out in classes qualifies each of them as
+        // for a second time. A round going out in batches qualifies each of them as
         // it goes, so the shortcut is not offered there.
         ...(qualifyingRecorded && !raceCompleted && !split
           ? [
@@ -171,15 +173,19 @@ export default function RoundMenu({
               },
             ]
           : []),
-        // A field too big for the track goes out a class at a time, each batch its
-        // own session. The standings put them back together into one result.
+        // A field too big for the track goes out a batch at a time, each its own
+        // session. The standings put them back together into one result.
         ...(split
           ? split.map((group, index) => ({
               key: `group-${index}`,
               label: group.label,
               hint: raceCompleted
-                ? `Run this class again for the fun of it (${group.drivers.length} cars) — no result is recorded`
-                : `Qualify and race the ${group.label} class (${group.drivers.length} cars) — the round is classified once every class has run`,
+                ? `Run this batch again for the fun of it (${group.drivers.length} cars) — no result is recorded`
+                : `Qualify and race ${group.label} (${group.drivers.length} cars, ${
+                    groups?.seededOn === 'random'
+                      ? 'drawn at random for the opening round'
+                      : 'seeded on the championship'
+                  }) — the round is classified once every batch has run`,
               icon: ICON_GROUP,
               tone: raceCompleted ? 'text-amber-400' : 'text-red-400',
               mode: 'weekend' as const,
