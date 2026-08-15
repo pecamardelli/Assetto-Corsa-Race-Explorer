@@ -79,6 +79,23 @@ const countryCodeMap: Record<string, string> = {
   'SWITZERLAND': 'CH',
   'AUSTRIA': 'AT',
   'MONACO': 'MC',
+  // Countries as their own tracks name them: a ui_track.json carries whatever its
+  // author typed, and an Italian track is as likely to say Italia as Italy.
+  'ITALIA': 'IT',
+  'DEUTSCHLAND': 'DE',
+  'ÖSTERREICH': 'AT',
+  'OSTERREICH': 'AT',
+  'SCHWEIZ': 'CH',
+  'SUISSE': 'CH',
+  'SVIZZERA': 'CH',
+  'BELGIQUE': 'BE',
+  'BELGIË': 'BE',
+  'BELGIE': 'BE',
+  'ESPAÑA': 'ES',
+  'ESPANA': 'ES',
+  'MAGYARORSZÁG': 'HU',
+  'MAGYARORSZAG': 'HU',
+  'NEDERLAND': 'NL',
 };
 
 export default function FlagIcon({ nation }: FlagIconProps) {
