@@ -1,1 +1,354 @@
-{"name":"Coppa Brescia 1938","rules":{"practice":0,"qualifying":20,"points":[25,18,15,12,10,8,6,4,2,1],"penalties":false,"jumpstart":1},"opponents":[{"name":"Pablin","skin":"4light_blue","car":"exmods_fiat_508s_balilla","ballast":0,"restrictor":0,"nation":"ARG"},{"name":"Fernando Camardelli","skin":"1white","car":"exmods_fiat_508s_balilla","ballast":0,"restrictor":0,"nation":"ARG"},{"name":"Clemente Biondetti","skin":"11bright","car":"exmods_alfa_8c_2900b_mm_roadster","ballast":0,"restrictor":0,"nation":"ITA"},{"name":"Carlo Pintacuda","skin":"10dark_red","car":"exmods_alfa_8c_2900b_mm_roadster","ballast":0,"restrictor":0,"nation":"ITA"},{"name":"Achille Varzi","skin":"0","car":"alfa_romeo_tipo_b","ballast":0,"restrictor":0,"nation":"ITA"},{"name":"Antonio Brivio","skin":"3","car":"alfa_romeo_tipo_b","ballast":0,"restrictor":0,"nation":"ITA"},{"name":"Christian Werner","skin":"007","car":"mercedes_ssk_1928","ballast":0,"restrictor":0,"nation":"DEU"},{"name":"Otto Merz","skin":"010","car":"mercedes_ssk_1928","ballast":0,"restrictor":0,"nation":"DEU"},{"name":"Louis Chiron","skin":"Green","car":"bugatti_57sc_tour_1937","ballast":0,"restrictor":0,"nation":"MCO"},{"name":"Maurice Trintignant","skin":"Green","car":"bugatti_57sc_tour_1937","ballast":0,"restrictor":0,"nation":"FRA"},{"name":"Rudolf Caracciola","skin":"001","car":"mercedes_ssk_1930","ballast":0,"restrictor":0,"nation":"DEU"},{"name":"Hans Stuck","skin":"003","car":"mercedes_ssk_1930","ballast":0,"restrictor":0,"nation":"DEU"},{"name":"Manfred von Brauchitsch","skin":"White","car":"bg_mercedes_500k","ballast":0,"restrictor":0,"nation":"DEU"},{"name":"Huschke von Hanstein","skin":"Black","car":"bg_mercedes_500k","ballast":0,"restrictor":0,"nation":"DEU"},{"name":"Eddie Hall","skin":"green","car":"legion_bentley_blower","ballast":0,"restrictor":0,"nation":"GBR"},{"name":"Forrest Lycett","skin":"blue","car":"legion_bentley_blower","ballast":0,"restrictor":0,"nation":"GBR"},{"name":"Robert Benoist","skin":"3dark_blue","car":"exmods_bug_type57sc_atlantic","ballast":0,"restrictor":0,"nation":"FRA"},{"name":"Jean Trémoulet","skin":"4light_blue","car":"exmods_bug_type57sc_atlantic","ballast":0,"restrictor":0,"nation":"FRA"},{"name":"Jean-Pierre Wimille","skin":"bleu_de_france","car":"bugatti_type_57g","ballast":0,"restrictor":0,"nation":"FRA"},{"name":"Pierre Veyron","skin":"2_4k","car":"bugatti_type_57g","ballast":0,"restrictor":0,"nation":"FRA"},{"name":"Piero Taruffi","skin":"rosso","car":"gd_alfa_romeo_8c_2300","ballast":0,"restrictor":0,"nation":"ITA"},{"name":"Raymond Sommer","skin":"azzurro","car":"gd_alfa_romeo_8c_2300","ballast":0,"restrictor":0,"nation":"FRA"},{"name":"Tommy Wisdom","skin":"5dark_green","car":"exmods_jaguar_ss100","ballast":0,"restrictor":0,"nation":"GBR"},{"name":"Sammy Newsome","skin":"6light_green","car":"exmods_jaguar_ss100","ballast":0,"restrictor":0,"nation":"GBR"},{"name":"Louis Gerard","skin":"Blue","car":"Delage_D8_1936","ballast":0,"restrictor":0,"nation":"FRA"},{"name":"Georges Comotti","skin":"Black","car":"Delage_D8_1936","ballast":0,"restrictor":0,"nation":"FRA"},{"name":"Marcel Mongin","skin":"9cream","car":"exmods_av_voisin_c25_aero","ballast":0,"restrictor":0,"nation":"FRA"},{"name":"André Lefèbvre","skin":"8golden","car":"exmods_av_voisin_c25_aero","ballast":0,"restrictor":0,"nation":"FRA"},{"name":"A.F.P. Fane","skin":"BRG_7","car":"frazer_nash_TT_1934","ballast":0,"restrictor":0,"nation":"GBR"},{"name":"H.J. Aldington","skin":"BRG_1","car":"frazer_nash_TT_1934","ballast":0,"restrictor":0,"nation":"GBR"},{"name":"St John Horsfall","skin":"5dark_green","car":"rz_aston_ulster","ballast":0,"restrictor":0,"nation":"GBR"},{"name":"Giovanni Lurani","skin":"6light_green","car":"rz_aston_ulster","ballast":0,"restrictor":0,"nation":"ITA"}],"rounds":[{"track":"rmi_circuitoditalia","laps":8,"weather":3,"surface":3},{"track":"monza_faux_pre-war","laps":8,"weather":3,"surface":3},{"track":"toscana-layout_stradale","laps":10,"weather":3,"surface":3},{"track":"trento-bondone-ep-uphill_summer","laps":1,"weather":3,"surface":3},{"track":"CesanaSestriere-CesanaSestriere","laps":1,"weather":3,"surface":3},{"track":"alpine_pass","laps":1,"weather":3,"surface":3},{"track":"amalfidrive-costaditalia_positano","laps":1,"weather":3,"surface":3},{"track":"tripoli","laps":5,"weather":3,"surface":3},{"track":"ablz_targaflorio73_winter-stage_1","laps":1,"weather":3,"surface":3},{"track":"ablz_targaflorio73_winter-stage_2","laps":1,"weather":3,"surface":3},{"track":"ablz_targaflorio73_winter-stage_3","laps":1,"weather":3,"surface":3},{"track":"ablz_targaflorio73_winter-stage_4","laps":1,"weather":3,"surface":3},{"track":"ablz_targaflorio73_winter-stage_5","laps":1,"weather":3,"surface":3}],"maxCars":32}
+{
+  "name": "Coppa Brescia 1938",
+  "rules": {
+    "practice": 0,
+    "qualifying": 20,
+    "points": [
+      25,
+      18,
+      15,
+      12,
+      10,
+      8,
+      6,
+      4,
+      2,
+      1
+    ],
+    "penalties": false,
+    "jumpstart": 1
+  },
+  "opponents": [
+    {
+      "name": "Pablin",
+      "skin": "4light_blue",
+      "car": "exmods_fiat_508s_balilla",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "ARG"
+    },
+    {
+      "name": "Fernando Camardelli",
+      "skin": "1white",
+      "car": "exmods_fiat_508s_balilla",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "ARG"
+    },
+    {
+      "name": "Clemente Biondetti",
+      "skin": "11bright",
+      "car": "exmods_alfa_8c_2900b_mm_roadster",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "ITA"
+    },
+    {
+      "name": "Carlo Pintacuda",
+      "skin": "10dark_red",
+      "car": "exmods_alfa_8c_2900b_mm_roadster",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "ITA"
+    },
+    {
+      "name": "Achille Varzi",
+      "skin": "0",
+      "car": "alfa_romeo_tipo_b",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "ITA"
+    },
+    {
+      "name": "Antonio Brivio",
+      "skin": "3",
+      "car": "alfa_romeo_tipo_b",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "ITA"
+    },
+    {
+      "name": "Christian Werner",
+      "skin": "007",
+      "car": "mercedes_ssk_1928",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "DEU"
+    },
+    {
+      "name": "Otto Merz",
+      "skin": "010",
+      "car": "mercedes_ssk_1928",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "DEU"
+    },
+    {
+      "name": "Louis Chiron",
+      "skin": "Green",
+      "car": "bugatti_57sc_tour_1937",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "MCO"
+    },
+    {
+      "name": "Maurice Trintignant",
+      "skin": "Green",
+      "car": "bugatti_57sc_tour_1937",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "Rudolf Caracciola",
+      "skin": "001",
+      "car": "mercedes_ssk_1930",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "DEU"
+    },
+    {
+      "name": "Hans Stuck",
+      "skin": "003",
+      "car": "mercedes_ssk_1930",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "DEU"
+    },
+    {
+      "name": "Manfred von Brauchitsch",
+      "skin": "White",
+      "car": "bg_mercedes_500k",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "DEU"
+    },
+    {
+      "name": "Huschke von Hanstein",
+      "skin": "Black",
+      "car": "bg_mercedes_500k",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "DEU"
+    },
+    {
+      "name": "Eddie Hall",
+      "skin": "green",
+      "car": "legion_bentley_blower",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "GBR"
+    },
+    {
+      "name": "Forrest Lycett",
+      "skin": "blue",
+      "car": "legion_bentley_blower",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "GBR"
+    },
+    {
+      "name": "Robert Benoist",
+      "skin": "3dark_blue",
+      "car": "exmods_bug_type57sc_atlantic",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "Jean Trémoulet",
+      "skin": "4light_blue",
+      "car": "exmods_bug_type57sc_atlantic",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "Jean-Pierre Wimille",
+      "skin": "bleu_de_france",
+      "car": "bugatti_type_57g",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "Pierre Veyron",
+      "skin": "2_4k",
+      "car": "bugatti_type_57g",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "Piero Taruffi",
+      "skin": "rosso",
+      "car": "gd_alfa_romeo_8c_2300",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "ITA"
+    },
+    {
+      "name": "Raymond Sommer",
+      "skin": "azzurro",
+      "car": "gd_alfa_romeo_8c_2300",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "Tommy Wisdom",
+      "skin": "5dark_green",
+      "car": "exmods_jaguar_ss100",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "GBR"
+    },
+    {
+      "name": "Sammy Newsome",
+      "skin": "6light_green",
+      "car": "exmods_jaguar_ss100",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "GBR"
+    },
+    {
+      "name": "Louis Gerard",
+      "skin": "Blue",
+      "car": "Delage_D8_1936",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "Georges Comotti",
+      "skin": "Black",
+      "car": "Delage_D8_1936",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "Marcel Mongin",
+      "skin": "9cream",
+      "car": "exmods_av_voisin_c25_aero",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "André Lefèbvre",
+      "skin": "8golden",
+      "car": "exmods_av_voisin_c25_aero",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "A.F.P. Fane",
+      "skin": "BRG_7",
+      "car": "frazer_nash_TT_1934",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "GBR"
+    },
+    {
+      "name": "H.J. Aldington",
+      "skin": "BRG_1",
+      "car": "frazer_nash_TT_1934",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "GBR"
+    },
+    {
+      "name": "St John Horsfall",
+      "skin": "5dark_green",
+      "car": "rz_aston_ulster",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "GBR"
+    },
+    {
+      "name": "Giovanni Lurani",
+      "skin": "6light_green",
+      "car": "rz_aston_ulster",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "ITA"
+    }
+  ],
+  "rounds": [
+    {
+      "track": "rmi_circuitoditalia",
+      "laps": 8,
+      "weather": 3,
+      "surface": 3
+    },
+    {
+      "track": "monza_faux_pre-war",
+      "laps": 8,
+      "weather": 3,
+      "surface": 3
+    },
+    {
+      "track": "toscana-layout_stradale",
+      "laps": 10,
+      "weather": 3,
+      "surface": 3
+    },
+    {
+      "track": "trento-bondone-ep-uphill_summer",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3
+    },
+    {
+      "track": "CesanaSestriere-CesanaSestriere",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3
+    },
+    {
+      "track": "amalfidrive-costaditalia_positano",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3
+    },
+    {
+      "track": "tripoli",
+      "laps": 5,
+      "weather": 3,
+      "surface": 3
+    },
+    {
+      "track": "ablz_targaflorio73_winter-stage_1",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3
+    },
+    {
+      "track": "ablz_targaflorio73_winter-stage_2",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3
+    },
+    {
+      "track": "ablz_targaflorio73_winter-stage_3",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3
+    },
+    {
+      "track": "ablz_targaflorio73_winter-stage_4",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3
+    },
+    {
+      "track": "ablz_targaflorio73_winter-stage_5",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3
+    }
+  ],
+  "maxCars": 32
+}
