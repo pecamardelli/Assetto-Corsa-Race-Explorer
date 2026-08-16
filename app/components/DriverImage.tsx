@@ -10,6 +10,8 @@ interface DriverImageProps {
    * Omit it entirely to fall back to probing extensions from the browser.
    */
   src?: string | null;
+  /** Overrides the default portrait size/shape, for callers with tighter cards. */
+  className?: string;
 }
 
 // Only used by the legacy probing path, for callers that pass no `src`.
@@ -23,7 +25,11 @@ function placeholder(driverName: string): string {
   );
 }
 
-export default function DriverImage({ driverName, src }: DriverImageProps) {
+export default function DriverImage({
+  driverName,
+  src,
+  className = "w-48 h-48 rounded-lg border-2 border-zinc-700 object-cover",
+}: DriverImageProps) {
   const [extensionIndex, setExtensionIndex] = useState(0);
   const imgRef = useRef<HTMLImageElement>(null);
 
@@ -50,7 +56,7 @@ export default function DriverImage({ driverName, src }: DriverImageProps) {
       ref={imgRef}
       src={imagePath}
       alt={driverName}
-      className="w-48 h-48 rounded-lg border-2 border-zinc-700 object-cover"
+      className={className}
       onError={handleImageError}
     />
   );

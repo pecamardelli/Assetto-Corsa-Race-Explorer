@@ -11,9 +11,14 @@ export interface CarData {
 }
 
 const carsDataDir = path.join(process.cwd(), 'app', 'data', 'cars');
+const galleryDir = path.join(process.cwd(), 'public', 'car-gallery');
 
 // Cache for car data to avoid repeated file reads
 const carDataCache = new Map<string, CarData | null>();
+
+// A handful of cars never had a skin preview copied over, so the lookup is cached
+// the same way the data is: pages ask for it once per car and per render.
+const previewCache = new Map<string, string | null>();
 
 /**
  * Load car data from the cars data folder
@@ -56,6 +61,23 @@ export function getCarName(carName: string): string {
   }
   // Fallback to formatted car_name
   return carName.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+/**
+ * Where a car's skin preview can be loaded from, or null when none was copied.
+ * The gallery script lands the preview first, so photo 01 is that shot.
+ * @param carName - The car folder name
+ */
+export function getCarPreviewUrl(carName: string): string | null {
+  if (previewCache.has(carName)) {
+    return previewCache.get(carName)!;
+  }
+
+  const url = fs.existsSync(path.join(galleryDir, carName, '01.webp'))
+    ? `/car-gallery/${carName}/01.webp`
+    : null;
+  previewCache.set(carName, url);
+  return url;
 }
 
 /**

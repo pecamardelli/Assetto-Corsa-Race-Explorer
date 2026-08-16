@@ -2,16 +2,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getChampionship } from "../../../../../lib/race-data";
-import { getCarDetails } from "../../../../../lib/car-data";
+import { getCarData, getCarDetails, getCarPreviewUrl } from "../../../../../lib/car-data";
 import { calculateStandings } from "../../../../../lib/standings";
 import BackButton from "../../../../../components/BackButton";
-import FlagIcon from "../../../../../components/FlagIcon";
-import DriverImage from "../../../../../components/DriverImage";
+import LineupDriverCard, {
+  type LineupDriver,
+} from "../../../../../components/LineupDriverCard";
 import {
   getDriverProfiles,
   resolveDriverPortraits,
-  profileAge,
-  type DriverProfile,
 } from "../../../../../lib/driver-assets";
 
 export default async function LineupPage({
@@ -101,13 +100,10 @@ export default async function LineupPage({
     resolveDriverPortraits(opponentNames, decodedChampId),
   ]);
 
-  const carDriverMap = new Map<
-    string,
-    Array<{ name: string; nation: string; profile: DriverProfile | null; portrait: string | null; championshipWins: number; isReigningChampion: boolean }>
-  >();
+  const carDriverMap = new Map<string, LineupDriver[]>();
 
   for (const opponent of data.opponents) {
-    const driverInfo = {
+    const driverInfo: LineupDriver = {
       name: opponent.name,
       nation: opponent.nation,
       profile: profiles.get(opponent.name) ?? null,
@@ -124,11 +120,27 @@ export default async function LineupPage({
 
   // Convert to array and sort by car name
   const carsWithDrivers = Array.from(carDriverMap.entries())
-    .map(([carName, drivers]) => ({
-      carName,
-      carDetails: getCarDetails(carName),
-      drivers,
-    }))
+    .map(([carName, drivers]) => {
+      // The row's stat line quotes the car's own UI specs, so anything a mod
+      // leaves out drops off the line rather than showing a blank. A zeroed
+      // figure ("0 km/h") is a mod's unfilled field, not a real number.
+      const specs = (getCarData(carName)?.specs ?? {}) as Record<string, string>;
+      const spec = (value?: string) =>
+        value && !/^0[\s.]/.test(value.trim()) ? value.trim() : undefined;
+      const stats = [
+        { label: "Power", value: [spec(specs.bhp), spec(specs.torque)].filter(Boolean).join(" / ") },
+        { label: "Weight", value: spec(specs.weight) },
+        { label: "Top Speed", value: spec(specs.topspeed) },
+      ].filter((stat) => stat.value);
+
+      return {
+        carName,
+        carDetails: getCarDetails(carName),
+        preview: getCarPreviewUrl(carName),
+        stats,
+        drivers,
+      };
+    })
     .sort((a, b) => a.carDetails.brand.localeCompare(b.carDetails.brand));
 
   return (
@@ -173,157 +185,111 @@ export default async function LineupPage({
       </section>
 
       <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
-        {/* Cars and Drivers Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {carsWithDrivers.map(({ carName, carDetails, drivers }) => (
+        {/* One full-width row per car: the preview, then the car's badge over its
+            data, then the drivers filling the rest of the row. */}
+        <div className="space-y-4">
+          {carsWithDrivers.map(({ carName, carDetails, preview, stats, drivers }) => {
+            // Two or three drivers to a car leave room to read, so they get the
+            // roomy card; a full works team of five needs the compact one.
+            const extended = drivers.length <= 3;
+
+            // The cards split whatever width the car's columns leave, so a pair
+            // takes half each instead of sitting in a rank of empty slots.
+            const columnClass = [
+              "xl:grid-cols-1",
+              "xl:grid-cols-2",
+              "xl:grid-cols-3",
+              "xl:grid-cols-4",
+              "xl:grid-cols-5",
+            ][Math.min(drivers.length, 5) - 1];
+
+            return (
             <div
               key={carName}
-              className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6"
+              className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-4 flex flex-col gap-4 xl:flex-row xl:items-stretch"
             >
-              {/* Car Header */}
+              {/* Car preview, run to the full height of the row */}
               <Link
                 href={`/car/${encodeURIComponent(carName)}`}
-                className="flex items-center gap-4 mb-6 pb-4 border-b border-zinc-700 group cursor-pointer"
+                className="relative flex-shrink-0 w-full aspect-video xl:aspect-auto xl:w-64 group"
+              >
+                {preview ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={preview}
+                    alt={carDetails.name}
+                    className="absolute inset-0 h-full w-full object-cover rounded-lg border border-zinc-700 transition-colors group-hover:border-purple-500/60"
+                  />
+                ) : (
+                  <div className="absolute inset-0 rounded-lg border border-dashed border-zinc-700 flex items-center justify-center text-xs text-zinc-600">
+                    No preview
+                  </div>
+                )}
+              </Link>
+
+              {/* Car badge over its identity and specs */}
+              <Link
+                href={`/car/${encodeURIComponent(carName)}`}
+                className="flex-shrink-0 w-full xl:w-64 group"
+                title={carDetails.name}
               >
                 <Image
                   src={`/badges/${carName}.png`}
                   alt={carDetails.brand}
-                  width={60}
-                  height={60}
-                  className="rounded-lg transition-transform group-hover:scale-105"
+                  width={72}
+                  height={72}
+                  className="mb-2 rounded-lg transition-transform group-hover:scale-105"
+                  // A badge that isn't square keeps its shape rather than being
+                  // squeezed into the 72px box.
+                  style={{ width: 72, height: "auto" }}
                   unoptimized
                 />
-                <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-white group-hover:text-purple-400 transition-colors">
-                    {carDetails.brand}
-                  </h2>
-                  <div className="text-lg text-zinc-300">{carDetails.model}</div>
+                <div className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">
+                  {carDetails.brand}
+                </div>
+                <div className="text-sm text-zinc-300">
+                  {carDetails.model}
                   {carDetails.year && (
-                    <div className="text-sm text-zinc-500">{carDetails.year}</div>
+                    <span className="text-zinc-500"> · {carDetails.year}</span>
                   )}
                 </div>
-                <div className="text-right">
-                  <div className="text-sm text-zinc-500">Drivers</div>
-                  <div className="text-2xl font-bold text-purple-400">
-                    {drivers.length}
+                {stats.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
+                    {stats.map((stat) => (
+                      <div key={stat.label}>
+                        <div className="text-[10px] uppercase tracking-wide text-zinc-500">
+                          {stat.label}
+                        </div>
+                        <div className="text-xs font-semibold text-zinc-300 whitespace-nowrap">
+                          {stat.value}
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
+                )}
               </Link>
 
-              {/* Drivers List */}
-              <div className="space-y-4">
-                {drivers.map((driver) => {
-                  const age = driver.profile ? profileAge(driver.profile) : null;
-
-                  return (
-                    <Link
-                      key={driver.name}
-                      href={`/driver/${encodeURIComponent(driver.name)}`}
-                      className={`relative flex items-start gap-4 p-4 rounded-lg border transition-all group ${
-                        driver.isReigningChampion
-                          ? 'bg-gradient-to-br from-amber-500/10 via-zinc-900/50 to-zinc-900/50 border-amber-500/50 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/20'
-                          : 'bg-zinc-900/50 border-zinc-700/50 hover:border-purple-500/50 hover:bg-zinc-900/80'
-                      }`}
-                    >
-                      {/* Reigning Champion Crown Badge */}
-                      {driver.isReigningChampion && (
-                        <div className="absolute -top-2 -right-2 z-10">
-                          <div className="relative">
-                            {/* Glow effect */}
-                            <div className="absolute inset-0 bg-amber-400 rounded-full blur-md opacity-60 animate-pulse"></div>
-                            {/* Badge */}
-                            <div className="relative flex items-center justify-center w-12 h-12 bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 rounded-full border-2 border-amber-300 shadow-xl">
-                              <svg
-                                className="w-7 h-7 text-zinc-900 drop-shadow-md"
-                                fill="currentColor"
-                                viewBox="0 0 24 24"
-                              >
-                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
-                              </svg>
-                              {/* Sparkle decorations */}
-                              <div className="absolute -top-1 -left-1 w-2 h-2 bg-white rounded-full animate-ping"></div>
-                              <div className="absolute -bottom-1 -right-1 w-1.5 h-1.5 bg-amber-200 rounded-full animate-pulse"></div>
-                            </div>
-                            {/* Tooltip */}
-                            <div className="absolute top-14 right-0 hidden group-hover:block w-max">
-                              <div className="bg-gradient-to-r from-amber-500 to-yellow-500 text-zinc-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg whitespace-nowrap">
-                                👑 REIGNING CHAMPION
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Driver Photo */}
-                      <div className="flex-shrink-0">
-                        <DriverImage driverName={driver.name} src={driver.portrait} />
-                      </div>
-
-                      {/* Driver Info */}
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">
-                            {driver.profile?.name || driver.name}
-                          </h3>
-                          <FlagIcon nation={driver.nation} />
-                          {driver.profile && (
-                            <span className={`inline-flex items-center px-1.5 py-0.5 text-[10px] font-semibold rounded ${
-                              driver.profile.isFictional === false
-                                ? 'bg-emerald-500/20 text-emerald-400'
-                                : 'bg-purple-500/20 text-purple-400'
-                            }`}>
-                              {driver.profile.isFictional === false ? 'REAL' : 'AI'}
-                            </span>
-                          )}
-                        </div>
-                        <div className="flex flex-col gap-1 text-sm">
-                          {age !== null && (
-                            <div>
-                              <span className="text-zinc-500">Age: </span>
-                              <span className="text-zinc-300">{age}</span>
-                            </div>
-                          )}
-                          {driver.profile?.placeOfBirth && (
-                            <div>
-                              <span className="text-zinc-500">From: </span>
-                              <span className="text-zinc-300">
-                                {driver.profile.placeOfBirth}
-                              </span>
-                            </div>
-                          )}
-                          {driver.profile?.nationality && (
-                            <div>
-                              <span className="text-zinc-500">Nationality: </span>
-                              <span className="text-zinc-300">
-                                {driver.profile.nationality}
-                              </span>
-                            </div>
-                          )}
-                          {driver.championshipWins > 0 && (
-                            <div className="mt-1">
-                              <span
-                                className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold bg-gradient-to-r from-amber-400 to-yellow-500 text-zinc-900 rounded-full shadow-lg"
-                                title={`${driver.championshipWins} Championship ${driver.championshipWins === 1 ? 'Win' : 'Wins'}`}
-                              >
-                                <svg
-                                  className="w-3.5 h-3.5"
-                                  fill="currentColor"
-                                  viewBox="0 0 20 20"
-                                >
-                                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                </svg>
-                                <span>{driver.championshipWins}× CHAMPION</span>
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </Link>
-                  );
-                })}
+              {/* Drivers, one rank across the rest of the row once the layout
+                  goes horizontal. */}
+              <div
+                className={`flex-1 grid gap-3 ${
+                  extended
+                    ? "grid-cols-1 md:grid-cols-2"
+                    : "grid-cols-2 sm:grid-cols-3"
+                } ${columnClass}`}
+              >
+                {drivers.map((driver) => (
+                  <LineupDriverCard
+                    key={driver.name}
+                    driver={driver}
+                    extended={extended}
+                    fillHeight={drivers.length <= 2}
+                  />
+                ))}
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
