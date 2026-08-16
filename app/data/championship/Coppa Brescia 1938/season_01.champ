@@ -21,16 +21,32 @@
   "opponents": [
     {
       "name": "Pablin",
-      "skin": "4light_blue",
-      "car": "exmods_fiat_508s_balilla",
+      "skin": "bianco_blu",
+      "car": "gd_alfa_romeo_8c_2300",
       "ballast": 0,
       "restrictor": 0,
       "nation": "ARG"
     },
     {
+      "name": "Piero Taruffi",
+      "skin": "rosso",
+      "car": "gd_alfa_romeo_8c_2300",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "ITA"
+    },
+    {
+      "name": "Raymond Sommer",
+      "skin": "azzurro",
+      "car": "gd_alfa_romeo_8c_2300",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
       "name": "Fernando Camardelli",
       "skin": "1white",
-      "car": "exmods_fiat_508s_balilla",
+      "car": "exmods_alfa_8c_2900b_mm_roadster",
       "ballast": 0,
       "restrictor": 0,
       "nation": "ARG"
@@ -52,22 +68,6 @@
       "nation": "ITA"
     },
     {
-      "name": "Achille Varzi",
-      "skin": "0",
-      "car": "alfa_romeo_tipo_b",
-      "ballast": 0,
-      "restrictor": 0,
-      "nation": "ITA"
-    },
-    {
-      "name": "Antonio Brivio",
-      "skin": "3",
-      "car": "alfa_romeo_tipo_b",
-      "ballast": 0,
-      "restrictor": 0,
-      "nation": "ITA"
-    },
-    {
       "name": "Christian Werner",
       "skin": "007",
       "car": "mercedes_ssk_1928",
@@ -78,6 +78,14 @@
     {
       "name": "Otto Merz",
       "skin": "010",
+      "car": "mercedes_ssk_1928",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "DEU"
+    },
+    {
+      "name": "Adolf Rosenberger",
+      "skin": "002",
       "car": "mercedes_ssk_1928",
       "ballast": 0,
       "restrictor": 0,
@@ -100,6 +108,14 @@
       "nation": "FRA"
     },
     {
+      "name": "William Grover-Williams",
+      "skin": "Green",
+      "car": "bugatti_57sc_tour_1937",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "GBR"
+    },
+    {
       "name": "Rudolf Caracciola",
       "skin": "001",
       "car": "mercedes_ssk_1930",
@@ -117,16 +133,32 @@
     },
     {
       "name": "Manfred von Brauchitsch",
-      "skin": "White",
-      "car": "bg_mercedes_500k",
+      "skin": "004",
+      "car": "mercedes_ssk_1930",
       "ballast": 0,
       "restrictor": 0,
       "nation": "DEU"
     },
     {
       "name": "Huschke von Hanstein",
-      "skin": "Black",
-      "car": "bg_mercedes_500k",
+      "skin": "silver",
+      "car": "lm_bmw_328_1938",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "DEU"
+    },
+    {
+      "name": "Walter Bäumer",
+      "skin": "white",
+      "car": "lm_bmw_328_1938",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "DEU"
+    },
+    {
+      "name": "Adolf Brudes",
+      "skin": "black",
+      "car": "lm_bmw_328_1938",
       "ballast": 0,
       "restrictor": 0,
       "nation": "DEU"
@@ -142,6 +174,14 @@
     {
       "name": "Forrest Lycett",
       "skin": "blue",
+      "car": "legion_bentley_blower",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "GBR"
+    },
+    {
+      "name": "Henry Birkin",
+      "skin": "black",
       "car": "legion_bentley_blower",
       "ballast": 0,
       "restrictor": 0,
@@ -164,6 +204,14 @@
       "nation": "FRA"
     },
     {
+      "name": "Pierre Levegh",
+      "skin": "1white",
+      "car": "exmods_bug_type57sc_atlantic",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
       "name": "Jean-Pierre Wimille",
       "skin": "bleu_de_france",
       "car": "bugatti_type_57g",
@@ -180,17 +228,9 @@
       "nation": "FRA"
     },
     {
-      "name": "Piero Taruffi",
-      "skin": "rosso",
-      "car": "gd_alfa_romeo_8c_2300",
-      "ballast": 0,
-      "restrictor": 0,
-      "nation": "ITA"
-    },
-    {
-      "name": "Raymond Sommer",
-      "skin": "azzurro",
-      "car": "gd_alfa_romeo_8c_2300",
+      "name": "Roger Labric",
+      "skin": "1_4k",
+      "car": "bugatti_type_57g",
       "ballast": 0,
       "restrictor": 0,
       "nation": "FRA"
@@ -212,33 +252,33 @@
       "nation": "GBR"
     },
     {
+      "name": "Jack Harrop",
+      "skin": "2black",
+      "car": "exmods_jaguar_ss100",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "GBR"
+    },
+    {
       "name": "Louis Gerard",
-      "skin": "Blue",
-      "car": "Delage_D8_1936",
+      "skin": "Bleu_de_Bruxelles",
+      "car": "talbot_lago_t23_coupe",
       "ballast": 0,
       "restrictor": 0,
       "nation": "FRA"
     },
     {
       "name": "Georges Comotti",
-      "skin": "Black",
-      "car": "Delage_D8_1936",
+      "skin": "Noir",
+      "car": "talbot_lago_t23_coupe",
       "ballast": 0,
       "restrictor": 0,
       "nation": "FRA"
     },
     {
-      "name": "Marcel Mongin",
-      "skin": "9cream",
-      "car": "exmods_av_voisin_c25_aero",
-      "ballast": 0,
-      "restrictor": 0,
-      "nation": "FRA"
-    },
-    {
-      "name": "André Lefèbvre",
-      "skin": "8golden",
-      "car": "exmods_av_voisin_c25_aero",
+      "name": "René Le Bègue",
+      "skin": "Rouge_Rubis",
+      "car": "talbot_lago_t23_coupe",
       "ballast": 0,
       "restrictor": 0,
       "nation": "FRA"
@@ -260,6 +300,14 @@
       "nation": "GBR"
     },
     {
+      "name": "Dick Nash",
+      "skin": "BRG_11",
+      "car": "frazer_nash_TT_1934",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "GBR"
+    },
+    {
       "name": "St John Horsfall",
       "skin": "5dark_green",
       "car": "rz_aston_ulster",
@@ -274,6 +322,14 @@
       "ballast": 0,
       "restrictor": 0,
       "nation": "ITA"
+    },
+    {
+      "name": "Mort Morris-Goodall",
+      "skin": "2black",
+      "car": "rz_aston_ulster",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "GBR"
     }
   ],
   "rounds": [
@@ -350,5 +406,5 @@
       "surface": 3
     }
   ],
-  "maxCars": 32
+  "maxCars": 39
 }

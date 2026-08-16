@@ -269,6 +269,35 @@ Each championship can have multiple seasons:
 }
 ```
 
+## Adding a Car to a Championship
+
+After putting a new car in a `.champ` file, pull its assets across from the
+Assetto Corsa install:
+
+```bash
+node scripts/copy-car-data.js
+```
+
+This scans every `.champ` file plus all race results, then copies `ui_car.json`
+and the badge for any car it doesn't already have. It only ever adds — removing
+a car from a championship leaves its JSON and badge behind, harmlessly.
+
+`maxCars` does not create pit boxes. A round will fail to launch if the track
+has fewer `AC_PIT_*` slots than the grid, so check the tightest round before
+growing a field. Hillclimbs and point-to-point stages are usually the limit.
+
+### Gallery images
+
+`public/car-gallery/<car_id>/` holds the car photos, numbered from `01.webp`.
+These are curated screenshots and are committed to the repo.
+
+`scripts/copy-car-previews.js` is a separate, unrelated tool: it grabs a random
+skin preview for *every* car and writes it as `00.png`, which
+`scripts/convert-previews-to-webp.js` then turns into `00.webp`. Neither file is
+tracked, and the app does not use them. Don't run these two expecting to
+backfill the gallery — they touch all ~140 car folders and produce nothing the
+site renders. Cars with no gallery folder simply render without photos.
+
 ## Modifying Score Values
 
 If you need to multiply all scores in existing data files by a factor (e.g., 100):
