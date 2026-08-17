@@ -1,6 +1,6 @@
 {
   "rounds": {
-    "9": {
+    "13": {
       "laps": 1,
       "pointToPoint": true,
       "weather": "__random__",
@@ -20,7 +20,7 @@
       "jumpStartPenalty": 1,
       "tyresOut": -1
     },
-    "10": {
+    "14": {
       "laps": 1,
       "pointToPoint": true,
       "weather": "__random__",
@@ -40,7 +40,7 @@
       "jumpStartPenalty": 1,
       "tyresOut": -1
     },
-    "11": {
+    "15": {
       "laps": 1,
       "pointToPoint": true,
       "weather": "__random__",
@@ -60,7 +60,27 @@
       "jumpStartPenalty": 1,
       "tyresOut": -1
     },
-    "12": {
+    "16": {
+      "laps": 1,
+      "pointToPoint": true,
+      "weather": "__random__",
+      "grip": -1,
+      "ambientTempFrom": 20,
+      "ambientTempTo": 20,
+      "roadTempFrom": 26,
+      "roadTempTo": 26,
+      "timeOfDayFrom": 720,
+      "timeOfDayTo": 720,
+      "windSpeedMin": 0,
+      "windSpeedMax": 10,
+      "windDirection": -1,
+      "practiceMinutes": 0,
+      "qualifyingMinutes": 20,
+      "penalties": false,
+      "jumpStartPenalty": 1,
+      "tyresOut": -1
+    },
+    "17": {
       "laps": 1,
       "pointToPoint": true,
       "weather": "__random__",
