@@ -31,16 +31,26 @@ function getImageFiles(dir) {
 }
 
 /**
- * Sanitize a filename to a consistent convention:
- * lowercase, spaces to underscores, remove non-alphanumeric (except underscores)
+ * Sanitize a filename to the name the app actually looks a portrait up by.
+ *
+ * This MUST stay in step with `driverSlug` in app/lib/driver-assets.ts, which is
+ * only ever `name.replace(/ /g, '_').toLowerCase()`. Everything else a driver's
+ * name contains — dots, hyphens, apostrophes, accents — is part of the slug and
+ * has to survive verbatim: "A.F.P. Fane" resolves to `a.f.p._fane`,
+ * "Mort Morris-Goodall" to `mort_morris-goodall`, "Walter Bäumer" to
+ * `walter_bäumer`. An earlier version of this function rewrote anything outside
+ * [a-z0-9_-] to an underscore and then collapsed runs of them, which silently
+ * renamed those files to slugs no driver resolves to.
+ *
+ * Whitespace runs still collapse to a single underscore and the ends are
+ * trimmed, so a file dropped in as "Tommy Wisdom.png" still lands correctly —
+ * neither can alter a name that is already a valid slug.
  */
 function sanitizeFilename(filename) {
   return filename
     .toLowerCase()
     .replace(/\s+/g, '_')
-    .replace(/[^a-z0-9_áéíóúàèìòùäëïöüâêîôûãõñçšžđ-]/g, '_')
-    .replace(/_+/g, '_')
-    .replace(/^_|_$/g, '');
+    .replace(/^_+|_+$/g, '');
 }
 
 /**
@@ -131,7 +141,7 @@ async function main() {
   console.log('\nConfiguration:');
   console.log(`  Portraits directory: ${PORTRAITS_DIR}`);
   console.log(`  Output format: WebP (quality 90)`);
-  console.log(`  Naming: lowercase_with_underscores.webp`);
+  console.log(`  Naming: the driver's slug (lowercase, spaces to underscores)`);
   console.log('\n' + '='.repeat(60));
 
   // Check if directory exists
