@@ -126,6 +126,10 @@ export interface ChampionshipOpponent {
   skin: string;
   ballast: number;
   restrictor: number;
+  // True for a car that shares the road without contesting the championship: the
+  // traffic a road series is driven through. It starts, it gets in the way, and the
+  // standings look straight past it — see `app/lib/traffic.ts`.
+  traffic?: boolean;
 }
 
 export interface ChampionshipRound {
@@ -159,6 +163,31 @@ export interface Championship {
   seasons: Season[];
   // Set only when a banner.webp has been dropped into the championship's folder.
   bannerUrl?: string;
+  // The category it races under, or undefined when categories.json does not place
+  // it — in which case the front page files it under "Unsorted".
+  categoryId?: string;
+}
+
+/**
+ * A shelf on the front page: the kind of racing a championship is, rather than the
+ * era or the machinery. Defined in app/data/championship/categories.json, which is
+ * also what decides the order they appear in and which championships they hold.
+ */
+export interface ChampionshipCategory {
+  id: string;
+  name: string;
+  /** One line, shown on the category card under the name. */
+  description: string;
+  /** Tailwind colour stem the card and its headings are tinted with, e.g. "amber". */
+  accent: string;
+  /**
+   * A banner under public/, when the category has one of its own. Without it the
+   * category borrows the banner of the first championship in it that has one, so a
+   * new category looks finished without needing new artwork.
+   */
+  banner?: string;
+  /** Championship folder names, in the order they should be listed. */
+  championships: string[];
 }
 
 export interface DriverStanding {

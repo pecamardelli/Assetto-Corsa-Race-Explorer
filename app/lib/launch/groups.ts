@@ -39,19 +39,35 @@ export async function pitCapacityFor(roundTrack: string): Promise<number | null>
  * goes as eleven and ten, not sixteen and five, because a five-car race is not
  * worth loading the game for.
  *
+ * `traffic` rides with every batch rather than being divided between them, because
+ * it is not part of the field being split — it is the state of the road, and the
+ * road is as busy for the last group as it was for the first. Its cars take up pit
+ * boxes in every batch alike, so they come off the capacity before the field is
+ * divided.
+ *
  * Returns an empty list when the field already fits, which is the ordinary case and
  * the caller's signal to race the round whole.
  */
-export function planGroups(order: ChampionshipOpponent[], capacity: number): LaunchGroup[] {
-  if (capacity < 2) return [];
-  if (order.length <= capacity) return [];
+export function planGroups(
+  order: ChampionshipOpponent[],
+  capacity: number,
+  traffic: ChampionshipOpponent[] = []
+): LaunchGroup[] {
+  const riders = traffic.map(entry => entry.name);
+  const room = capacity - riders.length;
 
-  const count = Math.ceil(order.length / capacity);
+  if (room < 2) return [];
+  if (order.length <= room) return [];
+
+  const count = Math.ceil(order.length / room);
   const per = Math.ceil(order.length / count);
 
   return Array.from({ length: count }, (_, index) => ({
     label: LABELS[index] ?? `Group ${index + 1}`,
     of: count,
-    drivers: order.slice(index * per, (index + 1) * per).map(entry => entry.name),
+    drivers: [
+      ...order.slice(index * per, (index + 1) * per).map(entry => entry.name),
+      ...riders,
+    ],
   }));
 }

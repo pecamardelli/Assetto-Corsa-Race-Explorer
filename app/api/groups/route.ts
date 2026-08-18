@@ -47,13 +47,12 @@ export async function GET(request: NextRequest) {
   const cap = caps[roundData.track];
   const capacity =
     cap === undefined ? pitboxes : Math.min(cap, pitboxes ?? Number.POSITIVE_INFINITY);
-  const field = season.data.opponents;
-
   // The championship table seeds the batches, and on a point-to-point round it is
   // the grid as well. Drawn from the round's own name before a season has any form
   // to seed on, so the draw survives a reload and the batch shown in the menu is
-  // the batch that gets raced.
-  const { order, seededOn, standings } = fieldOrder(championship, season, round);
+  // the batch that gets raced. Traffic comes back separately: it fills boxes in
+  // every batch but is not part of the field being split.
+  const { order, traffic, seededOn, standings } = fieldOrder(championship, season, round);
 
   // A round run from a start to a finish somewhere else is raced without qualifying,
   // so the menu offers the race itself rather than a weekend.
@@ -66,7 +65,7 @@ export async function GET(request: NextRequest) {
 
   // Without the track's data there is no telling what fits, so nothing is proposed
   // rather than a split guessed at.
-  const groups = capacity === null ? [] : planGroups(order, capacity);
+  const groups = capacity === null ? [] : planGroups(order, capacity, traffic);
 
   return NextResponse.json({
     track: roundData.track,
@@ -74,9 +73,12 @@ export async function GET(request: NextRequest) {
     // What the track actually has, when the season has asked for fewer.
     pitboxes,
     capped: cap !== undefined,
-    entries: field.length,
-    // True when the round cannot be raced whole and has to go out in batches.
-    splitRequired: capacity !== null && field.length > capacity,
+    entries: order.length,
+    // Cars on the road in every batch, contesting none of them.
+    traffic: traffic.length,
+    // True when the round cannot be raced whole and has to go out in batches. The
+    // traffic is on the road either way, so it counts against the boxes here.
+    splitRequired: capacity !== null && order.length + traffic.length > capacity,
     pointToPoint: spec?.spec.pointToPoint ?? false,
     seededOn,
     groups,

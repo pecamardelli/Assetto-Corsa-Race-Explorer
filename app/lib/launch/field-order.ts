@@ -1,4 +1,5 @@
 import { calculateStandings } from '../standings';
+import { partitionRoster } from '../traffic';
 import { Championship, ChampionshipOpponent, DriverStanding, Season } from '../../types/race';
 
 /**
@@ -80,8 +81,15 @@ export function orderAtRandom(
 }
 
 export interface FieldOrder {
-  /** The season's whole roster, best-placed first. */
+  /** The season's racing drivers, best-placed first. Traffic is not among them. */
   order: ChampionshipOpponent[];
+  /**
+   * The road's traffic, in roster order. It has no place in a running order seeded
+   * on a championship table it does not appear in, but it still has to go out: it
+   * joins every batch of a split round, and starts a point-to-point round at the
+   * back, ahead of the field on the road and behind it in the results.
+   */
+  traffic: ChampionshipOpponent[];
   /** What it was seeded on: the season's table, or an opening-round draw. */
   seededOn: 'standings' | 'random';
   /** The table it was seeded on, empty-ish before the season's first race. */
@@ -111,13 +119,13 @@ export function fieldOrder(
   };
 
   const standings = calculateStandings(seasonChampionship);
-  const field = season.data.opponents;
+  const { racing, traffic } = partitionRoster(season.data.opponents);
   const seededOn = seasonHasForm(standings) ? 'standings' : 'random';
 
   const order =
     seededOn === 'standings'
-      ? orderByStandings(field, standings)
-      : orderAtRandom(field, `${championship.id}|${season.seasonName}|${roundNumber}`);
+      ? orderByStandings(racing, standings)
+      : orderAtRandom(racing, `${championship.id}|${season.seasonName}|${roundNumber}`);
 
-  return { order, seededOn, standings };
+  return { order, traffic, seededOn, standings };
 }

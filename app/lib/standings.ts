@@ -2,6 +2,7 @@ import { Championship, DriverStanding, ChampionshipOpponent, RaceSession } from 
 import { safeNumber } from './format-utils';
 import { getCarDetails } from './car-data';
 import { mergeGroupedRounds } from './round-groups';
+import { classifyScoring, fastestLapDriver, trafficNames } from './traffic';
 
 export interface ConstructorStanding {
   carName: string;
@@ -58,6 +59,12 @@ export function calculateAllTimeStats(
 
   const statsMap = new Map<string, AllTimeDriverStats>();
 
+  // The cars that were only ever on the road to be overtaken. Gathered across every
+  // championship, since these sessions come from all of them at once.
+  const traffic = trafficNames(
+    championships.flatMap(championship => championship.seasons.map(season => season.data.opponents))
+  );
+
   // Create a map of opponent data from all championships and all seasons
   // Prioritize non-ARG nationalities to avoid defaulting to player nation
   // Keep the first non-ARG nation found to maintain consistency across seasons
@@ -88,16 +95,7 @@ export function calculateAllTimeStats(
     const isRace = sessionType === 'race';
 
     // Find the fastest lap in this session
-    let fastestLapTime = Infinity;
-    let fastestDriverName = '';
-
-    Object.entries(drivers).forEach(([driverName, stats]) => {
-      const bestLap = safeNumber(stats.best_lap);
-      if (bestLap > 0 && bestLap < fastestLapTime) {
-        fastestLapTime = bestLap;
-        fastestDriverName = driverName;
-      }
-    });
+    const fastestDriverName = fastestLapDriver(drivers, traffic);
 
     // Award pole position for qualifying sessions
     if (isQualifying && fastestDriverName) {
@@ -107,7 +105,9 @@ export function calculateAllTimeStats(
       }
     }
 
-    Object.entries(drivers).forEach(([driverName, stats]) => {
+    // Traffic is dropped here and the drivers behind it close ranks, so a race won
+    // behind a lorry is recorded as a win.
+    classifyScoring(drivers, traffic).forEach(({ name: driverName, stats, position }) => {
       if (!statsMap.has(driverName)) {
         // Get nation from opponent data, default to Argentina for player
         const opponentData = opponentMap.get(driverName);
@@ -129,9 +129,6 @@ export function calculateAllTimeStats(
       }
 
       const driverStats = statsMap.get(driverName)!;
-      const position = safeNumber(stats.position, 999);
-      const lapsCompleted = safeNumber(stats.laps_completed, 0);
-      const raceLaps = safeNumber(sessionInfo.race_laps, 0);
       const crashes = safeNumber(stats.crashes?.total_crashes, 0);
 
       // Track positions (only for race sessions)
@@ -227,10 +224,19 @@ export function calculateStandings(championship: Championship): DriverStanding[]
     opponentMap.set(opponent.name, opponent);
   });
 
+  // The road's traffic, which starts every round and contests none of them. Both
+  // scopes are asked because this is called with a whole championship and with a
+  // single season dressed up as one.
+  const traffic = trafficNames([
+    data.opponents,
+    ...championship.seasons.map(season => season.data.opponents),
+  ]);
+
   // Initialize standings by finding all drivers that appear in any session
   sessions.forEach((session) => {
     const drivers = session.data.driver_statistics;
     Object.entries(drivers).forEach(([driverName, stats]) => {
+      if (traffic.has(driverName)) return;
       if (!standingsMap.has(driverName)) {
         // Get opponent data if available, otherwise use defaults
         const opponentData = opponentMap.get(driverName);
@@ -260,16 +266,7 @@ export function calculateStandings(championship: Championship): DriverStanding[]
       const drivers = session.data.driver_statistics;
 
       // Find the driver with the fastest lap (pole position)
-      let fastestLap = Infinity;
-      let poleDriver = '';
-
-      Object.entries(drivers).forEach(([driverName, stats]) => {
-        const bestLap = safeNumber(stats.best_lap);
-        if (bestLap > 0 && bestLap < fastestLap) {
-          fastestLap = bestLap;
-          poleDriver = driverName;
-        }
-      });
+      const poleDriver = fastestLapDriver(drivers, traffic);
 
       // Award pole position
       if (poleDriver) {
@@ -288,28 +285,19 @@ export function calculateStandings(championship: Championship): DriverStanding[]
       const drivers = session.data.driver_statistics;
 
       // Find the driver with the fastest lap
-      let fastestLap = Infinity;
-      let fastestLapDriver = '';
-
-      Object.entries(drivers).forEach(([driverName, stats]) => {
-        const bestLap = safeNumber(stats.best_lap);
-        if (bestLap > 0 && bestLap < fastestLap) {
-          fastestLap = bestLap;
-          fastestLapDriver = driverName;
-        }
-      });
+      const fastest = fastestLapDriver(drivers, traffic);
 
       // Award fastest lap
-      if (fastestLapDriver) {
-        const standing = standingsMap.get(fastestLapDriver);
+      if (fastest) {
+        const standing = standingsMap.get(fastest);
         if (standing) standing.fastestLaps++;
       }
 
-      Object.entries(drivers).forEach(([driverName, stats]) => {
+      // Positions here are the ones left after the traffic is taken out, so the
+      // points go to the driver who actually finished sixth of those racing.
+      classifyScoring(drivers, traffic).forEach(({ name: driverName, stats, position }) => {
         const standing = standingsMap.get(driverName);
         if (!standing) return; // Driver not in championship
-
-        const position = stats.position ?? 999;
 
         // Award points based on position
         if (position <= pointsTable.length) {
@@ -352,6 +340,12 @@ export function calculateConstructorStandings(championship: Championship): Const
   // Map to track unique drivers per constructor
   const constructorDriversMap = new Map<string, Set<string>>();
 
+  // No constructors' title for the Fiat that spent the season being overtaken.
+  const traffic = trafficNames([
+    championship.data.opponents,
+    ...championship.seasons.map(season => season.data.opponents),
+  ]);
+
   // Process qualifying sessions for pole positions
   sessions
     .filter((session) => {
@@ -362,16 +356,7 @@ export function calculateConstructorStandings(championship: Championship): Const
       const drivers = session.data.driver_statistics;
 
       // Find the driver with the fastest lap (pole position)
-      let fastestLap = Infinity;
-      let poleDriver = '';
-
-      Object.entries(drivers).forEach(([driverName, stats]) => {
-        const bestLap = safeNumber(stats.best_lap);
-        if (bestLap > 0 && bestLap < fastestLap) {
-          fastestLap = bestLap;
-          poleDriver = driverName;
-        }
-      });
+      const poleDriver = fastestLapDriver(drivers, traffic);
 
       // Award pole position to constructor
       if (poleDriver) {
@@ -414,20 +399,11 @@ export function calculateConstructorStandings(championship: Championship): Const
       const drivers = session.data.driver_statistics;
 
       // Find the driver with the fastest lap
-      let fastestLap = Infinity;
-      let fastestLapDriver = '';
-
-      Object.entries(drivers).forEach(([driverName, stats]) => {
-        const bestLap = safeNumber(stats.best_lap);
-        if (bestLap > 0 && bestLap < fastestLap) {
-          fastestLap = bestLap;
-          fastestLapDriver = driverName;
-        }
-      });
+      const fastest = fastestLapDriver(drivers, traffic);
 
       // Award fastest lap to constructor
-      if (fastestLapDriver) {
-        const fastestDriverStats = drivers[fastestLapDriver];
+      if (fastest) {
+        const fastestDriverStats = drivers[fastest];
         const carName = fastestDriverStats.car_name;
         if (carName) {
           if (!constructorsMap.has(carName)) {
@@ -451,12 +427,12 @@ export function calculateConstructorStandings(championship: Championship): Const
           constructor.fastestLaps++;
 
           // Track unique driver
-          constructorDriversMap.get(carName)!.add(fastestLapDriver);
+          constructorDriversMap.get(carName)!.add(fastest);
         }
       }
 
       // Aggregate points from all drivers per constructor
-      Object.entries(drivers).forEach(([driverName, stats]) => {
+      classifyScoring(drivers, traffic).forEach(({ name: driverName, stats, position }) => {
         const carName = stats.car_name;
         if (!carName) return;
 
@@ -480,7 +456,6 @@ export function calculateConstructorStandings(championship: Championship): Const
         }
 
         const constructor = constructorsMap.get(carName)!;
-        const position = stats.position ?? 999;
 
         // Track unique driver
         constructorDriversMap.get(carName)!.add(driverName);
@@ -519,6 +494,11 @@ export function calculateAllTimeConstructorStats(
   const constructorDriversMap = new Map<string, Set<string>>();
   const raceSessionsMap = new Map<string, Set<string>>(); // Track which races each constructor participated in
 
+  // Traffic across every championship these sessions were drawn from.
+  const traffic = trafficNames(
+    championships.flatMap(championship => championship.seasons.map(season => season.data.opponents))
+  );
+
   // Process qualifying sessions for pole positions
   sessions
     .filter((session) => {
@@ -529,16 +509,7 @@ export function calculateAllTimeConstructorStats(
       const drivers = session.data.driver_statistics;
 
       // Find the driver with the fastest lap (pole position)
-      let fastestLap = Infinity;
-      let poleDriver = '';
-
-      Object.entries(drivers).forEach(([driverName, stats]) => {
-        const bestLap = safeNumber(stats.best_lap);
-        if (bestLap > 0 && bestLap < fastestLap) {
-          fastestLap = bestLap;
-          poleDriver = driverName;
-        }
-      });
+      const poleDriver = fastestLapDriver(drivers, traffic);
 
       // Award pole position to constructor
       if (poleDriver) {
@@ -586,20 +557,11 @@ export function calculateAllTimeConstructorStats(
       const sessionId = session.filename; // Use filename as unique identifier
 
       // Find the driver with the fastest lap
-      let fastestLap = Infinity;
-      let fastestLapDriver = '';
-
-      Object.entries(drivers).forEach(([driverName, stats]) => {
-        const bestLap = safeNumber(stats.best_lap);
-        if (bestLap > 0 && bestLap < fastestLap) {
-          fastestLap = bestLap;
-          fastestLapDriver = driverName;
-        }
-      });
+      const fastest = fastestLapDriver(drivers, traffic);
 
       // Award fastest lap to constructor
-      if (fastestLapDriver) {
-        const fastestDriverStats = drivers[fastestLapDriver];
+      if (fastest) {
+        const fastestDriverStats = drivers[fastest];
         const carName = fastestDriverStats.car_name;
         if (carName) {
           if (!statsMap.has(carName)) {
@@ -626,12 +588,12 @@ export function calculateAllTimeConstructorStats(
           constructor.fastestLaps++;
 
           // Track unique driver
-          constructorDriversMap.get(carName)!.add(fastestLapDriver);
+          constructorDriversMap.get(carName)!.add(fastest);
         }
       }
 
       // Aggregate points from all drivers per constructor
-      Object.entries(drivers).forEach(([driverName, stats]) => {
+      classifyScoring(drivers, traffic).forEach(({ name: driverName, stats, position }) => {
         const carName = stats.car_name;
         if (!carName) return;
 
@@ -658,7 +620,6 @@ export function calculateAllTimeConstructorStats(
         }
 
         const constructor = statsMap.get(carName)!;
-        const position = stats.position ?? 999;
 
         // Track unique driver
         constructorDriversMap.get(carName)!.add(driverName);

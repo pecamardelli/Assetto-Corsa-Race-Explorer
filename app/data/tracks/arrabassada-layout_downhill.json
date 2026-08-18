@@ -1,0 +1,9 @@
+{
+  "name": "Arrabassada - Downhill",
+  "description": "The BV-1417 run downhill off the Collserola ridge into Barcelona, the road between Sant Cugat del Vallès and the city. A working commuter road that happens to be one long sequence of second-gear corners.",
+  "tags": ["A2B", "downhill", "Spain"],
+  "country": "Spain",
+  "city": "Barcelona",
+  "placeholder": true,
+  "placeholderNote": "Written by hand before the mod was installed, so the app had something to go on. Delete this file and re-run scripts/copy-track-data.js once the track is in AC, to replace it with the author's own ui_track.json — pit box count included, which this file deliberately does not guess at. Check the layout name too: this round is written as layout_downhill, which is what the mod's pages list."
+}

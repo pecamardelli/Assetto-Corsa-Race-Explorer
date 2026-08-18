@@ -1,0 +1,47 @@
+{
+  "_comment": "The shelves the front page sorts championships onto, in the order they appear. A championship is filed by its folder name; anything not listed here still shows up, under 'Unsorted'. Accent is a colour stem and must be one of the ones app/lib/category-accents.ts knows: amber, sky, emerald, rose, violet, cyan, zinc. 'banner' is optional and points at a file under public/; without it the category borrows the banner of the first championship in it that has one.",
+  "categories": [
+    {
+      "id": "test-drive",
+      "name": "Test Drive",
+      "description": "Accolade's road duel, run for real: exotics from the 1987 lineup and the 1989 Duel, on circuits and on open roads with traffic.",
+      "accent": "cyan",
+      "championships": ["Test Drive Tour", "European Challenge"]
+    },
+    {
+      "id": "grand-prix",
+      "name": "Grand Prix",
+      "description": "Works teams and open-wheelers, from the riding-mechanic era to the last of the front-engined cars.",
+      "accent": "amber",
+      "championships": ["1920s Grand Prix Series", "Pre-War Grand Prix Series"]
+    },
+    {
+      "id": "endurance",
+      "name": "Endurance",
+      "description": "Long races, decided by whatever is still running at the end of them.",
+      "accent": "sky",
+      "championships": ["Le Mans Classic", "Le Mans Oldies"]
+    },
+    {
+      "id": "open-road",
+      "name": "Open Road",
+      "description": "Racing on roads that were never circuits: passes, coast roads and the long way between two towns.",
+      "accent": "emerald",
+      "championships": ["Mille Miglia 1955", "Coppa Brescia 1938"]
+    },
+    {
+      "id": "road-cars",
+      "name": "Road Cars",
+      "description": "Showroom machinery taken racing, with the number plates left on.",
+      "accent": "rose",
+      "championships": ["Supercars Trophy"]
+    },
+    {
+      "id": "touring",
+      "name": "Touring Cars",
+      "description": "Saloons, and the national championships built around them.",
+      "accent": "violet",
+      "championships": ["Campeonato Argentino"]
+    }
+  ]
+}

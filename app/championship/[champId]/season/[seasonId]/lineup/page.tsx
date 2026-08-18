@@ -12,6 +12,7 @@ import {
   getDriverProfiles,
   resolveDriverPortraits,
 } from "../../../../../lib/driver-assets";
+import { partitionRoster } from "../../../../../lib/traffic";
 
 export default async function LineupPage({
   params,
@@ -40,6 +41,11 @@ export default async function LineupPage({
   }
 
   const { data } = season;
+
+  // The entry list is two different things at once on a road series: the drivers
+  // contesting the championship, and the traffic they have to get past. Only the
+  // first belongs in a lineup — see `app/lib/traffic.ts`.
+  const { racing, traffic } = partitionRoster(data.opponents);
 
   // Calculate champions across all seasons in this championship
   const championWins = new Map<string, number>();
@@ -94,7 +100,7 @@ export default async function LineupPage({
 
   // Group drivers by car. Profiles and portraits resolve against this championship,
   // so a series that ships its own overrides wins over the global versions.
-  const opponentNames = data.opponents.map(o => o.name);
+  const opponentNames = racing.map(o => o.name);
   const [profiles, portraits] = await Promise.all([
     getDriverProfiles(opponentNames, decodedChampId),
     resolveDriverPortraits(opponentNames, decodedChampId),
@@ -102,7 +108,7 @@ export default async function LineupPage({
 
   const carDriverMap = new Map<string, LineupDriver[]>();
 
-  for (const opponent of data.opponents) {
+  for (const opponent of racing) {
     const driverInfo: LineupDriver = {
       name: opponent.name,
       nation: opponent.nation,
@@ -143,6 +149,22 @@ export default async function LineupPage({
     })
     .sort((a, b) => a.carDetails.brand.localeCompare(b.carDetails.brand));
 
+  // The traffic is tallied by car rather than named. What matters about it is how
+  // much of it is out there and what shape it is, not who is behind the wheel.
+  const trafficCars = Array.from(
+    traffic.reduce(
+      (tally, entry) => tally.set(entry.car, (tally.get(entry.car) ?? 0) + 1),
+      new Map<string, number>()
+    )
+  )
+    .map(([carName, count]) => ({
+      carName,
+      count,
+      carDetails: getCarDetails(carName),
+      preview: getCarPreviewUrl(carName),
+    }))
+    .sort((a, b) => a.carDetails.brand.localeCompare(b.carDetails.brand));
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
       {/* Header. The banner is the section's own background rather than a card's
@@ -179,7 +201,12 @@ export default async function LineupPage({
             {data.name}
           </h1>
           <div className="text-sm text-zinc-400">
-            {data.opponents.length} drivers competing in {carsWithDrivers.length} different cars
+            {racing.length} drivers competing in {carsWithDrivers.length} different cars
+            {traffic.length > 0 && (
+              <span className="text-zinc-500">
+                {" "}· {traffic.length} cars of traffic sharing the road
+              </span>
+            )}
           </div>
         </div>
       </section>
@@ -291,6 +318,63 @@ export default async function LineupPage({
             );
           })}
         </div>
+
+        {/* The traffic. Present in every session, entered in none of them: it takes
+            a pit box and gets in the way, and the standings never see it. */}
+        {trafficCars.length > 0 && (
+          <section className="mt-10">
+            <div className="flex items-baseline gap-3 mb-3">
+              <h2 className="text-lg font-bold text-white">On the road</h2>
+              <span className="text-xs font-semibold px-2 py-1 rounded bg-amber-500/20 text-amber-400 uppercase">
+                Traffic · not scored
+              </span>
+            </div>
+            <p className="text-sm text-zinc-400 mb-4 max-w-3xl">
+              These cars start every round and contest none of them. They fill pit
+              boxes and they get in the way; the championship table looks straight
+              past them, and the drivers behind them close ranks so a place lost to
+              traffic is not a place lost in the standings.
+            </p>
+            <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+              {trafficCars.map(({ carName, count, carDetails, preview }) => (
+                <Link
+                  key={carName}
+                  href={`/car/${encodeURIComponent(carName)}`}
+                  className="group bg-zinc-800/40 border border-zinc-700/70 rounded-lg overflow-hidden transition-colors hover:border-amber-500/50"
+                >
+                  <div className="relative aspect-video">
+                    {preview ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={preview}
+                        alt={carDetails.name}
+                        className="absolute inset-0 h-full w-full object-cover opacity-70 transition-opacity group-hover:opacity-100"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-xs text-zinc-600">
+                        No preview
+                      </div>
+                    )}
+                    <span className="absolute top-1.5 right-1.5 rounded bg-zinc-900/80 px-1.5 py-0.5 text-xs font-mono font-semibold text-amber-400">
+                      ×{count}
+                    </span>
+                  </div>
+                  <div className="p-2.5">
+                    <div className="text-sm font-semibold text-white truncate group-hover:text-amber-400 transition-colors">
+                      {carDetails.brand}
+                    </div>
+                    <div className="text-xs text-zinc-400 truncate">
+                      {carDetails.model}
+                      {carDetails.year && (
+                        <span className="text-zinc-600"> · {carDetails.year}</span>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );
