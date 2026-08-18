@@ -2,6 +2,7 @@ import { spawn, execFile } from 'child_process';
 import { randomUUID } from 'crypto';
 import { promises as fs } from 'fs';
 import { promisify } from 'util';
+import { installAiLine } from './ai-line';
 import { buildAssistsIni, pinSeasonAssists } from './assists';
 import { ingestResults, listResultFiles } from './ingest';
 import { LaunchPlan } from './plan';
@@ -42,6 +43,11 @@ export interface LaunchState {
   error?: string;
   /** False for a run driven for its own sake, whose sessions are never filed. */
   recorded: boolean;
+  /**
+   * Which AI line was installed for this launch, on a track that keeps more than one.
+   * Unset when the track has a single line, which is nearly all of them.
+   */
+  aiLine?: 'road' | 'racing';
   /** Result files moved into the season folder once AC quit. */
   ingested?: string[];
   /** Sessions AC wrote that were left unfinished, and so not filed. */
@@ -161,6 +167,15 @@ export async function launch(
 
   const id = randomUUID();
 
+  // A track that keeps both a racing line and a road line gets the one this round is
+  // raced on. Left alone entirely when it keeps only the one line, which is nearly
+  // every track.
+  const aiLine = await installAiLine(
+    plan.spec.track,
+    plan.spec.trackConfig,
+    Boolean(plan.spec.customMode)
+  );
+
   await backupCfgFile(RACE_INI, RACE_INI_BACKUP);
   await fs.writeFile(RACE_INI, buildRaceIni(plan.spec), 'utf8');
 
@@ -188,6 +203,7 @@ export async function launch(
     group: plan.group,
     aiSeat: plan.aiSeat,
     recorded: plan.record,
+    aiLine: aiLine?.variant,
     startedAt: Date.now(),
   };
 

@@ -65,7 +65,10 @@ export async function GET(request: NextRequest) {
 
   // Without the track's data there is no telling what fits, so nothing is proposed
   // rather than a split guessed at.
-  const groups = capacity === null ? [] : planGroups(order, capacity, traffic);
+  // A round whose road supplies its own traffic enters none of its own, so nothing
+  // rides along in every batch and the whole capacity goes to the field.
+  const riders = roundData.cspTraffic ? [] : traffic;
+  const groups = capacity === null ? [] : planGroups(order, capacity, riders);
 
   return NextResponse.json({
     track: roundData.track,

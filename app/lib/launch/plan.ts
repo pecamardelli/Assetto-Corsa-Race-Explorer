@@ -13,6 +13,7 @@ import { AC_CONTENT_TRACKS } from './paths';
 import { GridEntry, LaunchMode, RaceIniSpec } from './race-ini';
 import { resolveAssists } from './assists';
 import { fieldOrder } from './field-order';
+import { customModeFor, fieldFor } from '../traffic';
 import { listWeathers, resolveRaceSpec, rollRaceSpec } from './race-spec';
 import { AssistsConfig, AssistsSource } from '../../types/assists';
 
@@ -252,7 +253,11 @@ export async function buildLaunchPlan(
     );
   }
 
-  const field = group ? restrictToGroup(data.opponents, group) : data.opponents;
+  // A round whose road carries its own CSP traffic fields no roster traffic: the
+  // Fiats would be a second, worse set of it, and they would take pit boxes the
+  // actual field needs.
+  const roster = fieldFor(data.opponents, round);
+  const field = group ? restrictToGroup(roster, group) : roster;
 
   /**
    * AC gives CAR_0 to whoever is at the keyboard and offers no way to leave it
@@ -336,6 +341,7 @@ export async function buildLaunchPlan(
     player: toGridEntry(playerEntry, DEFAULT_AI_LEVEL, AI_AGGRESSION_MAX),
     opponents,
     gridOrder,
+    customMode: customModeFor(round),
   };
 
   return {

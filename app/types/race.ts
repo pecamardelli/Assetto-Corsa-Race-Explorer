@@ -137,6 +137,17 @@ export interface ChampionshipRound {
   laps: number;
   weather: number;
   surface: number;
+  /**
+   * True for a round whose traffic is the road's own rather than the roster's.
+   *
+   * On a track that carries a Custom Shaders Patch traffic plan, the cars sharing the
+   * road are simulated by CSP: hundreds of them, on both carriageways, costing no pit
+   * boxes and never classified. Where that is available it is simply better than
+   * entering Fiats as drivers, so a round marked this way fields no roster traffic at
+   * all — see `app/lib/traffic.ts`. Rounds on tracks with no plan leave this unset and
+   * keep the entered-traffic arrangement, which works anywhere.
+   */
+  cspTraffic?: boolean;
 }
 
 export interface ChampionshipData {

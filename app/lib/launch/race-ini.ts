@@ -47,6 +47,13 @@ export interface RaceIniSpec {
    * which has no qualifying of its own to line the field up from.
    */
   gridOrder?: string[];
+  /**
+   * A Custom Shaders Patch mode to race in, by folder name, or undefined for a plain
+   * Assetto Corsa race. Content Manager selects these through `__CM_CUSTOM_MODE` in
+   * `[RACE]`, and AC itself ignores the key, so writing it costs nothing on a machine
+   * without the mode installed — the round simply runs as an ordinary race.
+   */
+  customMode?: string;
 }
 
 /** AC session TYPE values used in [SESSION_n]. */
@@ -207,6 +214,7 @@ export function buildRaceIni(spec: RaceIniSpec): string {
       ['RACE_LAPS', sessions.includes('race') ? race.laps : 0],
       ['SKIN', spec.player.skin],
       ['TRACK', spec.track],
+      ...(spec.customMode ? [['__CM_CUSTOM_MODE', spec.customMode] as [string, string]] : []),
     ])
   );
 

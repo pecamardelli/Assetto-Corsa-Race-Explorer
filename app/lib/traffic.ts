@@ -1,4 +1,4 @@
-import { ChampionshipOpponent, DriverStatistics } from '../types/race';
+import { ChampionshipOpponent, ChampionshipRound, DriverStatistics } from '../types/race';
 
 /**
  * Traffic: the cars that share the road without contesting the championship.
@@ -133,4 +133,34 @@ export function fastestLapDriver(
   }
 
   return driver;
+}
+
+/**
+ * The Assetto Corsa mode a round is raced in, or undefined for an ordinary race.
+ *
+ * Custom Shaders Patch traffic will not run in a stock race session — its own Traffic
+ * mode is declared `BASE_MODE=PRACTICE`, which can host a road full of cars but never
+ * a classified result. `test-drive` is our mode: `BASE_MODE=RACE`, so it scores, and
+ * it adds the things a race in traffic needs that free-roam never did — competitors
+ * that see the traffic, wrecks that clear themselves, cars righted where they land,
+ * and a road held still until the flag drops. It lives outside this repo, in Assetto
+ * Corsa's own `extension/lua/new-modes/test-drive`, mirrored at
+ * `Modding/Tools/test-drive-mode`.
+ */
+export function customModeFor(round: ChampionshipRound): string | undefined {
+  return round.cspTraffic ? 'test-drive' : undefined;
+}
+
+/**
+ * The entries that actually take the grid for a round.
+ *
+ * Identical to the roster except on a round whose road supplies its own traffic, where
+ * the roster's traffic would be a second, worse set of it — and would eat pit boxes
+ * that the real field needs.
+ */
+export function fieldFor(
+  opponents: ChampionshipOpponent[],
+  round: ChampionshipRound
+): ChampionshipOpponent[] {
+  return round.cspTraffic ? opponents.filter(entry => !isTraffic(entry)) : opponents;
 }
