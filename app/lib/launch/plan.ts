@@ -17,11 +17,17 @@ import { customModeFor, fieldFor } from '../traffic';
 import { listWeathers, resolveRaceSpec, rollRaceSpec } from './race-spec';
 import { AssistsConfig, AssistsSource } from '../../types/assists';
 
-const AI_AGGRESSION_MIN = 80;
-const AI_AGGRESSION_MAX = 100;
+// Aggression only shapes how an AI races the player — it does nothing AI-vs-AI —
+// and above ~60 it turns into punts. The band is a style fallback for drivers
+// whose profile doesn't set its own value.
+const AI_AGGRESSION_MIN = 35;
+const AI_AGGRESSION_MAX = 55;
 
-/** Every driver races at full strength unless their profile says otherwise. */
-const DEFAULT_AI_LEVEL = 100;
+// AI-vs-AI overtaking comes from pace differences: a grid where everyone runs the
+// same level settles into a train. Unrated drivers draw a stable level from this
+// band; rated drivers carry `skill` on their championship profile override.
+const FALLBACK_AI_LEVEL_MIN = 94;
+const FALLBACK_AI_LEVEL_MAX = 99;
 
 /**
  * One batch of a round that is too big for its track.
@@ -131,6 +137,17 @@ function randomAggression(): number {
   return (
     AI_AGGRESSION_MIN + Math.floor(Math.random() * (AI_AGGRESSION_MAX - AI_AGGRESSION_MIN + 1))
   );
+}
+
+/**
+ * Stable per-name AI level for drivers without a rated profile, so an unrated
+ * driver keeps the same strength every round of a season instead of rerolling
+ * per launch.
+ */
+function fallbackAiLevel(name: string): number {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
+  return FALLBACK_AI_LEVEL_MIN + (hash % (FALLBACK_AI_LEVEL_MAX - FALLBACK_AI_LEVEL_MIN + 1));
 }
 
 function toGridEntry(
@@ -279,8 +296,8 @@ export async function buildLaunchPlan(
     .map(entry =>
       toGridEntry(
         entry,
-        profiles.get(entry.name)?.skill ?? DEFAULT_AI_LEVEL,
-        randomAggression()
+        profiles.get(entry.name)?.skill ?? fallbackAiLevel(entry.name),
+        profiles.get(entry.name)?.aggression ?? randomAggression()
       )
     );
 
@@ -338,7 +355,14 @@ export async function buildLaunchPlan(
     // Anything the round leaves to chance is drawn here, so race.ini only ever
     // carries settled conditions.
     race: rollRaceSpec(resolved.spec, weathers),
-    player: toGridEntry(playerEntry, DEFAULT_AI_LEVEL, AI_AGGRESSION_MAX),
+    // When the seat is handed to the AI (a batch the player isn't entered in),
+    // the stand-in races at their own rating like everyone else. AC ignores
+    // these values while a human is driving CAR_0.
+    player: toGridEntry(
+      playerEntry,
+      profiles.get(playerEntry.name)?.skill ?? fallbackAiLevel(playerEntry.name),
+      profiles.get(playerEntry.name)?.aggression ?? randomAggression()
+    ),
     opponents,
     gridOrder,
     customMode: customModeFor(round),

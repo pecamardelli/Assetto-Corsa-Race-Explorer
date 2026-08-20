@@ -14,9 +14,15 @@ export type DriverProfile = {
   // in a period series reads their in-era age instead of one measured from today.
   ageAsOf?: string;
   // AI strength this driver races at when a session is launched from the app.
-  // Absent means 100. Set it on a championship override to make one driver a
-  // sharper opponent in that series without touching their base profile.
+  // Absent means a stable per-name spread (see plan.ts). Set it on a championship
+  // override to make one driver a sharper opponent in that series without
+  // touching their base profile.
   skill?: number;
+  // AI aggression for this driver. In AC this only shapes how the AI races the
+  // player (Casillo: the odds of leaving the line when engaged with you) — it
+  // does nothing AI-vs-AI — so it encodes driving style, not pace. Absent means
+  // a random draw in plan.ts's fallback band.
+  aggression?: number;
 };
 
 const PORTRAIT_DIR = 'driver-portraits';
