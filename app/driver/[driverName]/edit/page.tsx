@@ -1,29 +1,14 @@
-import { notFound } from 'next/navigation';
 import BackButton from '../../../components/BackButton';
 import DriverEditForm from './DriverEditForm';
+import {
+  getDriverProfile,
+  driverSlug,
+  resolveDriverPortrait,
+  resolvePlayerName,
+  fallbackAiLevel,
+} from '../../../lib/driver-assets';
 import { promises as fs } from 'fs';
 import path from 'path';
-
-type DriverProfile = {
-  name: string;
-  nationality: string;
-  dateOfBirth: string;
-  placeOfBirth: string;
-  features: string;
-  gender: string;
-  isFictional?: boolean;
-  bio?: string;
-};
-
-async function getDriverProfile(driverName: string): Promise<DriverProfile | null> {
-  try {
-    const profilePath = path.join(process.cwd(), 'app/lib/driver-profiles', `${driverName.replace(/ /g, '_').toLowerCase()}.json`);
-    const fileContents = await fs.readFile(profilePath, 'utf8');
-    return JSON.parse(fileContents);
-  } catch (error) {
-    return null;
-  }
-}
 
 export default async function EditDriverPage({ params }: { params: Promise<{ driverName: string }> }) {
   const { driverName } = await params;
@@ -49,16 +34,30 @@ export default async function EditDriverPage({ params }: { params: Promise<{ dri
       const profilesDir = path.join(process.cwd(), 'app/lib/driver-profiles');
       await fs.mkdir(profilesDir, { recursive: true });
 
-      const profilePath = path.join(profilesDir, `${decodedDriverName.replace(/ /g, '_').toLowerCase()}.json`);
+      const profilePath = path.join(profilesDir, `${driverSlug(decodedDriverName)}.json`);
       await fs.writeFile(profilePath, JSON.stringify(profile, null, 2), 'utf8');
     } catch (error) {
       console.error('Error creating default profile:', error);
     }
   }
 
+  // One AI rating per driver, kept on the base profile and shared by every
+  // series. The player drives for themselves and gets none.
+  const isPlayer = decodedDriverName === (await resolvePlayerName());
+  const aiRating = isPlayer
+    ? null
+    : {
+        skill: profile.skill ?? null,
+        aggression: profile.aggression ?? null,
+        fallbackSkill: fallbackAiLevel(decodedDriverName),
+      };
+
+  // Global page: no championship, so this is the base portrait.
+  const portrait = await resolveDriverPortrait(decodedDriverName);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
-      <div className="w-full max-w-4xl px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
+      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
         {/* Header */}
         <div className="mb-8">
           <BackButton fallbackUrl={`/driver/${encodeURIComponent(decodedDriverName)}`}>
@@ -70,15 +69,17 @@ export default async function EditDriverPage({ params }: { params: Promise<{ dri
               Edit Profile
             </h1>
             <p className="text-zinc-400">
-              Update {profile.name}'s information
+              Update {profile.name}&apos;s information
             </p>
           </div>
         </div>
 
-        {/* Edit Form */}
-        <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-          <DriverEditForm profile={profile} driverName={decodedDriverName} />
-        </div>
+        <DriverEditForm
+          profile={profile}
+          driverName={decodedDriverName}
+          portrait={portrait}
+          aiRating={aiRating}
+        />
       </div>
     </div>
   );

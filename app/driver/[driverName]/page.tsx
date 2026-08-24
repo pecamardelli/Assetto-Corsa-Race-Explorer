@@ -2,12 +2,16 @@ import { notFound } from 'next/navigation';
 import BackButton from '../../components/BackButton';
 import FlagIcon from '../../components/FlagIcon';
 import DriverImage from '../../components/DriverImage';
-import { getDriverProfile, resolveDriverPortrait, profileAge } from '../../lib/driver-assets';
+import {
+  getDriverProfile,
+  resolveDriverPortrait,
+  profileAge,
+  resolvePlayerName,
+  fallbackAiLevel,
+} from '../../lib/driver-assets';
 import { getChampionships } from '../../lib/race-data';
 import { calculateStandings } from '../../lib/standings';
 import Link from 'next/link';
-import { promises as fs } from 'fs';
-import path from 'path';
 
 type DriverData = {
   name: string;
@@ -117,7 +121,7 @@ export default async function DriverPage({ params }: { params: Promise<{ driverN
   if (!driverData) {
     for (const champ of championships) {
       for (const season of champ.seasons) {
-        const opponent = season.data.opponents?.find((o: any) => o.name === decodedDriverName);
+        const opponent = season.data.opponents?.find(o => o.name === decodedDriverName);
         if (opponent) {
           driverData = {
             name: opponent.name,
@@ -143,6 +147,14 @@ export default async function DriverPage({ params }: { params: Promise<{ driverN
     notFound();
   }
 
+  // The player drives for themselves and carries no AI rating. Everyone else
+  // reads skill/aggression off their base profile — one rating per driver across
+  // every series — falling back to the stable per-name level when unrated.
+  const isPlayer = decodedDriverName === (await resolvePlayerName());
+  const skill = profile?.skill ?? null;
+  const aggression = profile?.aggression ?? null;
+  const unratedSkill = fallbackAiLevel(decodedDriverName);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
       <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
@@ -164,15 +176,6 @@ export default async function DriverPage({ params }: { params: Promise<{ driverN
                   <h1 className="text-4xl font-bold text-white">
                     {driverData.name}
                   </h1>
-                  {profile && (
-                    <span className={`inline-flex items-center gap-1 px-2.5 py-1 text-xs font-semibold rounded-full ${
-                      profile.isFictional === false
-                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                        : 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
-                    }`}>
-                      {profile.isFictional === false ? 'Real Driver' : 'Fictional'}
-                    </span>
-                  )}
                   <Link
                     href={`/driver/${encodeURIComponent(driverData.name)}/edit`}
                     className="ml-auto px-4 py-2 bg-zinc-700 hover:bg-zinc-600 text-white text-sm font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-zinc-500"
@@ -193,6 +196,55 @@ export default async function DriverPage({ params }: { params: Promise<{ driverN
                         <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                       </svg>
                       <span>From: {profile.placeOfBirth}</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* AI rating — one per driver, shared by every series they enter */}
+                {!isPlayer && (
+                  <div className="mt-4 max-w-xs space-y-3">
+                    <div>
+                      <div className="flex items-baseline justify-between mb-1">
+                        <span className="text-xs text-zinc-500 uppercase">Skill</span>
+                        <span
+                          className={`font-mono font-bold ${
+                            skill != null ? 'text-amber-400' : 'text-zinc-400'
+                          }`}
+                        >
+                          {skill ?? unratedSkill}
+                          {skill == null && (
+                            <span className="ml-2 text-xs font-sans font-normal text-zinc-500">
+                              unrated fallback
+                            </span>
+                          )}
+                        </span>
+                      </div>
+                      <div className="h-2 rounded-full bg-zinc-700 overflow-hidden">
+                        <div
+                          className={`h-full rounded-full ${
+                            skill != null ? 'bg-amber-400' : 'bg-zinc-500'
+                          }`}
+                          style={{ width: `${skill ?? unratedSkill}%` }}
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex items-baseline justify-between mb-1">
+                        <span className="text-xs text-zinc-500 uppercase">Aggression</span>
+                        {aggression != null ? (
+                          <span className="font-mono font-bold text-red-400">{aggression}</span>
+                        ) : (
+                          <span className="text-xs text-zinc-500">random 35–55 each race</span>
+                        )}
+                      </div>
+                      <div className="h-2 rounded-full bg-zinc-700 overflow-hidden">
+                        <div
+                          className={`h-full rounded-full ${
+                            aggression != null ? 'bg-red-400' : 'bg-zinc-600'
+                          }`}
+                          style={{ width: `${aggression ?? 45}%` }}
+                        />
+                      </div>
                     </div>
                   </div>
                 )}

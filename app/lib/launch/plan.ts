@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { getChampionship } from '../race-data';
-import { getDriverProfiles } from '../driver-assets';
+import { fallbackAiLevel, getDriverProfiles, resolvePlayerName } from '../driver-assets';
 import {
   ChampionshipData,
   ChampionshipOpponent,
@@ -22,12 +22,6 @@ import { AssistsConfig, AssistsSource } from '../../types/assists';
 // whose profile doesn't set its own value.
 const AI_AGGRESSION_MIN = 35;
 const AI_AGGRESSION_MAX = 55;
-
-// AI-vs-AI overtaking comes from pace differences: a grid where everyone runs the
-// same level settles into a train. Unrated drivers draw a stable level from this
-// band; rated drivers carry `skill` on their championship profile override.
-const FALLBACK_AI_LEVEL_MIN = 94;
-const FALLBACK_AI_LEVEL_MAX = 99;
 
 /**
  * One batch of a round that is too big for its track.
@@ -112,42 +106,10 @@ export async function resolveTrack(
   return { track: roundTrack.slice(0, cut), trackConfig: roundTrack.slice(cut + 1) };
 }
 
-/**
- * The driver seat the user occupies. player.json is the profile the app already
- * keeps for them, so its name doubles as the entry to pull out of the grid.
- */
-export async function resolvePlayerName(): Promise<string> {
-  if (process.env.AC_PLAYER_NAME) return process.env.AC_PLAYER_NAME;
-
-  try {
-    const contents = await fs.readFile(
-      path.join(process.cwd(), 'app', 'lib', 'driver-profiles', 'player.json'),
-      'utf8'
-    );
-    const profile = JSON.parse(contents) as { name?: string };
-    if (profile.name) return profile.name;
-  } catch {
-    // fall through
-  }
-
-  return 'PLAYER';
-}
-
 function randomAggression(): number {
   return (
     AI_AGGRESSION_MIN + Math.floor(Math.random() * (AI_AGGRESSION_MAX - AI_AGGRESSION_MIN + 1))
   );
-}
-
-/**
- * Stable per-name AI level for drivers without a rated profile, so an unrated
- * driver keeps the same strength every round of a season instead of rerolling
- * per launch.
- */
-function fallbackAiLevel(name: string): number {
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
-  return FALLBACK_AI_LEVEL_MIN + (hash % (FALLBACK_AI_LEVEL_MAX - FALLBACK_AI_LEVEL_MIN + 1));
 }
 
 function toGridEntry(

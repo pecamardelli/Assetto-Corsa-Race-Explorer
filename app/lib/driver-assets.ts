@@ -14,9 +14,8 @@ export type DriverProfile = {
   // in a period series reads their in-era age instead of one measured from today.
   ageAsOf?: string;
   // AI strength this driver races at when a session is launched from the app.
-  // Absent means a stable per-name spread (see plan.ts). Set it on a championship
-  // override to make one driver a sharper opponent in that series without
-  // touching their base profile.
+  // One rating per driver, kept on the base profile and shared by every series
+  // they enter. Absent means a stable per-name spread (see fallbackAiLevel below).
   skill?: number;
   // AI aggression for this driver. In AC this only shapes how the AI races the
   // player (Casillo: the odds of leaving the line when engaged with you) — it
@@ -151,6 +150,44 @@ export async function getDriverProfiles(
     unique.map(name => getDriverProfile(name, championship))
   );
   return new Map(unique.map((name, i) => [name, resolved[i]]));
+}
+
+// AI-vs-AI overtaking comes from pace differences: a grid where everyone runs the
+// same level settles into a train. Unrated drivers draw a stable level from this
+// band; rated drivers carry `skill` on their championship profile override.
+export const FALLBACK_AI_LEVEL_MIN = 94;
+export const FALLBACK_AI_LEVEL_MAX = 99;
+
+/**
+ * Stable per-name AI level for drivers without a rated profile, so an unrated
+ * driver keeps the same strength every round of a season instead of rerolling
+ * per launch.
+ */
+export function fallbackAiLevel(name: string): number {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
+  return FALLBACK_AI_LEVEL_MIN + (hash % (FALLBACK_AI_LEVEL_MAX - FALLBACK_AI_LEVEL_MIN + 1));
+}
+
+/**
+ * The driver seat the user occupies. player.json is the profile the app already
+ * keeps for them, so its name doubles as the entry to pull out of the grid.
+ */
+export async function resolvePlayerName(): Promise<string> {
+  if (process.env.AC_PLAYER_NAME) return process.env.AC_PLAYER_NAME;
+
+  try {
+    const contents = await fs.readFile(
+      path.join(process.cwd(), PROFILE_DIR, 'player.json'),
+      'utf8'
+    );
+    const profile = JSON.parse(contents) as { name?: string };
+    if (profile.name) return profile.name;
+  } catch {
+    // fall through
+  }
+
+  return 'PLAYER';
 }
 
 /**
