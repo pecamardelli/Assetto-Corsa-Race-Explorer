@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
-import { driverSlug, resolvePlayerName } from '../../../lib/driver-assets';
+import { AI_SKILL_MAX, driverSlug, resolvePlayerName } from '../../../lib/driver-assets';
 
 const PROFILE_DIR = 'app/lib/driver-profiles';
 
-function isValidRatingValue(value: unknown): value is number {
-  return typeof value === 'number' && Number.isInteger(value) && value >= 0 && value <= 100;
+function isIntegerIn(value: unknown, min: number, max: number): value is number {
+  return typeof value === 'number' && Number.isInteger(value) && value >= min && value <= max;
 }
+
+// Skill may run past AC's 100 (see AI_SKILL_MAX); aggression is AC's own 0-100.
+const isValidSkill = (value: unknown) => isIntegerIn(value, 0, AI_SKILL_MAX);
+const isValidAggression = (value: unknown) => isIntegerIn(value, 0, 100);
 
 async function readJson(filePath: string): Promise<Record<string, unknown> | null> {
   try {
@@ -45,9 +49,11 @@ export async function PUT(
         aiRating = null;
       } else {
         const { skill, aggression } = body.aiRating as { skill?: unknown; aggression?: unknown };
-        if (!isValidRatingValue(skill) || !isValidRatingValue(aggression)) {
+        if (!isValidSkill(skill) || !isValidAggression(aggression)) {
           return NextResponse.json(
-            { error: 'Invalid AI rating: skill and aggression must be integers 0-100' },
+            {
+              error: `Invalid AI rating: skill must be an integer 0-${AI_SKILL_MAX}, aggression 0-100`,
+            },
             { status: 400 }
           );
         }

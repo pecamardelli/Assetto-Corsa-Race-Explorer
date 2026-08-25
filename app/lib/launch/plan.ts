@@ -114,7 +114,7 @@ function randomAggression(): number {
 
 function toGridEntry(
   opponent: ChampionshipOpponent,
-  aiLevel: number,
+  aiSkill: number,
   aiAggression: number
 ): GridEntry {
   return {
@@ -122,7 +122,10 @@ function toGridEntry(
     skin: opponent.skin,
     name: opponent.name,
     nation: opponent.nation,
-    aiLevel,
+    // AC documents AI_LEVEL to 100; anything above it is handed to Il Direttore
+    // through the grid manifest instead (see direttore-manifest.ts).
+    aiLevel: Math.min(aiSkill, 100),
+    aiSkill,
     aiAggression,
   };
 }

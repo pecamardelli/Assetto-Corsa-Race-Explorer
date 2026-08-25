@@ -16,6 +16,9 @@ export type DriverProfile = {
   // AI strength this driver races at when a session is launched from the app.
   // One rating per driver, kept on the base profile and shared by every series
   // they enter. Absent means a stable per-name spread (see fallbackAiLevel below).
+  // Up to 100 it is AC's own level. Above 100 (to AI_SKILL_MAX) race.ini still
+  // says 100 and the number goes to Il Direttore's grid manifest as the driver's
+  // ceiling, raised toward on fast tracks as the car learns the track.
   skill?: number;
   // AI aggression for this driver. In AC this only shapes how the AI races the
   // player (Casillo: the odds of leaving the line when engaged with you) — it
@@ -156,6 +159,12 @@ export async function getDriverProfiles(
 // same level settles into a train. Unrated drivers draw a stable level from this
 // band; rated drivers carry `skill` on their championship profile override.
 export const FALLBACK_AI_LEVEL_MIN = 94;
+/**
+ * Highest rating a profile may carry. AC stops at 100; the 100-150 band is Il
+ * Direttore's, measured 2026-08-22 on this grid: lap time keeps improving up to
+ * ~1.50 on fast tracks and turns back above it, so higher numbers buy nothing.
+ */
+export const AI_SKILL_MAX = 150;
 export const FALLBACK_AI_LEVEL_MAX = 99;
 
 /**

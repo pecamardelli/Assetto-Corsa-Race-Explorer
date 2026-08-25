@@ -377,11 +377,15 @@ export default function DriverEditForm({ profile, driverName, portrait, aiRating
                 <>
                   <Slider
                     label="Skill"
-                    hint="AC's AI level — this is the driver's pace"
+                    hint={
+                      skill > 100
+                        ? `Above 100: race.ini stays at 100 and Il Direttore raises the driver toward ${(skill / 100).toFixed(2)} on fast tracks — scaled by the track, never at Monaco`
+                        : "AC's AI level — this is the driver's pace. Above 100 is Il Direttore's band."
+                    }
                     value={skill}
                     onChange={setSkill}
                     min={70}
-                    max={100}
+                    max={150}
                     step={1}
                     format={value => `${value}`}
                   />

@@ -7,12 +7,14 @@ import { buildAssistsIni, pinSeasonAssists } from './assists';
 import { ingestResults, listResultFiles } from './ingest';
 import { LaunchPlan } from './plan';
 import { buildRaceIni, LaunchMode, MODE_SESSIONS } from './race-ini';
+import { buildDirettoreManifest } from './direttore-manifest';
 import {
   AC_EXE,
   AC_OUT_DIR,
   AC_ROOT,
   ASSISTS_INI,
   ASSISTS_INI_BACKUP,
+  DIRETTORE_GRID,
   LAUNCH_CONTEXT_FILE,
   RACE_INI,
   RACE_INI_BACKUP,
@@ -181,6 +183,10 @@ export async function launch(
 
   await backupCfgFile(ASSISTS_INI, ASSISTS_INI_BACKUP);
   await fs.writeFile(ASSISTS_INI, buildAssistsIni(plan.assists), 'utf8');
+
+  // Il Direttore reads this at load: the ratings above 100 that race.ini cannot
+  // carry, and each driver's aggression.
+  await fs.writeFile(DIRETTORE_GRID, buildDirettoreManifest(plan.spec), 'utf8');
 
   // A season launching on the global config gets its own copy filed away, so the
   // data folder always records what each season was driven with.

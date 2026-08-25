@@ -28,7 +28,13 @@ export interface GridEntry {
   name: string;
   /** Three-letter code straight from the .champ file. */
   nation: string;
+  /** What race.ini gets: the rating, clamped to AC's 100. */
   aiLevel: number;
+  /**
+   * The rating as rated, which may run past 100 — that band is Il Direttore's and
+   * reaches it through cfg/direttore_grid.json, not race.ini.
+   */
+  aiSkill: number;
   aiAggression: number;
 }
 
