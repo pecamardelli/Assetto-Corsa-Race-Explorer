@@ -1,0 +1,201 @@
+{
+    "name":  "Le Frecce d\u0027Argento",
+    "rules":  {
+                  "practice":  0,
+                  "qualifying":  20,
+                  "points":  [
+                                 8,
+                                 6,
+                                 4,
+                                 3,
+                                 2
+                             ],
+                  "penalties":  false,
+                  "jumpstart":  1
+              },
+    "opponents":  [
+                      {
+                          "name":  "Juan Manuel Fangio",
+                          "skin":  "Fangio",
+                          "car":  "f1_1955_mercedes_w196",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ARG"
+                      },
+                      {
+                          "name":  "Stirling Moss",
+                          "skin":  "Moss",
+                          "car":  "f1_1955_mercedes_w196",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "GBR"
+                      },
+                      {
+                          "name":  "Karl Kling",
+                          "skin":  "Kling",
+                          "car":  "f1_1955_mercedes_w196",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "DEU"
+                      },
+                      {
+                          "name":  "Piero Taruffi",
+                          "skin":  "Taruffi",
+                          "car":  "f1_1955_mercedes_w196",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ITA"
+                      },
+                      {
+                          "name":  "Alberto Ascari",
+                          "skin":  "1955_26_Ascari",
+                          "car":  "ap_lancia_d50",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ITA"
+                      },
+                      {
+                          "name":  "Luigi Villoresi",
+                          "skin":  "1955_28_Villoresi",
+                          "car":  "ap_lancia_d50",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ITA"
+                      },
+                      {
+                          "name":  "Eugenio Castellotti",
+                          "skin":  "1955_30_Castellotti",
+                          "car":  "ap_lancia_d50",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ITA"
+                      },
+                      {
+                          "name":  "Louis Chiron",
+                          "skin":  "1955_32_Chiron",
+                          "car":  "ap_lancia_d50",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "MCO"
+                      },
+                      {
+                          "name":  "Giuseppe Farina",
+                          "skin":  "Farina",
+                          "car":  "f1_1955_ferrari_555",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ITA"
+                      },
+                      {
+                          "name":  "Jose Froilan Gonzalez",
+                          "skin":  "Gonzalez",
+                          "car":  "f1_1955_ferrari_555",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ARG"
+                      },
+                      {
+                          "name":  "Maurice Trintignant",
+                          "skin":  "Trintignant",
+                          "car":  "f1_1955_ferrari_555",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "FRA"
+                      },
+                      {
+                          "name":  "Jean Behra",
+                          "skin":  "00_racing_01",
+                          "car":  "ks_maserati_250f_6cyl",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "FRA"
+                      },
+                      {
+                          "name":  "Roberto Mieres",
+                          "skin":  "01_racing_03",
+                          "car":  "ks_maserati_250f_6cyl",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ARG"
+                      },
+                      {
+                          "name":  "Luigi Musso",
+                          "skin":  "02_racing_05",
+                          "car":  "ks_maserati_250f_6cyl",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ITA"
+                      },
+                      {
+                          "name":  "Carlos Menditeguy",
+                          "skin":  "03_racing_06",
+                          "car":  "ks_maserati_250f_6cyl",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ARG"
+                      },
+                      {
+                          "name":  "Cesare Perdisa",
+                          "skin":  "04_racing_13",
+                          "car":  "ks_maserati_250f_6cyl",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ITA"
+                      },
+                      {
+                          "name":  "Jean Lucas",
+                          "skin":  "Lucas",
+                          "car":  "f1_1955_gordini_t32",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "FRA"
+                      },
+                      {
+                          "name":  "Pablin",
+                          "skin":  "3",
+                          "car":  "brm_type_25",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ARG"
+                      }
+                  ],
+    "rounds":  [
+                   {
+                       "track":  "acf_buenos_aires-layout_no_09",
+                       "laps":  24,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "monaco_1966",
+                       "laps":  25,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "rj_spa_34_66-66",
+                       "laps":  6,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "ks_zandvoort",
+                       "laps":  18,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "aintree",
+                       "laps":  16,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "ks_monza66-full",
+                       "laps":  8,
+                       "weather":  3,
+                       "surface":  3
+                   }
+               ],
+    "maxCars":  18
+}

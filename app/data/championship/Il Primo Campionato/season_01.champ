@@ -1,0 +1,189 @@
+{
+    "name":  "Il Primo Campionato",
+    "rules":  {
+                  "practice":  0,
+                  "qualifying":  20,
+                  "points":  [
+                                 8,
+                                 6,
+                                 4,
+                                 3,
+                                 2
+                             ],
+                  "penalties":  false,
+                  "jumpstart":  1
+              },
+    "opponents":  [
+                      {
+                          "name":  "Juan Manuel Fangio",
+                          "skin":  "Fangio",
+                          "car":  "f1_1950_alfa_romeo_158",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ARG"
+                      },
+                      {
+                          "name":  "Giuseppe Farina",
+                          "skin":  "Farina",
+                          "car":  "f1_1950_alfa_romeo_158",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ITA"
+                      },
+                      {
+                          "name":  "Luigi Fagioli",
+                          "skin":  "Fagioli",
+                          "car":  "f1_1950_alfa_romeo_158",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ITA"
+                      },
+                      {
+                          "name":  "Felice Bonetto",
+                          "skin":  "Parnell",
+                          "car":  "f1_1950_alfa_romeo_158",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ITA"
+                      },
+                      {
+                          "name":  "Louis Rosier",
+                          "skin":  "Rosier",
+                          "car":  "f1_1950_talbot_t26c",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "FRA"
+                      },
+                      {
+                          "name":  "Philippe Etancelin",
+                          "skin":  "Etancelin",
+                          "car":  "f1_1950_talbot_t26c",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "FRA"
+                      },
+                      {
+                          "name":  "Yves Giraud-Cabantous",
+                          "skin":  "Cabantous",
+                          "car":  "f1_1950_talbot_t26c",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "FRA"
+                      },
+                      {
+                          "name":  "Johnny Claes",
+                          "skin":  "Claes",
+                          "car":  "f1_1950_talbot_t26c",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "BEL"
+                      },
+                      {
+                          "name":  "Eugene Martin",
+                          "skin":  "Martin",
+                          "car":  "f1_1950_talbot_t26c",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "FRA"
+                      },
+                      {
+                          "name":  "Eugene Chaboud",
+                          "skin":  "Cabantous",
+                          "car":  "f1_1950_talbot_t26c",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "FRA"
+                      },
+                      {
+                          "name":  "Louis Chiron",
+                          "skin":  "Etancelin",
+                          "car":  "f1_1950_talbot_t26c",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "MCO"
+                      },
+                      {
+                          "name":  "Pierre Levegh",
+                          "skin":  "Claes",
+                          "car":  "f1_1950_talbot_t26c",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "FRA"
+                      },
+                      {
+                          "name":  "Reg Parnell",
+                          "skin":  "Parnell",
+                          "car":  "legion_brm_type_15",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "GBR"
+                      },
+                      {
+                          "name":  "Peter Walker",
+                          "skin":  "Walker",
+                          "car":  "legion_brm_type_15",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "GBR"
+                      },
+                      {
+                          "name":  "Pablin",
+                          "skin":  "Pablin",
+                          "car":  "legion_brm_type_15",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ARG"
+                      }
+                  ],
+    "rounds":  [
+                   {
+                       "track":  "ks_silverstone1967",
+                       "laps":  16,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "monaco_1966",
+                       "laps":  25,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "bremgarten_faux_pre_war",
+                       "laps":  11,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "rj_spa_34_66-66",
+                       "laps":  6,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "rmi_reims1950",
+                       "laps":  11,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "monza",
+                       "laps":  14,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "nordschleife_67",
+                       "laps":  4,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "gb_pedralbes",
+                       "laps":  13,
+                       "weather":  3,
+                       "surface":  3
+                   }
+               ],
+    "maxCars":  15
+}

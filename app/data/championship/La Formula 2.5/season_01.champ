@@ -1,0 +1,253 @@
+{
+    "name":  "La Formula 2.5",
+    "rules":  {
+                  "practice":  0,
+                  "qualifying":  20,
+                  "points":  [
+                                 8,
+                                 6,
+                                 4,
+                                 3,
+                                 2
+                             ],
+                  "penalties":  false,
+                  "jumpstart":  1
+              },
+    "opponents":  [
+                      {
+                          "name":  "Juan Manuel Fangio",
+                          "skin":  "Fangio",
+                          "car":  "f1_1955_mercedes_w196",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ARG"
+                      },
+                      {
+                          "name":  "Stirling Moss",
+                          "skin":  "Moss",
+                          "car":  "f1_1955_mercedes_w196",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "GBR"
+                      },
+                      {
+                          "name":  "Karl Kling",
+                          "skin":  "Kling",
+                          "car":  "f1_1955_mercedes_w196",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "DEU"
+                      },
+                      {
+                          "name":  "Alberto Ascari",
+                          "skin":  "1955_26_Ascari",
+                          "car":  "ap_lancia_d50",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ITA"
+                      },
+                      {
+                          "name":  "Eugenio Castellotti",
+                          "skin":  "1956_12_Castellotti",
+                          "car":  "ap_lancia_d50",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ITA"
+                      },
+                      {
+                          "name":  "Peter Collins",
+                          "skin":  "1956_2_Collins",
+                          "car":  "ap_lancia_d50",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "GBR"
+                      },
+                      {
+                          "name":  "Luigi Musso",
+                          "skin":  "1956_22_Musso",
+                          "car":  "ap_lancia_d50",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ITA"
+                      },
+                      {
+                          "name":  "Mike Hawthorn",
+                          "skin":  "Farina",
+                          "car":  "f1_1955_ferrari_555",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "GBR"
+                      },
+                      {
+                          "name":  "Jose Froilan Gonzalez",
+                          "skin":  "Gonzalez",
+                          "car":  "f1_1955_ferrari_555",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ARG"
+                      },
+                      {
+                          "name":  "Maurice Trintignant",
+                          "skin":  "Trintignant",
+                          "car":  "f1_1955_ferrari_555",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "FRA"
+                      },
+                      {
+                          "name":  "Jean Behra",
+                          "skin":  "00_racing_01",
+                          "car":  "ks_maserati_250f_6cyl",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "FRA"
+                      },
+                      {
+                          "name":  "Roberto Mieres",
+                          "skin":  "01_racing_03",
+                          "car":  "ks_maserati_250f_6cyl",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ARG"
+                      },
+                      {
+                          "name":  "Harry Schell",
+                          "skin":  "00_racing_06",
+                          "car":  "ks_maserati_250f_12cyl",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "USA"
+                      },
+                      {
+                          "name":  "Luigi Villoresi",
+                          "skin":  "01_racing_02",
+                          "car":  "ks_maserati_250f_12cyl",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ITA"
+                      },
+                      {
+                          "name":  "Tony Brooks",
+                          "skin":  "8_Brooks",
+                          "car":  "vanwall_58",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "GBR"
+                      },
+                      {
+                          "name":  "Stuart Lewis-Evans",
+                          "skin":  "22",
+                          "car":  "vanwall_58",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "GBR"
+                      },
+                      {
+                          "name":  "Jo Bonnier",
+                          "skin":  "3",
+                          "car":  "brm_type_25",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "SWE"
+                      },
+                      {
+                          "name":  "Graham Hill",
+                          "skin":  "16",
+                          "car":  "lotus_16_58",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "GBR"
+                      },
+                      {
+                          "name":  "Pablin",
+                          "skin":  "6",
+                          "car":  "brm_type_25",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ARG"
+                      },
+                      {
+                          "name":  "Carlos Menditeguy",
+                          "skin":  "02_racing_05",
+                          "car":  "ks_maserati_250f_6cyl",
+                          "ballast":  0,
+                          "restrictor":  0,
+                          "nation":  "ARG"
+                      }
+                  ],
+    "rounds":  [
+                   {
+                       "track":  "acf_buenos_aires-layout_no_09",
+                       "laps":  24,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "monaco_1966",
+                       "laps":  25,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "gb_pedralbes",
+                       "laps":  13,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "rj_spa_34_66-66",
+                       "laps":  6,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "rmi_reims1950",
+                       "laps":  11,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "rouen_1962-long",
+                       "laps":  13,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "ks_silverstone1967",
+                       "laps":  16,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "aintree",
+                       "laps":  16,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "nordschleife_67",
+                       "laps":  4,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "avus-moto",
+                       "laps":  10,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "ks_monza66-full",
+                       "laps":  8,
+                       "weather":  3,
+                       "surface":  3
+                   },
+                   {
+                       "track":  "Ain_Diab",
+                       "laps":  11,
+                       "weather":  3,
+                       "surface":  3
+                   }
+               ],
+    "maxCars":  20
+}

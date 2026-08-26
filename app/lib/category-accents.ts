@@ -65,6 +65,13 @@ export const ACCENTS: Record<string, Accent> = {
     rule: 'bg-violet-500/40',
     chip: 'bg-violet-500/20 text-violet-300',
   },
+  red: {
+    card: 'hover:border-red-600 hover:shadow-lg hover:shadow-red-500/10',
+    title: 'group-hover:text-red-400',
+    count: 'text-red-400',
+    rule: 'bg-red-500/40',
+    chip: 'bg-red-500/20 text-red-300',
+  },
   zinc: {
     card: 'hover:border-zinc-500 hover:shadow-lg hover:shadow-zinc-400/10',
     title: 'group-hover:text-zinc-300',
