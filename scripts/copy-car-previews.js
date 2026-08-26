@@ -1,3 +1,15 @@
+/**
+ * Copy each car's skin preview out of Assetto Corsa into public/car-gallery.
+ *
+ * The output is `<car_id>/01.webp`, because that is the file the app reads:
+ * getCarPreviewUrl() in app/lib/car-data.ts returns `/car-gallery/<id>/01.webp`
+ * or null, and CarGallery numbers its photos from 01. Photos 02+ are added by
+ * hand. Writing anything else here leaves the car with no image at all.
+ *
+ * Car ids are case-sensitive to the app (they end up in URLs) but not to
+ * Windows, so this also repairs a gallery folder whose casing has drifted -
+ * see ensureExactCase().
+ */
 const fs = require("fs");
 const path = require("path");
 const sharp = require("sharp");
@@ -84,7 +96,7 @@ function findRandomSkinPreview(carId) {
 }
 
 /**
- * Convert image to PNG if necessary and resize
+ * Resize to at most 1024 wide and write the result as WebP.
  */
 async function processImage(inputPath, outputPath) {
   const ext = path.extname(inputPath).toLowerCase();
@@ -103,23 +115,39 @@ async function processImage(inputPath, outputPath) {
       });
     }
 
-    // Convert to PNG if not already
-    if (ext !== ".png") {
-      await image.png({ quality: 90 }).toFile(outputPath);
-      return "converted";
-    } else {
-      // Just copy if already PNG
-      await image.png({ quality: 90 }).toFile(outputPath);
-      return "processed";
-    }
+    // Always WebP, matching the quality the rest of the gallery was built at.
+    await image.webp({ quality: 85, effort: 6 }).toFile(outputPath);
+    return ext === ".webp" ? "processed" : "converted";
   } catch (err) {
-    // If sharp fails (e.g., DDS format not supported), try direct copy
-    if (ext === ".png" || ext === ".jpg" || ext === ".jpeg") {
-      fs.copyFileSync(inputPath, outputPath);
-      return "copied";
-    }
+    // No byte-copy fallback: the output must be a real WebP, so copying a DDS
+    // or PNG to a .webp path would just produce an image the browser refuses.
     throw err;
   }
+}
+
+/**
+ * Make an entry's on-disk casing match `name` exactly.
+ *
+ * Windows resolves paths case-insensitively, so mkdir/writeFile against a new
+ * casing silently reuses the existing entry and keeps its old name. The app
+ * puts car ids straight into URLs, which a case-sensitive host will not
+ * forgive, so drift has to be corrected rather than tolerated. The rename goes
+ * via a temp name because a same-name-different-case rename is a no-op here.
+ */
+function ensureExactCase(parentDir, name) {
+  const actual = fs
+    .readdirSync(parentDir)
+    .find((e) => e.toLowerCase() === name.toLowerCase());
+
+  if (!actual || actual === name) {
+    return false;
+  }
+
+  const tmp = path.join(parentDir, `__case__${name}`);
+  fs.renameSync(path.join(parentDir, actual), tmp);
+  fs.renameSync(tmp, path.join(parentDir, name));
+  console.log(`    ↳ gallery folder re-cased: ${actual} -> ${name}`);
+  return true;
 }
 
 /**
@@ -131,9 +159,10 @@ async function processCar(carId, index, total) {
   if (!fs.existsSync(carOutputDir)) {
     fs.mkdirSync(carOutputDir, { recursive: true });
   }
+  ensureExactCase(OUTPUT_DIR, carId);
 
-  // Check if 00.png already exists
-  const outputPath = path.join(carOutputDir, "00.png");
+  // Photo 01 is the preview the app asks for; anything already there wins.
+  const outputPath = path.join(carOutputDir, "01.webp");
   if (fs.existsSync(outputPath)) {
     console.log(
       `[${index}/${total}] ⊘ ${carId.padEnd(40)} - Preview already exists`
