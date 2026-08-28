@@ -13,6 +13,7 @@ import {
   resolveDriverPortraits,
 } from "../../../../../lib/driver-assets";
 import { partitionRoster } from "../../../../../lib/traffic";
+import { classOfEntry, isMultiClass, orderedClasses } from "../../../../../lib/racing-classes";
 
 export default async function LineupPage({
   params,
@@ -106,9 +107,17 @@ export default async function LineupPage({
     resolveDriverPortraits(opponentNames, decodedChampId),
   ]);
 
-  const carDriverMap = new Map<string, LineupDriver[]>();
+  // A row is a car *in a class*, not a car. The same model is often homologated for
+  // more than one of them — the 458, the Vantage and the RSR each ran in both LMGTE
+  // Pro and LMGTE Am in 2015 — so keying rows on the car alone would file the Am
+  // crews under Pro and show one badge over both.
+  const multiClass = isMultiClass(data.opponents);
+  const classRank = orderedClasses(data.opponents);
+  const carDriverMap = new Map<string, { car: string; raceClass: string; drivers: LineupDriver[] }>();
 
   for (const opponent of racing) {
+    const raceClass = classOfEntry(opponent);
+    const key = JSON.stringify([opponent.car, raceClass]);
     const driverInfo: LineupDriver = {
       name: opponent.name,
       nation: opponent.nation,
@@ -118,15 +127,19 @@ export default async function LineupPage({
       isReigningChampion: opponent.name === reigningChampion,
     };
 
-    if (!carDriverMap.has(opponent.car)) {
-      carDriverMap.set(opponent.car, []);
+    if (!carDriverMap.has(key)) {
+      carDriverMap.set(key, { car: opponent.car, raceClass, drivers: [] });
     }
-    carDriverMap.get(opponent.car)!.push(driverInfo);
+    carDriverMap.get(key)!.drivers.push(driverInfo);
   }
 
   // Convert to array and sort by car name
+  // Rows are car-and-class, so a model entered in two classes is two rows but one
+  // car; the count in the header is of cars.
+  const distinctCars = new Set([...carDriverMap.values()].map(row => row.car)).size;
+
   const carsWithDrivers = Array.from(carDriverMap.entries())
-    .map(([carName, drivers]) => {
+    .map(([key, { car: carName, raceClass, drivers }]) => {
       // The row's stat line quotes the car's own UI specs, so anything a mod
       // leaves out drops off the line rather than showing a blank. A zeroed
       // figure ("0 km/h") is a mod's unfilled field, not a real number.
@@ -140,14 +153,21 @@ export default async function LineupPage({
       ].filter((stat) => stat.value);
 
       return {
+        key,
         carName,
         carDetails: getCarDetails(carName),
         preview: getCarPreviewUrl(carName),
         stats,
         drivers,
+        raceClass,
       };
     })
-    .sort((a, b) => a.carDetails.brand.localeCompare(b.carDetails.brand));
+    // Fastest class first, then by brand within it — an endurance entry list reads
+    // top class downwards, and a GT car among the prototypes reads as a mistake.
+    .sort((a, b) => {
+      const rank = classRank.indexOf(a.raceClass) - classRank.indexOf(b.raceClass);
+      return rank !== 0 ? rank : a.carDetails.brand.localeCompare(b.carDetails.brand);
+    });
 
   // The traffic is tallied by car rather than named. What matters about it is how
   // much of it is out there and what shape it is, not who is behind the wheel.
@@ -201,7 +221,7 @@ export default async function LineupPage({
             {data.name}
           </h1>
           <div className="text-sm text-zinc-400">
-            {racing.length} drivers competing in {carsWithDrivers.length} different cars
+            {racing.length} drivers competing in {distinctCars} different cars
             {traffic.length > 0 && (
               <span className="text-zinc-500">
                 {" "}· {traffic.length} cars of traffic sharing the road
@@ -215,7 +235,7 @@ export default async function LineupPage({
         {/* One full-width row per car: the preview, then the car's badge over its
             data, then the drivers filling the rest of the row. */}
         <div className="space-y-4">
-          {carsWithDrivers.map(({ carName, carDetails, preview, stats, drivers }) => {
+          {carsWithDrivers.map(({ key, carName, carDetails, preview, stats, drivers, raceClass }) => {
             // Two or three drivers to a car leave room to read, so they get the
             // roomy card; a full works team of five needs the compact one.
             const extended = drivers.length <= 3;
@@ -232,7 +252,7 @@ export default async function LineupPage({
 
             return (
             <div
-              key={carName}
+              key={key}
               className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-4 flex flex-col gap-4 xl:flex-row xl:items-stretch"
             >
               {/* Car preview, run to the full height of the row */}
@@ -271,6 +291,11 @@ export default async function LineupPage({
                   style={{ width: 72, height: "auto" }}
                   unoptimized
                 />
+                {multiClass && (
+                  <div className="mb-1 inline-block rounded bg-purple-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-purple-300">
+                    {raceClass}
+                  </div>
+                )}
                 <div className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">
                   {carDetails.brand}
                 </div>

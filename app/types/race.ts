@@ -130,6 +130,16 @@ export interface ChampionshipOpponent {
   // traffic a road series is driven through. It starts, it gets in the way, and the
   // standings look straight past it — see `app/lib/traffic.ts`.
   traffic?: boolean;
+  /**
+   * The class this entry races in — `"LMP1"`, `"LMGTE Pro"` — for a championship that
+   * runs several races at once inside one race. Points, wins, podiums, poles and
+   * fastest laps are all settled among the entries sharing a class.
+   *
+   * Left off by every single-class championship, which is most of them: an absent
+   * class puts the entry in the one unnamed class the whole field shares, and scoring
+   * is exactly as it was before classes existed. See `app/lib/racing-classes.ts`.
+   */
+  class?: string;
 }
 
 export interface ChampionshipRound {
@@ -212,4 +222,10 @@ export interface DriverStanding {
   racesCompleted: number;
   car: string;
   nation: string;
+  /**
+   * The class these figures were earned in, empty for a single-class championship.
+   * Every count beside it — wins, podiums, poles, fastest laps, points — is a count
+   * within that class, so a GT driver's "win" is a class win.
+   */
+  class: string;
 }

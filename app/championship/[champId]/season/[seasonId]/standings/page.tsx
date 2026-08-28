@@ -8,6 +8,7 @@ import BackButton from '../../../../../components/BackButton';
 import FlagIcon from '../../../../../components/FlagIcon';
 import DriverPortrait from '../../../../../components/DriverPortrait';
 import { resolveDriverPortraits } from '../../../../../lib/driver-assets';
+import { classLabel, isMultiClass } from '../../../../../lib/racing-classes';
 
 export default async function SeasonStandingsPage({ params }: { params: Promise<{ champId: string; seasonId: string }> }) {
   const { champId, seasonId } = await params;
@@ -40,6 +41,18 @@ export default async function SeasonStandingsPage({ params }: { params: Promise<
   const standings = calculateStandings(seasonChampionship);
   const portraits = await resolveDriverPortraits(standings.map(d => d.name), decodedChampId);
   const { data } = season;
+
+  // A season running several classes is several championships, so it gets a table
+  // each rather than one table with the GT cars stranded at the bottom of it.
+  // Standings arrive sorted by class, so grouping in order is enough; a single-class
+  // season yields exactly one group and renders as it always did.
+  const multiClass = isMultiClass(data.opponents);
+  const groups: { name: string; drivers: typeof standings }[] = [];
+  for (const driver of standings) {
+    const group = groups.at(-1);
+    if (group && group.name === driver.class) group.drivers.push(driver);
+    else groups.push({ name: driver.class, drivers: [driver] });
+  }
 
   // Count only race sessions
   const completedRaces = season.sessions.filter(s => {
@@ -110,7 +123,17 @@ export default async function SeasonStandingsPage({ params }: { params: Promise<
         </div>
       </section>
 
-      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
+      <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12 flex flex-col gap-8">
+        {groups.map((group) => (
+        <div key={group.name} className="flex flex-col gap-3">
+        {multiClass && (
+          <div className="flex items-baseline gap-3">
+            <h2 className="text-xl font-bold text-white">{classLabel(group.name)}</h2>
+            <span className="text-xs text-zinc-500 uppercase tracking-wider">
+              {group.drivers.length} {group.drivers.length === 1 ? 'driver' : 'drivers'}
+            </span>
+          </div>
+        )}
         {/* Standings Table */}
         <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg overflow-hidden">
           <div className="overflow-x-auto">
@@ -147,7 +170,7 @@ export default async function SeasonStandingsPage({ params }: { params: Promise<
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-700">
-                {standings.map((driver, index) => {
+                {group.drivers.map((driver, index) => {
                   const position = index + 1;
                   const isLeader = position === 1;
                   const isPodium = position <= 3;
@@ -232,6 +255,8 @@ export default async function SeasonStandingsPage({ params }: { params: Promise<
             </table>
           </div>
         </div>
+        </div>
+        ))}
       </div>
     </div>
   );
