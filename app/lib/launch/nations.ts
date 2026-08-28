@@ -40,6 +40,7 @@ const NATION_NAMES: Record<string, string> = {
   NLD: 'Netherlands',
   PAN: 'Panama',
   POL: 'Poland',
+  PRT: 'Portugal',
   ROU: 'Romania',
   RUS: 'Russia',
   SCO: 'Scotland',

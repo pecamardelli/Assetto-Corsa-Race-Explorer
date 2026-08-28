@@ -28,6 +28,7 @@ const countryCodeMap: Record<string, string> = {
   'DEU': 'DE', // Germany
   'DNK': 'DK', // Denmark
   'ESP': 'ES', // Spain
+  'FIN': 'FI', // Finland
   'FRA': 'FR', // France
   'GBR': 'GB', // Great Britain
   'GEO': 'GE', // Georgia
@@ -49,6 +50,7 @@ const countryCodeMap: Record<string, string> = {
   'NLD': 'NL', // Netherlands
   'PAN': 'PA', // Panama
   'POL': 'PL', // Poland
+  'PRT': 'PT', // Portugal
   'ROU': 'RO', // Romania
   'RUS': 'RU', // Russia
   'SCO': 'GB-SCT', // Scotland
