@@ -123,7 +123,7 @@ export default function DriverEditForm({ profile, driverName, portrait, aiRating
   const [error, setError] = useState<string | null>(null);
   const [portraitSuccess, setPortraitSuccess] = useState<string | null>(null);
 
-  const [isFictional, setIsFictional] = useState(profile.isFictional ?? true);
+  const [isFictional, setIsFictional] = useState(profile.isFictional ?? false);
 
   const [rated, setRated] = useState(
     aiRating != null && (aiRating.skill != null || aiRating.aggression != null)

@@ -74,7 +74,12 @@ export async function PUT(
       placeOfBirth: body.placeOfBirth,
       features: body.features,
       gender: body.gender,
-      isFictional: body.isFictional ?? true,
+      // Defaults to a real person. Getting this wrong in that direction is the
+      // cheap mistake: a fictional driver left marked real merely goes without a
+      // portrait until someone says otherwise, while a real driver marked
+      // fictional is handed to the ComfyUI generator, which will paint an
+      // invented face over a photograph of someone who actually exists.
+      isFictional: body.isFictional ?? false,
       bio: body.bio || '',
     };
 

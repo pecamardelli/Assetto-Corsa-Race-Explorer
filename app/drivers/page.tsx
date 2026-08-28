@@ -15,9 +15,10 @@ async function getDriverFictionalMap(driverNames: string[]): Promise<Map<string,
       const profilePath = path.join(process.cwd(), 'app/lib/driver-profiles', `${name.replace(/ /g, '_').toLowerCase()}.json`);
       const fileContents = await fs.readFile(profilePath, 'utf8');
       const profile = JSON.parse(fileContents);
-      map.set(name, profile.isFictional ?? true);
+      map.set(name, profile.isFictional ?? false);
     } catch {
-      map.set(name, true);
+      // No profile at all: assume a real person, the same way the save route does.
+      map.set(name, false);
     }
   }
   return map;
