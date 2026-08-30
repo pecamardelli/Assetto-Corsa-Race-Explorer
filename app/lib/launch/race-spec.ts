@@ -48,16 +48,26 @@ export function seasonRaceSpecPath(champFolder: string, seasonFolder: string): s
 }
 
 /**
+ * Weather AC ships that a race is never run in. Heavy fog leaves the AI blind and
+ * the track barely raceable, so it is kept out of both the picker and the draw.
+ */
+const EXCLUDED_WEATHERS = new Set(['1_heavy_fog']);
+
+/**
  * Weather folders AC has installed, in the order it lists them — which is by
- * folder name, and why they all carry a numeric prefix.
+ * folder name, and why they all carry a numeric prefix. Anything in
+ * EXCLUDED_WEATHERS is dropped, so it can neither be picked nor drawn.
  */
 export async function listWeathers(): Promise<string[]> {
   try {
     const entries = await fs.readdir(AC_CONTENT_WEATHER, { withFileTypes: true });
-    return entries
+    const folders = entries
       .filter(entry => entry.isDirectory())
       .map(entry => entry.name)
+      .filter(name => !EXCLUDED_WEATHERS.has(name))
       .sort();
+
+    return folders.length ? folders : [DEFAULT_WEATHER];
   } catch {
     return [DEFAULT_WEATHER];
   }
