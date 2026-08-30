@@ -6,14 +6,21 @@
       "name": "Test Drive",
       "description": "Accolade's road duel, run for real: exotics from the 1987 lineup and the 1989 Duel, on circuits and on open roads with traffic.",
       "accent": "cyan",
-      "championships": ["Test Drive Tour", "European Challenge"]
+      "championships": [
+        "Test Drive Tour",
+        "European Challenge"
+      ]
     },
     {
       "id": "grand-prix",
       "name": "Grand Prix",
       "description": "Works teams and open-wheelers, from the riding-mechanic era to the last of the front-engined cars.",
       "accent": "amber",
-      "championships": ["1920s Grand Prix Series", "Pre-War Grand Prix Series"]
+      "championships": [
+        "1920s Grand Prix Series",
+        "Pre-War Grand Prix Series",
+        "Post-War Grand Prix Series"
+      ]
     },
     {
       "id": "formula-1",
@@ -21,35 +28,50 @@
       "description": "The World Championship years: three formulas in eleven seasons, from the supercharged Alfettas to the last of the front-engined cars.",
       "accent": "red",
       "banner": "/category-banners/formula-1.webp",
-      "championships": ["Il Primo Campionato", "Le Frecce d'Argento", "La Formula 2.5"]
+      "championships": [
+        "Il Primo Campionato",
+        "Le Frecce d'Argento",
+        "La Formula 2.5"
+      ]
     },
     {
       "id": "endurance",
       "name": "Endurance",
       "description": "Long races, decided by whatever is still running at the end of them — and, in the hybrid era, several of them at once on the same road.",
       "accent": "sky",
-      "championships": ["World Endurance Championship", "Le Mans Classic", "Le Mans Oldies"]
+      "championships": [
+        "World Endurance Championship",
+        "Le Mans Classic",
+        "Le Mans Oldies"
+      ]
     },
     {
       "id": "open-road",
       "name": "Open Road",
       "description": "Racing on roads that were never circuits: passes, coast roads and the long way between two towns.",
       "accent": "emerald",
-      "championships": ["Mille Miglia 1955", "Coppa Brescia 1938"]
+      "championships": [
+        "Mille Miglia 1955",
+        "Coppa Brescia 1938"
+      ]
     },
     {
       "id": "road-cars",
       "name": "Road Cars",
       "description": "Showroom machinery taken racing, with the number plates left on.",
       "accent": "rose",
-      "championships": ["Supercars Trophy"]
+      "championships": [
+        "Supercars Trophy"
+      ]
     },
     {
       "id": "touring",
       "name": "Touring Cars",
       "description": "Saloons, and the national championships built around them.",
       "accent": "violet",
-      "championships": ["Campeonato Argentino"]
+      "championships": [
+        "Campeonato Argentino"
+      ]
     }
   ]
 }
