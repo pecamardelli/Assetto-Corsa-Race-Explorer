@@ -13,19 +13,19 @@
   },
   "dependencies": {
     "country-flag-icons": "^1.6.4",
-    "next": "^16.0.7",
+    "next": "^16.3.3",
     "react": "^19.2.1",
     "react-dom": "^19.2.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
-    "@types/node": "^26.2.0",
+    "@types/node": "^26.4.0",
     "@types/react": "^19.2.7",
-    "@types/react-dom": "^19.2.3",
-    "baseline-browser-mapping": "^2.9.2",
+    "@types/react-dom": "^19.2.5",
+    "baseline-browser-mapping": "^2.11.20",
     "eslint": "^9.39.1",
-    "eslint-config-next": "^16.0.7",
-    "sharp": "^0.34.5",
+    "eslint-config-next": "^16.3.3",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4.1.17",
     "typescript": "^6.0.3"
   }
