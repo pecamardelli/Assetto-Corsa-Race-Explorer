@@ -13,6 +13,10 @@ export type DriverProfile = {
   // Reference date for age display. Set on a championship override so a driver
   // in a period series reads their in-era age instead of one measured from today.
   ageAsOf?: string;
+  // Set on a BASE profile to pin age display to the real, current one: the base
+  // dateOfBirth wins over any period-shifted override and ageAsOf is ignored, in
+  // every championship. For the real people on the grid (the Camardellis).
+  alwaysRealAge?: boolean;
   // AI strength this driver races at when a session is launched from the app.
   // One rating per driver, kept on the base profile and shared by every series
   // they enter. Absent means a stable per-name spread (see fallbackAiLevel below).
@@ -134,13 +138,22 @@ export async function getDriverProfile(
 
   if (!base && !override) return null;
 
-  return {
+  const merged = {
     ...(base ?? {}),
     ...(defaults ?? {}),
     ...(override ?? {}),
     // The name is the join key everywhere else, so never let an override change it.
     name: base?.name ?? driverName,
   } as DriverProfile;
+
+  // A real person's age stays real in every series: their base dateOfBirth beats
+  // the period-shifted one and the series ageAsOf does not apply to them.
+  if (base?.alwaysRealAge && base.dateOfBirth) {
+    merged.dateOfBirth = base.dateOfBirth;
+    delete merged.ageAsOf;
+  }
+
+  return merged;
 }
 
 /** Load many profiles at once, returning a name -> profile map. */
