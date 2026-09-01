@@ -1,0 +1,1690 @@
+{
+  "session_info": {
+    "session_type": "qualifying",
+    "session_duration_formatted": "22:06.544",
+    "session_duration_seconds": 1326.54,
+    "track_length_miles": 1.935,
+    "track_config": "",
+    "best_lap_time_seconds": 103.413,
+    "track": "monaco_1966",
+    "season": "season_02",
+    "championship": "1930s Grand Prix Series",
+    "race_laps": 10,
+    "track_length_meters": 3113.75,
+    "finished": true,
+    "track_length_km": 3.114,
+    "round": 1,
+    "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)",
+    "date": "2026-08-31 23:50:45",
+    "total_cars": 40,
+    "crash_penalty_config": {
+      "max_penalty_per_crash_g": 100,
+      "penalty_percent_per_g": 0.01
+    }
+  },
+  "driver_statistics": {
+    "Rudolf Hasse": {
+      "retired": false,
+      "lap_times": [
+        140.694,
+        115.767
+      ],
+      "crashes": {
+        "average_crash_g": 67.94,
+        "crash_intensities_g": [
+          69.61,
+          66.27
+        ],
+        "total_crash_intensity": 135.87,
+        "worst_crash_g": 69.61,
+        "total_crashes": 2
+      },
+      "times_overtaken": 32,
+      "best_lap": 115.767,
+      "net_positions_gained": 0,
+      "total_score": 686,
+      "score_breakdown": {
+        "speed_factor": 0.893,
+        "crash_penalty_percent": 1.36,
+        "base_score": 6227.5,
+        "crash_factor": 0.986,
+        "position_factor": 0.125,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 32,
+      "laps_completed": 2,
+      "total_time_formatted": "04:16.461",
+      "car_name": "avus_auto_union_type_c",
+      "total_time_seconds": 256.461,
+      "max_speed_kmh": 200.49,
+      "average_lap": 128.231,
+      "position": 36
+    },
+    "Louis Chiron": {
+      "retired": false,
+      "lap_times": [
+        174.711,
+        114.405,
+        114.921,
+        110.787,
+        113.517,
+        114.648,
+        222.102,
+        113.421,
+        114.015,
+        117.777
+      ],
+      "crashes": {
+        "average_crash_g": 412.72,
+        "crash_intensities_g": [
+          75.35,
+          750.1
+        ],
+        "total_crash_intensity": 825.45,
+        "worst_crash_g": 750.1,
+        "total_crashes": 2
+      },
+      "times_overtaken": 42,
+      "best_lap": 110.787,
+      "net_positions_gained": -6,
+      "total_score": 17134,
+      "score_breakdown": {
+        "speed_factor": 0.933,
+        "crash_penalty_percent": 1.75,
+        "base_score": 31137.49,
+        "crash_factor": 0.982,
+        "position_factor": 0.6,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 36,
+      "laps_completed": 10,
+      "total_time_formatted": "21:50.304",
+      "car_name": "legion_alfa_romeo_p3",
+      "total_time_seconds": 1310.304,
+      "max_speed_kmh": 188.19,
+      "average_lap": 131.03,
+      "position": 17
+    },
+    "Emilio Villoresi": {
+      "retired": false,
+      "lap_times": [
+        187.227,
+        111.066,
+        115.074,
+        115.011,
+        117.948,
+        226.443,
+        115.395,
+        112.176,
+        111.156
+      ],
+      "crashes": {
+        "average_crash_g": 64.11,
+        "crash_intensities_g": [
+          64.11
+        ],
+        "total_crash_intensity": 64.11,
+        "worst_crash_g": 64.11,
+        "total_crashes": 1
+      },
+      "times_overtaken": 28,
+      "best_lap": 111.066,
+      "net_positions_gained": 10,
+      "total_score": 11667,
+      "score_breakdown": {
+        "speed_factor": 0.931,
+        "crash_penalty_percent": 0.64,
+        "base_score": 28023.74,
+        "crash_factor": 0.994,
+        "position_factor": 0.45,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 38,
+      "laps_completed": 9,
+      "total_time_formatted": "20:11.496",
+      "car_name": "legion_alfa_romeo_158_39",
+      "total_time_seconds": 1211.496,
+      "max_speed_kmh": 182.92,
+      "average_lap": 134.611,
+      "position": 23
+    },
+    "Ernst Henne": {
+      "retired": false,
+      "lap_times": [
+        141.762,
+        112.407,
+        112.059,
+        112.719,
+        433.122,
+        109.245,
+        121.548,
+        106.815
+      ],
+      "crashes": {
+        "average_crash_g": 92.97,
+        "crash_intensities_g": [
+          77.98,
+          65.58,
+          68.62,
+          109.73,
+          97.41,
+          73.04,
+          158.43
+        ],
+        "total_crash_intensity": 650.79,
+        "worst_crash_g": 158.43,
+        "total_crashes": 7
+      },
+      "times_overtaken": 27,
+      "best_lap": 106.815,
+      "net_positions_gained": 30,
+      "total_score": 18737,
+      "score_breakdown": {
+        "speed_factor": 0.968,
+        "crash_penalty_percent": 5.83,
+        "base_score": 24909.99,
+        "crash_factor": 0.942,
+        "position_factor": 0.825,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 57,
+      "laps_completed": 8,
+      "total_time_formatted": "20:49.676",
+      "car_name": "avus_mercedes_w125_lwb_gp",
+      "total_time_seconds": 1249.677,
+      "max_speed_kmh": 205.82,
+      "average_lap": 156.21,
+      "position": 8
+    },
+    "Bernd Rosemeyer": {
+      "retired": false,
+      "lap_times": [
+        173.361,
+        115.236,
+        117.936,
+        194.52,
+        111.141,
+        109.884,
+        110.232
+      ],
+      "crashes": {
+        "average_crash_g": 58.35,
+        "crash_intensities_g": [
+          58.35
+        ],
+        "total_crash_intensity": 58.35,
+        "worst_crash_g": 58.35,
+        "total_crashes": 1
+      },
+      "times_overtaken": 37,
+      "best_lap": 109.884,
+      "net_positions_gained": 22,
+      "total_score": 14276,
+      "score_breakdown": {
+        "speed_factor": 0.941,
+        "crash_penalty_percent": 0.58,
+        "base_score": 21796.24,
+        "crash_factor": 0.994,
+        "position_factor": 0.7,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 59,
+      "laps_completed": 7,
+      "total_time_formatted": "15:32.309",
+      "car_name": "avus_auto_union_type_c_s",
+      "total_time_seconds": 932.31,
+      "max_speed_kmh": 200.74,
+      "average_lap": 133.187,
+      "position": 13
+    },
+    "Franco Cortese": {
+      "retired": false,
+      "lap_times": [
+        210.078,
+        117.396,
+        114.609,
+        113.868,
+        115.824,
+        225.306,
+        116.241
+      ],
+      "crashes": {
+        "average_crash_g": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0
+      },
+      "times_overtaken": 29,
+      "best_lap": 113.868,
+      "net_positions_gained": -4,
+      "total_score": 3959,
+      "score_breakdown": {
+        "speed_factor": 0.908,
+        "crash_penalty_percent": 0,
+        "base_score": 21796.24,
+        "crash_factor": 1,
+        "position_factor": 0.2,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 25,
+      "laps_completed": 7,
+      "total_time_formatted": "16:53.322",
+      "car_name": "legion_maserati_6cm",
+      "total_time_seconds": 1013.322,
+      "max_speed_kmh": 164.76,
+      "average_lap": 144.76,
+      "position": 33
+    },
+    "Paul Pietsch": {
+      "retired": false,
+      "lap_times": [
+        199.311,
+        107.682,
+        113.49,
+        130.929,
+        106.536,
+        111.69,
+        112.959,
+        112.311,
+        109.467
+      ],
+      "crashes": {
+        "average_crash_g": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0
+      },
+      "times_overtaken": 19,
+      "best_lap": 106.536,
+      "net_positions_gained": 10,
+      "total_score": 23802,
+      "score_breakdown": {
+        "speed_factor": 0.971,
+        "crash_penalty_percent": 0,
+        "base_score": 28023.74,
+        "crash_factor": 1,
+        "position_factor": 0.875,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 29,
+      "laps_completed": 9,
+      "total_time_formatted": "18:24.375",
+      "car_name": "legion_auto_union_type_d",
+      "total_time_seconds": 1104.375,
+      "max_speed_kmh": 200.47,
+      "average_lap": 122.708,
+      "position": 6
+    },
+    "Giuseppe Farina": {
+      "retired": false,
+      "lap_times": [
+        116.727,
+        114.372,
+        114.285,
+        113.514,
+        117.219,
+        203.862,
+        112.116,
+        111.735
+      ],
+      "crashes": {
+        "average_crash_g": 59.01,
+        "crash_intensities_g": [
+          65.32,
+          52.7
+        ],
+        "total_crash_intensity": 118.03,
+        "worst_crash_g": 65.32,
+        "total_crashes": 2
+      },
+      "times_overtaken": 38,
+      "best_lap": 111.735,
+      "net_positions_gained": -13,
+      "total_score": 8544,
+      "score_breakdown": {
+        "speed_factor": 0.926,
+        "crash_penalty_percent": 1.18,
+        "base_score": 24909.99,
+        "crash_factor": 0.988,
+        "position_factor": 0.375,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 25,
+      "laps_completed": 8,
+      "total_time_formatted": "16:43.830",
+      "car_name": "alfa_12c_1937",
+      "total_time_seconds": 1003.83,
+      "max_speed_kmh": 195.06,
+      "average_lap": 125.479,
+      "position": 26
+    },
+    "Pablin": {
+      "retired": false,
+      "lap_times": [
+        137.028,
+        114.489,
+        113.94,
+        112.455,
+        111.666
+      ],
+      "crashes": {
+        "average_crash_g": 53.21,
+        "crash_intensities_g": [
+          53.21
+        ],
+        "total_crash_intensity": 53.21,
+        "worst_crash_g": 53.21,
+        "total_crashes": 1
+      },
+      "times_overtaken": 39,
+      "best_lap": 111.666,
+      "net_positions_gained": -3,
+      "total_score": 5737,
+      "score_breakdown": {
+        "speed_factor": 0.926,
+        "crash_penalty_percent": 0.53,
+        "base_score": 15568.74,
+        "crash_factor": 0.995,
+        "position_factor": 0.4,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 36,
+      "laps_completed": 5,
+      "total_time_formatted": "09:49.577",
+      "car_name": "auto_union_type_c",
+      "total_time_seconds": 589.578,
+      "max_speed_kmh": 190,
+      "average_lap": 117.916,
+      "position": 25
+    },
+    "Rudolf Caracciola": {
+      "retired": false,
+      "lap_times": [
+        235.443,
+        112.431,
+        109.992,
+        116.058,
+        116.163,
+        191.697,
+        107.352,
+        111.054,
+        107.82
+      ],
+      "crashes": {
+        "average_crash_g": 57.85,
+        "crash_intensities_g": [
+          57.85
+        ],
+        "total_crash_intensity": 57.85,
+        "worst_crash_g": 57.85,
+        "total_crashes": 1
+      },
+      "times_overtaken": 36,
+      "best_lap": 107.352,
+      "net_positions_gained": 9,
+      "total_score": 21472,
+      "score_breakdown": {
+        "speed_factor": 0.963,
+        "crash_penalty_percent": 0.58,
+        "base_score": 28023.74,
+        "crash_factor": 0.994,
+        "position_factor": 0.8,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 45,
+      "laps_completed": 9,
+      "total_time_formatted": "20:08.009",
+      "car_name": "acb_mercedes_w125",
+      "total_time_seconds": 1208.01,
+      "max_speed_kmh": 204.35,
+      "average_lap": 134.223,
+      "position": 9
+    },
+    "Philippe Etancelin": {
+      "retired": false,
+      "lap_times": [
+        168.411,
+        116.955,
+        115.47,
+        113.178,
+        113.655,
+        114.474
+      ],
+      "crashes": {
+        "average_crash_g": 100.68,
+        "crash_intensities_g": [
+          51.63,
+          149.73
+        ],
+        "total_crash_intensity": 201.36,
+        "worst_crash_g": 149.73,
+        "total_crashes": 2
+      },
+      "times_overtaken": 45,
+      "best_lap": 113.178,
+      "net_positions_gained": -28,
+      "total_score": 3783,
+      "score_breakdown": {
+        "speed_factor": 0.914,
+        "crash_penalty_percent": 1.52,
+        "base_score": 18682.49,
+        "crash_factor": 0.985,
+        "position_factor": 0.225,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 17,
+      "laps_completed": 6,
+      "total_time_formatted": "12:22.143",
+      "car_name": "hss_1934_maserati_8cm",
+      "total_time_seconds": 742.143,
+      "max_speed_kmh": 168.24,
+      "average_lap": 123.691,
+      "position": 32
+    },
+    "Hermann Lang": {
+      "retired": false,
+      "lap_times": [
+        188.112,
+        110.898,
+        112.107,
+        115.698,
+        113.523,
+        114.357,
+        188.394
+      ],
+      "crashes": {
+        "average_crash_g": 117.2,
+        "crash_intensities_g": [
+          69.78,
+          228.64,
+          53.17
+        ],
+        "total_crash_intensity": 351.59,
+        "worst_crash_g": 228.64,
+        "total_crashes": 3
+      },
+      "times_overtaken": 31,
+      "best_lap": 110.898,
+      "net_positions_gained": 20,
+      "total_score": 10930,
+      "score_breakdown": {
+        "speed_factor": 0.933,
+        "crash_penalty_percent": 2.23,
+        "base_score": 21796.24,
+        "crash_factor": 0.978,
+        "position_factor": 0.55,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 51,
+      "laps_completed": 7,
+      "total_time_formatted": "15:43.089",
+      "car_name": "avus_mercedes_w125_lwb_gp",
+      "total_time_seconds": 943.089,
+      "max_speed_kmh": 206.79,
+      "average_lap": 134.727,
+      "position": 19
+    },
+    "Reg Parnell": {
+      "retired": false,
+      "lap_times": [
+        220.428,
+        111.039,
+        116.529,
+        112.395,
+        185.094,
+        113.331,
+        114.576,
+        210.777,
+        112.149
+      ],
+      "crashes": {
+        "average_crash_g": 738.97,
+        "crash_intensities_g": [
+          750.14,
+          727.8
+        ],
+        "total_crash_intensity": 1477.94,
+        "worst_crash_g": 750.14,
+        "total_crashes": 2
+      },
+      "times_overtaken": 32,
+      "best_lap": 111.039,
+      "net_positions_gained": 6,
+      "total_score": 12150,
+      "score_breakdown": {
+        "speed_factor": 0.931,
+        "crash_penalty_percent": 2,
+        "base_score": 28023.74,
+        "crash_factor": 0.98,
+        "position_factor": 0.475,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 38,
+      "laps_completed": 9,
+      "total_time_formatted": "21:36.317",
+      "car_name": "legion_maserati_6cm",
+      "total_time_seconds": 1296.318,
+      "max_speed_kmh": 172.23,
+      "average_lap": 144.035,
+      "position": 22
+    },
+    "Christian Kautz": {
+      "retired": false,
+      "lap_times": [
+        192.21,
+        112.779,
+        113.688,
+        210.438,
+        114.432,
+        108.39,
+        110.685,
+        113.829,
+        112.929,
+        118.455
+      ],
+      "crashes": {
+        "average_crash_g": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0
+      },
+      "times_overtaken": 31,
+      "best_lap": 108.39,
+      "net_positions_gained": 11,
+      "total_score": 21539,
+      "score_breakdown": {
+        "speed_factor": 0.954,
+        "crash_penalty_percent": 0,
+        "base_score": 31137.49,
+        "crash_factor": 1,
+        "position_factor": 0.725,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 42,
+      "laps_completed": 10,
+      "total_time_formatted": "21:47.835",
+      "car_name": "avus_mercedes_w125_lwb_m125_s",
+      "total_time_seconds": 1307.835,
+      "max_speed_kmh": 191.98,
+      "average_lap": 130.784,
+      "position": 12
+    },
+    "Rene Dreyfus": {
+      "retired": false,
+      "lap_times": [
+        198.444,
+        111.021
+      ],
+      "crashes": {
+        "average_crash_g": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0
+      },
+      "times_overtaken": 33,
+      "best_lap": 111.021,
+      "net_positions_gained": -13,
+      "total_score": 2901,
+      "score_breakdown": {
+        "speed_factor": 0.931,
+        "crash_penalty_percent": 0,
+        "base_score": 6227.5,
+        "crash_factor": 1,
+        "position_factor": 0.5,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 20,
+      "laps_completed": 2,
+      "total_time_formatted": "05:09.464",
+      "car_name": "legion_alfa_romeo_8c_35",
+      "total_time_seconds": 309.465,
+      "max_speed_kmh": 186.82,
+      "average_lap": 154.732,
+      "position": 21
+    },
+    "Piero Dusio": {
+      "retired": false,
+      "lap_times": [
+        209.91,
+        115.314,
+        113.004,
+        116.919,
+        112.914,
+        117.078,
+        176.817,
+        113.688,
+        112.998
+      ],
+      "crashes": {
+        "average_crash_g": 157.38,
+        "crash_intensities_g": [
+          256.44,
+          58.31
+        ],
+        "total_crash_intensity": 314.75,
+        "worst_crash_g": 256.44,
+        "total_crashes": 2
+      },
+      "times_overtaken": 30,
+      "best_lap": 112.914,
+      "net_positions_gained": 1,
+      "total_score": 6315,
+      "score_breakdown": {
+        "speed_factor": 0.916,
+        "crash_penalty_percent": 1.58,
+        "base_score": 28023.74,
+        "crash_factor": 0.984,
+        "position_factor": 0.25,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 31,
+      "laps_completed": 9,
+      "total_time_formatted": "19:48.642",
+      "car_name": "legion_alfa_romeo_158_39",
+      "total_time_seconds": 1188.642,
+      "max_speed_kmh": 178.34,
+      "average_lap": 132.071,
+      "position": 31
+    },
+    "Goffredo Zehender": {
+      "retired": false,
+      "lap_times": [
+        191.46,
+        112.86,
+        112.518,
+        114.768,
+        219.669,
+        113.52,
+        114.237,
+        114.129,
+        114.078
+      ],
+      "crashes": {
+        "average_crash_g": 80.35,
+        "crash_intensities_g": [
+          89.79,
+          70.9
+        ],
+        "total_crash_intensity": 160.7,
+        "worst_crash_g": 89.79,
+        "total_crashes": 2
+      },
+      "times_overtaken": 41,
+      "best_lap": 112.518,
+      "net_positions_gained": -25,
+      "total_score": 8237,
+      "score_breakdown": {
+        "speed_factor": 0.919,
+        "crash_penalty_percent": 1.61,
+        "base_score": 28023.74,
+        "crash_factor": 0.984,
+        "position_factor": 0.325,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 16,
+      "laps_completed": 9,
+      "total_time_formatted": "20:07.239",
+      "car_name": "hss_1934_maserati_8cm",
+      "total_time_seconds": 1207.239,
+      "max_speed_kmh": 168.95,
+      "average_lap": 134.138,
+      "position": 28
+    },
+    "Carlo Pintacuda": {
+      "retired": false,
+      "lap_times": [],
+      "crashes": {
+        "average_crash_g": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0
+      },
+      "times_overtaken": 34,
+      "best_lap": 0,
+      "net_positions_gained": -34,
+      "total_score": 0,
+      "score_breakdown": {
+        "speed_factor": 0.5,
+        "crash_penalty_percent": 0,
+        "base_score": 0,
+        "crash_factor": 1,
+        "position_factor": 0.025,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 0,
+      "laps_completed": 0,
+      "total_time_formatted": "00:00.000",
+      "car_name": "alfa_romeo_tipo_b",
+      "total_time_seconds": 0,
+      "max_speed_kmh": 146.31,
+      "average_lap": 0,
+      "position": 40
+    },
+    "Piero Taruffi": {
+      "retired": false,
+      "lap_times": [
+        228.825,
+        112.746,
+        114.654,
+        117,
+        114.882,
+        182.103,
+        116.319,
+        116.799,
+        115.14
+      ],
+      "crashes": {
+        "average_crash_g": 67.98,
+        "crash_intensities_g": [
+          80.05,
+          67.5,
+          56.38
+        ],
+        "total_crash_intensity": 203.93,
+        "worst_crash_g": 80.05,
+        "total_crashes": 3
+      },
+      "times_overtaken": 34,
+      "best_lap": 112.746,
+      "net_positions_gained": -3,
+      "total_score": 6925,
+      "score_breakdown": {
+        "speed_factor": 0.917,
+        "crash_penalty_percent": 2.04,
+        "base_score": 28023.74,
+        "crash_factor": 0.98,
+        "position_factor": 0.275,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 31,
+      "laps_completed": 9,
+      "total_time_formatted": "20:18.468",
+      "car_name": "legion_maserati_4cm_special",
+      "total_time_seconds": 1218.468,
+      "max_speed_kmh": 174.84,
+      "average_lap": 135.385,
+      "position": 30
+    },
+    "Heinz Brendel": {
+      "retired": false,
+      "lap_times": [
+        225.06,
+        107.688,
+        119.142,
+        112.458,
+        183.873,
+        113.736,
+        112.569,
+        109.845
+      ],
+      "crashes": {
+        "average_crash_g": 72.07,
+        "crash_intensities_g": [
+          61.29,
+          82.85
+        ],
+        "total_crash_intensity": 144.14,
+        "worst_crash_g": 82.85,
+        "total_crashes": 2
+      },
+      "times_overtaken": 29,
+      "best_lap": 107.688,
+      "net_positions_gained": 10,
+      "total_score": 18272,
+      "score_breakdown": {
+        "speed_factor": 0.96,
+        "crash_penalty_percent": 1.44,
+        "base_score": 24909.99,
+        "crash_factor": 0.986,
+        "position_factor": 0.775,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 39,
+      "laps_completed": 8,
+      "total_time_formatted": "18:04.371",
+      "car_name": "avus_mercedes_w125_lwb_m125_s",
+      "total_time_seconds": 1084.371,
+      "max_speed_kmh": 192.62,
+      "average_lap": 135.546,
+      "position": 10
+    },
+    "Hermann Muller": {
+      "retired": false,
+      "lap_times": [
+        237.393,
+        112.14,
+        121.194,
+        107.568,
+        147.726,
+        104.739,
+        106.668,
+        104.562
+      ],
+      "crashes": {
+        "average_crash_g": 447.55,
+        "crash_intensities_g": [
+          142.45,
+          752.65
+        ],
+        "total_crash_intensity": 895.1,
+        "worst_crash_g": 752.65,
+        "total_crashes": 2
+      },
+      "times_overtaken": 36,
+      "best_lap": 104.562,
+      "net_positions_gained": 15,
+      "total_score": 22333,
+      "score_breakdown": {
+        "speed_factor": 0.989,
+        "crash_penalty_percent": 2,
+        "base_score": 24909.99,
+        "crash_factor": 0.98,
+        "position_factor": 0.925,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 51,
+      "laps_completed": 8,
+      "total_time_formatted": "17:21.990",
+      "car_name": "legion_auto_union_type_d",
+      "total_time_seconds": 1041.99,
+      "max_speed_kmh": 205.49,
+      "average_lap": 130.249,
+      "position": 4
+    },
+    "Carlo Felice Trossi": {
+      "retired": false,
+      "lap_times": [
+        204.078,
+        111.195,
+        106.683,
+        121.779,
+        105.048,
+        147.585,
+        109.299,
+        109.227,
+        112.539
+      ],
+      "crashes": {
+        "average_crash_g": 735.28,
+        "crash_intensities_g": [
+          735.28
+        ],
+        "total_crash_intensity": 735.28,
+        "worst_crash_g": 735.28,
+        "total_crashes": 1
+      },
+      "times_overtaken": 33,
+      "best_lap": 105.048,
+      "net_positions_gained": 35,
+      "total_score": 24581,
+      "score_breakdown": {
+        "speed_factor": 0.984,
+        "crash_penalty_percent": 1,
+        "base_score": 28023.74,
+        "crash_factor": 0.99,
+        "position_factor": 0.9,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 68,
+      "laps_completed": 9,
+      "total_time_formatted": "18:47.432",
+      "car_name": "legion_maserati_8ctf",
+      "total_time_seconds": 1127.433,
+      "max_speed_kmh": 196.92,
+      "average_lap": 125.27,
+      "position": 5
+    },
+    "Walter Baumer": {
+      "retired": false,
+      "lap_times": [
+        234.96,
+        116.112,
+        110.688,
+        114.999,
+        109.692,
+        105.537,
+        113.898,
+        186.72,
+        104.286,
+        114.228
+      ],
+      "crashes": {
+        "average_crash_g": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0
+      },
+      "times_overtaken": 49,
+      "best_lap": 104.286,
+      "net_positions_gained": -1,
+      "total_score": 30105,
+      "score_breakdown": {
+        "speed_factor": 0.992,
+        "crash_penalty_percent": 0,
+        "base_score": 31137.49,
+        "crash_factor": 1,
+        "position_factor": 0.975,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 48,
+      "laps_completed": 10,
+      "total_time_formatted": "21:51.119",
+      "car_name": "legion_mercedes_benz_w154",
+      "total_time_seconds": 1311.12,
+      "max_speed_kmh": 201.4,
+      "average_lap": 131.112,
+      "position": 2
+    },
+    "Wilbur Shaw": {
+      "retired": false,
+      "lap_times": [
+        196.026,
+        110.037,
+        113.601,
+        112.062,
+        115.062,
+        111.258,
+        113.562,
+        150.78,
+        125.88,
+        111.012
+      ],
+      "crashes": {
+        "average_crash_g": 71.21,
+        "crash_intensities_g": [
+          55.55,
+          86.88
+        ],
+        "total_crash_intensity": 142.43,
+        "worst_crash_g": 86.88,
+        "total_crashes": 2
+      },
+      "times_overtaken": 23,
+      "best_lap": 110.037,
+      "net_positions_gained": 11,
+      "total_score": 19472,
+      "score_breakdown": {
+        "speed_factor": 0.94,
+        "crash_penalty_percent": 1.42,
+        "base_score": 31137.49,
+        "crash_factor": 0.986,
+        "position_factor": 0.675,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 34,
+      "laps_completed": 10,
+      "total_time_formatted": "20:59.279",
+      "car_name": "legion_maserati_8ctf_indianapolis",
+      "total_time_seconds": 1259.28,
+      "max_speed_kmh": 189.85,
+      "average_lap": 125.928,
+      "position": 14
+    },
+    "Luigi Villoresi": {
+      "retired": false,
+      "lap_times": [
+        199.86,
+        110.052,
+        111.342,
+        121.914,
+        104.532,
+        108.72,
+        110.673,
+        209.985,
+        112.908,
+        113.967
+      ],
+      "crashes": {
+        "average_crash_g": 292.97,
+        "crash_intensities_g": [
+          746.38,
+          66.95,
+          65.59
+        ],
+        "total_crash_intensity": 878.92,
+        "worst_crash_g": 746.38,
+        "total_crashes": 3
+      },
+      "times_overtaken": 18,
+      "best_lap": 104.532,
+      "net_positions_gained": 18,
+      "total_score": 28584,
+      "score_breakdown": {
+        "speed_factor": 0.989,
+        "crash_penalty_percent": 2.33,
+        "base_score": 31137.49,
+        "crash_factor": 0.977,
+        "position_factor": 0.95,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 36,
+      "laps_completed": 10,
+      "total_time_formatted": "21:43.952",
+      "car_name": "legion_maserati_8ctf",
+      "total_time_seconds": 1303.953,
+      "max_speed_kmh": 196.09,
+      "average_lap": 130.395,
+      "position": 3
+    },
+    "Raymond Sommer": {
+      "retired": false,
+      "lap_times": [
+        232.809,
+        116.067
+      ],
+      "crashes": {
+        "average_crash_g": 72.39,
+        "crash_intensities_g": [
+          69.8,
+          74.99
+        ],
+        "total_crash_intensity": 144.79,
+        "worst_crash_g": 74.99,
+        "total_crashes": 2
+      },
+      "times_overtaken": 35,
+      "best_lap": 116.067,
+      "net_positions_gained": -28,
+      "total_score": 547,
+      "score_breakdown": {
+        "speed_factor": 0.891,
+        "crash_penalty_percent": 1.45,
+        "base_score": 6227.5,
+        "crash_factor": 0.986,
+        "position_factor": 0.1,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 7,
+      "laps_completed": 2,
+      "total_time_formatted": "05:48.875",
+      "car_name": "legion_alfa_romeo_8c_35",
+      "total_time_seconds": 348.876,
+      "max_speed_kmh": 193.95,
+      "average_lap": 174.438,
+      "position": 37
+    },
+    "Clemente Biondetti": {
+      "retired": false,
+      "lap_times": [
+        180.828,
+        110.256,
+        120.33
+      ],
+      "crashes": {
+        "average_crash_g": 60.7,
+        "crash_intensities_g": [
+          60.7
+        ],
+        "total_crash_intensity": 60.7,
+        "worst_crash_g": 60.7,
+        "total_crashes": 1
+      },
+      "times_overtaken": 24,
+      "best_lap": 110.256,
+      "net_positions_gained": -3,
+      "total_score": 5661,
+      "score_breakdown": {
+        "speed_factor": 0.938,
+        "crash_penalty_percent": 0.61,
+        "base_score": 9341.25,
+        "crash_factor": 0.994,
+        "position_factor": 0.65,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 21,
+      "laps_completed": 3,
+      "total_time_formatted": "06:51.413",
+      "car_name": "legion_alfa_romeo_12c_36",
+      "total_time_seconds": 411.414,
+      "max_speed_kmh": 198.02,
+      "average_lap": 137.138,
+      "position": 15
+    },
+    "Manfred von Brauchitsch": {
+      "retired": false,
+      "lap_times": [
+        211.71,
+        114.273,
+        111.429,
+        115.239,
+        111.342,
+        107.841,
+        201.72,
+        108.012,
+        112.71
+      ],
+      "crashes": {
+        "average_crash_g": 78.83,
+        "crash_intensities_g": [
+          58.46,
+          102.13,
+          75.9
+        ],
+        "total_crash_intensity": 236.49,
+        "worst_crash_g": 102.13,
+        "total_crashes": 3
+      },
+      "times_overtaken": 36,
+      "best_lap": 107.841,
+      "net_positions_gained": 6,
+      "total_score": 19683,
+      "score_breakdown": {
+        "speed_factor": 0.959,
+        "crash_penalty_percent": 2.34,
+        "base_score": 28023.74,
+        "crash_factor": 0.977,
+        "position_factor": 0.75,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 42,
+      "laps_completed": 9,
+      "total_time_formatted": "19:54.276",
+      "car_name": "acb_mercedes_w125",
+      "total_time_seconds": 1194.276,
+      "max_speed_kmh": 205.56,
+      "average_lap": 132.697,
+      "position": 11
+    },
+    "Luigi Fagioli": {
+      "retired": false,
+      "lap_times": [
+        180.276,
+        111.267,
+        118.968,
+        115.71,
+        110.817,
+        117.981,
+        112.611,
+        191.004,
+        111.573,
+        112.803
+      ],
+      "crashes": {
+        "average_crash_g": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0
+      },
+      "times_overtaken": 27,
+      "best_lap": 110.817,
+      "net_positions_gained": 16,
+      "total_score": 16708,
+      "score_breakdown": {
+        "speed_factor": 0.933,
+        "crash_penalty_percent": 0,
+        "base_score": 31137.49,
+        "crash_factor": 1,
+        "position_factor": 0.575,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 43,
+      "laps_completed": 10,
+      "total_time_formatted": "21:23.009",
+      "car_name": "avus_auto_union_type_c_s",
+      "total_time_seconds": 1283.01,
+      "max_speed_kmh": 199.41,
+      "average_lap": 128.301,
+      "position": 18
+    },
+    "Eugenio Siena": {
+      "retired": false,
+      "lap_times": [
+        150.96,
+        112.572,
+        117.279,
+        113.196,
+        115.176,
+        181.008,
+        112.965,
+        114.09
+      ],
+      "crashes": {
+        "average_crash_g": 84.74,
+        "crash_intensities_g": [
+          84.74
+        ],
+        "total_crash_intensity": 84.74,
+        "worst_crash_g": 84.74,
+        "total_crashes": 1
+      },
+      "times_overtaken": 33,
+      "best_lap": 112.572,
+      "net_positions_gained": -24,
+      "total_score": 6807,
+      "score_breakdown": {
+        "speed_factor": 0.919,
+        "crash_penalty_percent": 0.85,
+        "base_score": 24909.99,
+        "crash_factor": 0.992,
+        "position_factor": 0.3,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 9,
+      "laps_completed": 8,
+      "total_time_formatted": "16:57.245",
+      "car_name": "alfa_romeo_tipo_b",
+      "total_time_seconds": 1017.246,
+      "max_speed_kmh": 177.09,
+      "average_lap": 127.156,
+      "position": 29
+    },
+    "Fernando Camardelli": {
+      "retired": false,
+      "lap_times": [
+        229.425,
+        112.833,
+        114.702,
+        121.425,
+        111.729,
+        213.627,
+        109.557,
+        104.397,
+        103.413
+      ],
+      "crashes": {
+        "average_crash_g": 92.94,
+        "crash_intensities_g": [
+          92.94
+        ],
+        "total_crash_intensity": 92.94,
+        "worst_crash_g": 92.94,
+        "total_crashes": 1
+      },
+      "times_overtaken": 51,
+      "best_lap": 103.413,
+      "net_positions_gained": 1,
+      "total_score": 29152,
+      "score_breakdown": {
+        "speed_factor": 1,
+        "crash_penalty_percent": 0.93,
+        "base_score": 28023.74,
+        "crash_factor": 0.991,
+        "position_factor": 1,
+        "fastest_lap_bonus": 1388.16
+      },
+      "overtakes_made": 52,
+      "laps_completed": 9,
+      "total_time_formatted": "20:21.107",
+      "car_name": "legion_mercedes_benz_w154",
+      "total_time_seconds": 1221.108,
+      "max_speed_kmh": 201.87,
+      "average_lap": 135.679,
+      "position": 1
+    },
+    "Achille Varzi": {
+      "retired": false,
+      "lap_times": [
+        214.077,
+        116.832
+      ],
+      "crashes": {
+        "average_crash_g": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0
+      },
+      "times_overtaken": 41,
+      "best_lap": 116.832,
+      "net_positions_gained": -32,
+      "total_score": 276,
+      "score_breakdown": {
+        "speed_factor": 0.885,
+        "crash_penalty_percent": 0,
+        "base_score": 6227.5,
+        "crash_factor": 1,
+        "position_factor": 0.05,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 9,
+      "laps_completed": 2,
+      "total_time_formatted": "05:30.908",
+      "car_name": "auto_union_type_c",
+      "total_time_seconds": 330.909,
+      "max_speed_kmh": 187.48,
+      "average_lap": 165.454,
+      "position": 39
+    },
+    "Attilio Marinoni": {
+      "retired": false,
+      "lap_times": [
+        234.192,
+        112.956,
+        114.114,
+        226.896,
+        118.602,
+        110.697,
+        111.21,
+        121.125,
+        111.867
+      ],
+      "crashes": {
+        "average_crash_g": 85.89,
+        "crash_intensities_g": [
+          146.33,
+          53.44,
+          57.89
+        ],
+        "total_crash_intensity": 257.66,
+        "worst_crash_g": 146.33,
+        "total_crashes": 3
+      },
+      "times_overtaken": 42,
+      "best_lap": 110.697,
+      "net_positions_gained": -6,
+      "total_score": 16017,
+      "score_breakdown": {
+        "speed_factor": 0.934,
+        "crash_penalty_percent": 2.11,
+        "base_score": 28023.74,
+        "crash_factor": 0.979,
+        "position_factor": 0.625,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 36,
+      "laps_completed": 9,
+      "total_time_formatted": "21:01.659",
+      "car_name": "legion_alfa_romeo_p3",
+      "total_time_seconds": 1261.659,
+      "max_speed_kmh": 180.98,
+      "average_lap": 140.184,
+      "position": 16
+    },
+    "Richard Seaman": {
+      "retired": false,
+      "lap_times": [
+        212.709,
+        115.974,
+        115.839,
+        112.767,
+        115.428,
+        235.68,
+        112.212,
+        126.981,
+        110.934
+      ],
+      "crashes": {
+        "average_crash_g": 51.09,
+        "crash_intensities_g": [
+          51.09
+        ],
+        "total_crash_intensity": 51.09,
+        "worst_crash_g": 51.09,
+        "total_crashes": 1
+      },
+      "times_overtaken": 31,
+      "best_lap": 110.934,
+      "net_positions_gained": 11,
+      "total_score": 13645,
+      "score_breakdown": {
+        "speed_factor": 0.932,
+        "crash_penalty_percent": 0.51,
+        "base_score": 28023.74,
+        "crash_factor": 0.995,
+        "position_factor": 0.525,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 42,
+      "laps_completed": 9,
+      "total_time_formatted": "20:58.523",
+      "car_name": "acb_delage_15s8_seaman_special",
+      "total_time_seconds": 1258.524,
+      "max_speed_kmh": 180.56,
+      "average_lap": 139.836,
+      "position": 20
+    },
+    "Antonio Brivio": {
+      "retired": false,
+      "lap_times": [
+        117.228,
+        114.282
+      ],
+      "crashes": {
+        "average_crash_g": 0,
+        "crash_intensities_g": [],
+        "total_crash_intensity": 0,
+        "worst_crash_g": 0,
+        "total_crashes": 0
+      },
+      "times_overtaken": 33,
+      "best_lap": 114.282,
+      "net_positions_gained": -19,
+      "total_score": 987,
+      "score_breakdown": {
+        "speed_factor": 0.905,
+        "crash_penalty_percent": 0,
+        "base_score": 6227.5,
+        "crash_factor": 1,
+        "position_factor": 0.175,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 14,
+      "laps_completed": 2,
+      "total_time_formatted": "03:51.509",
+      "car_name": "legion_alfa_romeo_12c_36",
+      "total_time_seconds": 231.51,
+      "max_speed_kmh": 190.5,
+      "average_lap": 115.755,
+      "position": 34
+    },
+    "Ernst von Delius": {
+      "retired": false,
+      "lap_times": [
+        167.043,
+        116.268,
+        121.2
+      ],
+      "crashes": {
+        "average_crash_g": 116.27,
+        "crash_intensities_g": [
+          62.4,
+          170.15
+        ],
+        "total_crash_intensity": 232.55,
+        "worst_crash_g": 170.15,
+        "total_crashes": 2
+      },
+      "times_overtaken": 33,
+      "best_lap": 116.268,
+      "net_positions_gained": -1,
+      "total_score": 614,
+      "score_breakdown": {
+        "speed_factor": 0.889,
+        "crash_penalty_percent": 1.62,
+        "base_score": 9341.25,
+        "crash_factor": 0.984,
+        "position_factor": 0.075,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 32,
+      "laps_completed": 3,
+      "total_time_formatted": "06:44.511",
+      "car_name": "avus_auto_union_type_c",
+      "total_time_seconds": 404.511,
+      "max_speed_kmh": 194.16,
+      "average_lap": 134.837,
+      "position": 38
+    },
+    "Tazio Nuvolari": {
+      "retired": false,
+      "lap_times": [
+        203.328,
+        115.392,
+        113.109,
+        118.977,
+        218.136,
+        112.161,
+        113.271,
+        114.009,
+        111.471
+      ],
+      "crashes": {
+        "average_crash_g": 96.19,
+        "crash_intensities_g": [
+          96.19
+        ],
+        "total_crash_intensity": 96.19,
+        "worst_crash_g": 96.19,
+        "total_crashes": 1
+      },
+      "times_overtaken": 42,
+      "best_lap": 111.471,
+      "net_positions_gained": -10,
+      "total_score": 10943,
+      "score_breakdown": {
+        "speed_factor": 0.928,
+        "crash_penalty_percent": 0.96,
+        "base_score": 28023.74,
+        "crash_factor": 0.99,
+        "position_factor": 0.425,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 32,
+      "laps_completed": 9,
+      "total_time_formatted": "20:19.854",
+      "car_name": "alfa_12c_1937",
+      "total_time_seconds": 1219.854,
+      "max_speed_kmh": 195.19,
+      "average_lap": 135.539,
+      "position": 24
+    },
+    "Adolfo Mandirola": {
+      "retired": false,
+      "lap_times": [
+        171.561,
+        115.485,
+        121.824,
+        116.085,
+        119.379
+      ],
+      "crashes": {
+        "average_crash_g": 166.61,
+        "crash_intensities_g": [
+          253.38,
+          71.88,
+          174.58
+        ],
+        "total_crash_intensity": 499.83,
+        "worst_crash_g": 253.38,
+        "total_crashes": 3
+      },
+      "times_overtaken": 32,
+      "best_lap": 115.485,
+      "net_positions_gained": -9,
+      "total_score": 2035,
+      "score_breakdown": {
+        "speed_factor": 0.895,
+        "crash_penalty_percent": 2.72,
+        "base_score": 15568.74,
+        "crash_factor": 0.973,
+        "position_factor": 0.15,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 23,
+      "laps_completed": 5,
+      "total_time_formatted": "10:44.333",
+      "car_name": "legion_maserati_4cm_special",
+      "total_time_seconds": 644.334,
+      "max_speed_kmh": 169.76,
+      "average_lap": 128.867,
+      "position": 35
+    },
+    "Dick Shuttleworth": {
+      "retired": false,
+      "lap_times": [
+        138.894,
+        113.658,
+        119.559,
+        115.278,
+        117.141,
+        222.99,
+        114.855,
+        113.343,
+        112.266,
+        120.294
+      ],
+      "crashes": {
+        "average_crash_g": 90.68,
+        "crash_intensities_g": [
+          59.15,
+          51.78,
+          161.09
+        ],
+        "total_crash_intensity": 272.03,
+        "worst_crash_g": 161.09,
+        "total_crashes": 3
+      },
+      "times_overtaken": 31,
+      "best_lap": 112.266,
+      "net_positions_gained": 3,
+      "total_score": 9827,
+      "score_breakdown": {
+        "speed_factor": 0.921,
+        "crash_penalty_percent": 2.11,
+        "base_score": 31137.49,
+        "crash_factor": 0.979,
+        "position_factor": 0.35,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 34,
+      "laps_completed": 10,
+      "total_time_formatted": "21:28.278",
+      "car_name": "acb_delage_15s8_seaman_special",
+      "total_time_seconds": 1288.278,
+      "max_speed_kmh": 176.87,
+      "average_lap": 128.828,
+      "position": 27
+    },
+    "Ted Horn": {
+      "retired": false,
+      "lap_times": [
+        204.978,
+        114.438,
+        113.868,
+        113.346,
+        107.502,
+        107.544,
+        112.11,
+        140.07,
+        110.46,
+        106.638
+      ],
+      "crashes": {
+        "average_crash_g": 83.7,
+        "crash_intensities_g": [
+          83.7
+        ],
+        "total_crash_intensity": 83.7,
+        "worst_crash_g": 83.7,
+        "total_crashes": 1
+      },
+      "times_overtaken": 35,
+      "best_lap": 106.638,
+      "net_positions_gained": 17,
+      "total_score": 25452,
+      "score_breakdown": {
+        "speed_factor": 0.97,
+        "crash_penalty_percent": 0.84,
+        "base_score": 31137.49,
+        "crash_factor": 0.992,
+        "position_factor": 0.85,
+        "fastest_lap_bonus": 0
+      },
+      "overtakes_made": 52,
+      "laps_completed": 10,
+      "total_time_formatted": "20:30.953",
+      "car_name": "legion_maserati_8ctf_indianapolis",
+      "total_time_seconds": 1230.954,
+      "max_speed_kmh": 192.47,
+      "average_lap": 123.095,
+      "position": 7
+    }
+  }
+}
