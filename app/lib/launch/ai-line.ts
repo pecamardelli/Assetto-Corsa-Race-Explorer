@@ -64,6 +64,12 @@ async function readIfPresent(file: string): Promise<Buffer | null> {
 /**
  * Put the line this round should be raced on into `fast_lane.ai`.
  *
+ * The `turbopackIgnore` markers keep Next's file tracer out of the game install. A
+ * path it sees built as `<unbounded folder> + 'fast_lane_road.ai'` is treated as a
+ * glob for that filename under the project root, and following it drags every file
+ * in the repo into the route's trace ("Encountered unexpected file in NFT list").
+ * The AC content folder is never inside this project, so there is nothing to trace.
+ *
  * Returns undefined when the track does not carry the variant asked for, which is the
  * ordinary case: almost every track has one line and no opinion about it. Nothing is
  * written when the right line is already installed, so repeated launches of the same
@@ -78,14 +84,14 @@ export async function installAiLine(
   if (!folder) return undefined;
 
   const variant = roadTraffic ? 'road' : 'racing';
-  const wanted = await readIfPresent(path.join(folder, roadTraffic ? ROAD : RACING));
+  const wanted = await readIfPresent(path.join(/*turbopackIgnore: true*/ folder, roadTraffic ? ROAD : RACING));
   if (!wanted) return undefined;
 
-  const active = await readIfPresent(path.join(folder, ACTIVE));
+  const active = await readIfPresent(path.join(/*turbopackIgnore: true*/ folder, ACTIVE));
   if (active && active.equals(wanted)) return { variant, swapped: false };
 
-  await fs.writeFile(path.join(folder, ACTIVE), wanted);
-  await fs.rm(path.join(folder, PAYLOADS), { force: true });
+  await fs.writeFile(path.join(/*turbopackIgnore: true*/ folder, ACTIVE), wanted);
+  await fs.rm(path.join(/*turbopackIgnore: true*/ folder, PAYLOADS), { force: true });
 
   return { variant, swapped: true };
 }

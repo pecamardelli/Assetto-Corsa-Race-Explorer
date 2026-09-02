@@ -103,9 +103,16 @@ export async function resolveDriverPortraits(
   return new Map(unique.map((name, i) => [name, resolved[i]]));
 }
 
+/**
+ * Read one profile JSON from under PROFILE_DIR. The directory is joined here, not by
+ * the callers: Next's file tracer scopes `path.join(process.cwd(), 'literal', ...rest)`
+ * to that subfolder, but `path.join(process.cwd(), ...rest)` with nothing constant
+ * after the root makes it trace the entire project into every route that imports
+ * this module ("Encountered unexpected file in NFT list").
+ */
 async function readProfile(...segments: string[]): Promise<Partial<DriverProfile> | null> {
   try {
-    const contents = await fs.readFile(path.join(process.cwd(), ...segments), 'utf8');
+    const contents = await fs.readFile(path.join(process.cwd(), PROFILE_DIR, ...segments), 'utf8');
     return JSON.parse(contents);
   } catch {
     return null;
@@ -123,7 +130,7 @@ export async function getDriverProfile(
   championship?: string
 ): Promise<DriverProfile | null> {
   const slug = driverSlug(driverName);
-  const base = await readProfile(PROFILE_DIR, `${slug}.json`);
+  const base = await readProfile(`${slug}.json`);
 
   let defaults: Partial<DriverProfile> | null = null;
   let override: Partial<DriverProfile> | null = null;
@@ -131,8 +138,8 @@ export async function getDriverProfile(
   if (championship) {
     const champDir = championshipSlug(championship);
     [defaults, override] = await Promise.all([
-      readProfile(PROFILE_DIR, champDir, `${SERIES_DEFAULTS}.json`),
-      readProfile(PROFILE_DIR, champDir, `${slug}.json`),
+      readProfile(champDir, `${SERIES_DEFAULTS}.json`),
+      readProfile(champDir, `${slug}.json`),
     ]);
   }
 
