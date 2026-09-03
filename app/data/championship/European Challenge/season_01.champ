@@ -3,7 +3,18 @@
   "rules": {
     "practice": 0,
     "qualifying": 0,
-    "points": [25, 18, 15, 12, 10, 8, 6, 4, 2, 1],
+    "points": [
+      25,
+      18,
+      15,
+      12,
+      10,
+      8,
+      6,
+      4,
+      2,
+      1
+    ],
     "penalties": false,
     "jumpstart": 1
   },
@@ -17,47 +28,15 @@
       "restrictor": 0
     },
     {
-      "name": "Pavel Voludin",
-      "nation": "RUS",
+      "name": "Mario Ravioli",
+      "nation": "ITA",
       "car": "ferrari_f40",
       "skin": "01_red",
       "ballast": 0,
       "restrictor": 0
     },
     {
-      "name": "Andy Mendieta",
-      "nation": "PAN",
-      "car": "jf_porsche_959",
-      "skin": "02_grey_br_black",
-      "ballast": 0,
-      "restrictor": 0
-    },
-    {
-      "name": "Dick Palumbo",
-      "nation": "USA",
-      "car": "jf_porsche_959",
-      "skin": "07_red_sr_black",
-      "ballast": 0,
-      "restrictor": 0
-    },
-    {
-      "name": "Percy Goodpace",
-      "nation": "GBR",
-      "car": "ks_lamborghini_countach",
-      "skin": "rosso_siviglia",
-      "ballast": 0,
-      "restrictor": 0
-    },
-    {
-      "name": "Kevin Pirongo",
-      "nation": "KEN",
-      "car": "ks_lamborghini_countach",
-      "skin": "bianco_polo_park",
-      "ballast": 0,
-      "restrictor": 0
-    },
-    {
-      "name": "Mario Ravioli",
+      "name": "Andrea Crotto",
       "nation": "ITA",
       "car": "rs_testarossa_84",
       "skin": "00_Rosso_Corsa",
@@ -67,24 +46,32 @@
     {
       "name": "Carlo Pappolongo",
       "nation": "ITA",
-      "car": "rs_testarossa_84",
-      "skin": "Nero_Metallizzato",
+      "car": "ks_lamborghini_countach",
+      "skin": "bianco_polo_park",
       "ballast": 0,
       "restrictor": 0
     },
     {
-      "name": "Willy Sandia",
-      "nation": "VEN",
-      "car": "porsche_911_turbo",
-      "skin": "Green",
+      "name": "Hugo Fast",
+      "nation": "DEU",
+      "car": "jf_porsche_959",
+      "skin": "02_grey_br_black",
       "ballast": 0,
       "restrictor": 0
     },
     {
-      "name": "Andrea Crotto",
-      "nation": "ITA",
+      "name": "Dieter Von Heil",
+      "nation": "DEU",
       "car": "porsche_911_turbo",
       "skin": "black",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Hans Footdown",
+      "nation": "DEU",
+      "car": "ruf_yellowbird",
+      "skin": "00_yellowbird_black",
       "ballast": 0,
       "restrictor": 0
     },
@@ -97,15 +84,7 @@
       "restrictor": 0
     },
     {
-      "name": "Mark Fullthrottle",
-      "nation": "GBR",
-      "car": "lotus_esprit80",
-      "skin": "blue",
-      "ballast": 0,
-      "restrictor": 0
-    },
-    {
-      "name": "Danny Paletto",
+      "name": "Billy Lampazzo",
       "nation": "USA",
       "car": "chevrolet_corvette_c4_1989",
       "skin": "Bright_Red",
@@ -113,10 +92,42 @@
       "restrictor": 0
     },
     {
-      "name": "Dave Gargiulo",
+      "name": "Dick Palumbo",
       "nation": "USA",
-      "car": "chevrolet_corvette_c4_1989",
-      "skin": "Steel_Blue_Metallic",
+      "car": "chevy_camaro_1969_zl1",
+      "skin": "02",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Chuck Tornado",
+      "nation": "USA",
+      "car": "exmods_dodge_charg_daytona",
+      "skin": "8golden",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Matt LaPallita",
+      "nation": "USA",
+      "car": "chevrolet_63vette",
+      "skin": "06",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Danny Paletto",
+      "nation": "USA",
+      "car": "j8_shelby_gt500_67",
+      "skin": "00_nightmist_blue",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Rick Pegasus",
+      "nation": "USA",
+      "car": "pb_pontiac_gto_65",
+      "skin": "gold",
       "ballast": 0,
       "restrictor": 0
     },
@@ -194,12 +205,10 @@
     }
   ],
   "rounds": [
-    { "track": "ks_zandvoort", "laps": 10, "weather": 3, "surface": 3 },
-    { "track": "autobahn", "laps": 1, "weather": 3, "surface": 3 },
-    { "track": "fluela_pass", "laps": 1, "weather": 3, "surface": 3 },
-    { "track": "amalfidrive-costaditalia_traffic", "laps": 1, "weather": 3, "surface": 3 },
-    { "track": "dr2_col_de_turini_downhill", "laps": 1, "weather": 3, "surface": 3 },
-    { "track": "arrabassada-layout_downhill", "laps": 1, "weather": 3, "surface": 3 }
+    { "track": "new_forest_2_5", "laps": 8, "weather": 3, "surface": 3, "cspTraffic": true },
+    { "track": "rt_bannochbrae-normal", "laps": 4, "weather": 3, "surface": 3, "cspTraffic": true },
+    { "track": "autobahn", "laps": 1, "weather": 3, "surface": 3, "cspTraffic": true },
+    { "track": "amalfidrive-costaditalia_traffic", "laps": 1, "weather": 3, "surface": 3 }
   ],
   "maxCars": 22,
   "changedByCm": false
