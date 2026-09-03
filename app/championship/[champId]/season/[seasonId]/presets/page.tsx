@@ -1,7 +1,10 @@
 import { notFound } from "next/navigation";
 import AssistsEditor from "../../../../../components/AssistsEditor";
 import BackButton from "../../../../../components/BackButton";
-import { resolveAssists } from "../../../../../lib/launch/assists";
+import {
+  resolveAssists,
+  resolveTraffic,
+} from "../../../../../lib/launch/assists";
 import { getChampionship } from "../../../../../lib/race-data";
 
 // Always read the config from disk; this page is the editor for it.
@@ -38,6 +41,7 @@ export default async function SeasonPresetsPage({
     championship.folderName,
     seasonFolder
   );
+  const { traffic } = await resolveTraffic(championship.folderName, seasonFolder);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
@@ -75,8 +79,8 @@ export default async function SeasonPresetsPage({
             {season.data.name}
           </h1>
           <p className="text-zinc-400">
-            Game presets for this season&apos;s launches — driving aids and
-            realism settings.
+            Game presets for this season&apos;s launches — driving aids, realism
+            settings and how busy a road in traffic gets.
           </p>
         </div>
       </section>
@@ -84,6 +88,7 @@ export default async function SeasonPresetsPage({
       <div className="w-full max-w-4xl px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
         <AssistsEditor
           initial={assists}
+          initialTraffic={traffic}
           initialSource={source}
           scope={{ champId: championship.folderName, seasonId: seasonFolder }}
         />

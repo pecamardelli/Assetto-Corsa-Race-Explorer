@@ -11,11 +11,13 @@ import {
 } from '../../types/race';
 import { AC_CONTENT_TRACKS } from './paths';
 import { GridEntry, LaunchMode, RaceIniSpec } from './race-ini';
-import { resolveAssists } from './assists';
+import { resolveAssists, resolveTraffic } from './assists';
+import { readTrafficRoad } from './traffic-plan';
 import { fieldOrder } from './field-order';
 import { customModeFor, fieldFor } from '../traffic';
 import { listWeathers, resolveRaceSpec, rollRaceSpec } from './race-spec';
 import { AssistsConfig, AssistsSource } from '../../types/assists';
+import { TrafficConfig, TrafficDecision, decideTrafficCars } from '../../types/traffic-preset';
 
 // Aggression only shapes how an AI races the player — it does nothing AI-vs-AI —
 // and above ~60 it turns into punts. The band is a style fallback for drivers
@@ -48,6 +50,14 @@ export interface LaunchPlan {
   assists: AssistsConfig;
   /** Whether the assists came from the season's own file or the global config. */
   assistsSource: AssistsSource;
+  /**
+   * How much traffic this round puts on the road, and where the number came from.
+   * Only meaningful when `spec.customMode` is set: a round without it has no script
+   * traffic to size, and the launcher leaves the mode's settings alone.
+   */
+  traffic?: TrafficDecision;
+  /** The config that decision came from, filed against the season on first launch. */
+  trafficConfig?: TrafficConfig;
   championshipName: string;
   seasonNumber: number;
   seasonFolder: string;
@@ -333,10 +343,21 @@ export async function buildLaunchPlan(
     customMode: customModeFor(round),
   };
 
+  // Only a round handed to the Test Drive mode has script traffic to size. Measuring
+  // the road is a file read, so it is not worth doing for the rest.
+  let traffic: TrafficDecision | undefined;
+  let trafficConfig: TrafficConfig | undefined;
+  if (spec.customMode) {
+    trafficConfig = (await resolveTraffic(championship.folderName, seasonFolder)).traffic;
+    traffic = decideTrafficCars(trafficConfig, await readTrafficRoad(track, trackConfig));
+  }
+
   return {
     spec,
     assists,
     assistsSource,
+    traffic,
+    trafficConfig,
     championshipName: championship.folderName,
     seasonNumber: season.seasonNumber,
     seasonFolder,

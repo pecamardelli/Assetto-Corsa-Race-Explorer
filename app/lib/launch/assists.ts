@@ -6,13 +6,17 @@ import {
   DEFAULT_ASSISTS,
   sanitizeAssists,
 } from '../../types/assists';
+import { DEFAULT_TRAFFIC, TrafficConfig, sanitizeTraffic } from '../../types/traffic-preset';
 
 /**
- * Game presets (driving aids and realism settings) resolve in two layers: a
- * global config every launch uses by default, and a per-season override. Each
- * season's effective config is pinned into the data folder on its first launch,
- * so the archive keeps a record of the settings a season was driven with even if
- * the global config changes later.
+ * Game presets resolve in two layers: a global config every launch uses by default,
+ * and a per-season override. Each season's effective config is pinned into the data
+ * folder on its first launch, so the archive keeps a record of the settings a season
+ * was driven with even if the global config changes later.
+ *
+ * Two kinds live here. `assists` is the driving aids and realism settings AC reads from
+ * cfg/assists.ini. `traffic` is how much traffic a road carries, which only a round run
+ * in the Test Drive mode uses.
  */
 
 const DATA_DIR = path.join(process.cwd(), 'app', 'data');
@@ -39,10 +43,13 @@ async function readConfigFile(target: string): Promise<AssistsConfig | null> {
   }
 }
 
-async function writeConfigFile(target: string, assists: AssistsConfig): Promise<void> {
-  // Merge rather than replace. A presets file holds an `assists` key so later preset
-  // kinds can join it, and rewriting the whole object would quietly delete them -
-  // `grid`, the per-round cap on how many cars go out at once, lives here too.
+async function writeConfigFile(
+  target: string,
+  patch: Record<string, unknown>
+): Promise<void> {
+  // Merge rather than replace. A presets file holds several independent preset kinds -
+  // `assists`, `traffic`, and `grid`, the per-round cap on how many cars go out at once
+  // - and rewriting the whole object would quietly delete the ones not being saved.
   let existing: Record<string, unknown> = {};
   try {
     existing = JSON.parse((await fs.readFile(target, 'utf8')).replace(/^﻿/, ''));
@@ -52,7 +59,7 @@ async function writeConfigFile(target: string, assists: AssistsConfig): Promise<
   }
 
   await fs.mkdir(path.dirname(target), { recursive: true });
-  await fs.writeFile(target, JSON.stringify({ ...existing, assists }, null, 2) + '\n', 'utf8');
+  await fs.writeFile(target, JSON.stringify({ ...existing, ...patch }, null, 2) + '\n', 'utf8');
 }
 
 /**
@@ -90,7 +97,7 @@ export async function readGlobalAssists(): Promise<AssistsConfig> {
 }
 
 export async function writeGlobalAssists(assists: AssistsConfig): Promise<void> {
-  await writeConfigFile(GAME_CONFIG_FILE, assists);
+  await writeConfigFile(GAME_CONFIG_FILE, { assists });
 }
 
 export async function readSeasonAssists(
@@ -105,7 +112,7 @@ export async function writeSeasonAssists(
   seasonFolder: string,
   assists: AssistsConfig
 ): Promise<void> {
-  await writeConfigFile(seasonAssistsPath(champFolder, seasonFolder), assists);
+  await writeConfigFile(seasonAssistsPath(champFolder, seasonFolder), { assists });
 }
 
 /** Drop a season's override so it follows the global config again. */
@@ -144,6 +151,75 @@ export async function pinSeasonAssists(
 ): Promise<void> {
   const existing = await readSeasonAssists(champFolder, seasonFolder);
   if (!existing) await writeSeasonAssists(champFolder, seasonFolder, assists);
+}
+
+/* ---------------------------------------------------------------- traffic presets */
+
+async function readTrafficFile(target: string): Promise<TrafficConfig | null> {
+  try {
+    const contents = await fs.readFile(target, 'utf8');
+    const parsed = JSON.parse(contents.replace(/^﻿/, '')) as { traffic?: unknown };
+    // A file written before traffic existed has no key, and must not read as a config
+    // of defaults - that would make every season look like it had pinned one.
+    return parsed.traffic === undefined ? null : sanitizeTraffic(parsed.traffic);
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code;
+    if (code !== 'ENOENT') console.error(`Could not read presets file ${target}:`, error);
+    return null;
+  }
+}
+
+export async function readGlobalTraffic(): Promise<TrafficConfig> {
+  return (await readTrafficFile(GAME_CONFIG_FILE)) ?? DEFAULT_TRAFFIC;
+}
+
+export async function writeGlobalTraffic(traffic: TrafficConfig): Promise<void> {
+  await writeConfigFile(GAME_CONFIG_FILE, { traffic });
+}
+
+export async function readSeasonTraffic(
+  champFolder: string,
+  seasonFolder: string
+): Promise<TrafficConfig | null> {
+  return readTrafficFile(seasonAssistsPath(champFolder, seasonFolder));
+}
+
+export async function writeSeasonTraffic(
+  champFolder: string,
+  seasonFolder: string,
+  traffic: TrafficConfig
+): Promise<void> {
+  await writeConfigFile(seasonAssistsPath(champFolder, seasonFolder), { traffic });
+}
+
+export interface ResolvedTraffic {
+  traffic: TrafficConfig;
+  source: AssistsSource;
+}
+
+/** The traffic config a launch of this season would use: its own, else the global one. */
+export async function resolveTraffic(
+  champFolder: string,
+  seasonFolder: string
+): Promise<ResolvedTraffic> {
+  const season = await readSeasonTraffic(champFolder, seasonFolder);
+  if (season) return { traffic: season, source: 'season' };
+
+  return { traffic: await readGlobalTraffic(), source: 'global' };
+}
+
+/**
+ * Record the traffic config a season is being driven with, on the same terms as the
+ * assists: a season that already has one keeps it, one running on the global config
+ * gets a copy filed away.
+ */
+export async function pinSeasonTraffic(
+  champFolder: string,
+  seasonFolder: string,
+  traffic: TrafficConfig
+): Promise<void> {
+  const existing = await readSeasonTraffic(champFolder, seasonFolder);
+  if (!existing) await writeSeasonTraffic(champFolder, seasonFolder, traffic);
 }
 
 /** Render cfg/assists.ini, keys in the order AC's own launcher writes them. */

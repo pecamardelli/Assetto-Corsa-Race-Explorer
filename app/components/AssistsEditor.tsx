@@ -8,7 +8,15 @@ import {
   AssistsConfig,
   AssistsSource,
 } from '../types/assists';
-import { Group, Slider, Toggle } from './SettingControls';
+import {
+  DEFAULT_TRAFFIC,
+  TRAFFIC_CARS_MAX,
+  TRAFFIC_CARS_MIN,
+  TRAFFIC_CARS_SLIDER_MAX,
+  TRAFFIC_PER_LANE_KM_MAX,
+  TrafficConfig,
+} from '../types/traffic-preset';
+import { Group, NumberInput, Slider, Toggle } from './SettingControls';
 
 /**
  * Edit form for the game presets AC reads at launch. Without a scope it edits the
@@ -63,17 +71,31 @@ function LevelPicker({
 
 const percent = (value: number) => `${value}%`;
 const multiplier = (value: number) => (value === 0 ? 'Off' : `${value}x`);
+const perLaneKm = (value: number) => `${value} / lane-km`;
+
+/**
+ * What a density works out to on the two roads that have a lane plan, so the slider
+ * means something before a race is launched. Lane-kilometres, not track length: a
+ * two-way plan carries traffic in both directions over the same tarmac.
+ */
+const REFERENCE_ROADS: Array<{ name: string; laneKm: number }> = [
+  { name: 'New Forest', laneKm: 7.26 },
+  { name: 'Bannochbrae', laneKm: 14.54 },
+];
 
 export default function AssistsEditor({
   initial,
+  initialTraffic,
   initialSource,
   scope,
 }: {
   initial: AssistsConfig;
+  initialTraffic?: TrafficConfig;
   initialSource: AssistsSource;
   scope?: SeasonScope;
 }) {
   const [assists, setAssists] = useState<AssistsConfig>(initial);
+  const [traffic, setTraffic] = useState<TrafficConfig>(initialTraffic ?? DEFAULT_TRAFFIC);
   const [source, setSource] = useState<AssistsSource>(initialSource);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -85,6 +107,11 @@ export default function AssistsEditor({
     setSaved(false);
   };
 
+  const setTrafficField = <K extends keyof TrafficConfig>(key: K, value: TrafficConfig[K]) => {
+    setTraffic(current => ({ ...current, [key]: value }));
+    setSaved(false);
+  };
+
   const request = async (init: RequestInit, url = '/api/assists') => {
     setSaving(true);
     setError(null);
@@ -93,6 +120,7 @@ export default function AssistsEditor({
       const response = await fetch(url, init);
       const body = (await response.json()) as {
         assists?: AssistsConfig;
+        traffic?: TrafficConfig;
         source?: AssistsSource;
         error?: string;
       };
@@ -103,6 +131,7 @@ export default function AssistsEditor({
       }
 
       if (body.assists) setAssists(body.assists);
+      if (body.traffic) setTraffic(body.traffic);
       if (body.source) setSource(body.source);
       setSaved(true);
       router.refresh();
@@ -119,8 +148,8 @@ export default function AssistsEditor({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(
         scope
-          ? { assists, champ: scope.champId, season: scope.seasonId }
-          : { assists }
+          ? { assists, traffic, champ: scope.champId, season: scope.seasonId }
+          : { assists, traffic }
       ),
     });
 
@@ -209,6 +238,94 @@ export default function AssistsEditor({
             value={assists.tyreBlankets}
             onChange={value => set('tyreBlankets', value)}
           />
+        </Group>
+
+        <Group title="Traffic">
+          <p className="pb-2 text-xs text-zinc-500">
+            Cars the Test Drive mode puts on the road, on rounds raced in traffic. Other
+            rounds ignore this.
+          </p>
+
+          <Toggle
+            label="Set the car count myself"
+            hint="Off: the count is worked out from the road's own lane plan"
+            value={traffic.cars !== null}
+            onChange={enabled =>
+              setTrafficField(
+                'cars',
+                enabled
+                  ? Math.round(
+                      Math.min(
+                        TRAFFIC_CARS_MAX,
+                        Math.max(TRAFFIC_CARS_MIN, REFERENCE_ROADS[0].laneKm * traffic.perLaneKm)
+                      )
+                    )
+                  : null
+              )
+            }
+          />
+
+          {traffic.cars !== null ? (
+            <>
+              <Slider
+                label="Traffic cars"
+                hint="Every road gets this many, however long or short it is"
+                value={Math.min(traffic.cars, TRAFFIC_CARS_SLIDER_MAX)}
+                onChange={value => setTrafficField('cars', value)}
+                min={TRAFFIC_CARS_MIN}
+                max={TRAFFIC_CARS_SLIDER_MAX}
+                step={1}
+                format={value => `${value} cars`}
+              />
+              <NumberInput
+                label="Exact count"
+                hint={`The mode accepts ${TRAFFIC_CARS_MIN} to ${TRAFFIC_CARS_MAX}`}
+                value={traffic.cars}
+                onChange={value => setTrafficField('cars', value)}
+                min={TRAFFIC_CARS_MIN}
+                max={TRAFFIC_CARS_MAX}
+                suffix="cars"
+              />
+            </>
+          ) : (
+            <>
+              <Slider
+                label="Density"
+                hint="A two-way road counts twice: both lanes carry traffic"
+                value={traffic.perLaneKm}
+                onChange={value => setTrafficField('perLaneKm', value)}
+                min={1}
+                max={TRAFFIC_PER_LANE_KM_MAX}
+                step={0.5}
+                format={perLaneKm}
+              />
+              <div className="space-y-1 py-2 text-xs text-zinc-500">
+                {REFERENCE_ROADS.map(road => (
+                  <div key={road.name} className="flex justify-between gap-4">
+                    <span>{road.name}</span>
+                    <span className="font-mono text-zinc-400">
+                      {Math.max(
+                        TRAFFIC_CARS_MIN,
+                        Math.round(road.laneKm * traffic.perLaneKm)
+                      )}{' '}
+                      cars
+                      <span className="ml-2 text-zinc-600">
+                        one every{' '}
+                        {Math.round(
+                          (road.laneKm * 1000) /
+                            Math.max(
+                              TRAFFIC_CARS_MIN,
+                              Math.round(road.laneKm * traffic.perLaneKm)
+                            )
+                        )}{' '}
+                        m
+                      </span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </Group>
 
         <Group title="Realism">

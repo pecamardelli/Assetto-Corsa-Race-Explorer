@@ -3,11 +3,12 @@ import { randomUUID } from 'crypto';
 import { promises as fs } from 'fs';
 import { promisify } from 'util';
 import { installAiLine } from './ai-line';
-import { buildAssistsIni, pinSeasonAssists } from './assists';
+import { buildAssistsIni, pinSeasonAssists, pinSeasonTraffic } from './assists';
 import { ingestResults, listResultFiles } from './ingest';
 import { LaunchPlan } from './plan';
 import { buildRaceIni, LaunchMode, MODE_SESSIONS } from './race-ini';
 import { buildDirettoreManifest } from './direttore-manifest';
+import { setTrafficDensity } from './traffic-mode';
 import {
   AC_EXE,
   AC_OUT_DIR,
@@ -18,6 +19,8 @@ import {
   LAUNCH_CONTEXT_FILE,
   RACE_INI,
   RACE_INI_BACKUP,
+  TEST_DRIVE_SETTINGS_BACKUP,
+  TEST_DRIVE_SETTINGS_INI,
 } from './paths';
 
 const execFileAsync = promisify(execFile);
@@ -50,6 +53,8 @@ export interface LaunchState {
    * Unset when the track has a single line, which is nearly all of them.
    */
   aiLine?: 'road' | 'racing';
+  /** Traffic cars this launch put on the road, on a round that has script traffic. */
+  trafficCars?: number;
   /** Result files moved into the season folder once AC quit. */
   ingested?: string[];
   /** Sessions AC wrote that were left unfinished, and so not filed. */
@@ -95,6 +100,32 @@ async function backupCfgFile(source: string, backup: string): Promise<void> {
 }
 
 /**
+ * Set the car count on the Test Drive mode for this round.
+ *
+ * The mode reads its settings from its own folder in the install, so this edits a file
+ * that is not ours and belongs to a live mod. It rewrites exactly one key and leaves the
+ * rest of the file alone, because the other settings there are hand-tuned and several of
+ * them are load-bearing. A missing file means the mode is not installed, which the
+ * launch will fail on for its own reasons - not worth creating one from nothing here.
+ */
+async function writeTrafficDensity(cars: number): Promise<void> {
+  let existing: string;
+  try {
+    existing = await fs.readFile(TEST_DRIVE_SETTINGS_INI, 'utf8');
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code;
+    if (code !== 'ENOENT') throw error;
+    console.error(
+      `No Test Drive settings at ${TEST_DRIVE_SETTINGS_INI} - traffic count left unset`
+    );
+    return;
+  }
+
+  await backupCfgFile(TEST_DRIVE_SETTINGS_INI, TEST_DRIVE_SETTINGS_BACKUP);
+  await fs.writeFile(TEST_DRIVE_SETTINGS_INI, setTrafficDensity(existing, cars), 'utf8');
+}
+
+/**
  * Tells racestats.py what it is recording. `sessions` names each save in the order
  * AC runs them, and the two targets are how the app decides whether a session
  * reached its natural end — AC's own session state is only in shared memory, which
@@ -113,6 +144,7 @@ async function writeLaunchContext(plan: LaunchPlan, id: string): Promise<void> {
     track: plan.roundTrack,
     // Recorded so the session stats can carry the presets they were driven with.
     assists: plan.assists,
+    traffic_cars: plan.traffic?.cars ?? null,
   };
 
   await fs.mkdir(AC_OUT_DIR, { recursive: true });
@@ -184,6 +216,10 @@ export async function launch(
   await backupCfgFile(ASSISTS_INI, ASSISTS_INI_BACKUP);
   await fs.writeFile(ASSISTS_INI, buildAssistsIni(plan.assists), 'utf8');
 
+  // Only a round in the Test Drive mode has script traffic, and only then is the
+  // mode's own settings file ours to touch.
+  if (plan.traffic) await writeTrafficDensity(plan.traffic.cars);
+
   // Il Direttore reads this at load: the ratings above 100 that race.ini cannot
   // carry, and each driver's aggression.
   await fs.writeFile(DIRETTORE_GRID, buildDirettoreManifest(plan.spec), 'utf8');
@@ -191,6 +227,9 @@ export async function launch(
   // A season launching on the global config gets its own copy filed away, so the
   // data folder always records what each season was driven with.
   await pinSeasonAssists(plan.championshipName, plan.seasonFolder, plan.assists);
+  if (plan.trafficConfig) {
+    await pinSeasonTraffic(plan.championshipName, plan.seasonFolder, plan.trafficConfig);
+  }
 
   await writeLaunchContext(plan, id);
 
@@ -210,6 +249,7 @@ export async function launch(
     aiSeat: plan.aiSeat,
     recorded: plan.record,
     aiLine: aiLine?.variant,
+    trafficCars: plan.traffic?.cars,
     startedAt: Date.now(),
   };
 

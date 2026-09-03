@@ -31,6 +31,17 @@ export const ASSISTS_INI_BACKUP = path.join(AC_CFG_DIR, 'assists.ini.bak');
 /** Grid manifest for Il Direttore (ratings above 100, aggression), rewritten each launch. */
 export const DIRETTORE_GRID = path.join(AC_CFG_DIR, 'direttore_grid.json');
 
+/**
+ * Settings for our own Test Drive mode, which lives in the install rather than in
+ * Documents. CSP reads this file directly, so the launcher edits it in place to set the
+ * traffic car count for a round.
+ */
+export const TEST_DRIVE_DIR = path.join(AC_ROOT, 'extension', 'lua', 'new-modes', 'test-drive');
+export const TEST_DRIVE_SETTINGS_INI = path.join(TEST_DRIVE_DIR, 'settings.ini');
+
+/** Same one-deep backup policy as race.ini and assists.ini. */
+export const TEST_DRIVE_SETTINGS_BACKUP = path.join(TEST_DRIVE_DIR, 'settings.ini.bak');
+
 export const AC_OUT_DIR = path.join(AC_DOCUMENTS, 'out');
 
 /** Where the racestats AC app drops one JSON per finished session. */
