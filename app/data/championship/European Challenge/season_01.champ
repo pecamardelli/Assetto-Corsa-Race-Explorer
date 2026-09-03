@@ -22,8 +22,8 @@
     {
       "name": "Pablin",
       "nation": "ARG",
-      "car": "ferrari_f40",
-      "skin": "01_red",
+      "car": "j8_shelby_gt500_67",
+      "skin": "00_nightmist_blue",
       "ballast": 0,
       "restrictor": 0
     },
@@ -118,16 +118,8 @@
     {
       "name": "Danny Paletto",
       "nation": "USA",
-      "car": "j8_shelby_gt500_67",
-      "skin": "00_nightmist_blue",
-      "ballast": 0,
-      "restrictor": 0
-    },
-    {
-      "name": "Rick Pegasus",
-      "nation": "USA",
       "car": "pb_pontiac_gto_65",
-      "skin": "gold",
+      "skin": "Gold",
       "ballast": 0,
       "restrictor": 0
     },
@@ -210,6 +202,6 @@
     { "track": "autobahn", "laps": 1, "weather": 3, "surface": 3, "cspTraffic": true },
     { "track": "amalfidrive-costaditalia_traffic", "laps": 1, "weather": 3, "surface": 3 }
   ],
-  "maxCars": 22,
+  "maxCars": 21,
   "changedByCm": false
 }
