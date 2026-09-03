@@ -35,6 +35,7 @@ interface RoundGroups {
    * so nothing that can be qualified on. These rounds go straight to the race.
    */
   pointToPoint: boolean;
+  standingsGrid: boolean;
   /** What the batches were seeded on: the season's table, or an opening-round draw. */
   seededOn: 'standings' | 'random';
   groups: LaunchGroup[];
@@ -161,10 +162,13 @@ export default function RoundMenu({
 
   const split = groups?.splitRequired && groups.groups.length > 0 ? groups.groups : null;
 
-  // A point-to-point round never qualifies: the race is the whole of it, and the
-  // grid is the championship table. Everything below launches it as a race alone.
+  // A round that takes its grid from the standings never qualifies: the race is the
+  // whole of it. Everything below launches it as a race alone. `pointToPoint` is kept
+  // apart because it only changes the wording - whether there was nothing to qualify
+  // on, or the series simply does not.
   const pointToPoint = groups?.pointToPoint ?? false;
-  const raceMode: LaunchMode = pointToPoint ? 'race' : 'weekend';
+  const standingsGrid = groups?.standingsGrid ?? pointToPoint;
+  const raceMode: LaunchMode = standingsGrid ? 'race' : 'weekend';
 
   /** How a batch of a split round says where its running order came from. */
   const seeding =
@@ -178,7 +182,7 @@ export default function RoundMenu({
         // race itself, and its grid is rebuilt from that result rather than driven
         // for a second time. A round going out in batches qualifies each of them as
         // it goes, so the shortcut is not offered there.
-        ...(qualifyingRecorded && !raceCompleted && !split && !pointToPoint
+        ...(qualifyingRecorded && !raceCompleted && !split && !standingsGrid
           ? [
               {
                 key: 'race',
@@ -199,7 +203,7 @@ export default function RoundMenu({
               label: group.label,
               hint: raceCompleted
                 ? `Run this batch again for the fun of it (${group.drivers.length} cars) — no result is recorded`
-                : pointToPoint
+                : standingsGrid
                   ? `Race ${group.label} (${group.drivers.length} cars, ${seeding}) — no qualifying, so they line up in championship order`
                   : `Qualify and race ${group.label} (${group.drivers.length} cars, ${seeding}) — the round is classified once every batch has run`,
               icon: ICON_GROUP,
@@ -213,7 +217,7 @@ export default function RoundMenu({
                 ? {
                     key: 'rerun',
                     label: 'Race Again',
-                    hint: pointToPoint
+                    hint: standingsGrid
                       ? 'Run it again for the fun of it — no result is recorded'
                       : 'Run the weekend again for the fun of it — no result is recorded',
                     icon: ICON_RERUN,
@@ -221,11 +225,13 @@ export default function RoundMenu({
                     mode: raceMode,
                     record: false,
                   }
-                : pointToPoint
+                : standingsGrid
                   ? {
                       key: 'climb',
                       label: 'Start Race',
-                      hint: 'Launch the race alone — nothing to qualify on here, so the field lines up in championship order',
+                      hint: pointToPoint
+                        ? 'Launch the race alone — nothing to qualify on here, so the field lines up in championship order'
+                        : 'Launch the race alone — this round does not qualify, so the field lines up in championship order',
                       icon: ICON_CLIMB,
                       tone: 'text-red-400',
                       mode: 'race' as const,

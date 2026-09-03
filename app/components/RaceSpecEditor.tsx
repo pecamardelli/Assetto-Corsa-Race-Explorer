@@ -17,6 +17,7 @@ import {
   RaceSpec,
   RaceSpecSource,
   formatTimeOfDay,
+  takesGridFromStandings,
   weatherLabel,
 } from '../types/race-spec';
 import { Group, NumberInput, Select, Slider, Toggle } from './SettingControls';
@@ -323,6 +324,17 @@ export default function RaceSpecEditor({
                     value={spec.pointToPoint}
                     onChange={value => set('pointToPoint', value)}
                   />
+                  {/* Only offered where it decides anything. A point-to-point round
+                      takes its grid from the table whatever this says, and a toggle
+                      that cannot be turned off is worse than no toggle. */}
+                  {!spec.pointToPoint && (
+                    <Toggle
+                      label="Grid from standings"
+                      hint="Skip qualifying on a course that could be qualified on, and line the field up on the championship table instead"
+                      value={spec.gridFromStandings}
+                      onChange={value => set('gridFromStandings', value)}
+                    />
+                  )}
                   <NumberInput
                     label="Race laps"
                     hint="Ignored by a free run, which never reaches the race"
@@ -335,8 +347,8 @@ export default function RaceSpecEditor({
                   <Slider
                     label="Qualifying"
                     hint={
-                      spec.pointToPoint
-                        ? 'Not used: a point-to-point round goes straight to its race'
+                      takesGridFromStandings(spec)
+                        ? 'Not used: this round goes straight to its race'
                         : undefined
                     }
                     value={spec.qualifyingMinutes}

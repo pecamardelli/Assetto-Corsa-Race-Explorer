@@ -103,12 +103,14 @@ export function rollRaceSpec(spec: RaceSpec, weathers: string[]): SettledRace {
     timeOfDayFrom,
     timeOfDayTo,
     pointToPoint,
+    gridFromStandings,
     ...rest
   } = spec;
 
   // Whether the round qualifies at all decides which sessions a launch runs, not
-  // what goes into race.ini, so it is dropped here rather than settled.
+  // what goes into race.ini, so both are dropped here rather than settled.
   void pointToPoint;
+  void gridFromStandings;
 
   return {
     ...rest,
@@ -145,6 +147,8 @@ export function championshipSpec(
     // circuit but raced as a stage — the Targa Florio cuts, say — is set straight
     // in the round's own settings.
     pointToPoint: isPointToPointTrack(round.track),
+    // Off unless a round says otherwise: a championship qualifies until it opts out.
+    gridFromStandings: false,
     weather: RANDOM_WEATHER,
     grip: RANDOM_GRIP,
     // Ranges whose ends meet, so temperature and time are not left to chance.

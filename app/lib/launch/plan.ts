@@ -17,6 +17,7 @@ import { fieldOrder } from './field-order';
 import { customModeFor, fieldFor } from '../traffic';
 import { listWeathers, resolveRaceSpec, rollRaceSpec } from './race-spec';
 import { AssistsConfig, AssistsSource } from '../../types/assists';
+import { takesGridFromStandings } from '../../types/race-spec';
 import { TrafficConfig, TrafficDecision, decideTrafficCars } from '../../types/traffic-preset';
 
 // Aggression only shapes how an AI races the player — it does nothing AI-vs-AI —
@@ -298,13 +299,15 @@ export async function buildLaunchPlan(
   // something else has to.
   let gridOrder: string[] | undefined;
   const pointToPoint = resolved.spec.pointToPoint;
+  const standingsGrid = takesGridFromStandings(resolved.spec);
 
   if (mode === 'race') {
-    if (pointToPoint) {
-      // A course that cannot be lapped cannot be qualified on, so the championship
-      // table is the grid: leader on pole, down the table from there, and the batch
-      // takes the slice of that order it is made of. It is the same order the
-      // batches were seeded from, so Group A lines up in the order it was drawn up.
+    if (standingsGrid) {
+      // Either the course cannot be qualified on, or the series has chosen not to.
+      // Either way the championship table is the grid: leader on pole, down the table
+      // from there, and the batch takes the slice of that order it is made of. It is
+      // the same order the batches were seeded from, so Group A lines up in the order
+      // it was drawn up.
       const { order } = fieldOrder(championship, season, roundNumber);
       const entered = new Set(field.map(entry => entry.name));
 

@@ -4,6 +4,7 @@ import { pitCapacityFor, planGroups } from '../../lib/launch/groups';
 import { fieldOrder } from '../../lib/launch/field-order';
 import { readSeasonGridCaps } from '../../lib/launch/assists';
 import { resolveRaceSpec } from '../../lib/launch/race-spec';
+import { takesGridFromStandings } from '../../types/race-spec';
 
 /**
  * How a round would have to be split to fit its track, who would be in each batch,
@@ -83,6 +84,9 @@ export async function GET(request: NextRequest) {
     // traffic is on the road either way, so it counts against the boxes here.
     splitRequired: capacity !== null && order.length + traffic.length > capacity,
     pointToPoint: spec?.spec.pointToPoint ?? false,
+    // Whether the round goes straight to its race off the championship table, for
+    // either reason. The menu asks this; `pointToPoint` alone only shapes the wording.
+    standingsGrid: spec ? takesGridFromStandings(spec.spec) : false,
     seededOn,
     groups,
     order: order.map((entry, index) => ({

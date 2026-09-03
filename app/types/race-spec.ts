@@ -104,6 +104,20 @@ export interface RaceSpec
    * goes into race.ini.
    */
   pointToPoint: boolean;
+  /**
+   * Skip qualifying and line the field up on the championship standings, on a course
+   * that could perfectly well be qualified on.
+   *
+   * Separate from `pointToPoint`, which says something about the *road*: that it has no
+   * lap to qualify over. This says something about the *series*. A road championship run
+   * in traffic is the case it exists for — a flying lap among the public is not a thing
+   * anyone does, and the running order that means anything is the table. Defaults off,
+   * so every championship keeps qualifying until one asks not to.
+   *
+   * Not part of SettledRace: like `pointToPoint` it decides which sessions a launch
+   * runs, not what goes into race.ini.
+   */
+  gridFromStandings: boolean;
   /** Weather folder name, or RANDOM_WEATHER to draw one per launch. */
   weather: string;
   /** Index into GRIP_PRESETS, or RANDOM_GRIP to draw one per launch. */
@@ -120,6 +134,21 @@ export interface RaceSpec
 
 /** Where a round's effective settings came from. */
 export type RaceSpecSource = 'championship' | 'round';
+
+/**
+ * Whether this round goes straight to its race with a grid off the championship table.
+ *
+ * Two different reasons land in the same place: the road cannot be qualified on, or the
+ * series has chosen not to. Everything downstream — which sessions a launch runs, where
+ * the grid order comes from, what the round menu offers — only cares that one of them
+ * holds, so it asks here rather than testing both.
+ */
+export function takesGridFromStandings(spec: {
+  pointToPoint: boolean;
+  gridFromStandings: boolean;
+}): boolean {
+  return spec.pointToPoint || spec.gridFromStandings;
+}
 
 /**
  * AC aims the sun with an angle rather than a clock: -80 is 8:00 and 80 is 18:00,
@@ -209,6 +238,7 @@ export function sanitizeRaceSpec(input: unknown, base: RaceSpec): RaceSpec {
   return {
     laps: clamp(raw.laps, base.laps, 1, 500),
     pointToPoint: bool(raw.pointToPoint, base.pointToPoint),
+    gridFromStandings: bool(raw.gridFromStandings, base.gridFromStandings),
     weather: typeof raw.weather === 'string' && raw.weather ? raw.weather : base.weather,
     grip: clamp(raw.grip, base.grip, RANDOM_GRIP, GRIP_PRESETS.length - 1),
     ambientTempFrom,
