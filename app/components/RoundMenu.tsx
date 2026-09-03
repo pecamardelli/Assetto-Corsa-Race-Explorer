@@ -23,6 +23,11 @@ interface LaunchEntry {
   record: boolean;
   /** Set on the entries of a round being raced a batch at a time. */
   group?: LaunchGroup;
+  /**
+   * True when which sessions this entry runs depends on /api/groups having answered.
+   * Every race does; a free run is the player alone and never qualifies.
+   */
+  needsGroups?: boolean;
 }
 
 /** What /api/groups says about fitting this round's field onto its track. */
@@ -170,6 +175,12 @@ export default function RoundMenu({
   const standingsGrid = groups?.standingsGrid ?? pointToPoint;
   const raceMode: LaunchMode = standingsGrid ? 'race' : 'weekend';
 
+  // Until /api/groups answers there is no telling whether this round qualifies, and
+  // the fallback above reads as "it does". Clicking in that window launched a weekend
+  // on a round set to grid off the standings, so anything whose sessions depend on the
+  // answer waits for it. A free run does not, and stays clickable throughout.
+  const known = groups !== null;
+
   /** How a batch of a split round says where its running order came from. */
   const seeding =
     groups?.seededOn === 'random'
@@ -192,6 +203,7 @@ export default function RoundMenu({
                 tone: 'text-green-400',
                 mode: 'race' as const,
                 record: true,
+                needsGroups: true,
               },
             ]
           : []),
@@ -211,6 +223,7 @@ export default function RoundMenu({
               mode: raceMode,
               record: !raceCompleted,
               group,
+              needsGroups: true,
             }))
           : [
               raceCompleted
@@ -224,6 +237,7 @@ export default function RoundMenu({
                     tone: 'text-amber-400',
                     mode: raceMode,
                     record: false,
+                    needsGroups: true,
                   }
                 : standingsGrid
                   ? {
@@ -236,6 +250,7 @@ export default function RoundMenu({
                       tone: 'text-red-400',
                       mode: 'race' as const,
                       record: true,
+                      needsGroups: true,
                     }
                   : {
                       key: 'weekend',
@@ -245,6 +260,7 @@ export default function RoundMenu({
                       tone: 'text-red-400',
                       mode: 'weekend' as const,
                       record: true,
+                      needsGroups: true,
                     },
             ]),
         {
@@ -299,6 +315,7 @@ export default function RoundMenu({
           round={round}
           trackName={trackName}
           onOpen={close}
+          onSaved={() => setGroups(null)}
         />
 
         {launches.map(entry => (
@@ -306,8 +323,14 @@ export default function RoundMenu({
             key={entry.key}
             type="button"
             role="menuitem"
-            disabled={busy}
-            title={busy ? 'A session is already running' : entry.hint}
+            disabled={busy || (entry.needsGroups && !known)}
+            title={
+              busy
+                ? 'A session is already running'
+                : entry.needsGroups && !known
+                  ? 'Checking whether this round qualifies...'
+                  : entry.hint
+            }
             onClick={() => {
               close();
               start(round, entry.mode, entry.record, entry.group);

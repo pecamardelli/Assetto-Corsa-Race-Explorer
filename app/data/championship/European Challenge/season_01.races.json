@@ -1,10 +1,46 @@
 {
   "rounds": {
     "1": {
-      "gridFromStandings": true
+      "laps": 3,
+      "pointToPoint": false,
+      "gridFromStandings": true,
+      "weather": "__random__",
+      "grip": -1,
+      "ambientTempFrom": 20,
+      "ambientTempTo": 20,
+      "roadTempFrom": 26,
+      "roadTempTo": 26,
+      "timeOfDayFrom": 720,
+      "timeOfDayTo": 720,
+      "windSpeedMin": 0,
+      "windSpeedMax": 10,
+      "windDirection": -1,
+      "practiceMinutes": 0,
+      "qualifyingMinutes": 33,
+      "penalties": false,
+      "jumpStartPenalty": 1,
+      "tyresOut": -1
     },
     "2": {
-      "gridFromStandings": true
+      "laps": 2,
+      "pointToPoint": false,
+      "gridFromStandings": true,
+      "weather": "__random__",
+      "grip": -1,
+      "ambientTempFrom": 20,
+      "ambientTempTo": 20,
+      "roadTempFrom": 26,
+      "roadTempTo": 26,
+      "timeOfDayFrom": 720,
+      "timeOfDayTo": 720,
+      "windSpeedMin": 0,
+      "windSpeedMax": 10,
+      "windDirection": -1,
+      "practiceMinutes": 0,
+      "qualifyingMinutes": 15,
+      "penalties": false,
+      "jumpStartPenalty": 1,
+      "tyresOut": -1
     },
     "3": {
       "gridFromStandings": true

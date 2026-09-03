@@ -163,6 +163,7 @@ export default function RaceSpecEditor({
   round,
   trackName,
   onOpen,
+  onSaved,
 }: {
   /** Championship folder, as it is named under app/data. */
   champId: string;
@@ -172,6 +173,16 @@ export default function RaceSpecEditor({
   trackName: string;
   /** Told when the entry is picked, so the menu around it can step aside. */
   onOpen?: () => void;
+  /**
+   * Told when these settings have changed on disk.
+   *
+   * The menu around this dialog decides which sessions a round launches - a weekend,
+   * or the race alone - and it reads that from /api/groups once and keeps it. Some of
+   * what is edited here, `pointToPoint` and `gridFromStandings`, is exactly what that
+   * answer depends on, so without this the menu would go on offering a qualifying for
+   * a round that has just been told not to run one.
+   */
+  onSaved?: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const [loaded, setLoaded] = useState<Loaded | null>(null);
@@ -250,13 +261,17 @@ export default function RaceSpecEditor({
     });
 
     if (saved) {
+      onSaved?.();
       router.refresh();
       onClose();
     }
   };
 
   const reset = async () => {
-    if (await request({ method: 'DELETE' })) router.refresh();
+    if (await request({ method: 'DELETE' })) {
+      onSaved?.();
+      router.refresh();
+    }
   };
 
   // The dialog goes straight to the body: the entry that opens it sits inside a

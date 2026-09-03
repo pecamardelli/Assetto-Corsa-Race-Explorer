@@ -1,0 +1,22 @@
+{
+  "assists": {
+    "autoShifter": false,
+    "autoClutch": false,
+    "autoBlip": false,
+    "autoBrake": false,
+    "idealLine": false,
+    "abs": "on",
+    "tractionControl": "off",
+    "stabilityControl": 0,
+    "damage": 0,
+    "visualDamage": true,
+    "fuelRate": 0,
+    "tyreWear": 0,
+    "tyreBlankets": false,
+    "slipstream": 0
+  },
+  "traffic": {
+    "perLaneKm": 7,
+    "cars": null
+  }
+}
