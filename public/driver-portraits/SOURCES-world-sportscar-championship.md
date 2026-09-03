@@ -1,6 +1,6 @@
 # Portrait sources
 
-Photographs of the Le Mans Oldies (1970 International Championship for Makes) drivers,
+Photographs of the World Sportscar Championship (formerly Le Mans Oldies; 1970 International Championship for Makes) drivers,
 taken from Wikipedia/Wikimedia Commons lead images on 2026-09-02 and cropped to head-and-shoulders
 (512x640 WebP). All are freely licensed; CC BY and CC BY-SA require attribution, which is what this
 file is for. Hans Herrmann, Jo Bonnier and Pablin use the portraits already in this folder.
