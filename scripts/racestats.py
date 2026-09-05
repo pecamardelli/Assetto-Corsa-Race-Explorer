@@ -314,15 +314,27 @@ def save_current_session():
             if key in launch_context:
                 session_data['session_info'][key] = launch_context[key]
 
-        # Capture final positions
+        # Capture final positions.
+        #
+        # In a race the order is ours to work out, from the laps we counted: most laps
+        # first, and among equals the one who finished them in the least time. AC's
+        # leaderboard ranks by AC's own lap count, and that count is dead in the Test
+        # Drive mode (every repositioning call resets a car's lap, and every car gets
+        # repositioned), so it put a 13-car field in grid order with zero laps each on
+        # 2026-09-05. Any other session keeps AC's order, which there is by best lap.
         for car_id, stats in car_stats.items():
             try:
                 stats.final_position = ac.getCarLeaderboardPosition(car_id)
             except:
                 stats.final_position = 999
 
-        # Sort drivers by position
-        sorted_drivers = sorted(car_stats.items(), key=lambda x: x[1].final_position)
+        if session_type == 'race':
+            sorted_drivers = sorted(car_stats.items(),
+                                    key=lambda x: (-len(x[1].lap_times), x[1].racing_time()))
+            for place, (car_id, stats) in enumerate(sorted_drivers, start=1):
+                stats.final_position = place
+        else:
+            sorted_drivers = sorted(car_stats.items(), key=lambda x: x[1].final_position)
 
         # Anyone with less race time on the clock than the winner stopped before the
         # end, so they did not finish. Being lapped does not count: AC lets a car

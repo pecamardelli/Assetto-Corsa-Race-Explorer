@@ -200,6 +200,52 @@ check("the real lap still counts once it has been driven", len(stats[0].lap_time
 check("  and it is a full lap, not the 2 s from grid to line",
       stats[0].lap_times[0] / 1000.0, 100.0, 2.5)
 
+print("\nRace positions come from our laps, not AC's leaderboard")
+# AC's leaderboard (the stub's i + 1) says car 0 leads. Give car 2 an extra lap and make
+# car 1 quicker than car 0 over the same laps: the order has to be 2, 1, 0.
+stats = run(3, 320.0, ac_counter_works=False)
+stats[2].lap_times.append(95000.0)
+stats[1].lap_times = [t - 3000.0 for t in stats[1].lap_times]
+saved = {}
+racestats.read_launch_context = lambda: {'sessions': ['race'], 'laps': 3}
+racestats.current_session_number = 0
+_open = open
+
+
+class _Sink(object):
+    def __init__(self, *a, **k):
+        pass
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+    def write(self, text):
+        saved.setdefault('text', '')
+        saved['text'] += text
+
+
+import builtins  # noqa: E402
+builtins.open = lambda *a, **k: _Sink()
+try:
+    os.makedirs = lambda *a, **k: None
+    racestats.os.path.exists = lambda *a: True
+    completed = racestats.save_current_session()
+finally:
+    builtins.open = _open
+import json  # noqa: E402
+result = json.loads(saved['text'])
+order = sorted(result['driver_statistics'].items(), key=lambda kv: kv[1]['position'])
+print("    " + ", ".join("%s P%d (%d laps, %.0f s)" % (
+    name, d['position'], d['laps_completed'], d['total_time_seconds']) for name, d in order))
+check("the car with the most laps wins", order[0][0], 'Driver 2')
+check("equal laps rank by racing time", order[1][0], 'Driver 1')
+check("AC's leaderboard leader is last", order[2][0], 'Driver 0')
+check("the session counts as finished by our laps", completed, True)
+check("fewer laps than the winner reads as retired", result['driver_statistics']['Driver 0']['retired'], True)
+
 print("\n%d failed" % len(fails) if fails else "\nall passed")
 for f in fails:
     print("  FAILED:", f)
