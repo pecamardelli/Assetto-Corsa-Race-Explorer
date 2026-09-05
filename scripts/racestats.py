@@ -30,6 +30,26 @@ prev_positions = {}
 prev_lap_counts = {}
 prev_g_forces = {}
 last_crash_times = {}  # Track time of last crash for cooldown
+prev_splines = {}      # Last normalized spline position, to see a car cross the line
+lap_started_at = {}    # Session time each car's current lap began, for our own timing
+last_lap_at = {}       # Session time each car last completed a lap, to dedupe triggers
+went_round = {}        # Whether a car has been half way round since its last crossing
+
+# A lap is only recorded if this much time has passed since that car's previous one.
+# Two things can announce the same lap -- AC's own counter and the car crossing the
+# line -- usually in the same frame, and this is what stops that being two laps. No
+# real lap on any circuit is shorter than this, so nothing genuine is ever rejected.
+MIN_LAP_SECONDS = 10.0
+
+# How far apart AC's lap timer and our own may be before AC's is treated as unusable.
+LAP_TIME_AGREEMENT_MS = 2000.0
+
+# A car has to be seen somewhere in this band, half way round, before its next crossing
+# of the line counts as a lap. Without it the grid scores a lap on almost every track:
+# the grid sits behind the start line, so cars begin at a spline position near 1.0 and
+# wrap to 0 the instant the race starts, which looks exactly like completing a lap.
+LAP_HALFWAY_LOW = 0.4
+LAP_HALFWAY_HIGH = 0.6
 
 # Session info
 total_cars = 0
@@ -382,6 +402,7 @@ def acUpdate(deltaT):
     """Called every frame - track all statistics"""
     global car_stats, prev_positions, prev_lap_counts, total_cars, session_active, prev_g_forces, session_total_time
     global current_session_number, previous_session_time, last_crash_times
+    global prev_splines, lap_started_at, last_lap_at, went_round
 
     try:
         # Detect session change by monitoring if lap counts reset or session time goes backwards
@@ -417,6 +438,10 @@ def acUpdate(deltaT):
             prev_lap_counts = {}
             prev_g_forces = {}
             last_crash_times = {}
+            prev_splines = {}
+            lap_started_at = {}
+            last_lap_at = {}
+            went_round = {}
             session_active = False
 
         # Initialize on first update
@@ -433,6 +458,10 @@ def acUpdate(deltaT):
                 prev_lap_counts[i] = 0
                 prev_g_forces[i] = [0.0, 0.0, 0.0]
                 last_crash_times[i] = -999.0  # Initialize far in the past
+                prev_splines[i] = None
+                lap_started_at[i] = 0.0
+                last_lap_at[i] = -999.0
+                went_round[i] = False
 
         # Update statistics for each car
         for car_id in range(total_cars):
@@ -458,15 +487,67 @@ def acUpdate(deltaT):
 
             prev_positions[car_id] = current_position
 
-            # Track lap times
+            # Track lap times.
+            #
+            # A lap used to be whatever AC's own counter said, timed by AC's own lap
+            # timer. That is the better answer when it is available, and it is not
+            # always available: any call that moves a car is documented "invalidates
+            # current lap time", the Test Drive mode moves cars to put them back on the
+            # road after a crash, and CSP offers nothing that adds a lap back or clears
+            # an invalidation -- the only lap-validity calls in the whole SDK are the two
+            # markLapAsSpoiled, which go the wrong way. So a race could be driven in full
+            # and score nothing here.
+            #
+            # A car crossing the start line is therefore counted as a lap in its own
+            # right, whatever AC made of it, and timed from this app's own clock. AC's
+            # counter is still honoured too, because a point-to-point track never wraps
+            # its spline and the counter is the only witness there. Either may fire
+            # first; MIN_LAP_SECONDS is what keeps one lap from being counted twice.
             current_lap_count = ac.getCarState(car_id, acsys.CS.LapCount)
             current_lap_time = ac.getCarState(car_id, acsys.CS.LapTime)
 
-            # New lap completed
-            if current_lap_count > prev_lap_counts.get(car_id, 0):
-                if stats.current_lap_time > 0:
-                    stats.lap_times.append(stats.current_lap_time)
+            try:
+                spline = ac.getCarState(car_id, acsys.CS.NormalizedSplinePosition)
+            except:
+                spline = None
 
+            if spline is not None and LAP_HALFWAY_LOW < spline < LAP_HALFWAY_HIGH:
+                went_round[car_id] = True
+
+            previous_spline = prev_splines.get(car_id)
+            crossed_the_line = (spline is not None and previous_spline is not None
+                                and previous_spline > 0.9 and spline < 0.1
+                                and went_round.get(car_id, False))
+            counter_moved = current_lap_count > prev_lap_counts.get(car_id, 0)
+
+            # The half-way test gates BOTH witnesses, not just the crossing. AC does not
+            # credit the run from the grid to the line as a lap, so in practice only the
+            # crossing needs guarding -- but a counter that moves for a reason we did not
+            # predict should not get to walk past the one check that knows whether a lap
+            # was actually driven. A point-to-point track still passes: its car goes
+            # through the middle of the run before AC counts it at the end.
+            if (crossed_the_line or counter_moved) and went_round.get(car_id, False) and \
+                    session_total_time - last_lap_at.get(car_id, -999.0) > MIN_LAP_SECONDS:
+                # Our own measure of the lap, which is always available.
+                ours = (session_total_time - lap_started_at.get(car_id, 0.0)) * 1000.0
+
+                # AC's, sampled the frame before the crossing, which is the finished
+                # lap's time. Preferred when the two agree, because it is measured in the
+                # physics thread rather than once a frame -- but a lap AC invalidated or
+                # never saw leaves this stale or zero, and then ours is the only honest
+                # number.
+                theirs = stats.current_lap_time
+                if theirs > 0 and abs(theirs - ours) < LAP_TIME_AGREEMENT_MS:
+                    stats.lap_times.append(theirs)
+                else:
+                    stats.lap_times.append(ours)
+
+                last_lap_at[car_id] = session_total_time
+                lap_started_at[car_id] = session_total_time
+                went_round[car_id] = False
+
+            if spline is not None:
+                prev_splines[car_id] = spline
             stats.current_lap_time = current_lap_time
             prev_lap_counts[car_id] = current_lap_count
 
