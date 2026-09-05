@@ -15,8 +15,11 @@ import { AC_CONTENT_TRACKS } from './paths';
  *
  * Assetto Corsa reads one file, `ai/fast_lane.ai`, so both cannot be installed at
  * once. A track that keeps `fast_lane_racing.ai` and `fast_lane_road.ai` beside it
- * declares that it has both, and the launcher installs whichever the round is being
- * raced with. Tracks with neither are left completely alone.
+ * declares that it has both, and the launcher installs whichever it is asked for.
+ * Since 2026-09-05 that is always the racing line (see launcher.ts): the Test Drive
+ * mode dodges traffic from the track's own spline, so the road line is no longer
+ * raced on. The machinery stays because it is also what puts the racing line back.
+ * Tracks with neither are left completely alone.
  *
  * Measured on `new_forest_2_5`, where the two lanes are only 2.7 m apart: the racing
  * line strays 1.64 m from the lane centre at the 90th percentile, the recorded road

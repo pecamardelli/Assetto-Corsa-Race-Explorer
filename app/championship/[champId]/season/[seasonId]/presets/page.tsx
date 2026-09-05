@@ -1,7 +1,13 @@
 import { notFound } from "next/navigation";
 import AssistsEditor from "../../../../../components/AssistsEditor";
 import BackButton from "../../../../../components/BackButton";
+import LineupPicker, {
+  type LineupEntry,
+} from "../../../../../components/LineupPicker";
+import { getCarDetails } from "../../../../../lib/car-data";
+import { resolvePlayerName } from "../../../../../lib/driver-assets";
 import {
+  readSeasonLineup,
   resolveAssists,
   resolveTraffic,
 } from "../../../../../lib/launch/assists";
@@ -43,6 +49,17 @@ export default async function SeasonPresetsPage({
   );
   const { traffic } = await resolveTraffic(championship.folderName, seasonFolder);
 
+  // The lineup: every roster entry, with the player's own marked so the picker keeps it.
+  const lineup = await readSeasonLineup(championship.folderName, seasonFolder);
+  const playerName = await resolvePlayerName();
+  const roster: LineupEntry[] = season.data.opponents.map((entry) => ({
+    name: entry.name,
+    car: getCarDetails(entry.car).name,
+    nation: entry.nation,
+    traffic: entry.traffic === true,
+    player: entry.name === playerName || entry.name === "PLAYER",
+  }));
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
       {/* Header. The banner is the section's own background rather than a card's
@@ -79,13 +96,18 @@ export default async function SeasonPresetsPage({
             {season.data.name}
           </h1>
           <p className="text-zinc-400">
-            Game presets for this season&apos;s launches — driving aids, realism
-            settings and how busy a road in traffic gets.
+            Game presets for this season&apos;s launches — who goes out, driving
+            aids, realism settings and how busy a road in traffic gets.
           </p>
         </div>
       </section>
 
-      <div className="w-full max-w-4xl px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
+      <div className="w-full max-w-4xl space-y-8 px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
+        <LineupPicker
+          roster={roster}
+          initialExcluded={lineup.excluded}
+          scope={{ champId: championship.folderName, seasonId: seasonFolder }}
+        />
         <AssistsEditor
           initial={assists}
           initialTraffic={traffic}

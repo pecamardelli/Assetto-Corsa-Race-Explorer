@@ -11,7 +11,7 @@ import {
 } from '../../types/race';
 import { AC_CONTENT_TRACKS } from './paths';
 import { GridEntry, LaunchMode, RaceIniSpec } from './race-ini';
-import { resolveAssists, resolveTraffic } from './assists';
+import { readSeasonLineup, resolveAssists, resolveTraffic } from './assists';
 import { readTrafficRoad } from './traffic-plan';
 import { fieldOrder } from './field-order';
 import { customModeFor, fieldFor } from '../traffic';
@@ -249,7 +249,15 @@ export async function buildLaunchPlan(
   // A round whose road carries its own CSP traffic fields no roster traffic: the
   // Fiats would be a second, worse set of it, and they would take pit boxes the
   // actual field needs.
-  const roster = fieldFor(data.opponents, round);
+  //
+  // And the season's lineup takes out whoever it leaves at home -- never the player's
+  // own entry, which a launch cannot do without.
+  const seasonFolder = `season_${String(season.seasonNumber).padStart(2, '0')}`;
+  const lineup = await readSeasonLineup(championship.folderName, seasonFolder);
+  const excluded = new Set(lineup.excluded);
+  const roster = fieldFor(data.opponents, round).filter(
+    entry => entry === seasonEntry || !excluded.has(entry.name)
+  );
   const field = group ? restrictToGroup(roster, group) : roster;
 
   /**
@@ -279,7 +287,6 @@ export async function buildLaunchPlan(
 
   const { track, trackConfig } = await resolveTrack(round.track);
 
-  const seasonFolder = `season_${String(season.seasonNumber).padStart(2, '0')}`;
   const { assists, source: assistsSource } = await resolveAssists(
     championship.folderName,
     seasonFolder
@@ -346,8 +353,8 @@ export async function buildLaunchPlan(
     customMode: customModeFor(round),
   };
 
-  // Only a round handed to the Test Drive mode has script traffic to size. Measuring
-  // the road is a file read, so it is not worth doing for the rest.
+  // Only a round handed to a traffic mode has script traffic to size. Measuring the
+  // road is a file read, so it is not worth doing for the rest.
   let traffic: TrafficDecision | undefined;
   let trafficConfig: TrafficConfig | undefined;
   if (spec.customMode) {

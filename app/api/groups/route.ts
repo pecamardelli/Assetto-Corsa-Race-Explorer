@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getChampionship } from '../../lib/race-data';
 import { pitCapacityFor, planGroups } from '../../lib/launch/groups';
 import { fieldOrder } from '../../lib/launch/field-order';
-import { readSeasonGridCaps } from '../../lib/launch/assists';
+import { readSeasonGridCaps, readSeasonLineup } from '../../lib/launch/assists';
 import { resolveRaceSpec } from '../../lib/launch/race-spec';
 import { takesGridFromStandings } from '../../types/race-spec';
-import { usesTestDrive } from '../../lib/traffic';
+import { usesTrafficMode } from '../../lib/traffic';
 
 /**
  * How a round would have to be split to fit its track, who would be in each batch,
@@ -54,7 +54,13 @@ export async function GET(request: NextRequest) {
   // to seed on, so the draw survives a reload and the batch shown in the menu is
   // the batch that gets raced. Traffic comes back separately: it fills boxes in
   // every batch but is not part of the field being split.
-  const { order, traffic, seededOn, standings } = fieldOrder(championship, season, round);
+  const lineup = await readSeasonLineup(championship.folderName, seasonId.toLowerCase());
+  const { order, traffic, seededOn, standings } = fieldOrder(
+    championship,
+    season,
+    round,
+    new Set(lineup.excluded)
+  );
 
   // A round run from a start to a finish somewhere else is raced without qualifying,
   // so the menu offers the race itself rather than a weekend.
@@ -69,7 +75,7 @@ export async function GET(request: NextRequest) {
   // rather than a split guessed at.
   // A round whose road supplies its own traffic enters none of its own, so nothing
   // rides along in every batch and the whole capacity goes to the field.
-  const riders = usesTestDrive(roundData) ? [] : traffic;
+  const riders = usesTrafficMode(roundData) ? [] : traffic;
   const groups = capacity === null ? [] : planGroups(order, capacity, riders);
 
   return NextResponse.json({

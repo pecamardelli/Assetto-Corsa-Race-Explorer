@@ -1,0 +1,1495 @@
+{
+  "session_info": {
+    "crash_penalty_config": {
+      "max_penalty_per_crash_g": 100,
+      "penalty_percent_per_g": 0.01
+    },
+    "session_duration_seconds": 1460.05,
+    "track_length_km": 11.443,
+    "date": "2026-09-05 13:35:56",
+    "total_cars": 40,
+    "championship": "Supercars Trophy",
+    "race_laps": 5,
+    "finished": true,
+    "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)",
+    "track_config": "",
+    "track_length_miles": 7.11,
+    "best_lap_time_seconds": 243.786,
+    "season": "season_02",
+    "session_duration_formatted": "24:20.047",
+    "session_type": "qualifying",
+    "track_length_meters": 11443.03,
+    "track": "feldberg",
+    "round": 7
+  },
+  "driver_statistics": {
+    "Fernando Camardelli": {
+      "laps_completed": 5,
+      "overtakes_made": 30,
+      "total_score": 28344,
+      "position": 20,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -15,
+      "best_lap": 258.363,
+      "times_overtaken": 45,
+      "max_speed_kmh": 289.03,
+      "lap_times": [
+        378.414,
+        258.363,
+        270.225,
+        274.764,
+        258.807
+      ],
+      "average_lap": 288.115,
+      "score_breakdown": {
+        "position_factor": 0.525,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.944,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "24:00.573",
+      "total_time_seconds": 1440.573,
+      "car_name": "os_pagani_zonda_f"
+    },
+    "Billy Lampazzo": {
+      "laps_completed": 5,
+      "overtakes_made": 71,
+      "total_score": 47633,
+      "position": 7,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 32,
+      "best_lap": 248.904,
+      "times_overtaken": 39,
+      "max_speed_kmh": 288.71,
+      "lap_times": [
+        302.451,
+        268.038,
+        266.028,
+        254.19,
+        248.904
+      ],
+      "average_lap": 267.922,
+      "score_breakdown": {
+        "position_factor": 0.85,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.979,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "22:19.611",
+      "total_time_seconds": 1339.611,
+      "car_name": "di_jaguar_cx75"
+    },
+    "Danny Paletto": {
+      "laps_completed": 4,
+      "overtakes_made": 27,
+      "total_score": 6222,
+      "position": 35,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [
+          689.05
+        ],
+        "average_crash_g": 689.05,
+        "total_crashes": 1,
+        "worst_crash_g": 689.05,
+        "total_crash_intensity": 689.05
+      },
+      "net_positions_gained": -20,
+      "best_lap": 266.346,
+      "times_overtaken": 47,
+      "max_speed_kmh": 293.71,
+      "lap_times": [
+        366.549,
+        266.346,
+        272.382,
+        274.86
+      ],
+      "average_lap": 295.034,
+      "score_breakdown": {
+        "position_factor": 0.15,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.915,
+        "base_score": 45772.1,
+        "crash_penalty_percent": 1,
+        "crash_factor": 0.99
+      },
+      "total_time_formatted": "19:40.136",
+      "total_time_seconds": 1180.137,
+      "car_name": "saleen_s5s"
+    },
+    "Pierre Du Mans": {
+      "laps_completed": 5,
+      "overtakes_made": 40,
+      "total_score": 49041,
+      "position": 6,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 7,
+      "best_lap": 248.871,
+      "times_overtaken": 33,
+      "max_speed_kmh": 301.33,
+      "lap_times": [
+        402.696,
+        261.192,
+        248.871,
+        273.009,
+        261.366
+      ],
+      "average_lap": 289.427,
+      "score_breakdown": {
+        "position_factor": 0.875,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.98,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "24:07.134",
+      "total_time_seconds": 1447.134,
+      "car_name": "exmods_ascari_kz_a10"
+    },
+    "Shawn Cachamai": {
+      "laps_completed": 5,
+      "overtakes_made": 52,
+      "total_score": 41326,
+      "position": 11,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -1,
+      "best_lap": 253.14,
+      "times_overtaken": 53,
+      "max_speed_kmh": 292.93,
+      "lap_times": [
+        352.032,
+        276.279,
+        272.829,
+        264.159,
+        253.14
+      ],
+      "average_lap": 283.688,
+      "score_breakdown": {
+        "position_factor": 0.75,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.963,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "23:38.439",
+      "total_time_seconds": 1418.439,
+      "car_name": "ks_lamborghini_huracan_performante"
+    },
+    "Andrea Crotto": {
+      "laps_completed": 5,
+      "overtakes_made": 36,
+      "total_score": 32411,
+      "position": 17,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 1,
+      "best_lap": 258.219,
+      "times_overtaken": 35,
+      "max_speed_kmh": 295.03,
+      "lap_times": [
+        404.547,
+        264.279,
+        260.187,
+        258.219,
+        262.221
+      ],
+      "average_lap": 289.891,
+      "score_breakdown": {
+        "position_factor": 0.6,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.944,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "24:09.452",
+      "total_time_seconds": 1449.453,
+      "car_name": "ks_ferrari_488_gtb"
+    },
+    "Klingon Popinsky": {
+      "laps_completed": 3,
+      "overtakes_made": 48,
+      "total_score": 5518,
+      "position": 34,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 4,
+      "best_lap": 265.452,
+      "times_overtaken": 44,
+      "max_speed_kmh": 291.4,
+      "lap_times": [
+        305.982,
+        266.178,
+        265.452
+      ],
+      "average_lap": 279.204,
+      "score_breakdown": {
+        "position_factor": 0.175,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.918,
+        "base_score": 34329.08,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "13:57.611",
+      "total_time_seconds": 837.612,
+      "car_name": "vrstnr_audi_r8_vorsteiner"
+    },
+    "Michael Birulo": {
+      "laps_completed": 5,
+      "overtakes_made": 33,
+      "total_score": 25610,
+      "position": 22,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -13,
+      "best_lap": 258.705,
+      "times_overtaken": 46,
+      "max_speed_kmh": 295.77,
+      "lap_times": [
+        390.897,
+        258.705,
+        260.19,
+        274.725,
+        259.155
+      ],
+      "average_lap": 288.734,
+      "score_breakdown": {
+        "position_factor": 0.475,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.942,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "24:03.672",
+      "total_time_seconds": 1443.672,
+      "car_name": "cky_porschecarrera_gt_04"
+    },
+    "Grospo Pelella": {
+      "laps_completed": 5,
+      "overtakes_made": 37,
+      "total_score": 39636,
+      "position": 12,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 13,
+      "best_lap": 255.138,
+      "times_overtaken": 24,
+      "max_speed_kmh": 273.88,
+      "lap_times": [
+        329.532,
+        258.765,
+        256.56,
+        257.895,
+        255.138
+      ],
+      "average_lap": 271.578,
+      "score_breakdown": {
+        "position_factor": 0.725,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.956,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "22:37.890",
+      "total_time_seconds": 1357.89,
+      "car_name": "dk_b_engineering_edonis_2001"
+    },
+    "Pete Slipstream": {
+      "laps_completed": 4,
+      "overtakes_made": 54,
+      "total_score": 35366,
+      "position": 9,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 17,
+      "best_lap": 252.417,
+      "times_overtaken": 37,
+      "max_speed_kmh": 328.66,
+      "lap_times": [
+        346.698,
+        275.955,
+        266.523,
+        252.417
+      ],
+      "average_lap": 285.398,
+      "score_breakdown": {
+        "position_factor": 0.8,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.966,
+        "base_score": 45772.1,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "19:01.593",
+      "total_time_seconds": 1141.593,
+      "car_name": "noble_m600_carbonsport"
+    },
+    "Klej Bergan": {
+      "laps_completed": 5,
+      "overtakes_made": 52,
+      "total_score": 21504,
+      "position": 25,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 10,
+      "best_lap": 259.464,
+      "times_overtaken": 42,
+      "max_speed_kmh": 289.17,
+      "lap_times": [
+        345.798,
+        277.563,
+        268.446,
+        264.549,
+        259.464
+      ],
+      "average_lap": 283.164,
+      "score_breakdown": {
+        "position_factor": 0.4,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.94,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "23:35.819",
+      "total_time_seconds": 1415.82,
+      "car_name": "bg_italdesign_zerouno"
+    },
+    "Vince Crossline": {
+      "laps_completed": 5,
+      "overtakes_made": 48,
+      "total_score": 24217,
+      "position": 23,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 7,
+      "best_lap": 259.188,
+      "times_overtaken": 41,
+      "max_speed_kmh": 285.91,
+      "lap_times": [
+        389.898,
+        259.188,
+        260.271,
+        274.713,
+        263.643
+      ],
+      "average_lap": 289.543,
+      "score_breakdown": {
+        "position_factor": 0.45,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.941,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "24:07.712",
+      "total_time_seconds": 1447.713,
+      "car_name": "ks_mclaren_570s"
+    },
+    "Krosty Ganzua": {
+      "laps_completed": 5,
+      "overtakes_made": 23,
+      "total_score": 11875,
+      "position": 32,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -28,
+      "best_lap": 264.294,
+      "times_overtaken": 51,
+      "max_speed_kmh": 284.14,
+      "lap_times": [
+        354.63,
+        275.007,
+        274.896,
+        273.816,
+        264.294
+      ],
+      "average_lap": 288.529,
+      "score_breakdown": {
+        "position_factor": 0.225,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.922,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "24:02.643",
+      "total_time_seconds": 1442.643,
+      "car_name": "os_pagani_zonda_f"
+    },
+    "Trump Miranda": {
+      "laps_completed": 2,
+      "overtakes_made": 16,
+      "total_score": 505,
+      "position": 40,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -33,
+      "best_lap": 276.366,
+      "times_overtaken": 49,
+      "max_speed_kmh": 281.53,
+      "lap_times": [
+        347.7,
+        276.366
+      ],
+      "average_lap": 312.033,
+      "score_breakdown": {
+        "position_factor": 0.025,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.882,
+        "base_score": 22886.05,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "10:24.066",
+      "total_time_seconds": 624.066,
+      "car_name": "ford_gt_new"
+    },
+    "Shura McPinch": {
+      "laps_completed": 3,
+      "overtakes_made": 31,
+      "total_score": 1532,
+      "position": 39,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -15,
+      "best_lap": 273.294,
+      "times_overtaken": 46,
+      "max_speed_kmh": 283.92,
+      "lap_times": [
+        355.833,
+        273.294,
+        273.645
+      ],
+      "average_lap": 300.924,
+      "score_breakdown": {
+        "position_factor": 0.05,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.892,
+        "base_score": 34329.08,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "15:02.772",
+      "total_time_seconds": 902.772,
+      "car_name": "dk_b_engineering_edonis_2001"
+    },
+    "Mario Ravioli": {
+      "laps_completed": 5,
+      "overtakes_made": 41,
+      "total_score": 51874,
+      "position": 4,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 15,
+      "best_lap": 248.721,
+      "times_overtaken": 26,
+      "max_speed_kmh": 304.78,
+      "lap_times": [
+        403.665,
+        261.732,
+        248.721,
+        270.918,
+        261.426
+      ],
+      "average_lap": 289.292,
+      "score_breakdown": {
+        "position_factor": 0.925,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.98,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "24:06.461",
+      "total_time_seconds": 1446.462,
+      "car_name": "ks_ferrari_488_gtb"
+    },
+    "Kevin Pirongo": {
+      "laps_completed": 5,
+      "overtakes_made": 58,
+      "total_score": 60076,
+      "position": 1,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 10,
+      "best_lap": 243.786,
+      "times_overtaken": 48,
+      "max_speed_kmh": 294.94,
+      "lap_times": [
+        349.449,
+        276.417,
+        267.642,
+        260.61,
+        243.786
+      ],
+      "average_lap": 279.581,
+      "score_breakdown": {
+        "position_factor": 1,
+        "fastest_lap_bonus": 2860.76,
+        "speed_factor": 1,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "23:17.903",
+      "total_time_seconds": 1397.904,
+      "car_name": "ks_lamborghini_huracan_performante"
+    },
+    "Vicente Gasoil": {
+      "laps_completed": 5,
+      "overtakes_made": 43,
+      "total_score": 34031,
+      "position": 16,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 13,
+      "best_lap": 256.173,
+      "times_overtaken": 30,
+      "max_speed_kmh": 288.91,
+      "lap_times": [
+        332.133,
+        262.362,
+        258.237,
+        256.173,
+        257.235
+      ],
+      "average_lap": 273.228,
+      "score_breakdown": {
+        "position_factor": 0.625,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.952,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "22:46.140",
+      "total_time_seconds": 1366.14,
+      "car_name": "bg_ferrari_enzo"
+    },
+    "Sakon Matraka": {
+      "laps_completed": 4,
+      "overtakes_made": 37,
+      "total_score": 4134,
+      "position": 37,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -6,
+      "best_lap": 269.94,
+      "times_overtaken": 43,
+      "max_speed_kmh": 273.54,
+      "lap_times": [
+        344.697,
+        278.157,
+        269.94,
+        276.387
+      ],
+      "average_lap": 292.295,
+      "score_breakdown": {
+        "position_factor": 0.1,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.903,
+        "base_score": 45772.1,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "19:29.181",
+      "total_time_seconds": 1169.181,
+      "car_name": "honda_nsx_type_s_22"
+    },
+    "Kito Banzai": {
+      "laps_completed": 5,
+      "overtakes_made": 40,
+      "total_score": 10535,
+      "position": 33,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -1,
+      "best_lap": 264.819,
+      "times_overtaken": 41,
+      "max_speed_kmh": 279.15,
+      "lap_times": [
+        301.917,
+        271.902,
+        265.194,
+        265.485,
+        264.819
+      ],
+      "average_lap": 273.863,
+      "score_breakdown": {
+        "position_factor": 0.2,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.921,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "22:49.317",
+      "total_time_seconds": 1369.317,
+      "car_name": "honda_nsx_type_s_22"
+    },
+    "Juancho Talarga": {
+      "laps_completed": 5,
+      "overtakes_made": 37,
+      "total_score": 38192,
+      "position": 13,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -5,
+      "best_lap": 255.651,
+      "times_overtaken": 42,
+      "max_speed_kmh": 291.91,
+      "lap_times": [
+        331.632,
+        261.534,
+        256.878,
+        255.651,
+        259.89
+      ],
+      "average_lap": 273.117,
+      "score_breakdown": {
+        "position_factor": 0.7,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.954,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "22:45.585",
+      "total_time_seconds": 1365.585,
+      "car_name": "cky_porschecarrera_gt_04"
+    },
+    "Hugo Fast": {
+      "laps_completed": 3,
+      "overtakes_made": 26,
+      "total_score": 3886,
+      "position": 36,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -20,
+      "best_lap": 269.253,
+      "times_overtaken": 46,
+      "max_speed_kmh": 292.53,
+      "lap_times": [
+        361.797,
+        269.253,
+        273.681
+      ],
+      "average_lap": 301.577,
+      "score_breakdown": {
+        "position_factor": 0.125,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.905,
+        "base_score": 34329.08,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "15:04.730",
+      "total_time_seconds": 904.731,
+      "car_name": "mercedes_clk_gtr_stock"
+    },
+    "Pablin": {
+      "laps_completed": 4,
+      "overtakes_made": 43,
+      "total_score": 11591,
+      "position": 30,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [
+          67.46
+        ],
+        "average_crash_g": 67.46,
+        "total_crashes": 1,
+        "worst_crash_g": 67.46,
+        "total_crash_intensity": 67.46
+      },
+      "net_positions_gained": -8,
+      "best_lap": 262.956,
+      "times_overtaken": 51,
+      "max_speed_kmh": 291.25,
+      "lap_times": [
+        331.215,
+        291.051,
+        265.824,
+        262.956
+      ],
+      "average_lap": 287.762,
+      "score_breakdown": {
+        "position_factor": 0.275,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.927,
+        "base_score": 45772.1,
+        "crash_penalty_percent": 0.67,
+        "crash_factor": 0.993
+      },
+      "total_time_formatted": "19:11.046",
+      "total_time_seconds": 1151.046,
+      "car_name": "ks_mclaren_570s"
+    },
+    "Shake Myhand": {
+      "laps_completed": 5,
+      "overtakes_made": 37,
+      "total_score": 36828,
+      "position": 14,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 6,
+      "best_lap": 255.651,
+      "times_overtaken": 31,
+      "max_speed_kmh": 284,
+      "lap_times": [
+        332.817,
+        262.692,
+        258.384,
+        255.651,
+        257.358
+      ],
+      "average_lap": 273.38,
+      "score_breakdown": {
+        "position_factor": 0.675,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.954,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "22:46.902",
+      "total_time_seconds": 1366.902,
+      "car_name": "exmods_gord_mur_t33"
+    },
+    "Carlo Pappolongo": {
+      "laps_completed": 5,
+      "overtakes_made": 29,
+      "total_score": 15945,
+      "position": 29,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -28,
+      "best_lap": 262.446,
+      "times_overtaken": 57,
+      "max_speed_kmh": 279.84,
+      "lap_times": [
+        401.664,
+        266.1,
+        264.117,
+        262.446,
+        264.405
+      ],
+      "average_lap": 291.746,
+      "score_breakdown": {
+        "position_factor": 0.3,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.929,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "24:18.731",
+      "total_time_seconds": 1458.732,
+      "car_name": "slang_tz3_stradale"
+    },
+    "Dex Winrace": {
+      "laps_completed": 5,
+      "overtakes_made": 69,
+      "total_score": 50471,
+      "position": 5,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 28,
+      "best_lap": 248.73,
+      "times_overtaken": 41,
+      "max_speed_kmh": 304.81,
+      "lap_times": [
+        359.166,
+        271.116,
+        273.33,
+        272.514,
+        248.73
+      ],
+      "average_lap": 284.971,
+      "score_breakdown": {
+        "position_factor": 0.9,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.98,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "23:44.855",
+      "total_time_seconds": 1424.856,
+      "car_name": "astonmartin_db-12"
+    },
+    "Dick Palumbo": {
+      "laps_completed": 5,
+      "overtakes_made": 37,
+      "total_score": 29696,
+      "position": 19,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -13,
+      "best_lap": 258.342,
+      "times_overtaken": 50,
+      "max_speed_kmh": 291.3,
+      "lap_times": [
+        391.965,
+        258.342,
+        259.929,
+        276.39,
+        261.786
+      ],
+      "average_lap": 289.682,
+      "score_breakdown": {
+        "position_factor": 0.55,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.944,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "24:08.412",
+      "total_time_seconds": 1448.412,
+      "car_name": "ford_gt_new"
+    },
+    "Matt LaPallita": {
+      "laps_completed": 3,
+      "overtakes_made": 34,
+      "total_score": 2314,
+      "position": 38,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -11,
+      "best_lap": 271.32,
+      "times_overtaken": 45,
+      "max_speed_kmh": 316.07,
+      "lap_times": [
+        357.999,
+        271.32,
+        272.535
+      ],
+      "average_lap": 300.618,
+      "score_breakdown": {
+        "position_factor": 0.075,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.899,
+        "base_score": 34329.08,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "15:01.854",
+      "total_time_seconds": 901.854,
+      "car_name": "noble_m600_carbonsport"
+    },
+    "Dave Gargiulo": {
+      "laps_completed": 5,
+      "overtakes_made": 43,
+      "total_score": 22852,
+      "position": 24,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -10,
+      "best_lap": 259.416,
+      "times_overtaken": 53,
+      "max_speed_kmh": 295.35,
+      "lap_times": [
+        350.415,
+        276.213,
+        271.902,
+        259.416,
+        259.818
+      ],
+      "average_lap": 283.553,
+      "score_breakdown": {
+        "position_factor": 0.425,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.94,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "23:37.763",
+      "total_time_seconds": 1417.764,
+      "car_name": "saleen_s5s"
+    },
+    "Hans Footdown": {
+      "laps_completed": 5,
+      "overtakes_made": 33,
+      "total_score": 20144,
+      "position": 26,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -23,
+      "best_lap": 259.665,
+      "times_overtaken": 56,
+      "max_speed_kmh": 285.24,
+      "lap_times": [
+        348.549,
+        276.429,
+        269.244,
+        263.088,
+        259.665
+      ],
+      "average_lap": 283.395,
+      "score_breakdown": {
+        "position_factor": 0.375,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.939,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "23:36.974",
+      "total_time_seconds": 1416.975,
+      "car_name": "cky_maserati_mc20"
+    },
+    "Pio Tornamale": {
+      "laps_completed": 5,
+      "overtakes_made": 23,
+      "total_score": 17423,
+      "position": 28,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -7,
+      "best_lap": 260.184,
+      "times_overtaken": 30,
+      "max_speed_kmh": 282.46,
+      "lap_times": [
+        290.733,
+        264.723,
+        263.958,
+        262.149,
+        260.184
+      ],
+      "average_lap": 268.349,
+      "score_breakdown": {
+        "position_factor": 0.325,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.937,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "22:21.747",
+      "total_time_seconds": 1341.747,
+      "car_name": "slang_tz3_stradale"
+    },
+    "Mark Fullthrottle": {
+      "laps_completed": 5,
+      "overtakes_made": 41,
+      "total_score": 46064,
+      "position": 8,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 15,
+      "best_lap": 249.813,
+      "times_overtaken": 26,
+      "max_speed_kmh": 298.53,
+      "lap_times": [
+        301.848,
+        265.203,
+        299.157,
+        258.54,
+        249.813
+      ],
+      "average_lap": 274.912,
+      "score_breakdown": {
+        "position_factor": 0.825,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.976,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "22:54.560",
+      "total_time_seconds": 1374.561,
+      "car_name": "exmods_gord_mur_t33"
+    },
+    "Holly Sikorsky": {
+      "laps_completed": 5,
+      "overtakes_made": 53,
+      "total_score": 42748,
+      "position": 10,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 2,
+      "best_lap": 252.876,
+      "times_overtaken": 51,
+      "max_speed_kmh": 295.29,
+      "lap_times": [
+        351.348,
+        276.039,
+        272.73,
+        266.463,
+        252.876
+      ],
+      "average_lap": 283.891,
+      "score_breakdown": {
+        "position_factor": 0.775,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.964,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "23:39.455",
+      "total_time_seconds": 1419.456,
+      "car_name": "exmods_ascari_kz_a10"
+    },
+    "Bjork Papota": {
+      "laps_completed": 5,
+      "overtakes_made": 37,
+      "total_score": 13253,
+      "position": 31,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 5,
+      "best_lap": 263.127,
+      "times_overtaken": 32,
+      "max_speed_kmh": 281.68,
+      "lap_times": [
+        300.567,
+        265.461,
+        263.946,
+        263.673,
+        263.127
+      ],
+      "average_lap": 271.355,
+      "score_breakdown": {
+        "position_factor": 0.25,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.926,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "22:36.773",
+      "total_time_seconds": 1356.774,
+      "car_name": "bg_italdesign_zerouno"
+    },
+    "Zeke Garloch": {
+      "laps_completed": 5,
+      "overtakes_made": 34,
+      "total_score": 31046,
+      "position": 18,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": -16,
+      "best_lap": 258.339,
+      "times_overtaken": 50,
+      "max_speed_kmh": 282.89,
+      "lap_times": [
+        379.08,
+        258.63,
+        270.231,
+        274.704,
+        258.339
+      ],
+      "average_lap": 288.197,
+      "score_breakdown": {
+        "position_factor": 0.575,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.944,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "24:00.983",
+      "total_time_seconds": 1440.984,
+      "car_name": "cky_maserati_mc20"
+    },
+    "Dieter Von Heil": {
+      "laps_completed": 5,
+      "overtakes_made": 58,
+      "total_score": 53348,
+      "position": 3,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 14,
+      "best_lap": 248.385,
+      "times_overtaken": 44,
+      "max_speed_kmh": 292.97,
+      "lap_times": [
+        362.964,
+        269.289,
+        272.355,
+        272.706,
+        248.385
+      ],
+      "average_lap": 285.14,
+      "score_breakdown": {
+        "position_factor": 0.95,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.981,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "23:45.699",
+      "total_time_seconds": 1425.699,
+      "car_name": "mercedes_clk_gtr_stock"
+    },
+    "Pavel Voludin": {
+      "laps_completed": 3,
+      "overtakes_made": 40,
+      "total_score": 21042,
+      "position": 15,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [
+          691.11
+        ],
+        "average_crash_g": 691.11,
+        "total_crashes": 1,
+        "worst_crash_g": 691.11,
+        "total_crash_intensity": 691.11
+      },
+      "net_positions_gained": 19,
+      "best_lap": 255.939,
+      "times_overtaken": 21,
+      "max_speed_kmh": 315.75,
+      "lap_times": [
+        340.416,
+        255.939,
+        258.708
+      ],
+      "average_lap": 285.021,
+      "score_breakdown": {
+        "position_factor": 0.65,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.953,
+        "base_score": 34329.08,
+        "crash_penalty_percent": 1,
+        "crash_factor": 0.99
+      },
+      "total_time_formatted": "14:15.062",
+      "total_time_seconds": 855.063,
+      "car_name": "astonmartin_db-12"
+    },
+    "Enzo Dappe": {
+      "laps_completed": 4,
+      "overtakes_made": 47,
+      "total_score": 15030,
+      "position": 27,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 1,
+      "best_lap": 259.851,
+      "times_overtaken": 46,
+      "max_speed_kmh": 283.6,
+      "lap_times": [
+        386.748,
+        259.851,
+        262.17,
+        274.623
+      ],
+      "average_lap": 295.848,
+      "score_breakdown": {
+        "position_factor": 0.35,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.938,
+        "base_score": 45772.1,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "19:43.392",
+      "total_time_seconds": 1183.392,
+      "car_name": "bg_ferrari_enzo"
+    },
+    "Percy Goodpace": {
+      "laps_completed": 5,
+      "overtakes_made": 73,
+      "total_score": 55033,
+      "position": 2,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 38,
+      "best_lap": 247.119,
+      "times_overtaken": 35,
+      "max_speed_kmh": 308.71,
+      "lap_times": [
+        365.331,
+        266.298,
+        272.049,
+        272.892,
+        247.119
+      ],
+      "average_lap": 284.738,
+      "score_breakdown": {
+        "position_factor": 0.975,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.987,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "23:43.689",
+      "total_time_seconds": 1423.689,
+      "car_name": "di_jaguar_cx75"
+    },
+    "Andy Mendieta": {
+      "laps_completed": 5,
+      "overtakes_made": 59,
+      "total_score": 26964,
+      "position": 21,
+      "retired": false,
+      "crashes": {
+        "crash_intensities_g": [],
+        "average_crash_g": 0,
+        "total_crashes": 0,
+        "worst_crash_g": 0,
+        "total_crash_intensity": 0
+      },
+      "net_positions_gained": 16,
+      "best_lap": 258.648,
+      "times_overtaken": 43,
+      "max_speed_kmh": 280.2,
+      "lap_times": [
+        376.932,
+        259.083,
+        269.901,
+        275.088,
+        258.648
+      ],
+      "average_lap": 287.93,
+      "score_breakdown": {
+        "position_factor": 0.5,
+        "fastest_lap_bonus": 0,
+        "speed_factor": 0.943,
+        "base_score": 57215.13,
+        "crash_penalty_percent": 0,
+        "crash_factor": 1
+      },
+      "total_time_formatted": "23:59.652",
+      "total_time_seconds": 1439.652,
+      "car_name": "vrstnr_audi_r8_vorsteiner"
+    }
+  }
+}

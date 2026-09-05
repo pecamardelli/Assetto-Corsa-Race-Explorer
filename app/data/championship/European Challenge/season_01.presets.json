@@ -16,7 +16,19 @@
     "slipstream": 0
   },
   "traffic": {
-    "perLaneKm": 7,
+    "perLaneKm": 4,
     "cars": null
+  },
+  "lineup": {
+    "excluded": [
+      "Dieter Von Heil",
+      "Hans Footdown",
+      "Pete Slipstream",
+      "Billy Lampazzo",
+      "Dick Palumbo",
+      "Chuck Tornado",
+      "Matt LaPallita",
+      "Danny Paletto"
+    ]
   }
 }

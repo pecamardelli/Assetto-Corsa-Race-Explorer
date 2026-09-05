@@ -19,8 +19,8 @@ import {
   LAUNCH_CONTEXT_FILE,
   RACE_INI,
   RACE_INI_BACKUP,
-  TEST_DRIVE_SETTINGS_BACKUP,
-  TEST_DRIVE_SETTINGS_INI,
+  trafficModeSettingsBackup,
+  trafficModeSettingsIni,
 } from './paths';
 
 const execFileAsync = promisify(execFile);
@@ -100,7 +100,7 @@ async function backupCfgFile(source: string, backup: string): Promise<void> {
 }
 
 /**
- * Set the car count on the Test Drive mode for this round.
+ * Set the car count on the traffic mode this round is raced in.
  *
  * The mode reads its settings from its own folder in the install, so this edits a file
  * that is not ours and belongs to a live mod. It rewrites exactly one key and leaves the
@@ -108,21 +108,20 @@ async function backupCfgFile(source: string, backup: string): Promise<void> {
  * them are load-bearing. A missing file means the mode is not installed, which the
  * launch will fail on for its own reasons - not worth creating one from nothing here.
  */
-async function writeTrafficDensity(cars: number): Promise<void> {
+async function writeTrafficDensity(mode: string, cars: number): Promise<void> {
+  const settingsIni = trafficModeSettingsIni(mode);
   let existing: string;
   try {
-    existing = await fs.readFile(TEST_DRIVE_SETTINGS_INI, 'utf8');
+    existing = await fs.readFile(settingsIni, 'utf8');
   } catch (error) {
     const code = (error as NodeJS.ErrnoException).code;
     if (code !== 'ENOENT') throw error;
-    console.error(
-      `No Test Drive settings at ${TEST_DRIVE_SETTINGS_INI} - traffic count left unset`
-    );
+    console.error(`No ${mode} settings at ${settingsIni} - traffic count left unset`);
     return;
   }
 
-  await backupCfgFile(TEST_DRIVE_SETTINGS_INI, TEST_DRIVE_SETTINGS_BACKUP);
-  await fs.writeFile(TEST_DRIVE_SETTINGS_INI, setTrafficDensity(existing, cars), 'utf8');
+  await backupCfgFile(settingsIni, trafficModeSettingsBackup(mode));
+  await fs.writeFile(settingsIni, setTrafficDensity(existing, cars), 'utf8');
 }
 
 /**
@@ -142,9 +141,11 @@ async function writeLaunchContext(plan: LaunchPlan, id: string): Promise<void> {
     round: plan.roundNumber,
     group: plan.group ?? null,
     track: plan.roundTrack,
-    // A Test Drive (traffic) launch: AC's own lap counter is dead there, so racestats
-    // ranks the race by the laps it counted itself instead of AC's leaderboard.
-    traffic: Boolean(plan.traffic),
+    // A Test Drive launch: AC's own lap counter is dead there (every respawn resets a
+    // car's lap), so racestats ranks the race by the laps it counted itself instead of
+    // AC's leaderboard. The traffic-race mode never moves a car, so AC's own results
+    // stand there as in any ordinary race.
+    traffic: plan.spec.customMode === 'test-drive',
     // Recorded so the session stats can carry the presets they were driven with.
     assists: plan.assists,
     traffic_cars: plan.traffic?.cars ?? null,
@@ -204,14 +205,15 @@ export async function launch(
 
   const id = randomUUID();
 
-  // A track that keeps both a racing line and a road line gets the one this round is
-  // raced on. Left alone entirely when it keeps only the one line, which is nearly
-  // every track.
-  const aiLine = await installAiLine(
-    plan.spec.track,
-    plan.spec.trackConfig,
-    Boolean(plan.spec.customMode)
-  );
+  // A track that keeps both a racing line and a road line races on the racing line,
+  // whatever the round. The road line used to be installed for traffic rounds; since
+  // 2026-09-05 the Test Drive mode drives the track's own spline and dodges traffic
+  // from there (Pablin: "leave the original AI spline"), so the swap only undid that --
+  // the 16:09 New Forest race ran on the centred road line without anyone asking for it.
+  // Asking for the racing line also puts it back wherever an earlier launch left the
+  // road line installed. Left alone entirely when the track keeps only one line, which
+  // is nearly every track.
+  const aiLine = await installAiLine(plan.spec.track, plan.spec.trackConfig, false);
 
   await backupCfgFile(RACE_INI, RACE_INI_BACKUP);
   await fs.writeFile(RACE_INI, buildRaceIni(plan.spec), 'utf8');
@@ -221,7 +223,9 @@ export async function launch(
 
   // Only a round in the Test Drive mode has script traffic, and only then is the
   // mode's own settings file ours to touch.
-  if (plan.traffic) await writeTrafficDensity(plan.traffic.cars);
+  if (plan.traffic && plan.spec.customMode) {
+    await writeTrafficDensity(plan.spec.customMode, plan.traffic.cars);
+  }
 
   // Il Direttore reads this at load: the ratings above 100 that race.ini cannot
   // carry, and each driver's aggression.

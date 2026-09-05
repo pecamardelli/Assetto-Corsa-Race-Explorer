@@ -7,6 +7,7 @@ import {
   sanitizeAssists,
 } from '../../types/assists';
 import { DEFAULT_TRAFFIC, TrafficConfig, sanitizeTraffic } from '../../types/traffic-preset';
+import { DEFAULT_LINEUP, LineupConfig, sanitizeLineup } from '../../types/lineup-preset';
 
 /**
  * Game presets resolve in two layers: a global config every launch uses by default,
@@ -14,9 +15,9 @@ import { DEFAULT_TRAFFIC, TrafficConfig, sanitizeTraffic } from '../../types/tra
  * folder on its first launch, so the archive keeps a record of the settings a season
  * was driven with even if the global config changes later.
  *
- * Two kinds live here. `assists` is the driving aids and realism settings AC reads from
+ * Three kinds live here. `assists` is the driving aids and realism settings AC reads from
  * cfg/assists.ini. `traffic` is how much traffic a road carries, which only a round run
- * in the Test Drive mode uses.
+ * in the Test Drive mode uses. `lineup` is which of the roster stays home, season-only.
  */
 
 const DATA_DIR = path.join(process.cwd(), 'app', 'data');
@@ -242,4 +243,34 @@ export function buildAssistsIni(assists: AssistsConfig): string {
   ];
 
   return ['[ASSISTS]', ...rows.map(([key, value]) => `${key}=${value}`), ''].join('\n');
+}
+
+/* ----------------------------------------------------------------- lineup presets */
+
+/**
+ * The drivers a season leaves at home. Season-only: a lineup is a list of this
+ * season's names, so there is nothing global for it to fall back to. No file, or a file
+ * without the key, is the whole roster.
+ */
+export async function readSeasonLineup(
+  champFolder: string,
+  seasonFolder: string
+): Promise<LineupConfig> {
+  try {
+    const raw = await fs.readFile(seasonAssistsPath(champFolder, seasonFolder), 'utf8');
+    const parsed = JSON.parse(raw.replace(/^﻿/, '')) as { lineup?: unknown };
+    return parsed.lineup === undefined ? DEFAULT_LINEUP : sanitizeLineup(parsed.lineup);
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code;
+    if (code !== 'ENOENT') console.error('Could not read the season lineup:', error);
+    return DEFAULT_LINEUP;
+  }
+}
+
+export async function writeSeasonLineup(
+  champFolder: string,
+  seasonFolder: string,
+  lineup: LineupConfig
+): Promise<void> {
+  await writeConfigFile(seasonAssistsPath(champFolder, seasonFolder), { lineup });
 }

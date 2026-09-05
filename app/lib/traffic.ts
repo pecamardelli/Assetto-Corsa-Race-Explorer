@@ -200,32 +200,37 @@ export function fastestLapDrivers(
 }
 
 /**
- * The Assetto Corsa mode a round is raced in, or undefined for an ordinary race.
+ * The Assetto Corsa mode a round flagged `cspTraffic` is raced in, or null to race such
+ * rounds as ordinary races with their roster traffic.
  *
  * Custom Shaders Patch traffic will not run in a stock race session — its own Traffic
  * mode is declared `BASE_MODE=PRACTICE`, which can host a road full of cars but never
- * a classified result. `test-drive` is our mode: `BASE_MODE=RACE`, so it scores, and
- * it adds the things a race in traffic needs that free-roam never did — competitors
- * that see the traffic, wrecks that clear themselves, cars righted where they land,
- * and a road held still until the flag drops. It lives outside this repo, in Assetto
- * Corsa's own `extension/lua/new-modes/test-drive`, mirrored at
- * `Modding/Tools/test-drive-mode`.
+ * a classified result. Both of ours are `BASE_MODE=RACE`, so they score. They live
+ * outside this repo, in Assetto Corsa's own `extension/lua/new-modes/<name>`, mirrored
+ * under `Modding/Tools/`:
+ *
+ * - `test-drive` (current; given another chance 2026-09-05 afternoon): the track's own
+ *   AI spline, AI that dodges traffic when it can and brakes when it cannot, crashed
+ *   cars respawned where they land and never retired or pitted, the mode's own lap
+ *   count, the game closed when everyone is home. Direttore's marshal stands down for
+ *   it. Its repositioning kills AC's lap counter, which is why the launcher flags
+ *   `traffic` in the launch context for it and racestats then ranks by the laps it
+ *   counted itself.
+ * - `traffic-race`: the minimal fallback. The same traffic and the same dodging, and
+ *   nothing else — AC's own lap counter and leaderboard, the marshal on duty as in any
+ *   race, no respawns.
  */
-/**
- * The Test Drive (traffic race) mode is switched off for now — 2026-09-05, after five
- * races of the AI misbehaving in traffic. A round flagged `cspTraffic` launches as an
- * ordinary race with its roster, roster traffic included, exactly as it did before the
- * mode existed. Flip this to bring the mode back; nothing else needs to change.
- */
-export const TEST_DRIVE_ENABLED = false;
+export type TrafficMode = 'traffic-race' | 'test-drive';
 
-/** Whether this round actually goes to the Test Drive mode: flagged for it, and the mode on. */
-export function usesTestDrive(round: ChampionshipRound): boolean {
-  return TEST_DRIVE_ENABLED && Boolean(round.cspTraffic);
+export const TRAFFIC_MODE: TrafficMode | null = 'test-drive';
+
+/** Whether this round actually goes to a traffic mode: flagged for it, and a mode selected. */
+export function usesTrafficMode(round: ChampionshipRound): boolean {
+  return TRAFFIC_MODE !== null && Boolean(round.cspTraffic);
 }
 
-export function customModeFor(round: ChampionshipRound): string | undefined {
-  return usesTestDrive(round) ? 'test-drive' : undefined;
+export function customModeFor(round: ChampionshipRound): TrafficMode | undefined {
+  return usesTrafficMode(round) && TRAFFIC_MODE !== null ? TRAFFIC_MODE : undefined;
 }
 
 /**
@@ -239,5 +244,5 @@ export function fieldFor(
   opponents: ChampionshipOpponent[],
   round: ChampionshipRound
 ): ChampionshipOpponent[] {
-  return usesTestDrive(round) ? opponents.filter(entry => !isTraffic(entry)) : opponents;
+  return usesTrafficMode(round) ? opponents.filter(entry => !isTraffic(entry)) : opponents;
 }

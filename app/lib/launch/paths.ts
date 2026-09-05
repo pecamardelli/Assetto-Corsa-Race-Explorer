@@ -32,15 +32,21 @@ export const ASSISTS_INI_BACKUP = path.join(AC_CFG_DIR, 'assists.ini.bak');
 export const DIRETTORE_GRID = path.join(AC_CFG_DIR, 'direttore_grid.json');
 
 /**
- * Settings for our own Test Drive mode, which lives in the install rather than in
- * Documents. CSP reads this file directly, so the launcher edits it in place to set the
+ * Settings for one of our own traffic modes, which live in the install rather than in
+ * Documents. CSP reads the file directly, so the launcher edits it in place to set the
  * traffic car count for a round.
  */
-export const TEST_DRIVE_DIR = path.join(AC_ROOT, 'extension', 'lua', 'new-modes', 'test-drive');
-export const TEST_DRIVE_SETTINGS_INI = path.join(TEST_DRIVE_DIR, 'settings.ini');
+export function trafficModeDir(mode: string): string {
+  return path.join(AC_ROOT, 'extension', 'lua', 'new-modes', mode);
+}
+export function trafficModeSettingsIni(mode: string): string {
+  return path.join(trafficModeDir(mode), 'settings.ini');
+}
 
 /** Same one-deep backup policy as race.ini and assists.ini. */
-export const TEST_DRIVE_SETTINGS_BACKUP = path.join(TEST_DRIVE_DIR, 'settings.ini.bak');
+export function trafficModeSettingsBackup(mode: string): string {
+  return path.join(trafficModeDir(mode), 'settings.ini.bak');
+}
 
 export const AC_OUT_DIR = path.join(AC_DOCUMENTS, 'out');
 

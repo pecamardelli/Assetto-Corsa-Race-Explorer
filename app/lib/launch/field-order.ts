@@ -106,7 +106,9 @@ export interface FieldOrder {
 export function fieldOrder(
   championship: Championship,
   season: Season,
-  roundNumber: number
+  roundNumber: number,
+  /** Roster names the season leaves at home (its lineup preset); nobody by default. */
+  excluded: ReadonlySet<string> = new Set()
 ): FieldOrder {
   // Standings are a season's business, so ask this season rather than the whole
   // championship — the same season-scoped view the standings page builds.
@@ -119,7 +121,10 @@ export function fieldOrder(
   };
 
   const standings = calculateStandings(seasonChampionship);
-  const { racing, traffic } = partitionRoster(season.data.opponents);
+  // The season's lineup applies to racers and roster traffic alike: a Fiat left at home
+  // is a pit box freed like any other.
+  const fielded = season.data.opponents.filter(entry => !excluded.has(entry.name));
+  const { racing, traffic } = partitionRoster(fielded);
   const seededOn = seasonHasForm(standings) ? 'standings' : 'random';
 
   const order =
