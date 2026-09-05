@@ -142,6 +142,9 @@ async function writeLaunchContext(plan: LaunchPlan, id: string): Promise<void> {
     round: plan.roundNumber,
     group: plan.group ?? null,
     track: plan.roundTrack,
+    // A Test Drive (traffic) launch: AC's own lap counter is dead there, so racestats
+    // ranks the race by the laps it counted itself instead of AC's leaderboard.
+    traffic: Boolean(plan.traffic),
     // Recorded so the session stats can carry the presets they were driven with.
     assists: plan.assists,
     traffic_cars: plan.traffic?.cars ?? null,

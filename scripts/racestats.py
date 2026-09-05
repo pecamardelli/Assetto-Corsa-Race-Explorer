@@ -316,19 +316,20 @@ def save_current_session():
 
         # Capture final positions.
         #
-        # In a race the order is ours to work out, from the laps we counted: most laps
-        # first, and among equals the one who finished them in the least time. AC's
-        # leaderboard ranks by AC's own lap count, and that count is dead in the Test
-        # Drive mode (every repositioning call resets a car's lap, and every car gets
-        # repositioned), so it put a 13-car field in grid order with zero laps each on
-        # 2026-09-05. Any other session keeps AC's order, which there is by best lap.
+        # AC's leaderboard is the order, as it always was -- except in a Test Drive
+        # (traffic) race, which Race Explorer flags in the launch context. There AC's
+        # own lap count is dead (every repositioning call resets a car's lap, and every
+        # car gets repositioned), and its leaderboard put a 13-car field in grid order
+        # with zero laps each on 2026-09-05. For those the order is ours to work out,
+        # from the laps we counted: most laps first, and among equals the one who
+        # finished them in the least time. Normal races are not touched by this.
         for car_id, stats in car_stats.items():
             try:
                 stats.final_position = ac.getCarLeaderboardPosition(car_id)
             except:
                 stats.final_position = 999
 
-        if session_type == 'race':
+        if session_type == 'race' and launch_context.get('traffic'):
             sorted_drivers = sorted(car_stats.items(),
                                     key=lambda x: (-len(x[1].lap_times), x[1].racing_time()))
             for place, (car_id, stats) in enumerate(sorted_drivers, start=1):

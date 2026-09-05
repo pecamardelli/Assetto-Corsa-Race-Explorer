@@ -207,7 +207,7 @@ stats = run(3, 320.0, ac_counter_works=False)
 stats[2].lap_times.append(95000.0)
 stats[1].lap_times = [t - 3000.0 for t in stats[1].lap_times]
 saved = {}
-racestats.read_launch_context = lambda: {'sessions': ['race'], 'laps': 3}
+racestats.read_launch_context = lambda: {'sessions': ['race'], 'laps': 3, 'traffic': True}
 racestats.current_session_number = 0
 _open = open
 
@@ -245,6 +245,18 @@ check("equal laps rank by racing time", order[1][0], 'Driver 1')
 check("AC's leaderboard leader is last", order[2][0], 'Driver 0')
 check("the session counts as finished by our laps", completed, True)
 check("fewer laps than the winner reads as retired", result['driver_statistics']['Driver 0']['retired'], True)
+
+print("\nA normal race keeps AC's leaderboard order")
+saved.clear()
+racestats.read_launch_context = lambda: {'sessions': ['race'], 'laps': 3}
+builtins.open = lambda *a, **k: _Sink()
+try:
+    racestats.save_current_session()
+finally:
+    builtins.open = _open
+result = json.loads(saved['text'])
+order = sorted(result['driver_statistics'].items(), key=lambda kv: kv[1]['position'])
+check("without the traffic flag AC's leaderboard leader stays first", order[0][0], 'Driver 0')
 
 print("\n%d failed" % len(fails) if fails else "\nall passed")
 for f in fails:

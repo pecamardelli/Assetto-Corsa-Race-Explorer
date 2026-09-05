@@ -211,8 +211,21 @@ export function fastestLapDrivers(
  * Corsa's own `extension/lua/new-modes/test-drive`, mirrored at
  * `Modding/Tools/test-drive-mode`.
  */
+/**
+ * The Test Drive (traffic race) mode is switched off for now — 2026-09-05, after five
+ * races of the AI misbehaving in traffic. A round flagged `cspTraffic` launches as an
+ * ordinary race with its roster, roster traffic included, exactly as it did before the
+ * mode existed. Flip this to bring the mode back; nothing else needs to change.
+ */
+export const TEST_DRIVE_ENABLED = false;
+
+/** Whether this round actually goes to the Test Drive mode: flagged for it, and the mode on. */
+export function usesTestDrive(round: ChampionshipRound): boolean {
+  return TEST_DRIVE_ENABLED && Boolean(round.cspTraffic);
+}
+
 export function customModeFor(round: ChampionshipRound): string | undefined {
-  return round.cspTraffic ? 'test-drive' : undefined;
+  return usesTestDrive(round) ? 'test-drive' : undefined;
 }
 
 /**
@@ -226,5 +239,5 @@ export function fieldFor(
   opponents: ChampionshipOpponent[],
   round: ChampionshipRound
 ): ChampionshipOpponent[] {
-  return round.cspTraffic ? opponents.filter(entry => !isTraffic(entry)) : opponents;
+  return usesTestDrive(round) ? opponents.filter(entry => !isTraffic(entry)) : opponents;
 }

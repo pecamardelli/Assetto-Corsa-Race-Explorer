@@ -5,6 +5,7 @@ import { fieldOrder } from '../../lib/launch/field-order';
 import { readSeasonGridCaps } from '../../lib/launch/assists';
 import { resolveRaceSpec } from '../../lib/launch/race-spec';
 import { takesGridFromStandings } from '../../types/race-spec';
+import { usesTestDrive } from '../../lib/traffic';
 
 /**
  * How a round would have to be split to fit its track, who would be in each batch,
@@ -68,7 +69,7 @@ export async function GET(request: NextRequest) {
   // rather than a split guessed at.
   // A round whose road supplies its own traffic enters none of its own, so nothing
   // rides along in every batch and the whole capacity goes to the field.
-  const riders = roundData.cspTraffic ? [] : traffic;
+  const riders = usesTestDrive(roundData) ? [] : traffic;
   const groups = capacity === null ? [] : planGroups(order, capacity, riders);
 
   return NextResponse.json({
