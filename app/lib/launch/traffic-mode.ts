@@ -78,7 +78,7 @@ export function setTrafficDensity(existing: string, cars: number): string {
 }
 
 /**
- * The cast list (`TRAFFIC_CARS`): `id:weight,id:weight,...`, or empty for every
+ * The cast list (`TRAFFIC_CARS`): `id:weight id:weight ...`, or empty for every
  * installed model. See `traffic-fleet.ts` for where it comes from and the mode's
  * `castFleet` for how it is read.
  */

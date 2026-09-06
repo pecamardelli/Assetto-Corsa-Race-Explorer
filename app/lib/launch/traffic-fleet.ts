@@ -7,7 +7,7 @@
  * every road would carry all of them. The cast list lives in `app/data/traffic-fleets.json`:
  * named fleets (a set of model ids with spawn weights) and a map from track id to fleet.
  * The launcher writes the resolved list into the Test Drive mode's settings as
- * `TRAFFIC_CARS=id:weight,id:weight,...`, and the mode trims CSP's model list to it
+ * `TRAFFIC_CARS=id:weight id:weight ...`, and the mode trims CSP's model list to it
  * before the simulation builds its pools. A track with no fleet leaves the key empty,
  * which the mode reads as "every model" — what it always did.
  *
@@ -81,9 +81,13 @@ export async function readTrafficFleets(file: string = FLEETS_FILE): Promise<Tra
 /**
  * The `TRAFFIC_CARS` value for a fleet. Weights are written with two decimals, which
  * is all the precision a spawn ratio needs and keeps the line readable in the ini.
+ *
+ * Space-separated, not comma: CSP's INI reader splits a value on commas into a list
+ * and hands a string setting only the first item, which is how the first cast New
+ * Forest saw was one Cortina (2026-09-06).
  */
 export function fleetSpec(entries: FleetEntry[]): string {
-  return entries.map(entry => `${entry.id}:${entry.weight.toFixed(2)}`).join(',');
+  return entries.map(entry => `${entry.id}:${entry.weight.toFixed(2)}`).join(' ');
 }
 
 /**
