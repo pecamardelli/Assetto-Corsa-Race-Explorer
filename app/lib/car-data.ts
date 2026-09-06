@@ -19,6 +19,7 @@ const carDataCache = new Map<string, CarData | null>();
 // A handful of cars never had a skin preview copied over, so the lookup is cached
 // the same way the data is: pages ask for it once per car and per render.
 const previewCache = new Map<string, string | null>();
+const badgeCache = new Map<string, string | null>();
 
 /**
  * Load car data from the cars data folder
@@ -77,6 +78,23 @@ export function getCarPreviewUrl(carName: string): string | null {
     ? `/car-gallery/${carName}/01.webp`
     : null;
   previewCache.set(carName, url);
+  return url;
+}
+
+/**
+ * Where a car's brand badge can be loaded from, or null when we don't have one.
+ * Badges are copied by car folder name, so a car keys its brand's logo here.
+ * @param carName - The car folder name
+ */
+export function getCarBadgeUrl(carName: string): string | null {
+  if (badgeCache.has(carName)) {
+    return badgeCache.get(carName)!;
+  }
+
+  const url = fs.existsSync(path.join(process.cwd(), 'public', 'badges', `${carName}.png`))
+    ? `/badges/${encodeURIComponent(carName)}.png`
+    : null;
+  badgeCache.set(carName, url);
   return url;
 }
 

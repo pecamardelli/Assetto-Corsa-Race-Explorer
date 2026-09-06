@@ -9,7 +9,7 @@ import { resolveDriverPortraits } from '../../../lib/driver-assets';
 import { racesInTraffic } from '../../../lib/traffic';
 import { formatDuration } from '../../../lib/format-utils';
 import { completedSeasonRanking } from '../../../lib/road-series-ranking';
-import { getCarDetails, getCarPreviewUrl } from '../../../lib/car-data';
+import { getCarDetails, getCarPreviewUrl, getCarBadgeUrl } from '../../../lib/car-data';
 
 export default async function AllTimeStandingsPage({ params }: { params: Promise<{ champId: string }> }) {
   const { champId } = await params;
@@ -42,6 +42,45 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
     const sessionType = session.data.session_type || session.data.session_info.session_type;
       return sessionType === 'race';
   }).length;
+
+  // Total unique race winners, and drivers who won at least one championship
+  const raceWinners = new Set(driverStats.filter(d => d.firstPlaces > 0).map(d => d.name));
+  const champions = new Set(driverStats.filter(d => d.championshipsWon > 0).map(d => d.name));
+
+  // A road series shows eight cards in one row, so they are drawn tighter there.
+  const cardClass = trafficSeries
+    ? 'bg-zinc-800/50 border border-zinc-700 rounded-lg p-4'
+    : 'bg-zinc-800/50 border border-zinc-700 rounded-lg p-6';
+  const bigNumber = trafficSeries ? 'text-2xl' : 'text-3xl';
+
+  const summaryCards = (
+    <>
+      <div className={cardClass}>
+        <h3 className="text-zinc-400 text-sm font-medium mb-2">Total Drivers</h3>
+        <div className={`${bigNumber} font-bold text-white`}>
+          {driverStats.length}
+        </div>
+      </div>
+      <div className={cardClass}>
+        <h3 className="text-zinc-400 text-sm font-medium mb-2">Total Races</h3>
+        <div className={`${bigNumber} font-bold text-white`}>
+          {totalRaces}
+        </div>
+      </div>
+      <div className={cardClass}>
+        <h3 className="text-zinc-400 text-sm font-medium mb-2">Total Race Winners</h3>
+        <div className={`${bigNumber} font-bold text-amber-400`}>
+          {raceWinners.size}
+        </div>
+      </div>
+      <div className={cardClass}>
+        <h3 className="text-zinc-400 text-sm font-medium mb-2">Total Champions</h3>
+        <div className={`${bigNumber} font-bold text-amber-500`}>
+          {champions.size}
+        </div>
+      </div>
+    </>
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
@@ -87,47 +126,13 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
       </section>
 
       <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
-        {/* Statistics Summary */}
-        {driverStats.length > 0 && (() => {
-          // Calculate total unique race winners
-          const raceWinners = new Set(
-            driverStats.filter(d => d.firstPlaces > 0).map(d => d.name)
-          );
-
-          // Calculate total champions (drivers who won at least one championship)
-          const champions = new Set(
-            driverStats.filter(d => d.championshipsWon > 0).map(d => d.name)
-          );
-
-          return (
-            <div className="mb-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-                <h3 className="text-zinc-400 text-sm font-medium mb-2">Total Drivers</h3>
-                <div className="text-3xl font-bold text-white">
-                  {driverStats.length}
-                </div>
-              </div>
-              <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-                <h3 className="text-zinc-400 text-sm font-medium mb-2">Total Races</h3>
-                <div className="text-3xl font-bold text-white">
-                  {totalRaces}
-                </div>
-              </div>
-              <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-                <h3 className="text-zinc-400 text-sm font-medium mb-2">Total Race Winners</h3>
-                <div className="text-3xl font-bold text-amber-400">
-                  {raceWinners.size}
-                </div>
-              </div>
-              <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-                <h3 className="text-zinc-400 text-sm font-medium mb-2">Total Champions</h3>
-                <div className="text-3xl font-bold text-amber-500">
-                  {champions.size}
-                </div>
-              </div>
-            </div>
-          );
-        })()}
+        {/* Statistics Summary: above the table for a circuit series; a road series
+            keeps the ranking first and shows these in the bottom row instead. */}
+        {!trafficSeries && driverStats.length > 0 && (
+          <div className="mb-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+            {summaryCards}
+          </div>
+        )}
 
         {/* High-score table for a road series: one row per driver per completed season */}
         {trafficSeries ? (
@@ -160,9 +165,6 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
                       Season
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
-                      Score
-                    </th>
-                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
                       Completed
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
@@ -173,6 +175,9 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
                       Crashes
+                    </th>
+                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
+                      Score
                     </th>
                   </tr>
                 </thead>
@@ -185,6 +190,7 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
                       : '-';
                     const car = getCarDetails(entry.car);
                     const carPreview = getCarPreviewUrl(entry.car);
+                    const carBadge = getCarBadgeUrl(entry.car);
 
                     return (
                       <tr
@@ -225,8 +231,20 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
                           <FlagIcon nation={entry.nation} />
                         </td>
                         <td className="px-4 py-4">
-                          {/* The car, as the original Test Drive listed it: its picture, the make and the model */}
+                          {/* The car: its brand's badge, the make and the model, then its picture */}
                           <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 shrink-0 flex items-center justify-center">
+                              {carBadge ? (
+                                /* eslint-disable-next-line @next/next/no-img-element */
+                                <img src={carBadge} alt={car.brand} className="max-h-full max-w-full object-contain" />
+                              ) : (
+                                <div className="w-10 h-10 rounded-full border border-dashed border-zinc-700" />
+                              )}
+                            </div>
+                            <div className="w-36 shrink-0">
+                              <div className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">{car.brand}</div>
+                              <div className="text-sm text-zinc-200 truncate">{car.model}</div>
+                            </div>
                             <div className="w-20 h-12 shrink-0 overflow-hidden rounded-lg border border-zinc-700 bg-zinc-900/60">
                               {carPreview ? (
                                 /* eslint-disable-next-line @next/next/no-img-element */
@@ -235,19 +253,10 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
                                 <div className="h-full w-full flex items-center justify-center text-[10px] text-zinc-600">No preview</div>
                               )}
                             </div>
-                            <div className="min-w-0">
-                              <div className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">{car.brand}</div>
-                              <div className="text-sm text-zinc-200 truncate">{car.model}</div>
-                            </div>
                           </div>
                         </td>
                         <td className="px-4 py-4 text-center text-zinc-300">
                           {entry.seasonName}
-                        </td>
-                        <td className="px-4 py-4 text-center">
-                          <div className="font-bold text-lg text-blue-400">
-                            {entry.score.toLocaleString()}
-                          </div>
                         </td>
                         <td className="px-4 py-4 text-center text-zinc-400 whitespace-nowrap">
                           {completed}
@@ -267,6 +276,11 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
                             'text-amber-400'
                           }`}>
                             {entry.crashes}
+                          </div>
+                        </td>
+                        <td className="px-4 py-4 text-center">
+                          <div className="font-bold text-lg text-blue-400">
+                            {entry.score.toLocaleString()}
                           </div>
                         </td>
                       </tr>
@@ -504,8 +518,14 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
           const championDriver = driverStats.find(d => d.championshipsWon === mostChampionships);
 
           return (
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
+            <div className={`mt-8 grid gap-4 ${
+              trafficSeries
+                ? 'grid-cols-2 md:grid-cols-4 xl:grid-cols-8'
+                : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
+            }`}>
+              {trafficSeries && summaryCards}
+
+              <div className={cardClass}>
                 <h3 className="text-zinc-400 text-sm font-medium mb-2">Most Wins</h3>
                 <div className="text-2xl font-bold text-amber-400 mb-1">
                   {mostWins}
@@ -516,7 +536,7 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
               </div>
 
               {trafficSeries ? (
-                <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
+                <div className={cardClass}>
                   <h3 className="text-zinc-400 text-sm font-medium mb-2">Most Time on the Road</h3>
                   <div className="text-2xl font-bold text-zinc-300 mb-1 font-mono">
                     {formatDuration(mostTime)}
@@ -526,7 +546,7 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
                   </div>
                 </div>
               ) : (
-                <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
+                <div className={cardClass}>
                   <h3 className="text-zinc-400 text-sm font-medium mb-2">Most Fastest Laps</h3>
                   <div className="text-2xl font-bold text-purple-400 mb-1">
                     {mostFastestLaps}
@@ -537,7 +557,7 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
                 </div>
               )}
 
-              <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
+              <div className={cardClass}>
                 <h3 className="text-zinc-400 text-sm font-medium mb-2">Cleanest Driver</h3>
                 <div className="text-2xl font-bold text-green-400 mb-1">
                   {cleanestDriver ? cleanestDriver.totalCrashes : 0} crashes
@@ -547,7 +567,7 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
                 </div>
               </div>
 
-              <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
+              <div className={cardClass}>
                 <h3 className="text-zinc-400 text-sm font-medium mb-2">Most Championships</h3>
                 <div className="text-2xl font-bold text-amber-500 mb-1">
                   {mostChampionships > 0 ? mostChampionships : '-'}
