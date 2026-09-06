@@ -104,6 +104,8 @@ export function rollRaceSpec(spec: RaceSpec, weathers: string[]): SettledRace {
     timeOfDayTo,
     pointToPoint,
     gridFromStandings,
+    trafficPerLaneKm,
+    trafficCars,
     ...rest
   } = spec;
 
@@ -111,6 +113,9 @@ export function rollRaceSpec(spec: RaceSpec, weathers: string[]): SettledRace {
   // what goes into race.ini, so both are dropped here rather than settled.
   void pointToPoint;
   void gridFromStandings;
+  // Likewise the round's own traffic sizing: it goes to the mode's settings, not race.ini.
+  void trafficPerLaneKm;
+  void trafficCars;
 
   return {
     ...rest,
@@ -149,6 +154,9 @@ export function championshipSpec(
     pointToPoint: isPointToPointTrack(round.track),
     // Off unless a round says otherwise: a championship qualifies until it opts out.
     gridFromStandings: false,
+    // The season's traffic preset, unless a round asks for its own.
+    trafficPerLaneKm: null,
+    trafficCars: null,
     weather: RANDOM_WEATHER,
     grip: RANDOM_GRIP,
     // Ranges whose ends meet, so temperature and time are not left to chance.

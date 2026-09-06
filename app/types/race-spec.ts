@@ -5,6 +5,7 @@
  * this became editable. Client-safe — the filesystem side (resolving a round's
  * effective spec, saving an override) lives in lib/launch/race-spec.
  */
+import { TRAFFIC_CARS_MAX, TRAFFIC_CARS_MIN, TRAFFIC_PER_LANE_KM_MAX } from './traffic-preset';
 
 export interface GripPreset {
   name: string;
@@ -118,6 +119,19 @@ export interface RaceSpec
    * runs, not what goes into race.ini.
    */
   gridFromStandings: boolean;
+  /**
+   * Traffic for this round alone, over the season's preset: cars per lane-kilometre
+   * within the simulation's reach, or a pinned count. null inherits the season's, which
+   * is the usual case. It exists because density is per lane-km and a road with two
+   * lanes each way has twice the lane-km of the rest of a series over the same tarmac:
+   * Black Cat County's four-lane plan (2026-09-06) at the Americas Challenge's 4 per
+   * lane-km came to 130 cars around the player where its neighbours get 30-50, so that
+   * round runs at 2. A pinned count wins over the density, as in the season preset.
+   *
+   * Not part of SettledRace: it sizes the traffic mode's settings, not race.ini.
+   */
+  trafficPerLaneKm: number | null;
+  trafficCars: number | null;
   /** Weather folder name, or RANDOM_WEATHER to draw one per launch. */
   weather: string;
   /** Index into GRIP_PRESETS, or RANDOM_GRIP to draw one per launch. */
@@ -201,6 +215,25 @@ function bool(value: unknown, fallback: boolean): boolean {
 }
 
 /**
+ * A number that may deliberately be absent: an explicit null (or the string "null"
+ * from a form) clears it, a number is clamped, anything else keeps the fallback.
+ */
+function nullable(
+  value: unknown,
+  fallback: number | null,
+  min: number,
+  max: number,
+  integer = false
+): number | null {
+  if (value === null || value === 'null' || value === '') return null;
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    const clamped = Math.min(max, Math.max(min, value));
+    return integer ? Math.round(clamped) : clamped;
+  }
+  return fallback;
+}
+
+/**
  * Coerce anything read from disk or a request body into a complete spec, field by
  * field, so a saved file from an older version keeps the values it does know and
  * takes the rest from the round's own settings.
@@ -239,6 +272,8 @@ export function sanitizeRaceSpec(input: unknown, base: RaceSpec): RaceSpec {
     laps: clamp(raw.laps, base.laps, 1, 500),
     pointToPoint: bool(raw.pointToPoint, base.pointToPoint),
     gridFromStandings: bool(raw.gridFromStandings, base.gridFromStandings),
+    trafficPerLaneKm: nullable(raw.trafficPerLaneKm, base.trafficPerLaneKm, 0.5, TRAFFIC_PER_LANE_KM_MAX),
+    trafficCars: nullable(raw.trafficCars, base.trafficCars, TRAFFIC_CARS_MIN, TRAFFIC_CARS_MAX, true),
     weather: typeof raw.weather === 'string' && raw.weather ? raw.weather : base.weather,
     grip: clamp(raw.grip, base.grip, RANDOM_GRIP, GRIP_PRESETS.length - 1),
     ambientTempFrom,

@@ -367,7 +367,17 @@ export async function buildLaunchPlan(
   let trafficFleet: TrafficFleetDecision | undefined;
   if (spec.customMode) {
     trafficConfig = (await resolveTraffic(championship.folderName, seasonFolder)).traffic;
-    traffic = decideTrafficCars(trafficConfig, await readTrafficRoad(track, trackConfig));
+    // A round may size its own traffic (a four-lane road in a series of two-lane ones).
+    // Only the decision takes the override: `trafficConfig` stays the season's, which is
+    // what gets filed with the season on its first launch.
+    const own = resolved.spec;
+    const roundTraffic: TrafficConfig =
+      own.trafficCars !== null
+        ? { ...trafficConfig, cars: own.trafficCars }
+        : own.trafficPerLaneKm !== null
+          ? { ...trafficConfig, perLaneKm: own.trafficPerLaneKm, cars: null }
+          : trafficConfig;
+    traffic = decideTrafficCars(roundTraffic, await readTrafficRoad(track, trackConfig));
     trafficFleet = resolveTrafficFleet(await readTrafficFleets(), round.track) ?? undefined;
   }
 
