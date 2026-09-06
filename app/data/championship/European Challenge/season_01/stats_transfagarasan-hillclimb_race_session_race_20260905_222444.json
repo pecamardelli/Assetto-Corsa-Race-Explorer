@@ -69,12 +69,12 @@
       "position": 5,
       "retired": true,
       "score_breakdown": {
-        "base_score": 0,
-        "crash_factor": 0.897,
-        "crash_penalty_percent": 10.32,
-        "fastest_lap_bonus": 0,
-        "position_factor": 0.2,
-        "speed_factor": 0.5
+        "average_speed_kmh": 0,
+        "base_score": 0.0,
+        "crash_count": 49,
+        "crash_factor": 0.225,
+        "crash_penalty_percent": 77.52,
+        "distance_km": 0.0
       },
       "times_overtaken": 18,
       "total_score": 0,
@@ -125,12 +125,12 @@
       "position": 4,
       "retired": true,
       "score_breakdown": {
-        "base_score": 0,
-        "crash_factor": 0.941,
-        "crash_penalty_percent": 5.87,
-        "fastest_lap_bonus": 0,
-        "position_factor": 0.4,
-        "speed_factor": 0.5
+        "average_speed_kmh": 0,
+        "base_score": 0.0,
+        "crash_count": 24,
+        "crash_factor": 0.481,
+        "crash_penalty_percent": 51.86,
+        "distance_km": 0.0
       },
       "times_overtaken": 17,
       "total_score": 0,
@@ -196,12 +196,12 @@
       "position": 3,
       "retired": true,
       "score_breakdown": {
-        "base_score": 0,
-        "crash_factor": 0.906,
-        "crash_penalty_percent": 9.36,
-        "fastest_lap_bonus": 0,
-        "position_factor": 0.6,
-        "speed_factor": 0.5
+        "average_speed_kmh": 0,
+        "base_score": 0.0,
+        "crash_count": 39,
+        "crash_factor": 0.305,
+        "crash_penalty_percent": 69.51,
+        "distance_km": 0.0
       },
       "times_overtaken": 16,
       "total_score": 0,
@@ -251,15 +251,15 @@
       "position": 1,
       "retired": false,
       "score_breakdown": {
-        "base_score": 23587.85,
-        "crash_factor": 0.946,
-        "crash_penalty_percent": 5.38,
-        "fastest_lap_bonus": 1115.94,
-        "position_factor": 1,
-        "speed_factor": 1
+        "average_speed_kmh": 73.32,
+        "base_score": 17295.61,
+        "crash_count": 21,
+        "crash_factor": 0.527,
+        "crash_penalty_percent": 47.25,
+        "distance_km": 23.588
       },
       "times_overtaken": 12,
-      "total_score": 23435,
+      "total_score": 9124,
       "total_time_formatted": "19:18.092",
       "total_time_seconds": 1158.093
     },
@@ -301,15 +301,15 @@
       "position": 2,
       "retired": false,
       "score_breakdown": {
-        "base_score": 23587.85,
-        "crash_factor": 0.951,
-        "crash_penalty_percent": 4.94,
-        "fastest_lap_bonus": 0,
-        "position_factor": 0.8,
-        "speed_factor": 0.718
+        "average_speed_kmh": 52.68,
+        "base_score": 12425.79,
+        "crash_count": 16,
+        "crash_factor": 0.614,
+        "crash_penalty_percent": 38.57,
+        "distance_km": 23.588
       },
       "times_overtaken": 8,
-      "total_score": 12888,
+      "total_score": 7633,
       "total_time_formatted": "26:51.962",
       "total_time_seconds": 1611.963
     }
@@ -318,15 +318,15 @@
     "best_lap_time_seconds": 1158.093,
     "championship": "European Challenge",
     "crash_penalty_config": {
-      "max_penalty_per_crash_g": 100,
-      "penalty_percent_per_g": 0.01
+      "penalty_percent_per_crash": 3
     },
     "date": "2026-09-05 22:24:44",
     "finished": true,
     "race_laps": 1,
+    "rescored": "2026-09-06: Test Drive count formula applied to a result written under the circuit formula",
     "round": 5,
     "save_reason": "release",
-    "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
     "season": "season_01",
     "session_duration_formatted": "27:16.420",
     "session_duration_seconds": 1636.42,

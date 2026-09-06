@@ -31,15 +31,15 @@
       "position": 4,
       "retired": false,
       "score_breakdown": {
-        "base_score": 10785.76,
-        "crash_factor": 0.982,
-        "crash_penalty_percent": 1.76,
-        "fastest_lap_bonus": 0,
-        "position_factor": 0.4,
-        "speed_factor": 0.954
+        "average_speed_kmh": 50.99,
+        "base_score": 5499.62,
+        "crash_count": 9,
+        "crash_factor": 0.76,
+        "crash_penalty_percent": 23.98,
+        "distance_km": 10.786
       },
       "times_overtaken": 20,
-      "total_score": 4043,
+      "total_score": 4181,
       "total_time_formatted": "12:41.501",
       "total_time_seconds": 761.502
     },
@@ -81,15 +81,15 @@
       "position": 2,
       "retired": false,
       "score_breakdown": {
-        "base_score": 10785.76,
-        "crash_factor": 0.966,
-        "crash_penalty_percent": 3.36,
-        "fastest_lap_bonus": 0,
-        "position_factor": 0.8,
-        "speed_factor": 0.966
+        "average_speed_kmh": 51.62,
+        "base_score": 5568.02,
+        "crash_count": 16,
+        "crash_factor": 0.614,
+        "crash_penalty_percent": 38.57,
+        "distance_km": 10.786
       },
       "times_overtaken": 21,
-      "total_score": 8053,
+      "total_score": 3421,
       "total_time_formatted": "12:32.148",
       "total_time_seconds": 752.148
     },
@@ -134,15 +134,15 @@
       "position": 3,
       "retired": false,
       "score_breakdown": {
-        "base_score": 10785.76,
-        "crash_factor": 0.955,
-        "crash_penalty_percent": 4.51,
-        "fastest_lap_bonus": 0,
-        "position_factor": 0.6,
-        "speed_factor": 0.961
+        "average_speed_kmh": 51.38,
+        "base_score": 5541.94,
+        "crash_count": 19,
+        "crash_factor": 0.561,
+        "crash_penalty_percent": 43.94,
+        "distance_km": 10.786
       },
       "times_overtaken": 24,
-      "total_score": 5940,
+      "total_score": 3107,
       "total_time_formatted": "12:35.687",
       "total_time_seconds": 755.688
     },
@@ -188,15 +188,15 @@
       "position": 5,
       "retired": false,
       "score_breakdown": {
-        "base_score": 10785.76,
-        "crash_factor": 0.942,
-        "crash_penalty_percent": 5.79,
-        "fastest_lap_bonus": 0,
-        "position_factor": 0.2,
-        "speed_factor": 0.949
+        "average_speed_kmh": 50.76,
+        "base_score": 5474.35,
+        "crash_count": 20,
+        "crash_factor": 0.544,
+        "crash_penalty_percent": 45.62,
+        "distance_km": 10.786
       },
       "times_overtaken": 27,
-      "total_score": 1930,
+      "total_score": 2977,
       "total_time_formatted": "12:45.018",
       "total_time_seconds": 765.018
     },
@@ -237,15 +237,15 @@
       "position": 1,
       "retired": false,
       "score_breakdown": {
-        "base_score": 10785.76,
-        "crash_factor": 0.945,
-        "crash_penalty_percent": 5.48,
-        "fastest_lap_bonus": 509.73,
-        "position_factor": 1,
-        "speed_factor": 1
+        "average_speed_kmh": 53.46,
+        "base_score": 5765.82,
+        "crash_count": 15,
+        "crash_factor": 0.633,
+        "crash_penalty_percent": 36.67,
+        "distance_km": 10.786
       },
       "times_overtaken": 20,
-      "total_score": 10705,
+      "total_score": 3652,
       "total_time_formatted": "12:06.345",
       "total_time_seconds": 726.345
     }
@@ -254,15 +254,15 @@
     "best_lap_time_seconds": 726.345,
     "championship": "European Challenge",
     "crash_penalty_config": {
-      "max_penalty_per_crash_g": 100,
-      "penalty_percent_per_g": 0.01
+      "penalty_percent_per_crash": 3
     },
     "date": "2026-09-05 22:10:58",
     "finished": true,
     "race_laps": 1,
+    "rescored": "2026-09-06: Test Drive count formula applied to a result written under the circuit formula",
     "round": 4,
     "save_reason": "release",
-    "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
     "season": "season_01",
     "session_duration_formatted": "13:25.845",
     "session_duration_seconds": 805.85,

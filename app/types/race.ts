@@ -10,8 +10,15 @@ export interface ScoreBreakdown {
   base_score: number;
   crash_penalty_percent: number;
   crash_factor: number;
-  position_factor: number;
-  speed_factor: number;
+  // A circuit race: base × position × best-lap ratio, crashes charged by their g.
+  position_factor?: number;
+  speed_factor?: number;
+  fastest_lap_bonus?: number;
+  // A Test Drive race (traffic_race): distance × average speed × 10, then 3% off per
+  // crash, whatever its g. No position factor, no fastest-lap bonus.
+  distance_km?: number;
+  average_speed_kmh?: number;
+  crash_count?: number;
 }
 
 export interface DriverStatistics {
@@ -42,8 +49,11 @@ export interface DriverStatistics {
 }
 
 export interface CrashPenaltyConfig {
-  penalty_percent_per_g: number;
-  max_penalty_per_crash_g: number;
+  // Circuit races: 0.01% per g, each crash capped at 100 g.
+  penalty_percent_per_g?: number;
+  max_penalty_per_crash_g?: number;
+  // Test Drive races: a fixed share of the score per crash.
+  penalty_percent_per_crash?: number;
 }
 
 export interface SessionInfo {
