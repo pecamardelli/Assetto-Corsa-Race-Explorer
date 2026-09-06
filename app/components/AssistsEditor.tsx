@@ -74,13 +74,17 @@ const multiplier = (value: number) => (value === 0 ? 'Off' : `${value}x`);
 const perLaneKm = (value: number) => `${value} / lane-km`;
 
 /**
- * What a density works out to on the two roads that have a lane plan, so the slider
- * means something before a race is launched. Lane-kilometres, not track length: a
- * two-way plan carries traffic in both directions over the same tarmac.
+ * What a density works out to on a few roads that have a lane plan, so the slider
+ * means something before a race is launched. The figure is lane-kilometres *within the
+ * simulation's 1.5 km reach* of a typical point on the road (`TrafficRoad.reachKm`), not
+ * the road's length: the cars all live around the player, so a 33 km loop is spread no
+ * thinner than a 3.6 km one. Measured 2026-09-05 from the installed plans.
  */
 const REFERENCE_ROADS: Array<{ name: string; laneKm: number }> = [
-  { name: 'New Forest', laneKm: 7.26 },
-  { name: 'Bannochbrae', laneKm: 14.54 },
+  { name: 'New Forest (3.6 km loop)', laneKm: 7.3 },
+  { name: 'Bannochbrae (7.3 km loop)', laneKm: 13.5 },
+  { name: 'Evo Triangle (32.7 km loop)', laneKm: 6.9 },
+  { name: 'Transfăgărășan (23.4 km pass)', laneKm: 14.1 },
 ];
 
 export default function AssistsEditor({
@@ -291,7 +295,7 @@ export default function AssistsEditor({
             <>
               <Slider
                 label="Density"
-                hint="A two-way road counts twice: both lanes carry traffic"
+                hint="Cars per lane-km within 1.5 km of you: the simulation keeps its traffic around the player, not spread along the road. A two-way road counts twice"
                 value={traffic.perLaneKm}
                 onChange={value => setTrafficField('perLaneKm', value)}
                 min={1}
