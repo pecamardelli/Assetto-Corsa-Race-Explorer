@@ -84,15 +84,55 @@
       },
       {
         "id": "betr_truck_petrol",
-        "weight": 0.25
+        "weight": 0.45
       },
       {
         "id": "betr_truck_dirt",
-        "weight": 0.2
+        "weight": 0.3
       },
       {
         "id": "vw_scirocco_mk1",
         "weight": 0.3
+      },
+      {
+        "id": "tky_small_truck",
+        "weight": 0.5
+      },
+      {
+        "id": "betr_truck_mixer",
+        "weight": 0.15
+      },
+      {
+        "id": "toyota_hiace",
+        "weight": 0.4
+      },
+      {
+        "id": "honda_acty",
+        "weight": 0.3
+      },
+      {
+        "id": "suzuki_carry",
+        "weight": 0.3
+      },
+      {
+        "id": "fiat_fiorino",
+        "weight": 0.3
+      },
+      {
+        "id": "gmc_vandura",
+        "weight": 0.3
+      },
+      {
+        "id": "vw_splitty_t1",
+        "weight": 0.3
+      },
+      {
+        "id": "kenworth_w900",
+        "weight": 0.1
+      },
+      {
+        "id": "toyota_coaster",
+        "weight": 0.15
       }
     ],
     "italy": [
@@ -186,7 +226,51 @@
       },
       {
         "id": "betr_truck_petrol",
-        "weight": 0.2
+        "weight": 0.45
+      },
+      {
+        "id": "tky_small_truck",
+        "weight": 0.5
+      },
+      {
+        "id": "betr_truck_dirt",
+        "weight": 0.3
+      },
+      {
+        "id": "betr_truck_mixer",
+        "weight": 0.15
+      },
+      {
+        "id": "ford_transit_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "toyota_hiace",
+        "weight": 0.4
+      },
+      {
+        "id": "honda_acty",
+        "weight": 0.3
+      },
+      {
+        "id": "suzuki_carry",
+        "weight": 0.3
+      },
+      {
+        "id": "gmc_vandura",
+        "weight": 0.3
+      },
+      {
+        "id": "vw_splitty_t1",
+        "weight": 0.3
+      },
+      {
+        "id": "toyota_coaster",
+        "weight": 0.3
+      },
+      {
+        "id": "chevrolet_c10",
+        "weight": 0.1
       }
     ],
     "romania": [
@@ -224,11 +308,47 @@
       },
       {
         "id": "betr_truck_petrol",
-        "weight": 0.3
+        "weight": 0.45
       },
       {
         "id": "betr_truck_mixer",
         "weight": 0.2
+      },
+      {
+        "id": "tky_small_truck",
+        "weight": 0.5
+      },
+      {
+        "id": "ford_transit_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "toyota_hiace",
+        "weight": 0.4
+      },
+      {
+        "id": "honda_acty",
+        "weight": 0.3
+      },
+      {
+        "id": "suzuki_carry",
+        "weight": 0.3
+      },
+      {
+        "id": "fiat_fiorino",
+        "weight": 0.3
+      },
+      {
+        "id": "gmc_vandura",
+        "weight": 0.3
+      },
+      {
+        "id": "toyota_coaster",
+        "weight": 0.3
+      },
+      {
+        "id": "dodge_ram_van",
+        "weight": 0.15
       }
     ],
     "usa": [
@@ -314,11 +434,43 @@
       },
       {
         "id": "kenworth_w900",
-        "weight": 0.4
+        "weight": 0.5
       },
       {
         "id": "betr_truck_petrol",
-        "weight": 0.1
+        "weight": 0.45
+      },
+      {
+        "id": "tky_small_truck",
+        "weight": 0.5
+      },
+      {
+        "id": "betr_truck_dirt",
+        "weight": 0.3
+      },
+      {
+        "id": "betr_truck_mixer",
+        "weight": 0.15
+      },
+      {
+        "id": "ford_transit_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "toyota_hiace",
+        "weight": 0.4
+      },
+      {
+        "id": "honda_acty",
+        "weight": 0.3
+      },
+      {
+        "id": "suzuki_carry",
+        "weight": 0.3
+      },
+      {
+        "id": "fiat_fiorino",
+        "weight": 0.3
       }
     ],
     "caribbean": [
@@ -380,11 +532,35 @@
       },
       {
         "id": "betr_truck_petrol",
-        "weight": 0.3
+        "weight": 0.45
       },
       {
         "id": "betr_truck_dirt",
-        "weight": 0.2
+        "weight": 0.3
+      },
+      {
+        "id": "tky_small_truck",
+        "weight": 0.5
+      },
+      {
+        "id": "betr_truck_mixer",
+        "weight": 0.15
+      },
+      {
+        "id": "ford_transit_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "honda_acty",
+        "weight": 0.3
+      },
+      {
+        "id": "fiat_fiorino",
+        "weight": 0.3
+      },
+      {
+        "id": "gmc_vandura",
+        "weight": 0.3
       }
     ],
     "costa_rica": [
@@ -482,6 +658,26 @@
       },
       {
         "id": "kenworth_w900",
+        "weight": 0.35
+      },
+      {
+        "id": "tky_small_truck",
+        "weight": 0.5
+      },
+      {
+        "id": "ford_transit_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "honda_acty",
+        "weight": 0.3
+      },
+      {
+        "id": "fiat_fiorino",
+        "weight": 0.3
+      },
+      {
+        "id": "gmc_vandura",
         "weight": 0.3
       }
     ],
@@ -553,6 +749,50 @@
       {
         "id": "toyota_coaster",
         "weight": 0.3
+      },
+      {
+        "id": "tky_small_truck",
+        "weight": 0.5
+      },
+      {
+        "id": "betr_truck_mixer",
+        "weight": 0.15
+      },
+      {
+        "id": "ford_transit_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "toyota_hiace",
+        "weight": 0.4
+      },
+      {
+        "id": "honda_acty",
+        "weight": 0.3
+      },
+      {
+        "id": "suzuki_carry",
+        "weight": 0.3
+      },
+      {
+        "id": "fiat_fiorino",
+        "weight": 0.3
+      },
+      {
+        "id": "gmc_vandura",
+        "weight": 0.3
+      },
+      {
+        "id": "chevrolet_c10",
+        "weight": 0.3
+      },
+      {
+        "id": "kenworth_w900",
+        "weight": 0.2
+      },
+      {
+        "id": "pb_ford_f100_cargo_56",
+        "weight": 0.4
       }
     ],
     "japan": [
@@ -614,7 +854,7 @@
       },
       {
         "id": "tky_small_truck",
-        "weight": 0.8
+        "weight": 0.9
       },
       {
         "id": "toyota_hiace",
@@ -626,7 +866,31 @@
       },
       {
         "id": "betr_truck_petrol",
-        "weight": 0.2
+        "weight": 0.45
+      },
+      {
+        "id": "betr_truck_dirt",
+        "weight": 0.3
+      },
+      {
+        "id": "betr_truck_mixer",
+        "weight": 0.15
+      },
+      {
+        "id": "ford_transit_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "fiat_fiorino",
+        "weight": 0.3
+      },
+      {
+        "id": "gmc_vandura",
+        "weight": 0.3
+      },
+      {
+        "id": "daihatsu_grandmax",
+        "weight": 0.3
       }
     ],
     "north_africa": [
@@ -713,6 +977,30 @@
       {
         "id": "zizh_tga200",
         "weight": 0.2
+      },
+      {
+        "id": "tky_small_truck",
+        "weight": 0.5
+      },
+      {
+        "id": "ford_transit_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "honda_acty",
+        "weight": 0.3
+      },
+      {
+        "id": "suzuki_carry",
+        "weight": 0.3
+      },
+      {
+        "id": "fiat_fiorino",
+        "weight": 0.3
+      },
+      {
+        "id": "gmc_vandura",
+        "weight": 0.3
       }
     ],
     "south_africa": [
@@ -774,7 +1062,7 @@
       },
       {
         "id": "betr_truck_petrol",
-        "weight": 0.3
+        "weight": 0.45
       },
       {
         "id": "toyota_coaster",
@@ -783,6 +1071,46 @@
       {
         "id": "vw_scirocco_mk1",
         "weight": 0.5
+      },
+      {
+        "id": "tky_small_truck",
+        "weight": 0.5
+      },
+      {
+        "id": "betr_truck_dirt",
+        "weight": 0.3
+      },
+      {
+        "id": "betr_truck_mixer",
+        "weight": 0.15
+      },
+      {
+        "id": "ford_transit_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "honda_acty",
+        "weight": 0.3
+      },
+      {
+        "id": "suzuki_carry",
+        "weight": 0.3
+      },
+      {
+        "id": "fiat_fiorino",
+        "weight": 0.3
+      },
+      {
+        "id": "gmc_vandura",
+        "weight": 0.3
+      },
+      {
+        "id": "toyota_land_cruiser_79",
+        "weight": 1.0
+      },
+      {
+        "id": "kenworth_w900",
+        "weight": 0.15
       }
     ],
     "new_zealand": [
@@ -856,7 +1184,43 @@
       },
       {
         "id": "betr_truck_petrol",
+        "weight": 0.45
+      },
+      {
+        "id": "tky_small_truck",
+        "weight": 0.5
+      },
+      {
+        "id": "betr_truck_dirt",
         "weight": 0.3
+      },
+      {
+        "id": "betr_truck_mixer",
+        "weight": 0.15
+      },
+      {
+        "id": "ford_transit_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "honda_acty",
+        "weight": 0.3
+      },
+      {
+        "id": "suzuki_carry",
+        "weight": 0.3
+      },
+      {
+        "id": "fiat_fiorino",
+        "weight": 0.3
+      },
+      {
+        "id": "gmc_vandura",
+        "weight": 0.3
+      },
+      {
+        "id": "lm_chevy_silverado_1987",
+        "weight": 0.2
       }
     ]
   },
