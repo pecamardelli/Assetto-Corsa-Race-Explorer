@@ -1,0 +1,902 @@
+{
+  "_about": "Which traffic models each road gets in the Test Drive mode. `fleets` are named casts (model id = the JSON name in extension/lua/tools/csp-traffic-tool/data, weight = spawn ratio); `tracks` maps a round's track id (or its base id) to a fleet. Built 2026-09-06 for the five regional challenges; the models come from Modding/Tools/ac_car_tools/traffic_fleet.json via traffic_fleet_build.py. Check with `node scripts/check-traffic-fleets.js`.",
+  "fleets": {
+    "uk": [
+      {
+        "id": "ford_cortina_mk2",
+        "weight": 1.0
+      },
+      {
+        "id": "ford_escort_mk1",
+        "weight": 0.6
+      },
+      {
+        "id": "ford_sierra_estate",
+        "weight": 1.0
+      },
+      {
+        "id": "ford_transit_mk1",
+        "weight": 0.8
+      },
+      {
+        "id": "rover_sd1",
+        "weight": 0.6
+      },
+      {
+        "id": "land_rover_109",
+        "weight": 0.7
+      },
+      {
+        "id": "land_rover_defender_90",
+        "weight": 0.5
+      },
+      {
+        "id": "morris_minor",
+        "weight": 0.5
+      },
+      {
+        "id": "hillman_imp",
+        "weight": 0.4
+      },
+      {
+        "id": "ford_anglia",
+        "weight": 0.4
+      },
+      {
+        "id": "mgb_gt",
+        "weight": 0.3
+      },
+      {
+        "id": "vw_beetle",
+        "weight": 0.5
+      },
+      {
+        "id": "bmw_325i_e30",
+        "weight": 0.5
+      },
+      {
+        "id": "volvo_240",
+        "weight": 0.6
+      },
+      {
+        "id": "mercedes_w123",
+        "weight": 0.5
+      },
+      {
+        "id": "saab_99",
+        "weight": 0.3
+      },
+      {
+        "id": "mazda_mx5_na",
+        "weight": 0.2
+      },
+      {
+        "id": "audi_quattro",
+        "weight": 0.1
+      },
+      {
+        "id": "porsche_356",
+        "weight": 0.05
+      },
+      {
+        "id": "ferrari_308_gts",
+        "weight": 0.05
+      },
+      {
+        "id": "betr_truck_petrol",
+        "weight": 0.25
+      },
+      {
+        "id": "betr_truck_dirt",
+        "weight": 0.2
+      },
+      {
+        "id": "vw_scirocco_mk1",
+        "weight": 0.3
+      }
+    ],
+    "italy": [
+      {
+        "id": "fiat_500_abarth_595",
+        "weight": 1.2
+      },
+      {
+        "id": "fiat_600",
+        "weight": 1.0
+      },
+      {
+        "id": "fiat_128",
+        "weight": 1.0
+      },
+      {
+        "id": "fiat_131",
+        "weight": 0.9
+      },
+      {
+        "id": "fiat_panda_900",
+        "weight": 0.6
+      },
+      {
+        "id": "fiat_uno_turbo",
+        "weight": 0.7
+      },
+      {
+        "id": "fiat_147",
+        "weight": 0.3
+      },
+      {
+        "id": "autobianchi_a112",
+        "weight": 0.8
+      },
+      {
+        "id": "fiat_fiorino",
+        "weight": 0.6
+      },
+      {
+        "id": "alfa_giulia_super",
+        "weight": 0.9
+      },
+      {
+        "id": "alfa_giulia_gta",
+        "weight": 0.3
+      },
+      {
+        "id": "alfa_alfetta_gt",
+        "weight": 0.5
+      },
+      {
+        "id": "alfa_1750_spider",
+        "weight": 0.3
+      },
+      {
+        "id": "lancia_fulvia",
+        "weight": 0.5
+      },
+      {
+        "id": "fiat_2300_coupe",
+        "weight": 0.15
+      },
+      {
+        "id": "ferrari_308_gts",
+        "weight": 0.08
+      },
+      {
+        "id": "ferrari_288_gto",
+        "weight": 0.03
+      },
+      {
+        "id": "lamborghini_miura",
+        "weight": 0.02
+      },
+      {
+        "id": "vw_beetle",
+        "weight": 0.3
+      },
+      {
+        "id": "citroen_ds21",
+        "weight": 0.2
+      },
+      {
+        "id": "renault_12",
+        "weight": 0.2
+      },
+      {
+        "id": "mercedes_w123",
+        "weight": 0.4
+      },
+      {
+        "id": "betr_truck_petrol",
+        "weight": 0.2
+      }
+    ],
+    "romania": [
+      {
+        "id": "renault_12",
+        "weight": 1.5
+      },
+      {
+        "id": "lada_riva",
+        "weight": 0.8
+      },
+      {
+        "id": "skoda_120",
+        "weight": 0.8
+      },
+      {
+        "id": "polonez_1500",
+        "weight": 0.5
+      },
+      {
+        "id": "fiat_128",
+        "weight": 0.3
+      },
+      {
+        "id": "mercedes_w123",
+        "weight": 0.4
+      },
+      {
+        "id": "zizh_tga200",
+        "weight": 0.3
+      },
+      {
+        "id": "betr_truck_dirt",
+        "weight": 0.4
+      },
+      {
+        "id": "betr_truck_petrol",
+        "weight": 0.3
+      },
+      {
+        "id": "betr_truck_mixer",
+        "weight": 0.2
+      }
+    ],
+    "usa": [
+      {
+        "id": "chevrolet_c10",
+        "weight": 1.0
+      },
+      {
+        "id": "lm_chevy_silverado_1987",
+        "weight": 1.0
+      },
+      {
+        "id": "pb_ford_f100_cargo_56",
+        "weight": 0.5
+      },
+      {
+        "id": "ford_ltd_1985",
+        "weight": 1.0
+      },
+      {
+        "id": "chevrolet_monte_carlo_1988",
+        "weight": 0.8
+      },
+      {
+        "id": "pontiac_trans_am_1987",
+        "weight": 0.4
+      },
+      {
+        "id": "ford_mustang_fox",
+        "weight": 0.6
+      },
+      {
+        "id": "amc_pacer",
+        "weight": 0.5
+      },
+      {
+        "id": "jeep_cherokee_xj",
+        "weight": 0.9
+      },
+      {
+        "id": "gmc_vandura",
+        "weight": 0.8
+      },
+      {
+        "id": "dodge_ram_van",
+        "weight": 0.7
+      },
+      {
+        "id": "chevrolet_chevette",
+        "weight": 0.5
+      },
+      {
+        "id": "vw_beetle",
+        "weight": 0.4
+      },
+      {
+        "id": "vw_splitty_t1",
+        "weight": 0.3
+      },
+      {
+        "id": "toyota_corolla_sr5",
+        "weight": 0.4
+      },
+      {
+        "id": "honda_prelude_1988",
+        "weight": 0.4
+      },
+      {
+        "id": "toyota_celica_1986",
+        "weight": 0.4
+      },
+      {
+        "id": "mazda_mx5_na",
+        "weight": 0.2
+      },
+      {
+        "id": "delorean",
+        "weight": 0.05
+      },
+      {
+        "id": "cadillac_1949",
+        "weight": 0.05
+      },
+      {
+        "id": "kenworth_w900",
+        "weight": 0.4
+      },
+      {
+        "id": "betr_truck_petrol",
+        "weight": 0.1
+      }
+    ],
+    "caribbean": [
+      {
+        "id": "toyota_land_cruiser_79",
+        "weight": 1.4
+      },
+      {
+        "id": "land_rover_109",
+        "weight": 0.8
+      },
+      {
+        "id": "land_rover_defender_90",
+        "weight": 0.5
+      },
+      {
+        "id": "suzuki_carry",
+        "weight": 0.6
+      },
+      {
+        "id": "daihatsu_grandmax",
+        "weight": 0.5
+      },
+      {
+        "id": "toyota_hiace",
+        "weight": 0.8
+      },
+      {
+        "id": "toyota_coaster",
+        "weight": 0.5
+      },
+      {
+        "id": "vw_beetle",
+        "weight": 0.5
+      },
+      {
+        "id": "datsun_1200",
+        "weight": 0.5
+      },
+      {
+        "id": "toyota_corolla_sr5",
+        "weight": 0.5
+      },
+      {
+        "id": "mazda_323",
+        "weight": 0.4
+      },
+      {
+        "id": "peugeot_504",
+        "weight": 0.3
+      },
+      {
+        "id": "chevrolet_c10",
+        "weight": 0.4
+      },
+      {
+        "id": "lm_chevy_silverado_1987",
+        "weight": 0.3
+      },
+      {
+        "id": "betr_truck_petrol",
+        "weight": 0.3
+      },
+      {
+        "id": "betr_truck_dirt",
+        "weight": 0.2
+      }
+    ],
+    "costa_rica": [
+      {
+        "id": "toyota_land_cruiser_79",
+        "weight": 1.5
+      },
+      {
+        "id": "toyota_hiace",
+        "weight": 1.0
+      },
+      {
+        "id": "toyota_coaster",
+        "weight": 0.6
+      },
+      {
+        "id": "daihatsu_grandmax",
+        "weight": 0.6
+      },
+      {
+        "id": "suzuki_carry",
+        "weight": 0.4
+      },
+      {
+        "id": "toyota_corolla_sr5",
+        "weight": 0.5
+      },
+      {
+        "id": "toyota_levin_ae92",
+        "weight": 0.4
+      },
+      {
+        "id": "mazda_323",
+        "weight": 0.4
+      },
+      {
+        "id": "datsun_1200",
+        "weight": 0.4
+      },
+      {
+        "id": "nissan_cedric_y33",
+        "weight": 0.2
+      },
+      {
+        "id": "vw_beetle",
+        "weight": 0.4
+      },
+      {
+        "id": "vw_fusca_1970",
+        "weight": 0.3
+      },
+      {
+        "id": "chevrolet_chevette",
+        "weight": 0.4
+      },
+      {
+        "id": "fiat_147",
+        "weight": 0.4
+      },
+      {
+        "id": "fiat_uno_turbo",
+        "weight": 0.3
+      },
+      {
+        "id": "renault_12",
+        "weight": 0.3
+      },
+      {
+        "id": "peugeot_504",
+        "weight": 0.3
+      },
+      {
+        "id": "mercedes_w123",
+        "weight": 0.3
+      },
+      {
+        "id": "lm_chevy_silverado_1987",
+        "weight": 0.4
+      },
+      {
+        "id": "chevrolet_c10",
+        "weight": 0.3
+      },
+      {
+        "id": "betr_truck_petrol",
+        "weight": 0.6
+      },
+      {
+        "id": "betr_truck_dirt",
+        "weight": 0.4
+      },
+      {
+        "id": "betr_truck_mixer",
+        "weight": 0.2
+      },
+      {
+        "id": "kenworth_w900",
+        "weight": 0.3
+      }
+    ],
+    "argentina": [
+      {
+        "id": "renault_12",
+        "weight": 1.2
+      },
+      {
+        "id": "fiat_128",
+        "weight": 1.2
+      },
+      {
+        "id": "fiat_147",
+        "weight": 0.8
+      },
+      {
+        "id": "fiat_600",
+        "weight": 0.6
+      },
+      {
+        "id": "fiat_uno_turbo",
+        "weight": 0.4
+      },
+      {
+        "id": "renault_fuego",
+        "weight": 0.4
+      },
+      {
+        "id": "ika_estanciera",
+        "weight": 0.4
+      },
+      {
+        "id": "peugeot_504",
+        "weight": 0.9
+      },
+      {
+        "id": "peugeot_404",
+        "weight": 0.5
+      },
+      {
+        "id": "chevrolet_chevette",
+        "weight": 0.5
+      },
+      {
+        "id": "chevrolet_opala",
+        "weight": 0.3
+      },
+      {
+        "id": "chevrolet_caravan",
+        "weight": 0.3
+      },
+      {
+        "id": "vw_fusca_1970",
+        "weight": 0.3
+      },
+      {
+        "id": "mercedes_w123",
+        "weight": 0.3
+      },
+      {
+        "id": "betr_truck_petrol",
+        "weight": 0.5
+      },
+      {
+        "id": "betr_truck_dirt",
+        "weight": 0.3
+      },
+      {
+        "id": "toyota_coaster",
+        "weight": 0.3
+      }
+    ],
+    "japan": [
+      {
+        "id": "toyota_ae86",
+        "weight": 1.0
+      },
+      {
+        "id": "toyota_levin_ae92",
+        "weight": 0.8
+      },
+      {
+        "id": "toyota_corolla_sr5",
+        "weight": 0.7
+      },
+      {
+        "id": "toyota_crown_taxi",
+        "weight": 0.8
+      },
+      {
+        "id": "toyota_celica_1986",
+        "weight": 0.6
+      },
+      {
+        "id": "nissan_cedric_y33",
+        "weight": 0.4
+      },
+      {
+        "id": "datsun_510_wagon",
+        "weight": 0.7
+      },
+      {
+        "id": "datsun_1200",
+        "weight": 0.5
+      },
+      {
+        "id": "honda_prelude_1988",
+        "weight": 0.6
+      },
+      {
+        "id": "honda_acty",
+        "weight": 0.9
+      },
+      {
+        "id": "suzuki_carry",
+        "weight": 0.9
+      },
+      {
+        "id": "suzuki_carry_wagon",
+        "weight": 0.6
+      },
+      {
+        "id": "mazda_323",
+        "weight": 0.6
+      },
+      {
+        "id": "mazda_mx5_na",
+        "weight": 0.4
+      },
+      {
+        "id": "mitsubishi_sigma_wagon",
+        "weight": 0.4
+      },
+      {
+        "id": "tky_small_truck",
+        "weight": 0.8
+      },
+      {
+        "id": "toyota_hiace",
+        "weight": 0.5
+      },
+      {
+        "id": "toyota_coaster",
+        "weight": 0.3
+      },
+      {
+        "id": "betr_truck_petrol",
+        "weight": 0.2
+      }
+    ],
+    "north_africa": [
+      {
+        "id": "peugeot_504",
+        "weight": 1.5
+      },
+      {
+        "id": "peugeot_404",
+        "weight": 1.0
+      },
+      {
+        "id": "renault_12",
+        "weight": 0.9
+      },
+      {
+        "id": "mercedes_w123",
+        "weight": 1.2
+      },
+      {
+        "id": "fiat_128",
+        "weight": 0.6
+      },
+      {
+        "id": "fiat_131",
+        "weight": 0.5
+      },
+      {
+        "id": "lada_riva",
+        "weight": 0.4
+      },
+      {
+        "id": "citroen_ds21",
+        "weight": 0.3
+      },
+      {
+        "id": "citroen_2cv_sahara",
+        "weight": 0.5
+      },
+      {
+        "id": "simca_1200",
+        "weight": 0.4
+      },
+      {
+        "id": "vw_beetle",
+        "weight": 0.4
+      },
+      {
+        "id": "datsun_1200",
+        "weight": 0.3
+      },
+      {
+        "id": "fiat_uno_turbo",
+        "weight": 0.2
+      },
+      {
+        "id": "toyota_land_cruiser_79",
+        "weight": 1.16
+      },
+      {
+        "id": "land_rover_109",
+        "weight": 0.4
+      },
+      {
+        "id": "toyota_hiace",
+        "weight": 0.6
+      },
+      {
+        "id": "toyota_coaster",
+        "weight": 0.5
+      },
+      {
+        "id": "betr_truck_petrol",
+        "weight": 0.7
+      },
+      {
+        "id": "betr_truck_dirt",
+        "weight": 0.6
+      },
+      {
+        "id": "betr_truck_mixer",
+        "weight": 0.3
+      },
+      {
+        "id": "zizh_tga200",
+        "weight": 0.2
+      }
+    ],
+    "south_africa": [
+      {
+        "id": "toyota_hiace",
+        "weight": 1.2
+      },
+      {
+        "id": "vw_beetle",
+        "weight": 0.5
+      },
+      {
+        "id": "bmw_325i_e30",
+        "weight": 0.7
+      },
+      {
+        "id": "mercedes_w123",
+        "weight": 0.8
+      },
+      {
+        "id": "ford_cortina_mk2",
+        "weight": 0.4
+      },
+      {
+        "id": "ford_sierra_estate",
+        "weight": 0.4
+      },
+      {
+        "id": "ford_escort_mk1",
+        "weight": 0.3
+      },
+      {
+        "id": "mazda_323",
+        "weight": 0.6
+      },
+      {
+        "id": "toyota_corolla_sr5",
+        "weight": 0.6
+      },
+      {
+        "id": "datsun_1200",
+        "weight": 0.5
+      },
+      {
+        "id": "land_rover_109",
+        "weight": 0.5
+      },
+      {
+        "id": "land_rover_defender_90",
+        "weight": 0.5
+      },
+      {
+        "id": "peugeot_404",
+        "weight": 0.3
+      },
+      {
+        "id": "alfa_alfetta_gt",
+        "weight": 0.2
+      },
+      {
+        "id": "betr_truck_petrol",
+        "weight": 0.3
+      },
+      {
+        "id": "toyota_coaster",
+        "weight": 0.3
+      },
+      {
+        "id": "vw_scirocco_mk1",
+        "weight": 0.5
+      }
+    ],
+    "new_zealand": [
+      {
+        "id": "holden_vl",
+        "weight": 1.0
+      },
+      {
+        "id": "holden_vn_ss",
+        "weight": 0.6
+      },
+      {
+        "id": "holden_vk_wagon",
+        "weight": 0.9
+      },
+      {
+        "id": "ford_falcon_ea",
+        "weight": 0.9
+      },
+      {
+        "id": "ford_falcon_xy_ute",
+        "weight": 0.7
+      },
+      {
+        "id": "datsun_1200",
+        "weight": 0.5
+      },
+      {
+        "id": "mitsubishi_sigma_wagon",
+        "weight": 0.7
+      },
+      {
+        "id": "toyota_corolla_sr5",
+        "weight": 0.6
+      },
+      {
+        "id": "toyota_levin_ae92",
+        "weight": 0.4
+      },
+      {
+        "id": "mazda_323",
+        "weight": 0.6
+      },
+      {
+        "id": "morris_minor",
+        "weight": 0.4
+      },
+      {
+        "id": "ford_cortina_mk2",
+        "weight": 0.5
+      },
+      {
+        "id": "ford_escort_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "land_rover_109",
+        "weight": 0.5
+      },
+      {
+        "id": "toyota_land_cruiser_79",
+        "weight": 0.82
+      },
+      {
+        "id": "toyota_hiace",
+        "weight": 0.5
+      },
+      {
+        "id": "mazda_mx5_na",
+        "weight": 0.2
+      },
+      {
+        "id": "kenworth_w900",
+        "weight": 0.3
+      },
+      {
+        "id": "betr_truck_petrol",
+        "weight": 0.3
+      }
+    ]
+  },
+  "tracks": {
+    "new_forest_3_0": "uk",
+    "rt_bannochbrae-normal": "uk",
+    "ks_highlands-layout_long": "uk",
+    "evo_triangle-anticlockwise": "uk",
+    "amalfidrive-costaditalia_circuit": "italy",
+    "amalfidrive": "italy",
+    "transfagarasan-hillclimb_race": "romania",
+    "transfagarasan": "romania",
+    "pk_tail_of_the_dragon-pk_tail_of_the_dragon_2way": "usa",
+    "la_canyons-normal": "usa",
+    "la_canyons": "usa",
+    "pacific_coast_hwy-northbound": "usa",
+    "pacific_coast_hwy": "usa",
+    "ks_black_cat_county-layout_long": "usa",
+    "ks_black_cat_county": "usa",
+    "union_island-scenic": "caribbean",
+    "union_island": "caribbean",
+    "vr506_Ruta27": "costa_rica",
+    "nishi_izu_skyline-southbound_traffic": "japan",
+    "nishi_izu_skyline": "japan",
+    "mount_akina_2017-layout_downhill": "japan",
+    "mount_akina_2017": "japan",
+    "mountainroute-mountainroute_full": "japan",
+    "mountainroute": "japan",
+    "tripoli": "north_africa",
+    "mecheria": "north_africa",
+    "Ain_Diab": "north_africa",
+    "chapmanspeak_drive": "south_africa",
+    "new_plymouth": "new_zealand"
+  }
+}

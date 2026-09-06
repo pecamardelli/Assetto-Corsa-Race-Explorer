@@ -8,7 +8,7 @@ import { ingestResults, listResultFiles } from './ingest';
 import { LaunchPlan } from './plan';
 import { buildRaceIni, LaunchMode, MODE_SESSIONS } from './race-ini';
 import { buildDirettoreManifest } from './direttore-manifest';
-import { setTrafficDensity } from './traffic-mode';
+import { setTrafficCars, setTrafficDensity } from './traffic-mode';
 import {
   AC_EXE,
   AC_OUT_DIR,
@@ -55,6 +55,8 @@ export interface LaunchState {
   aiLine?: 'road' | 'racing';
   /** Traffic cars this launch put on the road, on a round that has script traffic. */
   trafficCars?: number;
+  /** The fleet the road was cast with, when the fleet table named one. */
+  trafficFleet?: string;
   /** Result files moved into the season folder once AC quit. */
   ingested?: string[];
   /** Sessions AC wrote that were left unfinished, and so not filed. */
@@ -100,7 +102,7 @@ async function backupCfgFile(source: string, backup: string): Promise<void> {
 }
 
 /**
- * Set the car count on the traffic mode this round is raced in.
+ * Set the car count and the cast list on the traffic mode this round is raced in.
  *
  * The mode reads its settings from its own folder in the install, so this edits a file
  * that is not ours and belongs to a live mod. It rewrites exactly one key and leaves the
@@ -108,7 +110,7 @@ async function backupCfgFile(source: string, backup: string): Promise<void> {
  * them are load-bearing. A missing file means the mode is not installed, which the
  * launch will fail on for its own reasons - not worth creating one from nothing here.
  */
-async function writeTrafficDensity(mode: string, cars: number): Promise<void> {
+async function writeTrafficSettings(mode: string, cars: number, fleetSpec: string): Promise<void> {
   const settingsIni = trafficModeSettingsIni(mode);
   let existing: string;
   try {
@@ -121,7 +123,10 @@ async function writeTrafficDensity(mode: string, cars: number): Promise<void> {
   }
 
   await backupCfgFile(settingsIni, trafficModeSettingsBackup(mode));
-  await fs.writeFile(settingsIni, setTrafficDensity(existing, cars), 'utf8');
+  // The fleet is written even when empty: a round with no cast must not inherit the
+  // previous round's, and empty is the mode's "every model".
+  const next = setTrafficCars(setTrafficDensity(existing, cars), fleetSpec);
+  await fs.writeFile(settingsIni, next, 'utf8');
 }
 
 /**
@@ -149,6 +154,7 @@ async function writeLaunchContext(plan: LaunchPlan, id: string): Promise<void> {
     // Recorded so the session stats can carry the presets they were driven with.
     assists: plan.assists,
     traffic_cars: plan.traffic?.cars ?? null,
+    traffic_fleet: plan.trafficFleet?.fleet ?? null,
   };
 
   await fs.mkdir(AC_OUT_DIR, { recursive: true });
@@ -224,7 +230,7 @@ export async function launch(
   // Only a round in the Test Drive mode has script traffic, and only then is the
   // mode's own settings file ours to touch.
   if (plan.traffic && plan.spec.customMode) {
-    await writeTrafficDensity(plan.spec.customMode, plan.traffic.cars);
+    await writeTrafficSettings(plan.spec.customMode, plan.traffic.cars, plan.trafficFleet?.spec ?? '');
   }
 
   // Il Direttore reads this at load: the ratings above 100 that race.ini cannot
@@ -257,6 +263,7 @@ export async function launch(
     recorded: plan.record,
     aiLine: aiLine?.variant,
     trafficCars: plan.traffic?.cars,
+    trafficFleet: plan.trafficFleet?.fleet,
     startedAt: Date.now(),
   };
 

@@ -19,6 +19,7 @@ import { listWeathers, resolveRaceSpec, rollRaceSpec } from './race-spec';
 import { AssistsConfig, AssistsSource } from '../../types/assists';
 import { takesGridFromStandings } from '../../types/race-spec';
 import { TrafficConfig, TrafficDecision, decideTrafficCars } from '../../types/traffic-preset';
+import { TrafficFleetDecision, readTrafficFleets, resolveTrafficFleet } from './traffic-fleet';
 
 // Aggression only shapes how an AI races the player — it does nothing AI-vs-AI —
 // and above ~60 it turns into punts. The band is a style fallback for drivers
@@ -59,6 +60,12 @@ export interface LaunchPlan {
   traffic?: TrafficDecision;
   /** The config that decision came from, filed against the season on first launch. */
   trafficConfig?: TrafficConfig;
+  /**
+   * Which traffic models the road gets, from `app/data/traffic-fleets.json`. Absent
+   * when the table names no fleet for the track, in which case the mode runs every
+   * installed model.
+   */
+  trafficFleet?: TrafficFleetDecision;
   championshipName: string;
   seasonNumber: number;
   seasonFolder: string;
@@ -357,9 +364,11 @@ export async function buildLaunchPlan(
   // road is a file read, so it is not worth doing for the rest.
   let traffic: TrafficDecision | undefined;
   let trafficConfig: TrafficConfig | undefined;
+  let trafficFleet: TrafficFleetDecision | undefined;
   if (spec.customMode) {
     trafficConfig = (await resolveTraffic(championship.folderName, seasonFolder)).traffic;
     traffic = decideTrafficCars(trafficConfig, await readTrafficRoad(track, trackConfig));
+    trafficFleet = resolveTrafficFleet(await readTrafficFleets(), round.track) ?? undefined;
   }
 
   return {
@@ -368,6 +377,7 @@ export async function buildLaunchPlan(
     assistsSource,
     traffic,
     trafficConfig,
+    trafficFleet,
     championshipName: championship.folderName,
     seasonNumber: season.seasonNumber,
     seasonFolder,
