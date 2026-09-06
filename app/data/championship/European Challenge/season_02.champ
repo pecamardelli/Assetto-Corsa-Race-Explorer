@@ -1,0 +1,245 @@
+{
+  "name": "European Challenge",
+  "rules": {
+    "practice": 0,
+    "qualifying": 0,
+    "points": [
+      25,
+      18,
+      15,
+      12,
+      10,
+      8,
+      6,
+      4,
+      2,
+      1
+    ],
+    "penalties": false,
+    "jumpstart": 1
+  },
+  "opponents": [
+    {
+      "name": "Pablin",
+      "nation": "ARG",
+      "car": "j8_shelby_gt500_67",
+      "skin": "00_nightmist_blue",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Mario Ravioli",
+      "nation": "ITA",
+      "car": "ferrari_f40",
+      "skin": "01_red",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Andrea Crotto",
+      "nation": "ITA",
+      "car": "rs_testarossa_84",
+      "skin": "00_Rosso_Corsa",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Carlo Pappolongo",
+      "nation": "ITA",
+      "car": "ks_lamborghini_countach",
+      "skin": "bianco_polo_park",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Hugo Fast",
+      "nation": "DEU",
+      "car": "jf_porsche_959",
+      "skin": "02_grey_br_black",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Dieter Von Heil",
+      "nation": "DEU",
+      "car": "porsche_911_turbo",
+      "skin": "black",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Hans Footdown",
+      "nation": "DEU",
+      "car": "ruf_yellowbird",
+      "skin": "00_yellowbird_black",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Pete Slipstream",
+      "nation": "GBR",
+      "car": "lotus_esprit80",
+      "skin": "white",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Billy Lampazzo",
+      "nation": "USA",
+      "car": "chevrolet_corvette_c4_1989",
+      "skin": "Bright_Red",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Dick Palumbo",
+      "nation": "USA",
+      "car": "chevy_camaro_1969_zl1",
+      "skin": "02",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Chuck Tornado",
+      "nation": "USA",
+      "car": "exmods_dodge_charg_daytona",
+      "skin": "8golden",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Matt LaPallita",
+      "nation": "USA",
+      "car": "chevrolet_63vette",
+      "skin": "06",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Danny Paletto",
+      "nation": "USA",
+      "car": "pb_pontiac_gto_65",
+      "skin": "Gold",
+      "ballast": 0,
+      "restrictor": 0
+    },
+    {
+      "name": "Traffic 01",
+      "nation": "NLD",
+      "car": "Renault_12_gordini",
+      "skin": "Yellow",
+      "ballast": 0,
+      "restrictor": 0,
+      "traffic": true
+    },
+    {
+      "name": "Traffic 02",
+      "nation": "DEU",
+      "car": "ks_ford_escort_mk1",
+      "skin": "mexico_beige",
+      "ballast": 0,
+      "restrictor": 0,
+      "traffic": true
+    },
+    {
+      "name": "Traffic 03",
+      "nation": "DEU",
+      "car": "asw-renault-fuego-gtx",
+      "skin": "Graphite_Grey",
+      "ballast": 0,
+      "restrictor": 0,
+      "traffic": true
+    },
+    {
+      "name": "Traffic 04",
+      "nation": "ITA",
+      "car": "lm_fiat128",
+      "skin": "white",
+      "ballast": 0,
+      "restrictor": 0,
+      "traffic": true
+    },
+    {
+      "name": "Traffic 05",
+      "nation": "ITA",
+      "car": "lm_fiat128",
+      "skin": "blu",
+      "ballast": 0,
+      "restrictor": 0,
+      "traffic": true
+    },
+    {
+      "name": "Traffic 06",
+      "nation": "FRA",
+      "car": "peugeot_504",
+      "skin": "ceramic_beige",
+      "ballast": 0,
+      "restrictor": 0,
+      "traffic": true
+    },
+    {
+      "name": "Traffic 07",
+      "nation": "FRA",
+      "car": "peugeot_504",
+      "skin": "metallic_blue",
+      "ballast": 0,
+      "restrictor": 0,
+      "traffic": true
+    },
+    {
+      "name": "Traffic 08",
+      "nation": "ESP",
+      "car": "set_fiat_147",
+      "skin": "3",
+      "ballast": 0,
+      "restrictor": 0,
+      "traffic": true
+    }
+  ],
+  "rounds": [
+    {
+      "track": "fonteny-fonteny",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3,
+      "cspTraffic": true
+    },
+    {
+      "track": "glensheil-lochrace",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3,
+      "cspTraffic": true
+    },
+    {
+      "track": "ks_highlands-layout_long",
+      "laps": 3,
+      "weather": 3,
+      "surface": 3,
+      "cspTraffic": true
+    },
+    {
+      "track": "amalfidrive-costaditalia_circuit",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3,
+      "cspTraffic": true
+    },
+    {
+      "track": "transfagarasan-hillclimb_race",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3,
+      "cspTraffic": true
+    },
+    {
+      "track": "evo_triangle-anticlockwise",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3,
+      "cspTraffic": true
+    }
+  ],
+  "maxCars": 21,
+  "changedByCm": false
+}

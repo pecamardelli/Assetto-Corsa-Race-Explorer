@@ -1222,6 +1222,218 @@
         "id": "lm_chevy_silverado_1987",
         "weight": 0.2
       }
+    ],
+    "france": [
+      {
+        "id": "renault_12",
+        "weight": 1.3
+      },
+      {
+        "id": "peugeot_504",
+        "weight": 1.2
+      },
+      {
+        "id": "peugeot_404",
+        "weight": 0.8
+      },
+      {
+        "id": "citroen_2cv_sahara",
+        "weight": 0.9
+      },
+      {
+        "id": "citroen_ds21",
+        "weight": 0.8
+      },
+      {
+        "id": "simca_1200",
+        "weight": 0.8
+      },
+      {
+        "id": "renault_fuego",
+        "weight": 0.5
+      },
+      {
+        "id": "fiat_128",
+        "weight": 0.3
+      },
+      {
+        "id": "vw_beetle",
+        "weight": 0.3
+      },
+      {
+        "id": "mercedes_w123",
+        "weight": 0.3
+      },
+      {
+        "id": "ford_escort_mk1",
+        "weight": 0.2
+      },
+      {
+        "id": "volvo_240",
+        "weight": 0.15
+      },
+      {
+        "id": "porsche_356",
+        "weight": 0.05
+      },
+      {
+        "id": "ferrari_308_gts",
+        "weight": 0.03
+      },
+      {
+        "id": "betr_truck_petrol",
+        "weight": 0.45
+      },
+      {
+        "id": "betr_truck_dirt",
+        "weight": 0.3
+      },
+      {
+        "id": "betr_truck_mixer",
+        "weight": 0.15
+      },
+      {
+        "id": "tky_small_truck",
+        "weight": 0.5
+      },
+      {
+        "id": "ford_transit_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "toyota_hiace",
+        "weight": 0.4
+      },
+      {
+        "id": "honda_acty",
+        "weight": 0.3
+      },
+      {
+        "id": "suzuki_carry",
+        "weight": 0.3
+      },
+      {
+        "id": "fiat_fiorino",
+        "weight": 0.35
+      },
+      {
+        "id": "gmc_vandura",
+        "weight": 0.3
+      },
+      {
+        "id": "vw_splitty_t1",
+        "weight": 0.4
+      },
+      {
+        "id": "toyota_coaster",
+        "weight": 0.2
+      }
+    ],
+    "germany": [
+      {
+        "id": "vw_beetle",
+        "weight": 1.3
+      },
+      {
+        "id": "mercedes_w123",
+        "weight": 1.2
+      },
+      {
+        "id": "bmw_325i_e30",
+        "weight": 0.9
+      },
+      {
+        "id": "vw_scirocco_mk1",
+        "weight": 0.7
+      },
+      {
+        "id": "audi_quattro",
+        "weight": 0.4
+      },
+      {
+        "id": "ford_escort_mk1",
+        "weight": 0.5
+      },
+      {
+        "id": "porsche_356",
+        "weight": 0.15
+      },
+      {
+        "id": "volvo_240",
+        "weight": 0.3
+      },
+      {
+        "id": "saab_99",
+        "weight": 0.2
+      },
+      {
+        "id": "citroen_ds21",
+        "weight": 0.15
+      },
+      {
+        "id": "renault_12",
+        "weight": 0.2
+      },
+      {
+        "id": "fiat_128",
+        "weight": 0.2
+      },
+      {
+        "id": "peugeot_504",
+        "weight": 0.15
+      },
+      {
+        "id": "ferrari_308_gts",
+        "weight": 0.04
+      },
+      {
+        "id": "betr_truck_petrol",
+        "weight": 0.45
+      },
+      {
+        "id": "betr_truck_dirt",
+        "weight": 0.3
+      },
+      {
+        "id": "betr_truck_mixer",
+        "weight": 0.15
+      },
+      {
+        "id": "tky_small_truck",
+        "weight": 0.5
+      },
+      {
+        "id": "ford_transit_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "toyota_hiace",
+        "weight": 0.4
+      },
+      {
+        "id": "honda_acty",
+        "weight": 0.3
+      },
+      {
+        "id": "suzuki_carry",
+        "weight": 0.3
+      },
+      {
+        "id": "fiat_fiorino",
+        "weight": 0.35
+      },
+      {
+        "id": "gmc_vandura",
+        "weight": 0.3
+      },
+      {
+        "id": "vw_splitty_t1",
+        "weight": 0.5
+      },
+      {
+        "id": "toyota_coaster",
+        "weight": 0.2
+      }
     ]
   },
   "tracks": {
@@ -1253,6 +1465,12 @@
     "mecheria": "north_africa",
     "Ain_Diab": "north_africa",
     "chapmanspeak_drive": "south_africa",
-    "new_plymouth": "new_zealand"
+    "new_plymouth": "new_zealand",
+    "fonteny-fonteny": "france",
+    "fonteny": "france",
+    "ks_nordschleife-nordschleife": "germany",
+    "ks_nordschleife": "germany",
+    "glensheil-lochrace": "uk",
+    "glensheil": "uk"
   }
 }
