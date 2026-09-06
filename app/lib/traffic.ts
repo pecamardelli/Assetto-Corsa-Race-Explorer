@@ -222,6 +222,24 @@ export function fastestLapDrivers(
  */
 export type TrafficMode = 'traffic-race' | 'test-drive';
 
+/**
+ * Whether a championship (or one season of it) is raced in traffic: any of its rounds
+ * carries CSP traffic, or any of its filed races was written in the traffic shape.
+ *
+ * The standings read this. A road series is not judged on poles and fastest laps -- a
+ * road round has no qualifying, and its lap times are set by what was in the way --
+ * but on how many times a driver hit something and how long they were out there.
+ */
+export function racesInTraffic(
+  data: { rounds: Array<{ cspTraffic?: boolean }> },
+  sessions: Array<{ data: { session_info: { traffic_race?: boolean } } }>
+): boolean {
+  return (
+    data.rounds.some(round => round.cspTraffic === true) ||
+    sessions.some(session => session.data.session_info.traffic_race === true)
+  );
+}
+
 export const TRAFFIC_MODE: TrafficMode | null = 'test-drive';
 
 /** Whether this round actually goes to a traffic mode: flagged for it, and a mode selected. */

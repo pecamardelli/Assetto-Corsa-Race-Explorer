@@ -17,6 +17,10 @@ export interface ConstructorStanding {
   podiums: number;
   fastestLaps: number;
   poles: number;
+  /** Crashes over the races, summed across the constructor's drivers. */
+  crashes: number;
+  /** Seconds of racing, summed across the constructor's drivers. */
+  totalTime: number;
 }
 
 export interface AllTimeDriverStats {
@@ -29,6 +33,8 @@ export interface AllTimeDriverStats {
   abandons: number;
   fastestLaps: number;
   totalCrashes: number;
+  /** Seconds of racing over every race on file. */
+  totalTime: number;
   championshipsWon: number;
   totalRaces: number;
   totalPoints: number;
@@ -47,6 +53,9 @@ export interface AllTimeConstructorStats {
   podiums: number;
   fastestLaps: number;
   poles: number;
+  /** Crashes and seconds of racing, summed across the constructor's drivers. */
+  totalCrashes: number;
+  totalTime: number;
   championshipsWon: number;
   totalRaces: number;
 }
@@ -135,6 +144,7 @@ export function calculateAllTimeStats(
           abandons: 0,
           fastestLaps: 0,
           totalCrashes: 0,
+          totalTime: 0,
           championshipsWon: 0,
           totalRaces: 0,
           totalPoints: 0,
@@ -173,6 +183,7 @@ export function calculateAllTimeStats(
       if (isRace) {
         const totalScore = safeNumber(stats.total_score, 0);
         driverStats.totalPoints += totalScore;
+        driverStats.totalTime += safeNumber(stats.total_time_seconds, 0);
         driverStats.totalRaces++;
       }
     });
@@ -272,6 +283,8 @@ export function calculateStandings(championship: Championship): DriverStanding[]
           podiums: 0,
           poles: 0,
           fastestLaps: 0,
+          crashes: 0,
+          totalTime: 0,
           racesCompleted: 0,
           car: stats.car_name || opponentData?.car || 'unknown',
           nation: opponentData?.nation || 'ARG', // Default to Argentina for player
@@ -330,6 +343,10 @@ export function calculateStandings(championship: Championship): DriverStanding[]
         // Track wins and podiums
         if (position === 1) standing.wins++;
         if (position <= 3) standing.podiums++;
+
+        // What a road series is judged on: the shunts and the time on the road.
+        standing.crashes += safeNumber(stats.crashes?.total_crashes, 0);
+        standing.totalTime += safeNumber(stats.total_time_seconds, 0);
 
         standing.racesCompleted++;
 
@@ -414,6 +431,8 @@ export function calculateConstructorStandings(championship: Championship): Const
               podiums: 0,
               fastestLaps: 0,
               poles: 0,
+              crashes: 0,
+              totalTime: 0,
             });
             constructorDriversMap.set(carName, new Set());
           }
@@ -454,6 +473,8 @@ export function calculateConstructorStandings(championship: Championship): Const
               podiums: 0,
               fastestLaps: 0,
               poles: 0,
+              crashes: 0,
+              totalTime: 0,
             });
             constructorDriversMap.set(carName, new Set());
           }
@@ -485,6 +506,8 @@ export function calculateConstructorStandings(championship: Championship): Const
             podiums: 0,
             fastestLaps: 0,
             poles: 0,
+            crashes: 0,
+            totalTime: 0,
           });
           constructorDriversMap.set(carName, new Set());
         }
@@ -500,6 +523,10 @@ export function calculateConstructorStandings(championship: Championship): Const
         // Track wins and podiums
         if (position === 1) constructor.wins++;
         if (position <= 3) constructor.podiums++;
+
+        // What a road series is judged on, per car: every driver's shunts and time.
+        constructor.crashes += safeNumber(stats.crashes?.total_crashes, 0);
+        constructor.totalTime += safeNumber(stats.total_time_seconds, 0);
       });
     });
 
@@ -570,6 +597,8 @@ export function calculateAllTimeConstructorStats(
               podiums: 0,
               fastestLaps: 0,
               poles: 0,
+              totalCrashes: 0,
+              totalTime: 0,
               championshipsWon: 0,
               totalRaces: 0,
             });
@@ -615,6 +644,8 @@ export function calculateAllTimeConstructorStats(
               podiums: 0,
               fastestLaps: 0,
               poles: 0,
+              totalCrashes: 0,
+              totalTime: 0,
               championshipsWon: 0,
               totalRaces: 0,
             });
@@ -649,6 +680,8 @@ export function calculateAllTimeConstructorStats(
             podiums: 0,
             fastestLaps: 0,
             poles: 0,
+            totalCrashes: 0,
+            totalTime: 0,
             championshipsWon: 0,
             totalRaces: 0,
           });
@@ -672,6 +705,10 @@ export function calculateAllTimeConstructorStats(
         // Track wins and podiums
         if (position === 1) constructor.wins++;
         if (position <= 3) constructor.podiums++;
+
+        // The road series columns, per car: every driver's shunts and time.
+        constructor.totalCrashes += safeNumber(stats.crashes?.total_crashes, 0);
+        constructor.totalTime += safeNumber(stats.total_time_seconds, 0);
       });
     });
 

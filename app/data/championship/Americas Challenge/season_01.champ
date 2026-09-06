@@ -1,5 +1,5 @@
 {
-  "name": "European Challenge",
+  "name": "Americas Challenge",
   "rules": {
     "practice": 0,
     "qualifying": 0,
@@ -198,42 +198,43 @@
   ],
   "rounds": [
     {
-      "track": "new_forest_3_0",
-      "laps": 8,
+      "track": "pk_tail_of_the_dragon-pk_tail_of_the_dragon_2way",
+      "laps": 1,
       "weather": 3,
       "surface": 3,
       "cspTraffic": true
     },
     {
-      "track": "rt_bannochbrae-normal",
-      "laps": 4,
+      "track": "la_canyons-normal",
+      "laps": 1,
       "weather": 3,
       "surface": 3,
       "cspTraffic": true
     },
     {
-      "track": "ks_highlands-layout_long",
+      "track": "pacific_coast_hwy-northbound",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3,
+      "cspTraffic": true
+    },
+    {
+      "track": "union_island-scenic",
+      "laps": 2,
+      "weather": 3,
+      "surface": 3,
+      "cspTraffic": true
+    },
+    {
+      "track": "vr506_Ruta27",
+      "laps": 1,
+      "weather": 3,
+      "surface": 3,
+      "cspTraffic": true
+    },
+    {
+      "track": "ks_black_cat_county-layout_long",
       "laps": 3,
-      "weather": 3,
-      "surface": 3,
-      "cspTraffic": true
-    },
-    {
-      "track": "amalfidrive-costaditalia_traffic",
-      "laps": 1,
-      "weather": 3,
-      "surface": 3
-    },
-    {
-      "track": "transfagarasan-hillclimb_race",
-      "laps": 1,
-      "weather": 3,
-      "surface": 3,
-      "cspTraffic": true
-    },
-    {
-      "track": "evo_triangle-anticlockwise",
-      "laps": 1,
       "weather": 3,
       "surface": 3,
       "cspTraffic": true

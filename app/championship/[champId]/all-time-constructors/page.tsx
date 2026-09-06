@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import { getChampionship } from '../../../lib/race-data';
 import { calculateAllTimeConstructorStats } from '../../../lib/standings';
 import BackButton from '../../../components/BackButton';
+import { racesInTraffic } from '../../../lib/traffic';
+import { formatDuration } from '../../../lib/format-utils';
 
 export default async function AllTimeConstructorStandingsPage({ params }: { params: Promise<{ champId: string }> }) {
   const { champId } = await params;
@@ -18,6 +20,10 @@ export default async function AllTimeConstructorStandingsPage({ params }: { para
 
   // Calculate all-time constructor stats for this championship only
   const constructorStats = calculateAllTimeConstructorStats(championship.sessions, [championship]);
+
+  // A road series raced in traffic: no poles, no fastest laps, no drivers column -- the
+  // shunts and the time on the road per car instead.
+  const trafficSeries = racesInTraffic(data, championship.sessions);
 
   // Count race sessions only
   const totalRaces = championship.sessions.filter(session => {
@@ -136,24 +142,33 @@ export default async function AllTimeConstructorStandingsPage({ params }: { para
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
                       Year
                     </th>
+                    {!trafficSeries && (
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden sm:table-cell">
                       Drivers
                     </th>
+                    )}
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden sm:table-cell">
                       Races
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
                       <span className="text-amber-400">Wins</span>
                     </th>
+                    {!trafficSeries && (
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
                       Poles
                     </th>
+                    )}
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
                       Podiums
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
-                      Fastest Laps
+                      {trafficSeries ? 'Crashes' : 'Fastest Laps'}
                     </th>
+                    {trafficSeries && (
+                    <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
+                      Total Time
+                    </th>
+                    )}
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
                       Titles
                     </th>
@@ -212,9 +227,11 @@ export default async function AllTimeConstructorStandingsPage({ params }: { para
                         <td className="px-4 py-4 text-center text-zinc-400 hidden lg:table-cell">
                           {constructor.year || '-'}
                         </td>
-                        <td className="px-4 py-4 text-center text-zinc-400 hidden sm:table-cell">
-                          {constructor.driverCount}
-                        </td>
+                        {!trafficSeries && (
+                          <td className="px-4 py-4 text-center text-zinc-400 hidden sm:table-cell">
+                            {constructor.driverCount}
+                          </td>
+                        )}
                         <td className="px-4 py-4 text-center text-zinc-400 hidden sm:table-cell">
                           {constructor.totalRaces}
                         </td>
@@ -225,13 +242,15 @@ export default async function AllTimeConstructorStandingsPage({ params }: { para
                             {constructor.wins}
                           </div>
                         </td>
-                        <td className="px-4 py-4 text-center hidden md:table-cell">
-                          <div className={`font-medium ${
-                            constructor.poles > 0 ? 'text-purple-400' : 'text-zinc-600'
-                          }`}>
-                            {constructor.poles}
-                          </div>
-                        </td>
+                        {!trafficSeries && (
+                          <td className="px-4 py-4 text-center hidden md:table-cell">
+                            <div className={`font-medium ${
+                              constructor.poles > 0 ? 'text-purple-400' : 'text-zinc-600'
+                            }`}>
+                              {constructor.poles}
+                            </div>
+                          </td>
+                        )}
                         <td className="px-4 py-4 text-center hidden lg:table-cell">
                           <div className={`font-medium ${
                             constructor.podiums > 0 ? 'text-zinc-300' : 'text-zinc-600'
@@ -239,13 +258,30 @@ export default async function AllTimeConstructorStandingsPage({ params }: { para
                             {constructor.podiums}
                           </div>
                         </td>
-                        <td className="px-4 py-4 text-center hidden lg:table-cell">
-                          <div className={`font-medium ${
-                            constructor.fastestLaps > 0 ? 'text-green-400' : 'text-zinc-600'
-                          }`}>
-                            {constructor.fastestLaps}
-                          </div>
-                        </td>
+                        {trafficSeries ? (
+                          <>
+                            <td className="px-4 py-4 text-center hidden lg:table-cell">
+                              <div className={`font-medium ${
+                                constructor.totalCrashes === 0 ? 'text-green-400' :
+                                constructor.totalCrashes > 20 ? 'text-red-400' :
+                                'text-amber-400'
+                              }`}>
+                                {constructor.totalCrashes}
+                              </div>
+                            </td>
+                            <td className="px-4 py-4 text-center hidden lg:table-cell">
+                              <span className="font-mono text-zinc-300">{formatDuration(constructor.totalTime)}</span>
+                            </td>
+                          </>
+                        ) : (
+                          <td className="px-4 py-4 text-center hidden lg:table-cell">
+                            <div className={`font-medium ${
+                              constructor.fastestLaps > 0 ? 'text-green-400' : 'text-zinc-600'
+                            }`}>
+                              {constructor.fastestLaps}
+                            </div>
+                          </td>
+                        )}
                         <td className="px-4 py-4 text-center">
                           {constructor.championshipsWon > 0 ? (
                             <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-amber-500 text-zinc-900 font-bold">
@@ -280,6 +316,12 @@ export default async function AllTimeConstructorStandingsPage({ params }: { para
           const mostFastestLaps = constructorStats.reduce((max, c) => Math.max(max, c.fastestLaps), 0);
           const fastestLapsConstructor = constructorStats.find(c => c.fastestLaps === mostFastestLaps);
 
+          // The road series' cards: the cleanest car and the one with the most road behind it.
+          const fewestCrashes = constructorStats.reduce((min, c) => Math.min(min, c.totalCrashes), Number.POSITIVE_INFINITY);
+          const cleanestConstructor = constructorStats.find(c => c.totalCrashes === fewestCrashes);
+          const mostTime = constructorStats.reduce((max, c) => Math.max(max, c.totalTime), 0);
+          const mostTimeConstructor = constructorStats.find(c => c.totalTime === mostTime);
+
           const mostChampionships = constructorStats.reduce((max, c) => Math.max(max, c.championshipsWon), 0);
           const championConstructor = constructorStats.find(c => c.championshipsWon === mostChampionships);
 
@@ -295,25 +337,51 @@ export default async function AllTimeConstructorStandingsPage({ params }: { para
                 </div>
               </div>
 
-              <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-                <h3 className="text-zinc-400 text-sm font-medium mb-2">Most Poles</h3>
-                <div className="text-2xl font-bold text-purple-400 mb-1">
-                  {mostPoles}
-                </div>
-                <div className="text-zinc-500 text-sm">
-                  {mostPolesConstructor?.brand || 'N/A'}
-                </div>
-              </div>
+              {trafficSeries ? (
+                <>
+                  <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
+                    <h3 className="text-zinc-400 text-sm font-medium mb-2">Fewest Crashes</h3>
+                    <div className="text-2xl font-bold text-green-400 mb-1">
+                      {Number.isFinite(fewestCrashes) ? fewestCrashes : '-'}
+                    </div>
+                    <div className="text-zinc-500 text-sm">
+                      {cleanestConstructor?.brand || 'N/A'}
+                    </div>
+                  </div>
 
-              <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
-                <h3 className="text-zinc-400 text-sm font-medium mb-2">Most Fastest Laps</h3>
-                <div className="text-2xl font-bold text-green-400 mb-1">
-                  {mostFastestLaps}
-                </div>
-                <div className="text-zinc-500 text-sm">
-                  {fastestLapsConstructor?.brand || 'N/A'}
-                </div>
-              </div>
+                  <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
+                    <h3 className="text-zinc-400 text-sm font-medium mb-2">Most Time on the Road</h3>
+                    <div className="text-2xl font-bold text-zinc-300 mb-1 font-mono">
+                      {formatDuration(mostTime)}
+                    </div>
+                    <div className="text-zinc-500 text-sm">
+                      {mostTimeConstructor?.brand || 'N/A'}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
+                    <h3 className="text-zinc-400 text-sm font-medium mb-2">Most Poles</h3>
+                    <div className="text-2xl font-bold text-purple-400 mb-1">
+                      {mostPoles}
+                    </div>
+                    <div className="text-zinc-500 text-sm">
+                      {mostPolesConstructor?.brand || 'N/A'}
+                    </div>
+                  </div>
+
+                  <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
+                    <h3 className="text-zinc-400 text-sm font-medium mb-2">Most Fastest Laps</h3>
+                    <div className="text-2xl font-bold text-green-400 mb-1">
+                      {mostFastestLaps}
+                    </div>
+                    <div className="text-zinc-500 text-sm">
+                      {fastestLapsConstructor?.brand || 'N/A'}
+                    </div>
+                  </div>
+                </>
+              )}
 
               <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-6">
                 <h3 className="text-zinc-400 text-sm font-medium mb-2">Most Championships</h3>

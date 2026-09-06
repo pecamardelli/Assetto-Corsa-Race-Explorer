@@ -64,6 +64,12 @@ export interface SessionInfo {
   // False when the driver quit before the session ran its course, so the stats are
   // a partial record. Absent on sessions recorded before this was tracked.
   finished?: boolean;
+  /**
+   * True when the race was run in the Test Drive mode: ordered by laps completed then
+   * time, retired meaning short of the distance, crashes counted by the mode.
+   */
+  traffic_race?: boolean;
+  target_laps?: number;
   // The round this session was run for, stamped when the result is filed. Absent on
   // results filed before rounds were recorded.
   round?: number;
@@ -219,6 +225,10 @@ export interface DriverStanding {
   podiums: number;
   poles: number;
   fastestLaps: number;
+  /** Crashes over the season's races, as the results counted them. */
+  crashes: number;
+  /** Seconds spent racing over the season: the sum of every race's total time. */
+  totalTime: number;
   racesCompleted: number;
   car: string;
   nation: string;

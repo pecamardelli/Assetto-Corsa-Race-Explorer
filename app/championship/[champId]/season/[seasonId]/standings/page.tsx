@@ -9,6 +9,8 @@ import FlagIcon from '../../../../../components/FlagIcon';
 import DriverPortrait from '../../../../../components/DriverPortrait';
 import { resolveDriverPortraits } from '../../../../../lib/driver-assets';
 import { classLabel, isMultiClass } from '../../../../../lib/racing-classes';
+import { racesInTraffic } from '../../../../../lib/traffic';
+import { formatDuration } from '../../../../../lib/format-utils';
 
 export default async function SeasonStandingsPage({ params }: { params: Promise<{ champId: string; seasonId: string }> }) {
   const { champId, seasonId } = await params;
@@ -41,6 +43,10 @@ export default async function SeasonStandingsPage({ params }: { params: Promise<
   const standings = calculateStandings(seasonChampionship);
   const portraits = await resolveDriverPortraits(standings.map(d => d.name), decodedChampId);
   const { data } = season;
+
+  // A road series raced in traffic is judged on crashes and time on the road, not on
+  // poles (there is no qualifying) and fastest laps (set by whatever was in the way).
+  const trafficSeries = racesInTraffic(data, season.sessions);
 
   // A season running several classes is several championships, so it gets a table
   // each rather than one table with the GT cars stranded at the bottom of it.
@@ -156,13 +162,13 @@ export default async function SeasonStandingsPage({ params }: { params: Promise<
                     Wins
                   </th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
-                    Poles
+                    {trafficSeries ? 'Crashes' : 'Poles'}
                   </th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
                     Podiums
                   </th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
-                    Fast Laps
+                    {trafficSeries ? 'Total Time' : 'Fast Laps'}
                   </th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
                     Points
@@ -221,7 +227,13 @@ export default async function SeasonStandingsPage({ params }: { params: Promise<
                         )}
                       </td>
                       <td className="px-4 py-4 text-center text-white hidden md:table-cell">
-                        {driver.poles > 0 ? (
+                        {trafficSeries ? (
+                          driver.crashes > 0 ? (
+                            <span className="text-red-400 font-semibold">{driver.crashes}</span>
+                          ) : (
+                            <span className="text-green-400 font-semibold">0</span>
+                          )
+                        ) : driver.poles > 0 ? (
                           <span className="text-purple-400 font-semibold">{driver.poles}</span>
                         ) : (
                           <span className="text-zinc-600">0</span>
@@ -235,7 +247,9 @@ export default async function SeasonStandingsPage({ params }: { params: Promise<
                         )}
                       </td>
                       <td className="px-4 py-4 text-center text-white hidden lg:table-cell">
-                        {driver.fastestLaps > 0 ? (
+                        {trafficSeries ? (
+                          <span className="font-mono text-zinc-300">{formatDuration(driver.totalTime)}</span>
+                        ) : driver.fastestLaps > 0 ? (
                           <span className="text-green-400 font-semibold">{driver.fastestLaps}</span>
                         ) : (
                           <span className="text-zinc-600">0</span>

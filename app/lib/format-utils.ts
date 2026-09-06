@@ -64,3 +64,14 @@ export function safeNumber(value: any, defaultValue: number = 0): number {
 export function safeString(value: any, defaultValue: string = ''): string {
   return value?.toString() ?? defaultValue;
 }
+
+/** Hours, minutes and seconds of racing: "1:07:23" over an hour, "47:23" under it. */
+export function formatDuration(seconds: number | undefined | null): string {
+  if (!seconds || !Number.isFinite(seconds) || seconds <= 0) return '-';
+  const whole = Math.round(seconds);
+  const hours = Math.floor(whole / 3600);
+  const minutes = Math.floor((whole % 3600) / 60);
+  const secs = whole % 60;
+  const mmss = `${hours > 0 ? String(minutes).padStart(2, '0') : minutes}:${String(secs).padStart(2, '0')}`;
+  return hours > 0 ? `${hours}:${mmss}` : mmss;
+}

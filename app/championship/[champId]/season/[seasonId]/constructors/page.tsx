@@ -5,6 +5,8 @@ import { getChampionship } from '../../../../../lib/race-data';
 import { calculateConstructorStandings } from '../../../../../lib/standings';
 import { Championship } from '../../../../../types/race';
 import BackButton from '../../../../../components/BackButton';
+import { racesInTraffic } from '../../../../../lib/traffic';
+import { formatDuration } from '../../../../../lib/format-utils';
 
 export default async function SeasonConstructorsPage({ params }: { params: Promise<{ champId: string; seasonId: string }> }) {
   const { champId, seasonId } = await params;
@@ -36,6 +38,13 @@ export default async function SeasonConstructorsPage({ params }: { params: Promi
 
   const standings = calculateConstructorStandings(seasonChampionship);
   const { data } = season;
+
+  // A road series raced in traffic: no qualifying, so no poles; lap times set by what
+  // was in the way, so no fastest laps; and the drivers column goes, since a car may
+  // carry more than one driver there and the table is about the car. In their place,
+  // the shunts and the time on the road, per car.
+  const trafficSeries = racesInTraffic(data, season.sessions);
+
 
   // Count only race sessions
   const completedRaces = season.sessions.filter(s => {
@@ -127,21 +136,30 @@ export default async function SeasonConstructorsPage({ params }: { params: Promi
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
                     Year
                   </th>
+                  {!trafficSeries && (
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
                     Drivers
                   </th>
+                  )}
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
                     Wins
                   </th>
+                  {!trafficSeries && (
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
                     Poles
                   </th>
+                  )}
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
                     Podiums
                   </th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
-                    Fast Laps
+                    {trafficSeries ? 'Crashes' : 'Fast Laps'}
                   </th>
+                  {trafficSeries && (
+                  <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
+                    Total Time
+                  </th>
+                  )}
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
                     Points
                   </th>
@@ -190,9 +208,11 @@ export default async function SeasonConstructorsPage({ params }: { params: Promi
                       <td className="px-4 py-4 text-center text-zinc-400">
                         {constructor.year || '-'}
                       </td>
-                      <td className="px-4 py-4 text-center text-white">
-                        {constructor.driverCount}
-                      </td>
+                      {!trafficSeries && (
+                        <td className="px-4 py-4 text-center text-white">
+                          {constructor.driverCount}
+                        </td>
+                      )}
                       <td className="px-4 py-4 text-center text-white hidden md:table-cell">
                         {constructor.wins > 0 ? (
                           <span className="text-amber-400 font-semibold">{constructor.wins}</span>
@@ -200,13 +220,15 @@ export default async function SeasonConstructorsPage({ params }: { params: Promi
                           <span className="text-zinc-600">0</span>
                         )}
                       </td>
-                      <td className="px-4 py-4 text-center text-white hidden md:table-cell">
-                        {constructor.poles > 0 ? (
-                          <span className="text-purple-400 font-semibold">{constructor.poles}</span>
-                        ) : (
-                          <span className="text-zinc-600">0</span>
-                        )}
-                      </td>
+                      {!trafficSeries && (
+                        <td className="px-4 py-4 text-center text-white hidden md:table-cell">
+                          {constructor.poles > 0 ? (
+                            <span className="text-purple-400 font-semibold">{constructor.poles}</span>
+                          ) : (
+                            <span className="text-zinc-600">0</span>
+                          )}
+                        </td>
+                      )}
                       <td className="px-4 py-4 text-center text-white hidden lg:table-cell">
                         {constructor.podiums > 0 ? (
                           <span className="text-zinc-300 font-semibold">{constructor.podiums}</span>
@@ -215,12 +237,23 @@ export default async function SeasonConstructorsPage({ params }: { params: Promi
                         )}
                       </td>
                       <td className="px-4 py-4 text-center text-white hidden lg:table-cell">
-                        {constructor.fastestLaps > 0 ? (
+                        {trafficSeries ? (
+                          constructor.crashes > 0 ? (
+                            <span className="text-red-400 font-semibold">{constructor.crashes}</span>
+                          ) : (
+                            <span className="text-green-400 font-semibold">0</span>
+                          )
+                        ) : constructor.fastestLaps > 0 ? (
                           <span className="text-green-400 font-semibold">{constructor.fastestLaps}</span>
                         ) : (
                           <span className="text-zinc-600">0</span>
                         )}
                       </td>
+                      {trafficSeries && (
+                        <td className="px-4 py-4 text-center hidden lg:table-cell">
+                          <span className="font-mono text-zinc-300">{formatDuration(constructor.totalTime)}</span>
+                        </td>
+                      )}
                       <td className="px-4 py-4 text-center">
                         <div className={`font-bold text-lg font-mono ${
                           isLeader ? 'text-blue-400' : 'text-white'

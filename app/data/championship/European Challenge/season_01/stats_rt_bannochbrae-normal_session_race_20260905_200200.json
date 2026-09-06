@@ -1,0 +1,271 @@
+{
+  "driver_statistics": {
+    "Andrea Crotto": {
+      "average_lap": 339.866,
+      "best_lap": 312.177,
+      "car_name": "rs_testarossa_84",
+      "crashes": {
+        "average_crash_g": 22.67,
+        "crash_intensities_g": [
+          17,
+          11,
+          11,
+          11,
+          54,
+          14,
+          89,
+          13,
+          15,
+          13,
+          13,
+          11
+        ],
+        "total_crash_intensity": 272,
+        "total_crashes": 12,
+        "worst_crash_g": 89
+      },
+      "lap_times": [
+        367.554,
+        312.177
+      ],
+      "laps_completed": 2,
+      "max_speed_kmh": 202.59,
+      "net_positions_gained": 3,
+      "overtakes_made": 9,
+      "position": 5,
+      "retired": false,
+      "score_breakdown": {
+        "base_score": 14502.1,
+        "crash_factor": 0.973,
+        "crash_penalty_percent": 2.72,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.2,
+        "speed_factor": 0.69
+      },
+      "times_overtaken": 6,
+      "total_score": 1948,
+      "total_time_formatted": "11:19.731",
+      "total_time_seconds": 679.731
+    },
+    "Carlo Pappolongo": {
+      "average_lap": 334.941,
+      "best_lap": 317.694,
+      "car_name": "ks_lamborghini_countach",
+      "crashes": {
+        "average_crash_g": 33,
+        "crash_intensities_g": [
+          36,
+          18,
+          21,
+          12,
+          14,
+          39,
+          15,
+          12,
+          17,
+          211,
+          53,
+          15,
+          18,
+          10,
+          17,
+          20
+        ],
+        "total_crash_intensity": 528,
+        "total_crashes": 16,
+        "worst_crash_g": 211
+      },
+      "lap_times": [
+        352.188,
+        317.694
+      ],
+      "laps_completed": 2,
+      "max_speed_kmh": 218.28,
+      "net_positions_gained": 1,
+      "overtakes_made": 8,
+      "position": 3,
+      "retired": false,
+      "score_breakdown": {
+        "base_score": 14502.1,
+        "crash_factor": 0.958,
+        "crash_penalty_percent": 4.17,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.6,
+        "speed_factor": 0.678
+      },
+      "times_overtaken": 7,
+      "total_score": 5657,
+      "total_time_formatted": "11:09.881",
+      "total_time_seconds": 669.882
+    },
+    "Hugo Fast": {
+      "average_lap": 339.024,
+      "best_lap": 309.777,
+      "car_name": "jf_porsche_959",
+      "crashes": {
+        "average_crash_g": 23.31,
+        "crash_intensities_g": [
+          11,
+          18,
+          12,
+          35,
+          25,
+          30,
+          10,
+          15,
+          55,
+          38,
+          15,
+          25,
+          14
+        ],
+        "total_crash_intensity": 303,
+        "total_crashes": 13,
+        "worst_crash_g": 55
+      },
+      "lap_times": [
+        368.271,
+        309.777
+      ],
+      "laps_completed": 2,
+      "max_speed_kmh": 210.92,
+      "net_positions_gained": -3,
+      "overtakes_made": 8,
+      "position": 4,
+      "retired": false,
+      "score_breakdown": {
+        "base_score": 14502.1,
+        "crash_factor": 0.97,
+        "crash_penalty_percent": 3.03,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.4,
+        "speed_factor": 0.696
+      },
+      "times_overtaken": 11,
+      "total_score": 3914,
+      "total_time_formatted": "11:18.048",
+      "total_time_seconds": 678.048
+    },
+    "Mario Ravioli": {
+      "average_lap": 318.158,
+      "best_lap": 291.577,
+      "car_name": "ferrari_f40",
+      "crashes": {
+        "average_crash_g": 49.9,
+        "crash_intensities_g": [
+          23,
+          12,
+          28,
+          20,
+          30,
+          15,
+          44,
+          20,
+          17,
+          11,
+          620,
+          14,
+          31,
+          14,
+          16,
+          10,
+          15,
+          20,
+          11,
+          27
+        ],
+        "total_crash_intensity": 998,
+        "total_crashes": 20,
+        "worst_crash_g": 620
+      },
+      "lap_times": [
+        344.739,
+        291.577
+      ],
+      "laps_completed": 2,
+      "max_speed_kmh": 548.82,
+      "net_positions_gained": -1,
+      "overtakes_made": 8,
+      "position": 2,
+      "retired": false,
+      "score_breakdown": {
+        "base_score": 14502.1,
+        "crash_factor": 0.952,
+        "crash_penalty_percent": 4.78,
+        "fastest_lap_bonus": 0,
+        "position_factor": 0.8,
+        "speed_factor": 0.739
+      },
+      "times_overtaken": 9,
+      "total_score": 8166,
+      "total_time_formatted": "10:36.316",
+      "total_time_seconds": 636.316
+    },
+    "Pablin": {
+      "average_lap": 232.667,
+      "best_lap": 215.512,
+      "car_name": "j8_shelby_gt500_67",
+      "crashes": {
+        "average_crash_g": 43.5,
+        "crash_intensities_g": [
+          100,
+          27,
+          26,
+          21
+        ],
+        "total_crash_intensity": 174,
+        "total_crashes": 4,
+        "worst_crash_g": 100
+      },
+      "lap_times": [
+        249.822,
+        215.512
+      ],
+      "laps_completed": 2,
+      "max_speed_kmh": 211.3,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "base_score": 14502.1,
+        "crash_factor": 0.983,
+        "crash_penalty_percent": 1.74,
+        "fastest_lap_bonus": 712.49,
+        "position_factor": 1,
+        "speed_factor": 1
+      },
+      "times_overtaken": 0,
+      "total_score": 14963,
+      "total_time_formatted": "07:45.334",
+      "total_time_seconds": 465.334
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 215.512,
+    "championship": "European Challenge",
+    "crash_penalty_config": {
+      "max_penalty_per_crash_g": 100,
+      "penalty_percent_per_g": 0.01
+    },
+    "date": "2026-09-05 20:02:00",
+    "finished": true,
+    "race_laps": 2,
+    "round": 2,
+    "save_reason": "release",
+    "scoring_formula": "score = base_score × position_factor × speed_factor × crash_factor (× 1.05 if fastest lap)",
+    "season": "season_01",
+    "session_duration_formatted": "11:49.271",
+    "session_duration_seconds": 709.27,
+    "session_type": "race",
+    "target_laps": 2,
+    "total_cars": 5,
+    "track": "rt_bannochbrae",
+    "track_config": "normal",
+    "track_length_km": 7.251,
+    "track_length_meters": 7251.05,
+    "track_length_miles": 4.506,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}

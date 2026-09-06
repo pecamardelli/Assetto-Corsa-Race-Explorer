@@ -7,6 +7,8 @@ import BackButton from '../../../components/BackButton';
 import FlagIcon from '../../../components/FlagIcon';
 import DriverPortrait from '../../../components/DriverPortrait';
 import { resolveDriverPortraits } from '../../../lib/driver-assets';
+import { racesInTraffic } from '../../../lib/traffic';
+import { formatDuration } from '../../../lib/format-utils';
 
 export default async function StandingsPage({ params }: { params: Promise<{ champId: string }> }) {
   const { champId } = await params;
@@ -20,6 +22,10 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
   const standings = calculateStandings(championship);
   const portraits = await resolveDriverPortraits(standings.map(d => d.name), decodedChampId);
   const { data } = championship;
+
+  // A road series raced in traffic is judged on crashes and time on the road, not on
+  // poles (there is no qualifying) and fastest laps (set by whatever was in the way).
+  const trafficSeries = racesInTraffic(data, championship.sessions);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
@@ -93,13 +99,13 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
                     Wins
                   </th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden md:table-cell">
-                    Poles
+                    {trafficSeries ? 'Crashes' : 'Poles'}
                   </th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
                     Podiums
                   </th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
-                    Fast Laps
+                    {trafficSeries ? 'Total Time' : 'Fast Laps'}
                   </th>
                   <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider">
                     Points
@@ -158,7 +164,13 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
                         )}
                       </td>
                       <td className="px-4 py-4 text-center text-white hidden md:table-cell">
-                        {driver.poles > 0 ? (
+                        {trafficSeries ? (
+                          driver.crashes > 0 ? (
+                            <span className="text-red-400 font-semibold">{driver.crashes}</span>
+                          ) : (
+                            <span className="text-green-400 font-semibold">0</span>
+                          )
+                        ) : driver.poles > 0 ? (
                           <span className="text-purple-400 font-semibold">{driver.poles}</span>
                         ) : (
                           <span className="text-zinc-600">0</span>
@@ -172,7 +184,9 @@ export default async function StandingsPage({ params }: { params: Promise<{ cham
                         )}
                       </td>
                       <td className="px-4 py-4 text-center text-white hidden lg:table-cell">
-                        {driver.fastestLaps > 0 ? (
+                        {trafficSeries ? (
+                          <span className="font-mono text-zinc-300">{formatDuration(driver.totalTime)}</span>
+                        ) : driver.fastestLaps > 0 ? (
                           <span className="text-green-400 font-semibold">{driver.fastestLaps}</span>
                         ) : (
                           <span className="text-zinc-600">0</span>

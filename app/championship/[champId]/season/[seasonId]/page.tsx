@@ -7,6 +7,7 @@ import { getCarName } from "../../../../lib/car-data";
 import { calculateStandings } from "../../../../lib/standings";
 import { roundFullyRaced } from "../../../../lib/round-groups";
 import { resolveSeasonRaceSpecs } from "../../../../lib/launch/race-spec";
+import { usesTrafficMode } from "../../../../lib/traffic";
 import { Championship, RaceSession } from "../../../../types/race";
 import { trackConditionLabel, weatherLabel } from "../../../../types/race-spec";
 import { resolveDriverPortrait } from "../../../../lib/driver-assets";
@@ -186,6 +187,10 @@ export default async function SeasonPage({
         practiceSessions.length > 0 ||
         qualifyingSessions.length > 0 ||
         raceSessions.length > 0,
+      // A round run in the Test Drive mode is a road with the public on it: laps are the
+      // mode's own count and a "fastest lap" through traffic means nothing, so the card
+      // does not offer one.
+      inTrafficMode: usesTrafficMode(round),
     };
   });
 
@@ -410,6 +415,7 @@ export default async function SeasonPage({
                 race,
                 raceCompleted,
                 hasAnySessions,
+                inTrafficMode,
               }) => {
                 // Get the race date (prefer race session, fall back to qualifying, then practice)
                 const sessionForDate = race || qualifying || practice;
@@ -592,27 +598,29 @@ export default async function SeasonPage({
                                       Race
                                     </Link>
                                     <UnfinishedBadge session={race} />
-                                    <Link
-                                      href={`/fastest-lap/${encodeURIComponent(
-                                        race.filename
-                                      )}`}
-                                      className="inline-flex items-center gap-2 px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-medium transition-all"
-                                    >
-                                      <svg
-                                        className="w-4 h-4"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
+                                    {!inTrafficMode && (
+                                      <Link
+                                        href={`/fastest-lap/${encodeURIComponent(
+                                          race.filename
+                                        )}`}
+                                        className="inline-flex items-center gap-2 px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-medium transition-all"
                                       >
-                                        <path
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                          strokeWidth={2}
-                                          d="M13 10V3L4 14h7v7l9-11h-7z"
-                                        />
-                                      </svg>
-                                      Fastest Lap
-                                    </Link>
+                                        <svg
+                                          className="w-4 h-4"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          viewBox="0 0 24 24"
+                                        >
+                                          <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M13 10V3L4 14h7v7l9-11h-7z"
+                                          />
+                                        </svg>
+                                        Fastest Lap
+                                      </Link>
+                                    )}
                                     {winnerName && (
                                       <div className="inline-flex items-center gap-2 text-amber-400 text-sm font-medium">
                                         <Image
