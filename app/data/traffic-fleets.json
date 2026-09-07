@@ -362,7 +362,7 @@
       },
       {
         "id": "pb_ford_f100_cargo_56",
-        "weight": 0.5
+        "weight": 0.2
       },
       {
         "id": "ford_ltd_1985",
@@ -382,7 +382,7 @@
       },
       {
         "id": "amc_pacer",
-        "weight": 0.5
+        "weight": 0.3
       },
       {
         "id": "jeep_cherokee_xj",
@@ -397,28 +397,24 @@
         "weight": 0.7
       },
       {
-        "id": "chevrolet_chevette",
-        "weight": 0.5
-      },
-      {
         "id": "vw_beetle",
-        "weight": 0.4
+        "weight": 0.1
       },
       {
         "id": "vw_splitty_t1",
-        "weight": 0.3
+        "weight": 0.1
       },
       {
         "id": "toyota_corolla_sr5",
-        "weight": 0.4
+        "weight": 0.2
       },
       {
         "id": "honda_prelude_1988",
-        "weight": 0.4
+        "weight": 0.2
       },
       {
         "id": "toyota_celica_1986",
-        "weight": 0.4
+        "weight": 0.2
       },
       {
         "id": "mazda_mx5_na",
@@ -458,19 +454,39 @@
       },
       {
         "id": "toyota_hiace",
+        "weight": 0.2
+      },
+      {
+        "id": "dodge_ram_2500",
+        "weight": 0.8
+      },
+      {
+        "id": "dodge_ram_2500_police",
+        "weight": 0.1
+      },
+      {
+        "id": "ford_crown_victoria_p71",
+        "weight": 0.5
+      },
+      {
+        "id": "ford_crown_victoria_police",
+        "weight": 0.12
+      },
+      {
+        "id": "ford_taurus_sho",
         "weight": 0.4
       },
       {
-        "id": "honda_acty",
-        "weight": 0.3
+        "id": "ford_taurus_police",
+        "weight": 0.12
       },
       {
-        "id": "suzuki_carry",
-        "weight": 0.3
+        "id": "jeep_wrangler_jk",
+        "weight": 0.6
       },
       {
-        "id": "fiat_fiorino",
-        "weight": 0.3
+        "id": "jeep_cj5",
+        "weight": 0.5
       }
     ],
     "caribbean": [
@@ -891,6 +907,10 @@
       {
         "id": "daihatsu_grandmax",
         "weight": 0.3
+      },
+      {
+        "id": "toyota_crown_s210_police",
+        "weight": 0.08
       }
     ],
     "north_africa": [
