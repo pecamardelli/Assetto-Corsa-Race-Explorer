@@ -1,3 +1,4 @@
+import fs from 'fs';
 import os from 'os';
 import path from 'path';
 
@@ -7,12 +8,32 @@ import path from 'path';
  * touches the disk until an actual launch is requested.
  */
 
-export const AC_ROOT = process.env.AC_ROOT ?? 'C:\\GAMES\\Assetto Corsa';
+/**
+ * Where Assetto Corsa is installed, by the name this machine reaches it under.
+ *
+ * One folder on one disk, but two names for it: Windows mounts the games partition as
+ * C:, the Linux side of the same box mounts it under /media. The game only ever runs on
+ * Windows, so nothing that writes or launches cares — but the car catalogue is read from
+ * whichever side the app is being run from, and a Windows path is not openable from
+ * Linux. So the root is the first candidate that is actually on the disk rather than a
+ * constant. AC_ROOT overrides the search outright, and when nothing is reachable the
+ * Windows path stands, which is what this always was.
+ */
+const AC_ROOT_CANDIDATES = ['C:\\GAMES\\Assetto Corsa', '/media/pablin/WIN 11/GAMES/Assetto Corsa'];
+
+function findAcRoot(): string {
+  if (process.env.AC_ROOT) return process.env.AC_ROOT;
+
+  return AC_ROOT_CANDIDATES.find(root => fs.existsSync(root)) ?? AC_ROOT_CANDIDATES[0];
+}
+
+export const AC_ROOT = findAcRoot();
 
 export const AC_DOCUMENTS =
   process.env.AC_DOCUMENTS ?? path.join(os.homedir(), 'Documents', 'Assetto Corsa');
 
 export const AC_EXE = path.join(AC_ROOT, 'acs.exe');
+export const AC_CONTENT_CARS = path.join(AC_ROOT, 'content', 'cars');
 export const AC_CONTENT_TRACKS = path.join(AC_ROOT, 'content', 'tracks');
 export const AC_CONTENT_WEATHER = path.join(AC_ROOT, 'content', 'weather');
 

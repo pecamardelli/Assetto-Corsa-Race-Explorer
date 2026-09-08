@@ -8,6 +8,7 @@ import {
 } from '../../types/assists';
 import { DEFAULT_TRAFFIC, TrafficConfig, sanitizeTraffic } from '../../types/traffic-preset';
 import { DEFAULT_LINEUP, LineupConfig, sanitizeLineup } from '../../types/lineup-preset';
+import { PlayerCarConfig, sanitizePlayerCar } from '../../types/player-car';
 
 /**
  * Game presets resolve in two layers: a global config every launch uses by default,
@@ -15,9 +16,11 @@ import { DEFAULT_LINEUP, LineupConfig, sanitizeLineup } from '../../types/lineup
  * folder on its first launch, so the archive keeps a record of the settings a season
  * was driven with even if the global config changes later.
  *
- * Three kinds live here. `assists` is the driving aids and realism settings AC reads from
+ * Four kinds live here. `assists` is the driving aids and realism settings AC reads from
  * cfg/assists.ini. `traffic` is how much traffic a road carries, which only a round run
- * in the Test Drive mode uses. `lineup` is which of the roster stays home, season-only.
+ * in the Test Drive mode uses. `lineup` is which of the roster stays home, season-only,
+ * and `car` is the car the player drives instead of the one the .champ entered them in,
+ * season-only for the same reason.
  */
 
 const DATA_DIR = path.join(process.cwd(), 'app', 'data');
@@ -61,6 +64,34 @@ async function writeConfigFile(
 
   await fs.mkdir(path.dirname(target), { recursive: true });
   await fs.writeFile(target, JSON.stringify({ ...existing, ...patch }, null, 2) + '\n', 'utf8');
+}
+
+/**
+ * Drop one preset kind from a file, leaving the others alone.
+ *
+ * The counterpart to the merge above: writing the key back as null would leave a file
+ * saying the season had pinned nothing, which is a different thing from a season that
+ * never pinned anything. A file with nothing left in it goes altogether.
+ */
+async function deleteConfigKey(target: string, key: string): Promise<void> {
+  let existing: Record<string, unknown>;
+  try {
+    existing = JSON.parse((await fs.readFile(target, 'utf8')).replace(/^﻿/, ''));
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code;
+    if (code !== 'ENOENT') console.error(`Could not read presets file ${target}:`, error);
+    return;
+  }
+
+  if (!(key in existing)) return;
+  delete existing[key];
+
+  if (Object.keys(existing).length === 0) {
+    await fs.rm(target, { force: true });
+    return;
+  }
+
+  await fs.writeFile(target, JSON.stringify(existing, null, 2) + '\n', 'utf8');
 }
 
 /**
@@ -273,4 +304,45 @@ export async function writeSeasonLineup(
   lineup: LineupConfig
 ): Promise<void> {
   await writeConfigFile(seasonAssistsPath(champFolder, seasonFolder), { lineup });
+}
+
+/* ------------------------------------------------------------- player car presets */
+
+/**
+ * The car this season puts the player in, or null where it leaves them in the one the
+ * .champ entered them in.
+ *
+ * Season-only, like the lineup: a car is a choice about one road trip, and there is
+ * nothing global for it to fall back to. See `types/player-car.ts` for why a season is
+ * allowed to override its own .champ at all.
+ */
+export async function readSeasonPlayerCar(
+  champFolder: string,
+  seasonFolder: string
+): Promise<PlayerCarConfig | null> {
+  try {
+    const raw = await fs.readFile(seasonAssistsPath(champFolder, seasonFolder), 'utf8');
+    const parsed = JSON.parse(raw.replace(/^﻿/, '')) as { car?: unknown };
+    return sanitizePlayerCar(parsed.car);
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code;
+    if (code !== 'ENOENT') console.error("Could not read the season's player car:", error);
+    return null;
+  }
+}
+
+export async function writeSeasonPlayerCar(
+  champFolder: string,
+  seasonFolder: string,
+  car: PlayerCarConfig
+): Promise<void> {
+  await writeConfigFile(seasonAssistsPath(champFolder, seasonFolder), { car });
+}
+
+/** Drop the pick so the season follows its .champ again. */
+export async function clearSeasonPlayerCar(
+  champFolder: string,
+  seasonFolder: string
+): Promise<void> {
+  await deleteConfigKey(seasonAssistsPath(champFolder, seasonFolder), 'car');
 }

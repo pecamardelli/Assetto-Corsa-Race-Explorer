@@ -51,6 +51,20 @@ export function getCarData(carName: string): CarData | null {
 }
 
 /**
+ * Forget what we know about one car, so the next read goes back to disk.
+ *
+ * The caches above are as firm about a miss as about a hit, which is right for a folder
+ * that only ever changes at build time — but a car picked in the app has its data copied
+ * across while the server is up, and the page that shows the pick has usually just asked
+ * for it and been told there is none.
+ */
+export function forgetCarData(carName: string): void {
+  carDataCache.delete(carName);
+  previewCache.delete(carName);
+  badgeCache.delete(carName);
+}
+
+/**
  * Get the display name for a car
  * @param carName - The car folder name
  * @returns The car's display name or formatted car_name as fallback

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import AssistsEditor from "../../../../../components/AssistsEditor";
 import BackButton from "../../../../../components/BackButton";
@@ -8,10 +9,12 @@ import { getCarDetails } from "../../../../../lib/car-data";
 import { resolvePlayerName } from "../../../../../lib/driver-assets";
 import {
   readSeasonLineup,
+  readSeasonPlayerCar,
   resolveAssists,
   resolveTraffic,
 } from "../../../../../lib/launch/assists";
 import { getChampionship } from "../../../../../lib/race-data";
+import { usesTrafficMode } from "../../../../../lib/traffic";
 
 // Always read the config from disk; this page is the editor for it.
 export const dynamic = "force-dynamic";
@@ -52,6 +55,17 @@ export default async function SeasonPresetsPage({
   // The lineup: every roster entry, with the player's own marked so the picker keeps it.
   const lineup = await readSeasonLineup(championship.folderName, seasonFolder);
   const playerName = await resolvePlayerName();
+
+  // A road season may put the player in a car of its own choosing; the choosing itself
+  // needs a page of its own, so this only reports what it settled on.
+  const roadSeason = season.data.rounds.some(usesTrafficMode);
+  const playerCar = roadSeason
+    ? await readSeasonPlayerCar(championship.folderName, seasonFolder)
+    : null;
+  const seasonEntry = season.data.opponents.find(
+    (entry) => entry.name === playerName || entry.name === "PLAYER"
+  );
+  const drivenCar = playerCar?.car ?? seasonEntry?.car ?? "";
   const roster: LineupEntry[] = season.data.opponents.map((entry) => ({
     name: entry.name,
     car: getCarDetails(entry.car).name,
@@ -103,6 +117,27 @@ export default async function SeasonPresetsPage({
       </section>
 
       <div className="w-full max-w-4xl space-y-8 px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
+        {roadSeason && drivenCar && (
+          <div className="rounded-xl border border-zinc-700 bg-zinc-800/50 p-5">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <h2 className="text-lg font-semibold text-white">Your car</h2>
+                <p className="text-sm text-zinc-400">
+                  {getCarDetails(drivenCar).name}
+                  {playerCar ? " — this season's own pick" : " — from the .champ"}.
+                </p>
+              </div>
+              <Link
+                href={`/championship/${encodeURIComponent(
+                  decodedChampId
+                )}/season/${encodeURIComponent(decodedSeasonId)}/car`}
+                className="rounded-lg border border-zinc-600 px-4 py-2 text-sm font-semibold text-zinc-200 transition-colors hover:border-zinc-400 hover:bg-zinc-700"
+              >
+                Choose a car…
+              </Link>
+            </div>
+          </div>
+        )}
         <LineupPicker
           roster={roster}
           initialExcluded={lineup.excluded}

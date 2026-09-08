@@ -11,7 +11,7 @@ import {
 } from '../../types/race';
 import { AC_CONTENT_TRACKS } from './paths';
 import { GridEntry, LaunchMode, RaceIniSpec } from './race-ini';
-import { readSeasonLineup, resolveAssists, resolveTraffic } from './assists';
+import { readSeasonLineup, readSeasonPlayerCar, resolveAssists, resolveTraffic } from './assists';
 import { readTrafficRoad } from './traffic-plan';
 import { fieldOrder } from './field-order';
 import { customModeFor, fieldFor } from '../traffic';
@@ -277,6 +277,19 @@ export async function buildLaunchPlan(
   const playerEntry = field.includes(seasonEntry) ? seasonEntry : field[0];
   const aiSeat = playerEntry !== seasonEntry;
 
+  /**
+   * A road season may put the player in a car of its own choosing, over the one the
+   * .champ entered them in — see `types/player-car.ts`. Only when they are actually
+   * driving: the seat of a batch they are not entered in belongs to one of that batch's
+   * own drivers, who races their own car.
+   */
+  const playerCar = aiSeat
+    ? null
+    : await readSeasonPlayerCar(championship.folderName, seasonFolder);
+  const drivenEntry: ChampionshipOpponent = playerCar
+    ? { ...playerEntry, car: playerCar.car, skin: playerCar.skin }
+    : playerEntry;
+
   const profiles = await getDriverProfiles(
     data.opponents.map(opponent => opponent.name),
     data.name
@@ -351,7 +364,7 @@ export async function buildLaunchPlan(
     // the stand-in races at their own rating like everyone else. AC ignores
     // these values while a human is driving CAR_0.
     player: toGridEntry(
-      playerEntry,
+      drivenEntry,
       profiles.get(playerEntry.name)?.skill ?? fallbackAiLevel(playerEntry.name),
       profiles.get(playerEntry.name)?.aggression ?? randomAggression()
     ),

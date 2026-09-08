@@ -154,11 +154,47 @@ Only one session can run at a time, and the route refuses requests that did not 
 from this machine. The `race.ini` that was in place beforehand is kept as
 `race.ini.bak` — one rolling copy, overwritten each launch.
 
+### Your car in a road series
+
+A championship is its cars as much as its drivers, so the `.champ` decides what
+everyone drives and the app leaves it alone. A road series in the Test Drive mode is
+the other thing: there is no constructors' table, the field is whoever turned up, and
+which car you take down the Pacific Coast Highway is the whole question the series
+asks. So a season whose rounds carry `cspTraffic` grows a **Your Car** page, next to
+the lineup and the presets, and what it picks is the car you drive for every round of
+that season.
+
+The picker lists every car under `content/cars` — around 350 on this install, and no
+part of it comes from `app/data/cars`, which only holds the cars something has already
+raced. Each card is the car's own livery preview, its name, and whatever of power,
+weight and top speed its `ui_car.json` states. Search runs over the name, the brand,
+the folder and the tags; beside it are brand, road-or-race, drivetrain, era, a minimum
+power slider and a sort. Opening a card shows the full specs, the description and every
+livery it ships, and the button there is what saves.
+
+The pick lands in `season_[XX].presets.json` as a `car` key beside the assists, the
+traffic and the lineup:
+
+```json
+{ "car": { "car": "ks_lamborghini_countach", "skin": "rosso_siviglia" } }
+```
+
+and the launcher writes it into `race.ini` as `[RACE] MODEL` and `SKIN`. The `.champ`
+is never touched, so **Back to the .champ car** drops the key and the season goes back
+to the entry it was imported with. A batch of a split round that you are not entered in
+is unaffected: that seat belongs to one of its own drivers, in their own car.
+
+Picking a car that no championship has raced before copies its `ui_car.json` into
+`app/data/cars` and its badge into `public/badges` on the spot, which is what every
+page that renders a car reads — the same thing `scripts/copy-car-data.js` does in bulk
+at build time, for the one car. There is no gallery folder for it, so its car page
+renders without photos until one is curated.
+
 **Environment overrides** (all optional):
 
 | Variable | Default |
 | --- | --- |
-| `AC_ROOT` | `C:\GAMES\Assetto Corsa` |
+| `AC_ROOT` | the first of `C:\GAMES\Assetto Corsa` and `/media/pablin/WIN 11/GAMES/Assetto Corsa` that exists |
 | `AC_DOCUMENTS` | `%USERPROFILE%\Documents\Assetto Corsa` |
 | `AC_PLAYER_NAME` | the `name` in `app/lib/driver-profiles/player.json` |
 
