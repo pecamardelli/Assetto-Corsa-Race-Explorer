@@ -1430,6 +1430,112 @@
         "id": "toyota_coaster",
         "weight": 0.2
       }
+    ],
+    "australia": [
+      {
+        "id": "holden_vl",
+        "weight": 1.0
+      },
+      {
+        "id": "holden_vn_ss",
+        "weight": 0.7
+      },
+      {
+        "id": "holden_vk_wagon",
+        "weight": 1.0
+      },
+      {
+        "id": "ford_falcon_ea",
+        "weight": 1.0
+      },
+      {
+        "id": "ford_falcon_xy_ute",
+        "weight": 0.9
+      },
+      {
+        "id": "datsun_1200",
+        "weight": 0.4
+      },
+      {
+        "id": "toyota_corolla_sr5",
+        "weight": 0.6
+      },
+      {
+        "id": "toyota_levin_ae92",
+        "weight": 0.3
+      },
+      {
+        "id": "mazda_323",
+        "weight": 0.6
+      },
+      {
+        "id": "morris_minor",
+        "weight": 0.4
+      },
+      {
+        "id": "ford_cortina_mk2",
+        "weight": 0.5
+      },
+      {
+        "id": "ford_escort_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "land_rover_109",
+        "weight": 0.5
+      },
+      {
+        "id": "toyota_land_cruiser_79",
+        "weight": 0.9
+      },
+      {
+        "id": "toyota_hiace",
+        "weight": 0.5
+      },
+      {
+        "id": "mazda_mx5_na",
+        "weight": 0.15
+      },
+      {
+        "id": "betr_truck_petrol",
+        "weight": 0.5
+      },
+      {
+        "id": "tky_small_truck",
+        "weight": 0.5
+      },
+      {
+        "id": "betr_truck_dirt",
+        "weight": 0.4
+      },
+      {
+        "id": "betr_truck_mixer",
+        "weight": 0.15
+      },
+      {
+        "id": "ford_transit_mk1",
+        "weight": 0.4
+      },
+      {
+        "id": "honda_acty",
+        "weight": 0.15
+      },
+      {
+        "id": "suzuki_carry",
+        "weight": 0.15
+      },
+      {
+        "id": "fiat_fiorino",
+        "weight": 0.15
+      },
+      {
+        "id": "gmc_vandura",
+        "weight": 0.3
+      },
+      {
+        "id": "lm_chevy_silverado_1987",
+        "weight": 0.3
+      }
     ]
   },
   "tracks": {
@@ -1473,6 +1579,12 @@
     "yuli_changbin_highway-full_eastbound": "japan",
     "yuli_changbin_highway": "japan",
     "shuto_revival_project_beta-c1_inner": "japan",
-    "shuto_revival_project_beta": "japan"
+    "shuto_revival_project_beta": "japan",
+    "targa_tas_21_s9_weldborough_pass": "australia",
+    "targa_tas_21_s16_hellyer_gorge": "australia",
+    "targa_tas_21_s17_rinadeena": "australia",
+    "targa_tas_21_s18_pieman": "australia",
+    "targa_tas_21_s21_riana": "australia",
+    "targa_tas_21_s33_cygnet_1": "australia"
   }
 }
