@@ -1,0 +1,77 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 1286.592,
+      "best_lap": 1286.592,
+      "car_name": "ferrari_f40",
+      "crashes": {
+        "average_crash_g": 33.77,
+        "crash_intensities_g": [
+          65,
+          19,
+          28,
+          13,
+          37,
+          29,
+          16,
+          32,
+          10,
+          11,
+          149,
+          16,
+          14
+        ],
+        "total_crash_intensity": 439,
+        "total_crashes": 13,
+        "worst_crash_g": 149
+      },
+      "lap_times": [
+        1286.592
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 236.64,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 88.04,
+        "base_score": 27702.05,
+        "crash_count": 13,
+        "crash_factor": 0.673,
+        "crash_penalty_percent": 32.7,
+        "distance_km": 31.465
+      },
+      "times_overtaken": 0,
+      "total_score": 18645,
+      "total_time_formatted": "21:26.591",
+      "total_time_seconds": 1286.592
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 1286.592,
+    "championship": "European Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-09 22:53:27",
+    "finished": true,
+    "race_laps": 1,
+    "round": 2,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_02",
+    "session_duration_formatted": "21:48.039",
+    "session_duration_seconds": 1308.04,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "glensheil",
+    "track_config": "lochrace",
+    "track_length_km": 31.465,
+    "track_length_meters": 31464.81,
+    "track_length_miles": 19.551,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}

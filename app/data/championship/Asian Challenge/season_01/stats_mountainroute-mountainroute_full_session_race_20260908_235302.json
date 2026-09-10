@@ -1,0 +1,84 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 1283.004,
+      "best_lap": 1283.004,
+      "car_name": "bmw_m635_csi_sc",
+      "crashes": {
+        "average_crash_g": 23.15,
+        "crash_intensities_g": [
+          11,
+          42,
+          16,
+          11,
+          10,
+          49,
+          36,
+          12,
+          10,
+          40,
+          18,
+          13,
+          10,
+          17,
+          17,
+          16,
+          25,
+          50,
+          45,
+          15
+        ],
+        "total_crash_intensity": 463,
+        "total_crashes": 20,
+        "worst_crash_g": 50
+      },
+      "lap_times": [
+        1283.004
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 240.23,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 94.32,
+        "base_score": 31707.35,
+        "crash_count": 20,
+        "crash_factor": 0.544,
+        "crash_penalty_percent": 45.62,
+        "distance_km": 33.616
+      },
+      "times_overtaken": 0,
+      "total_score": 17243,
+      "total_time_formatted": "21:23.003",
+      "total_time_seconds": 1283.004
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 1283.004,
+    "championship": "Asian Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-08 23:53:02",
+    "finished": true,
+    "race_laps": 1,
+    "round": 6,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_01",
+    "session_duration_formatted": "21:44.430",
+    "session_duration_seconds": 1304.43,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "mountainroute",
+    "track_config": "mountainroute_full",
+    "track_length_km": 33.616,
+    "track_length_meters": 33615.75,
+    "track_length_miles": 20.888,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}

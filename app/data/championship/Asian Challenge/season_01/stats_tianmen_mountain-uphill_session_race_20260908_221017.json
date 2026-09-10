@@ -1,0 +1,76 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 749.634,
+      "best_lap": 749.634,
+      "car_name": "bmw_m635_csi_sc",
+      "crashes": {
+        "average_crash_g": 19.83,
+        "crash_intensities_g": [
+          21,
+          20,
+          18,
+          55,
+          28,
+          12,
+          23,
+          10,
+          11,
+          16,
+          11,
+          13
+        ],
+        "total_crash_intensity": 238,
+        "total_crashes": 12,
+        "worst_crash_g": 55
+      },
+      "lap_times": [
+        749.634
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 163.62,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 53.88,
+        "base_score": 6045.33,
+        "crash_count": 12,
+        "crash_factor": 0.694,
+        "crash_penalty_percent": 30.62,
+        "distance_km": 11.22
+      },
+      "times_overtaken": 0,
+      "total_score": 4195,
+      "total_time_formatted": "12:29.633",
+      "total_time_seconds": 749.634
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 749.634,
+    "championship": "Asian Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-08 22:10:17",
+    "finished": true,
+    "race_laps": 1,
+    "round": 2,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_01",
+    "session_duration_formatted": "12:52.121",
+    "session_duration_seconds": 772.12,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "tianmen_mountain",
+    "track_config": "uphill",
+    "track_length_km": 11.22,
+    "track_length_meters": 11219.76,
+    "track_length_miles": 6.972,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}
