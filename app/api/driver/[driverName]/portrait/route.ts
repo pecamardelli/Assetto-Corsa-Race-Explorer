@@ -1,12 +1,43 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
+import { promises as fs, existsSync, readFileSync } from 'fs';
+import http from 'http';
 import path from 'path';
-
-// Import the portrait generation logic
-const http = require('http');
 
 const COMFYUI_HOST = "127.0.0.1";
 const COMFYUI_PORT = 8000;
+
+/**
+ * The slice of ComfyUI's HTTP API this route uses.
+ *
+ * A workflow is a graph keyed by node id, and this route only ever reaches into two
+ * kinds of node: the two CLIPTextEncode that carry the prompts, and the KSampler whose
+ * seed makes each portrait different. Everything else passes through untouched, so the
+ * node type says what is read and leaves `inputs` open.
+ */
+interface ComfyNode {
+  class_type?: string;
+  inputs?: Record<string, unknown>;
+  _meta?: { title?: string };
+}
+
+type ComfyWorkflow = Record<string, ComfyNode>;
+
+interface ComfyImage {
+  filename: string;
+  subfolder: string;
+  type: string;
+}
+
+interface ComfyHistoryEntry {
+  status?: { completed?: boolean; status_str?: string };
+  outputs?: Record<string, { images?: ComfyImage[] }>;
+}
+
+type ComfyHistory = Record<string, ComfyHistoryEntry>;
+
+interface QueuedPrompt {
+  prompt_id: string;
+}
 
 type DriverProfile = {
   name: string;
@@ -22,7 +53,7 @@ async function getDriverProfile(driverName: string): Promise<DriverProfile | nul
     const profilePath = path.join(process.cwd(), 'app/lib/driver-profiles', `${driverName.replace(/ /g, '_').toLowerCase()}.json`);
     const fileContents = await fs.readFile(profilePath, 'utf8');
     return JSON.parse(fileContents);
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -40,7 +71,7 @@ function calculateAge(dateOfBirth: string): number {
   return age;
 }
 
-function queuePrompt(workflow: any): Promise<any> {
+function queuePrompt(workflow: ComfyWorkflow): Promise<QueuedPrompt> {
   return new Promise((resolve, reject) => {
     const data = JSON.stringify({ prompt: workflow });
 
@@ -55,9 +86,9 @@ function queuePrompt(workflow: any): Promise<any> {
       },
     };
 
-    const req = http.request(options, (res: any) => {
+    const req = http.request(options, (res: http.IncomingMessage) => {
       let body = "";
-      res.on("data", (chunk: any) => (body += chunk));
+      res.on("data", (chunk: Buffer) => (body += chunk));
       res.on("end", () => {
         if (res.statusCode === 200) {
           resolve(JSON.parse(body));
@@ -73,7 +104,7 @@ function queuePrompt(workflow: any): Promise<any> {
   });
 }
 
-function getHistory(promptId: string): Promise<any> {
+function getHistory(promptId: string): Promise<ComfyHistory> {
   return new Promise((resolve, reject) => {
     const options = {
       hostname: COMFYUI_HOST,
@@ -82,9 +113,9 @@ function getHistory(promptId: string): Promise<any> {
       method: "GET",
     };
 
-    const req = http.request(options, (res: any) => {
+    const req = http.request(options, (res: http.IncomingMessage) => {
       let body = "";
-      res.on("data", (chunk: any) => (body += chunk));
+      res.on("data", (chunk: Buffer) => (body += chunk));
       res.on("end", () => {
         if (res.statusCode === 200) {
           resolve(JSON.parse(body));
@@ -110,7 +141,7 @@ function downloadImage(filename: string, subfolder: string, type: string): Promi
       method: "GET",
     };
 
-    const req = http.request(options, (res: any) => {
+    const req = http.request(options, (res: http.IncomingMessage) => {
       if (res.statusCode !== 200) {
         reject(new Error(`HTTP ${res.statusCode}`));
         return;
@@ -126,7 +157,7 @@ function downloadImage(filename: string, subfolder: string, type: string): Promi
   });
 }
 
-async function waitForCompletion(promptId: string, timeout = 300000): Promise<any> {
+async function waitForCompletion(promptId: string, timeout = 300000): Promise<ComfyHistoryEntry> {
   const startTime = Date.now();
 
   while (Date.now() - startTime < timeout) {
@@ -146,7 +177,7 @@ async function waitForCompletion(promptId: string, timeout = 300000): Promise<an
           throw new Error("Workflow execution failed");
         }
       }
-    } catch (err) {
+    } catch {
       // History might not be available yet, continue waiting
     }
   }
@@ -162,14 +193,14 @@ type PortraitOptions = {
   distance?: string;
 };
 
-function loadWorkflow(profile: DriverProfile, options: PortraitOptions = {}): any {
+function loadWorkflow(profile: DriverProfile, options: PortraitOptions = {}): ComfyWorkflow {
   const workflowPath = path.join(process.cwd(), 'scripts', 'comfyui-workflow.json');
 
-  if (!require('fs').existsSync(workflowPath)) {
+  if (!existsSync(workflowPath)) {
     throw new Error('ComfyUI workflow file not found');
   }
 
-  const workflow = JSON.parse(require('fs').readFileSync(workflowPath, 'utf8'));
+  const workflow: ComfyWorkflow = JSON.parse(readFileSync(workflowPath, 'utf8'));
 
   const age = calculateAge(profile.dateOfBirth);
   const features = profile.features;
@@ -282,12 +313,12 @@ function loadWorkflow(profile: DriverProfile, options: PortraitOptions = {}): an
 
   for (const [nodeId, node] of Object.entries(workflow)) {
     if (
-      (node as any).class_type === "CLIPTextEncode" &&
-      (node as any).inputs &&
-      (node as any).inputs.text !== undefined
+      node.class_type === "CLIPTextEncode" &&
+      node.inputs &&
+      node.inputs.text !== undefined
     ) {
-      const currentText = String((node as any).inputs.text).toLowerCase();
-      const title = String((node as any)._meta?.title || "").toLowerCase();
+      const currentText = String(node.inputs.text).toLowerCase();
+      const title = String(node._meta?.title || "").toLowerCase();
 
       if (
         currentText.includes("negative") ||
@@ -305,7 +336,7 @@ function loadWorkflow(profile: DriverProfile, options: PortraitOptions = {}): an
 
   if (!positivePromptNode || !negativePromptNode) {
     const clipNodes = Object.entries(workflow)
-      .filter(([, node]) => (node as any).class_type === "CLIPTextEncode")
+      .filter(([, node]) => node.class_type === "CLIPTextEncode")
       .map(([id]) => id);
 
     if (clipNodes.length >= 2) {
@@ -314,22 +345,24 @@ function loadWorkflow(profile: DriverProfile, options: PortraitOptions = {}): an
     }
   }
 
-  if (positivePromptNode && workflow[positivePromptNode]) {
-    (workflow[positivePromptNode] as any).inputs.text = positivePrompt;
+  const positiveInputs = positivePromptNode ? workflow[positivePromptNode]?.inputs : undefined;
+  if (positiveInputs) {
+    positiveInputs.text = positivePrompt;
   }
 
-  if (negativePromptNode && workflow[negativePromptNode]) {
-    (workflow[negativePromptNode] as any).inputs.text = negativePrompt;
+  const negativeInputs = negativePromptNode ? workflow[negativePromptNode]?.inputs : undefined;
+  if (negativeInputs) {
+    negativeInputs.text = negativePrompt;
   }
 
   // Update seed for variation
   for (const [, node] of Object.entries(workflow)) {
     if (
-      (node as any).class_type === "KSampler" &&
-      (node as any).inputs &&
-      (node as any).inputs.seed !== undefined
+      node.class_type === "KSampler" &&
+      node.inputs &&
+      node.inputs.seed !== undefined
     ) {
-      (node as any).inputs.seed = Math.floor(Math.random() * 1000000000);
+      node.inputs.seed = Math.floor(Math.random() * 1000000000);
     }
   }
 
@@ -390,12 +423,12 @@ export async function POST(
     const history = await waitForCompletion(promptId);
 
     // Find the output image
-    const outputs = history.outputs;
+    const outputs = history.outputs ?? {};
     let imageData: Buffer | null = null;
 
     for (const [, output] of Object.entries(outputs)) {
-      if ((output as any).images && (output as any).images.length > 0) {
-        const image = (output as any).images[0];
+      if (output.images && output.images.length > 0) {
+        const image = output.images[0];
         imageData = await downloadImage(
           image.filename,
           image.subfolder,

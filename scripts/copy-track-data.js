@@ -161,7 +161,7 @@ tracks.forEach(({ trackName, trackConfig, identifier }) => {
       let wasSanitized = false;
       try {
         trackData = JSON.parse(rawContent);
-      } catch (parseError) {
+      } catch {
         // If parsing fails, try to fix common JSON issues
         // Fix unescaped newlines in string values
         rawContent = rawContent.replace(

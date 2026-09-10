@@ -1,13 +1,26 @@
 import fs from 'fs';
 import path from 'path';
 
+/**
+ * A car's ui_car.json as scripts/copy-car-data.js copies it out of the install.
+ *
+ * Every field is optional and several are routinely `null` rather than absent, because
+ * that is what the mods ship: 132 of the 174 cars that have a `url` have it as null,
+ * and one has written its `version` as a number. The index signature stays for keys no
+ * car in this install carries yet, but it is `unknown`, so reading one has to narrow.
+ */
 export interface CarData {
   name?: string;
   brand?: string;
   class?: string;
-  specs?: Record<string, any>;
+  country?: string;
+  description?: string | null;
+  author?: string | null;
+  url?: string | null;
+  version?: string | number | null;
+  specs?: Record<string, string | number | null>;
   year?: number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 const carsDataDir = path.join(process.cwd(), 'app', 'data', 'cars');
@@ -69,7 +82,10 @@ export function forgetCarData(carName: string): void {
  * @param carName - The car folder name
  * @returns The car's display name or formatted car_name as fallback
  */
-export function getCarName(carName: string): string {
+export function getCarName(carName: string | undefined): string {
+  // A session file can carry a driver with no car_name at all, and until the callers
+  // were properly typed this threw on the split below rather than showing a blank cell.
+  if (!carName) return '';
   const carData = getCarData(carName);
   if (carData?.name) {
     return carData.name;

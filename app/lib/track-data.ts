@@ -11,7 +11,7 @@ export interface TrackData {
   pitboxes?: string;
   run?: string;
   tags?: string[];
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 const tracksDataDir = path.join(process.cwd(), 'app', 'data', 'tracks');

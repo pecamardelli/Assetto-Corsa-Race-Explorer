@@ -134,7 +134,7 @@ export async function getChampionships(): Promise<Championship[]> {
         // Find all .champ files
         const champFiles = seasonEntries.filter(entry => entry.isFile() && entry.name.endsWith('.champ'));
 
-        let allSessions: RaceSession[] = [];
+        const allSessions: RaceSession[] = [];
         let champData: ChampionshipData | null = null;
         const seasons: Season[] = [];
 
@@ -252,7 +252,7 @@ export async function getChampionship(champId: string): Promise<Championship | n
     // Find all .champ files
     const champFiles = seasonEntries.filter(entry => entry.isFile() && entry.name.endsWith('.champ'));
 
-    let allSessions: RaceSession[] = [];
+    const allSessions: RaceSession[] = [];
     let champData: ChampionshipData | null = null;
     const seasons: Season[] = [];
 

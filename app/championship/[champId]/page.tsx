@@ -347,7 +347,7 @@ export default async function ChampionshipPage({
                                 // Find the race winner (position 1)
                                 const drivers = race.data.driver_statistics;
                                 const winner = Object.entries(drivers).find(
-                                  ([_, stats]) => stats.position === 1
+                                  ([, stats]) => stats.position === 1
                                 );
                                 const winnerName = winner ? winner[0] : null;
                                 const winnerCar =

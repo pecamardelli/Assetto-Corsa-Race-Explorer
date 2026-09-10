@@ -30,7 +30,7 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
   if (session.championship) {
     const championship = await getChampionship(session.championship);
     if (championship?.data?.opponents) {
-      championship.data.opponents.forEach((opponent: any) => {
+      championship.data.opponents.forEach(opponent => {
         driverNationMap.set(opponent.name, opponent.nation);
       });
     }
@@ -42,7 +42,7 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
         .map(([name, stats]) => ({
           name,
           ...stats,
-          nation: (stats as any).nation || driverNationMap.get(name)
+          nation: stats.nation || driverNationMap.get(name)
         }))
         .sort((a, b) => {
           const lapA = safeNumber(a.best_lap);
@@ -231,7 +231,6 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
                     const isPodium = index < 3;
                     const netPositions = safeNumber(driver.net_positions_gained, 0);
                     const totalCrashes = safeNumber(driver.crashes?.total_crashes, 0);
-                    const worstCrashG = safeNumber(driver.crashes?.worst_crash_g, 0);
 
                     // Calculate time difference for practice/qualifying
                     const fastestLap = drivers[0]?.best_lap || 0;

@@ -23,7 +23,7 @@ function getImageFiles(dir) {
         }
       }
     }
-  } catch (err) {
+  } catch {
     // Directory doesn't exist or can't be read
   }
 

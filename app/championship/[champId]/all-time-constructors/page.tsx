@@ -119,7 +119,7 @@ export default async function AllTimeConstructorStandingsPage({ params }: { para
         {constructorStats.length === 0 ? (
           <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg p-12 text-center">
             <p className="text-zinc-400 text-lg">No constructor statistics available</p>
-            <p className="text-zinc-500 text-sm mt-2">This championship doesn't have any race data yet.</p>
+            <p className="text-zinc-500 text-sm mt-2">This championship doesn&apos;t have any race data yet.</p>
           </div>
         ) : (
           <div className="bg-zinc-800/50 border border-zinc-700 rounded-lg overflow-hidden">

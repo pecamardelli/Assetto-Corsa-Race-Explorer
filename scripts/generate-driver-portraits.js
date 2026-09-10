@@ -171,7 +171,7 @@ async function waitForCompletion(promptId, timeout = 300000) {
           throw new Error("Workflow execution failed");
         }
       }
-    } catch (err) {
+    } catch {
       // History might not be available yet, continue waiting
     }
   }
@@ -465,7 +465,7 @@ async function main() {
       if (i < drivers.length - 1) {
         await new Promise((resolve) => setTimeout(resolve, 500));
       }
-    } catch (err) {
+    } catch {
       failed++;
       failedDrivers.push(drivers[i]);
     }

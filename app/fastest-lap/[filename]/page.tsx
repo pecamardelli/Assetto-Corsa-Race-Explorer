@@ -28,7 +28,7 @@ export default async function FastestLapPage({ params }: { params: Promise<{ fil
   if (session.championship) {
     const championship = await getChampionship(session.championship);
     if (championship?.data?.opponents) {
-      championship.data.opponents.forEach((opponent: any) => {
+      championship.data.opponents.forEach(opponent => {
         driverNationMap.set(opponent.name, opponent.nation);
       });
     }
@@ -39,7 +39,7 @@ export default async function FastestLapPage({ params }: { params: Promise<{ fil
     .map(([name, stats]) => ({
       name,
       ...stats,
-      nation: (stats as any).nation || driverNationMap.get(name)
+      nation: stats.nation || driverNationMap.get(name)
     }))
     .filter(driver => {
       const lapTime = safeNumber(driver.best_lap);

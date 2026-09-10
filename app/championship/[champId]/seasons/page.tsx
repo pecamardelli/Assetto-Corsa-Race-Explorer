@@ -201,7 +201,7 @@ export default async function SeasonsPage({ params }: { params: Promise<{ champI
           <div className="text-center py-12">
             <div className="text-zinc-400 text-lg mb-2">No seasons found</div>
             <div className="text-zinc-500 text-sm">
-              This championship doesn't have any seasons yet.
+              This championship doesn&apos;t have any seasons yet.
             </div>
           </div>
         )}

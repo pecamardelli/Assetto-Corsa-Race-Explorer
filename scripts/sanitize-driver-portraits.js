@@ -23,7 +23,7 @@ function getImageFiles(dir) {
         }
       }
     }
-  } catch (err) {
+  } catch {
     // Directory doesn't exist or can't be read
   }
 
@@ -84,7 +84,6 @@ async function convertToWebP(inputPath) {
     fs.renameSync(outputPath + '.tmp', outputPath);
 
     const outputStats = fs.statSync(outputPath);
-    const savedKB = ((inputStats.size - outputStats.size) / 1024).toFixed(1);
     const savedPercent = (((inputStats.size - outputStats.size) / inputStats.size) * 100).toFixed(1);
 
     console.log(`  ${path.basename(inputPath)} -> ${path.basename(outputPath)}  (${(inputStats.size / 1024).toFixed(1)}KB -> ${(outputStats.size / 1024).toFixed(1)}KB, saved ${savedPercent}%)`);

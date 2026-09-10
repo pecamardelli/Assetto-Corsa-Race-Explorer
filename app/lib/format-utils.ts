@@ -1,4 +1,6 @@
 // Client-safe formatting utilities
+import { DriverStatistics } from '../types/race';
+
 export function formatTrackName(trackId: string | undefined): string {
   if (!trackId) return 'Unknown Track';
 
@@ -27,7 +29,7 @@ export function formatCarName(carId: string | undefined): string {
     .join(' ');
 }
 
-export function getSortedDrivers(driverStats: Record<string, any>) {
+export function getSortedDrivers(driverStats: Record<string, DriverStatistics>) {
   if (!driverStats) return [];
 
   const drivers = Object.entries(driverStats)
@@ -56,12 +58,12 @@ export function getSortedDrivers(driverStats: Record<string, any>) {
   return [...finishedDrivers, ...dnfDrivers];
 }
 
-export function safeNumber(value: any, defaultValue: number = 0): number {
+export function safeNumber(value: unknown, defaultValue: number = 0): number {
   const num = Number(value);
   return isNaN(num) ? defaultValue : num;
 }
 
-export function safeString(value: any, defaultValue: string = ''): string {
+export function safeString(value: unknown, defaultValue: string = ''): string {
   return value?.toString() ?? defaultValue;
 }
 

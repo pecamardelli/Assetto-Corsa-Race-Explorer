@@ -56,7 +56,7 @@ function processSessionFile(filePath) {
   let crashesKept = 0;
 
   if (data.driver_statistics) {
-    for (const [driverName, stats] of Object.entries(data.driver_statistics)) {
+    for (const [, stats] of Object.entries(data.driver_statistics)) {
       if (stats.crashes && stats.crashes.crash_intensities_g) {
         const originalCount = stats.crashes.crash_intensities_g.length;
         const newCrashes = recalculateCrashes(stats.crashes);

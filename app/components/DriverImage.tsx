@@ -52,6 +52,11 @@ export default function DriverImage({
   };
 
   return (
+    // A plain <img>, not next/image: the fallback swaps src through a ref onto an
+    // inline SVG data URI, and the unresolved path probes extensions on error.
+    // next/image manages its own src and would break both, and these are local
+    // files with nothing to optimise.
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       ref={imgRef}
       src={imagePath}

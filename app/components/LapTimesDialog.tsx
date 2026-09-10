@@ -17,7 +17,6 @@ export default function LapTimesDialog({ driverName, lapTimes, totalTime }: LapT
   }
 
   const bestLapTime = Math.min(...lapTimes);
-  const averageLapTime = lapTimes.reduce((sum, time) => sum + time, 0) / lapTimes.length;
 
   return (
     <>

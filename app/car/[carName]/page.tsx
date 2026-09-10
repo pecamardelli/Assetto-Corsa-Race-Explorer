@@ -28,14 +28,14 @@ export default async function CarPage({ params }: { params: Promise<{ carName: s
 
   for (const champ of championships) {
     for (const season of champ.seasons) {
-      const driversWithCar = season.data.opponents?.filter((o: any) => o.car === decodedCarName) || [];
+      const driversWithCar = season.data.opponents?.filter(o => o.car === decodedCarName) || [];
       if (driversWithCar.length > 0) {
         appearances.push({
           champId: champ.id,
           champName: season.data.name,
           seasonName: season.seasonName,
           seasonId: season.seasonName.toLowerCase().replace(' ', '_'),
-          drivers: driversWithCar.map((d: any) => d.name),
+          drivers: driversWithCar.map(d => d.name),
         });
       }
     }

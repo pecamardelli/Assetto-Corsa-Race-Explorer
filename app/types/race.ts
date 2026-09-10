@@ -102,8 +102,8 @@ export interface CarData {
   name?: string;
   brand?: string;
   class?: string;
-  specs?: Record<string, any>;
-  [key: string]: any;
+  specs?: Record<string, unknown>;
+  [key: string]: unknown;
 }
 
 export interface RaceData {
