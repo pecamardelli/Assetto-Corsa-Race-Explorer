@@ -6,6 +6,7 @@ import { resolveDriverPortrait } from '../../../lib/driver-assets';
 import { Championship, Season } from '../../../types/race';
 import BackButton from '../../../components/BackButton';
 import ChampionBadge from '../../../components/ChampionBadge';
+import NewSeasonButton from '../../../components/NewSeasonButton';
 
 // Helper function to calculate the champion for a specific season
 function getSeasonChampion(season: Season): string | null {
@@ -60,6 +61,14 @@ export default async function SeasonsPage({ params }: { params: Promise<{ champI
     })
   );
 
+  // The New Season button copies the last season, so the page has to say which one
+  // that is, and whether it has finished — an unfinished one earns a confirmation.
+  const lastSeason = seasonSummaries[seasonSummaries.length - 1];
+  const lastSeasonRunning =
+    lastSeason && !lastSeason.isCompleted
+      ? { completed: lastSeason.completedRaces, rounds: lastSeason.season.data.rounds.length }
+      : null;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900">
       {/* Header. The banner is the section's own background rather than a card's
@@ -109,6 +118,13 @@ export default async function SeasonsPage({ params }: { params: Promise<{ champI
               </svg>
               All-Time Constructors
             </Link>
+            {lastSeason && (
+              <NewSeasonButton
+                champId={decodedChampId}
+                lastSeasonName={lastSeason.season.seasonName}
+                lastSeasonRunning={lastSeasonRunning}
+              />
+            )}
           </div>
         </div>
       </section>
