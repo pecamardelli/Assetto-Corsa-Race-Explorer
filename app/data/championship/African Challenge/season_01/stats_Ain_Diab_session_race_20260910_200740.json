@@ -1,0 +1,72 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 207.396,
+      "best_lap": 170.613,
+      "car_name": "ks_mclaren_p1",
+      "crashes": {
+        "total_crash_intensity": 936,
+        "worst_crash_g": 391,
+        "total_crashes": 5,
+        "average_crash_g": 187.2,
+        "crash_intensities_g": [
+          52,
+          391,
+          208,
+          148,
+          137
+        ]
+      },
+      "lap_times": [
+        245.163,
+        212.579,
+        201.229,
+        170.613
+      ],
+      "laps_completed": 4,
+      "max_speed_kmh": 323.52,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 131.9,
+        "base_score": 40088.46,
+        "crash_count": 17,
+        "crash_factor": 0.596,
+        "crash_penalty_percent": 40.42,
+        "distance_km": 30.394
+      },
+      "times_overtaken": 0,
+      "total_score": 23886,
+      "total_time_formatted": "13:49.584",
+      "total_time_seconds": 829.584
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 170.613,
+    "championship": "African Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-10 20:07:40",
+    "finished": true,
+    "race_laps": 4,
+    "round": 4,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_01",
+    "session_duration_formatted": "14:23.572",
+    "session_duration_seconds": 863.57,
+    "session_type": "race",
+    "target_laps": 4,
+    "total_cars": 1,
+    "track": "Ain_Diab",
+    "track_config": "",
+    "track_length_km": 7.599,
+    "track_length_meters": 7598.51,
+    "track_length_miles": 4.722,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}

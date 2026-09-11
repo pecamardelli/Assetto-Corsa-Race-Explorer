@@ -16,12 +16,11 @@
     "slipstream": 0
   },
   "traffic": {
-    "perLaneKm": 4,
+    "perLaneKm": 5,
     "cars": null
   },
   "lineup": {
     "excluded": [
-      "Dieter Von Heil",
       "Hans Footdown",
       "Pete Slipstream",
       "Billy Lampazzo",
@@ -32,11 +31,12 @@
       "Mario Ravioli",
       "Andrea Crotto",
       "Carlo Pappolongo",
-      "Hugo Fast"
+      "Hugo Fast",
+      "Mitch Bazooka"
     ]
   },
   "car": {
-    "car": "ks_mclaren_p1",
-    "skin": "mercury_red"
+    "car": "jf_porsche_959",
+    "skin": "02_grey_br_black"
   }
 }
