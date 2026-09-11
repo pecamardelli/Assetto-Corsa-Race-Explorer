@@ -1,0 +1,84 @@
+{
+ "driver_statistics": {
+  "Pablin": {
+   "average_lap": 890.4,
+   "best_lap": 890.4,
+   "car_name": "jf_porsche_959",
+   "crashes": {
+    "average_crash_g": 18.0,
+    "crash_intensities_g": [
+     42,
+     19,
+     0,
+     11
+    ],
+    "total_crash_intensity": 72,
+    "total_crashes": 4,
+    "worst_crash_g": 42
+   },
+   "lap_times": [
+    890.4
+   ],
+   "laps_completed": 1,
+   "max_speed_kmh": 238.0,
+   "net_positions_gained": 0,
+   "overtakes_made": 0,
+   "position": 1,
+   "retired": false,
+   "score_breakdown": {
+    "average_speed_kmh": 80.99,
+    "base_score": 16224.12,
+    "crash_count": 4,
+    "crash_factor": 0.885,
+    "crash_penalty_percent": 11.47,
+    "distance_km": 20.032
+   },
+   "times_overtaken": 0,
+   "total_score": 14364,
+   "total_time_formatted": "14:50.400",
+   "total_time_seconds": 890.4
+  }
+ },
+ "session_info": {
+  "best_lap_time_seconds": 890.4,
+  "championship": "Americas Challenge",
+  "crash_penalty_config": {
+   "penalty_percent_per_crash": 3
+  },
+  "date": "2026-09-10 21:32:39",
+  "finished": true,
+  "race_laps": 1,
+  "reconstruction": {
+   "crashes_after_the_finish": [
+    20,
+    17
+   ],
+   "finish_session_time_s": 924.9,
+   "furthest_point_reached": "two-way spline 0.578, 25.7 km",
+   "green_flag_session_time_s": 34.5,
+   "note": "Raced on the 44.555 km two-way loop and scored here as the one-way Stateline-to-the-Bridge round, which was put on the calendar afterwards. The two-way start line and the one-way layout's AB_START are the same point within 6 m, and the one-way AB_FINISH sits at two-way spline 0.40274.",
+   "raced_on": "pk_tail_of_the_dragon-pk_tail_of_the_dragon_2way",
+   "raced_session": "stats_pk_tail_of_the_dragon-pk_tail_of_the_dragon_2way_session_race_20260910_213239.json",
+   "sources": [
+    "logs/test_drive.log 2026-09-10 21:32:39",
+    "logs/commendatore.log 2026-09-10 21:32:39"
+   ]
+  },
+  "round": 1,
+  "save_reason": "reconstructed",
+  "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+  "season": "season_02",
+  "session_duration_formatted": "15:24.900",
+  "session_duration_seconds": 924.9,
+  "session_type": "race",
+  "target_laps": 1,
+  "total_cars": 1,
+  "track": "pk_tail_of_the_dragon",
+  "track_config": "pk_tail_of_the_dragon_4nc_1lane",
+  "track_length_km": 20.032,
+  "track_length_meters": 20031.89,
+  "track_length_miles": 12.447,
+  "traffic_race": true,
+  "writer": "reconstructed"
+ }
+}

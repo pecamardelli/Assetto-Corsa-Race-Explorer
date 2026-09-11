@@ -1,0 +1,73 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 1378.329,
+      "best_lap": 1378.329,
+      "car_name": "jf_porsche_959",
+      "crashes": {
+        "average_crash_g": 27.89,
+        "crash_intensities_g": [
+          29,
+          39,
+          16,
+          29,
+          11,
+          55,
+          24,
+          13,
+          35
+        ],
+        "total_crash_intensity": 251,
+        "total_crashes": 9,
+        "worst_crash_g": 55
+      },
+      "lap_times": [
+        1378.329
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 214.49,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 111.96,
+        "base_score": 47989.48,
+        "crash_count": 9,
+        "crash_factor": 0.76,
+        "crash_penalty_percent": 23.98,
+        "distance_km": 42.865
+      },
+      "times_overtaken": 0,
+      "total_score": 36484,
+      "total_time_formatted": "22:58.328",
+      "total_time_seconds": 1378.329
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 1378.329,
+    "championship": "Americas Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-10 22:18:20",
+    "finished": true,
+    "race_laps": 1,
+    "round": 2,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_02",
+    "session_duration_formatted": "23:28.411",
+    "session_duration_seconds": 1408.41,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "la_canyons",
+    "track_config": "normal",
+    "track_length_km": 42.865,
+    "track_length_meters": 42864.55,
+    "track_length_miles": 26.635,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}
