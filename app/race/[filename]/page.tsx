@@ -24,6 +24,8 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
   const trackPreview = getTrackPreviewUrl(session_info.track, session_info.track_config);
   const sessionType = session_info.session_type || 'race';
   const isPracticeOrQualifying = sessionType === 'practice' || sessionType === 'qualifying';
+  // A Test Drive race: scored on distance and average speed, not on position and pace.
+  const isTestDrive = session_info.traffic_race === true;
 
   // Load championship data if this session is part of a championship
   const driverNationMap = new Map<string, string>();
@@ -152,18 +154,32 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
             )}
           </div>
 
-          {/* Quick Actions */}
+          {/* Quick Actions. A Test Drive round is not judged on lap times — its laps are
+              whatever the traffic allowed — so it offers the road's high scores instead. */}
           {sessionType === 'race' && (
             <div className="mt-6 flex flex-wrap items-center gap-2">
-              <Link
-                href={`/fastest-lap/${encodeURIComponent(decodedFilename)}`}
-                className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-semibold transition-all"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                View Fastest Lap Standings
-              </Link>
+              {isTestDrive ? (
+                <Link
+                  href={`/high-scores/${encodeURIComponent(decodedFilename)}`}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg text-sm font-semibold transition-all"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.05a9 9 0 109.95 9.95h-9.95V3.05z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.488 9A9 9 0 0015 3.512V9h5.488z" />
+                  </svg>
+                  View Track High Scores
+                </Link>
+              ) : (
+                <Link
+                  href={`/fastest-lap/${encodeURIComponent(decodedFilename)}`}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg text-sm font-semibold transition-all"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  View Fastest Lap Standings
+                </Link>
+              )}
             </div>
           )}
         </div>
