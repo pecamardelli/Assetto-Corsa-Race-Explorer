@@ -284,6 +284,7 @@ export function calculateStandings(championship: Championship): DriverStanding[]
           poles: 0,
           fastestLaps: 0,
           crashes: 0,
+          cleanRuns: 0,
           totalTime: 0,
           racesCompleted: 0,
           car: stats.car_name || opponentData?.car || 'unknown',
@@ -345,7 +346,11 @@ export function calculateStandings(championship: Championship): DriverStanding[]
         if (position <= 3) standing.podiums++;
 
         // What a road series is judged on: the shunts and the time on the road.
-        standing.crashes += safeNumber(stats.crashes?.total_crashes, 0);
+        const raceCrashes = safeNumber(stats.crashes?.total_crashes, 0);
+        standing.crashes += raceCrashes;
+        // A clean run: the whole race with nothing touched, the way Test Drive II
+        // announced it at the end of a stage.
+        if (raceCrashes === 0) standing.cleanRuns++;
         standing.totalTime += safeNumber(stats.total_time_seconds, 0);
 
         standing.racesCompleted++;

@@ -247,8 +247,11 @@ Each championship can have multiple seasons:
     }
   },
   // A Test Drive race (`"traffic_race": true`, written by Commendatore's stats module) is
-  // scored differently: distance_km × average_speed_kmh × 10 × 0.97 ^ crashes. No position
-  // factor, no fastest-lap bonus, and `crash_penalty_config` is `{"penalty_percent_per_crash": 3}`.
+  // scored differently: distance_km × average_speed_kmh × 10 × 0.97 ^ crashes, and × 1.10 on
+  // a clean run -- a race driven without a single crash, flagged in `score_breakdown` as
+  // `clean_run` with the `clean_run_bonus` it paid. No position factor, no fastest-lap bonus,
+  // and `crash_penalty_config` is
+  // `{"penalty_percent_per_crash": 3, "clean_run_bonus_percent": 10}`.
   "driver_statistics": {
     "Driver Name": {
       "position": 1,

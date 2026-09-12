@@ -28,7 +28,12 @@ export interface SeasonScore {
   /** Seconds on the road over the season. */
   time: number;
   crashes: number;
-  wins: number;
+  /**
+   * Races of the season finished without a crash. A road series has no wins worth
+   * counting — the field is traffic and the clock — so this is what the table shows
+   * instead, the way the first two Test Drives called a stage driven clean.
+   */
+  cleanRuns: number;
   racesCompleted: number;
   /** The car folder the season was driven in (its last race's, if it changed). */
   car: string;
@@ -79,7 +84,7 @@ export function completedSeasonRanking(championship: Championship): SeasonScore[
         score: standing.customPoints,
         time: standing.totalTime,
         crashes: standing.crashes,
-        wins: standing.wins,
+        cleanRuns: standing.cleanRuns,
         racesCompleted: standing.racesCompleted,
         car: standing.car,
         completedOn,

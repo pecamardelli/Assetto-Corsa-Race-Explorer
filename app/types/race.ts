@@ -19,6 +19,9 @@ export interface ScoreBreakdown {
   distance_km?: number;
   average_speed_kmh?: number;
   crash_count?: number;
+  /** True when the race was driven without a single crash, and what that paid. */
+  clean_run?: boolean;
+  clean_run_bonus?: number;
 }
 
 export interface DriverStatistics {
@@ -52,8 +55,10 @@ export interface CrashPenaltyConfig {
   // Circuit races: 0.01% per g, each crash capped at 100 g.
   penalty_percent_per_g?: number;
   max_penalty_per_crash_g?: number;
-  // Test Drive races: a fixed share of the score per crash.
+  // Test Drive races: a fixed share of the score per crash, and the bonus a race
+  // driven clean earns back.
   penalty_percent_per_crash?: number;
+  clean_run_bonus_percent?: number;
 }
 
 export interface SessionInfo {
@@ -237,6 +242,13 @@ export interface DriverStanding {
   fastestLaps: number;
   /** Crashes over the season's races, as the results counted them. */
   crashes: number;
+  /**
+   * Races finished without a single crash. The first two Test Drives called that a
+   * clean run, and on a road series it is the thing worth counting: nobody wins a
+   * drive down a coast road, but you can get to the end of one without touching
+   * anything.
+   */
+  cleanRuns: number;
   /** Seconds spent racing over the season: the sum of every race's total time. */
   totalTime: number;
   racesCompleted: number;

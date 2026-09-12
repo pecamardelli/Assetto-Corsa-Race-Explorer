@@ -171,7 +171,7 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
                       Time
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden sm:table-cell">
-                      <span className="text-amber-400">Wins</span>
+                      <span className="text-green-400">Clean Runs</span>
                     </th>
                     <th className="px-4 py-3 text-center text-xs font-medium text-zinc-400 uppercase tracking-wider hidden lg:table-cell">
                       Crashes
@@ -265,8 +265,16 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
                           <span className="font-mono text-zinc-300">{formatDuration(entry.time)}</span>
                         </td>
                         <td className="px-4 py-4 text-center hidden sm:table-cell">
-                          <div className={`font-bold text-lg ${entry.wins > 0 ? 'text-amber-400' : 'text-zinc-600'}`}>
-                            {entry.wins}
+                          {/* Races driven end to end without touching anything. A season
+                              of nothing but clean runs is the perfect score, so it reads
+                              green; the count is shown against the races started. */}
+                          <div className={`font-bold text-lg ${
+                            entry.cleanRuns === 0 ? 'text-zinc-600' :
+                            entry.cleanRuns === entry.racesCompleted ? 'text-green-400' :
+                            'text-amber-400'
+                          }`}>
+                            {entry.cleanRuns}
+                            <span className="text-xs font-normal text-zinc-500">/{entry.racesCompleted}</span>
                           </div>
                         </td>
                         <td className="px-4 py-4 text-center hidden lg:table-cell">
