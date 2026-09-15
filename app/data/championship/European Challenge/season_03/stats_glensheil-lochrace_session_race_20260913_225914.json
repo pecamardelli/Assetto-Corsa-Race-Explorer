@@ -1,0 +1,79 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 1177.254,
+      "best_lap": 1177.254,
+      "car_name": "rs_testarossa_84",
+      "crashes": {
+        "average_crash_g": 30.13,
+        "crash_intensities_g": [
+          11,
+          10,
+          122,
+          53,
+          23,
+          16,
+          10,
+          12,
+          28,
+          17,
+          14,
+          58,
+          50,
+          13,
+          15
+        ],
+        "total_crash_intensity": 452,
+        "total_crashes": 15,
+        "worst_crash_g": 122
+      },
+      "lap_times": [
+        1177.254
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 207.25,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 96.22,
+        "base_score": 30274.88,
+        "crash_count": 15,
+        "crash_factor": 0.633,
+        "crash_penalty_percent": 36.67,
+        "distance_km": 31.465
+      },
+      "times_overtaken": 0,
+      "total_score": 19172,
+      "total_time_formatted": "19:37.254",
+      "total_time_seconds": 1177.254
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 1177.254,
+    "championship": "European Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-13 22:59:14",
+    "finished": true,
+    "race_laps": 1,
+    "round": 2,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_03",
+    "session_duration_formatted": "20:00.564",
+    "session_duration_seconds": 1200.56,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "glensheil",
+    "track_config": "lochrace",
+    "track_length_km": 31.465,
+    "track_length_meters": 31464.81,
+    "track_length_miles": 19.551,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}

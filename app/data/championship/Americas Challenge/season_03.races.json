@@ -1,0 +1,61 @@
+{
+  "rounds": {
+    "1": {
+      "gridFromStandings": true
+    },
+    "2": {
+      "gridFromStandings": true
+    },
+    "3": {
+      "gridFromStandings": true,
+      "pointToPoint": true
+    },
+    "4": {
+      "laps": 1,
+      "pointToPoint": false,
+      "gridFromStandings": true,
+      "weather": "__random__",
+      "grip": -1,
+      "ambientTempFrom": 20,
+      "ambientTempTo": 20,
+      "roadTempFrom": 26,
+      "roadTempTo": 26,
+      "timeOfDayFrom": 720,
+      "timeOfDayTo": 720,
+      "windSpeedMin": 0,
+      "windSpeedMax": 10,
+      "windDirection": -1,
+      "practiceMinutes": 0,
+      "qualifyingMinutes": 15,
+      "penalties": false,
+      "jumpStartPenalty": 1,
+      "tyresOut": -1
+    },
+    "5": {
+      "gridFromStandings": true
+    },
+    "6": {
+      "laps": 2,
+      "pointToPoint": false,
+      "gridFromStandings": true,
+      "trafficPerLaneKm": 2,
+      "trafficCars": null,
+      "weather": "__random__",
+      "grip": -1,
+      "ambientTempFrom": 20,
+      "ambientTempTo": 20,
+      "roadTempFrom": 26,
+      "roadTempTo": 26,
+      "timeOfDayFrom": 720,
+      "timeOfDayTo": 720,
+      "windSpeedMin": 0,
+      "windSpeedMax": 10,
+      "windDirection": -1,
+      "practiceMinutes": 0,
+      "qualifyingMinutes": 15,
+      "penalties": false,
+      "jumpStartPenalty": 1,
+      "tyresOut": -1
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 969.891,
+      "best_lap": 969.891,
+      "car_name": "rs_testarossa_84",
+      "crashes": {
+        "average_crash_g": 134.79,
+        "crash_intensities_g": [
+          51,
+          26,
+          13,
+          11,
+          10,
+          62,
+          360,
+          19,
+          295,
+          12,
+          593,
+          14,
+          71,
+          27,
+          14,
+          34,
+          484,
+          452,
+          13
+        ],
+        "total_crash_intensity": 2561,
+        "total_crashes": 19,
+        "worst_crash_g": 593
+      },
+      "lap_times": [
+        969.891
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 245.52,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 123.34,
+        "base_score": 40983.21,
+        "crash_count": 19,
+        "crash_factor": 0.561,
+        "crash_penalty_percent": 43.94,
+        "distance_km": 33.229
+      },
+      "times_overtaken": 0,
+      "total_score": 22976,
+      "total_time_formatted": "16:09.890",
+      "total_time_seconds": 969.891
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 969.891,
+    "championship": "European Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-14 22:02:24",
+    "finished": true,
+    "race_laps": 1,
+    "round": 6,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_03",
+    "session_duration_formatted": "16:30.799",
+    "session_duration_seconds": 990.8,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "evo_triangle",
+    "track_config": "anticlockwise",
+    "track_length_km": 33.229,
+    "track_length_meters": 33228.69,
+    "track_length_miles": 20.647,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 1136.265,
+      "best_lap": 1136.265,
+      "car_name": "rs_testarossa_84",
+      "crashes": {
+        "average_crash_g": 29.47,
+        "crash_intensities_g": [
+          89,
+          39,
+          14,
+          24,
+          11,
+          145,
+          16,
+          0,
+          18,
+          16,
+          14,
+          34,
+          13,
+          13,
+          34,
+          11,
+          10
+        ],
+        "total_crash_intensity": 501,
+        "total_crashes": 17,
+        "worst_crash_g": 145
+      },
+      "lap_times": [
+        1136.265
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 285.62,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 74.73,
+        "base_score": 17627.86,
+        "crash_count": 17,
+        "crash_factor": 0.596,
+        "crash_penalty_percent": 40.42,
+        "distance_km": 23.588
+      },
+      "times_overtaken": 0,
+      "total_score": 10504,
+      "total_time_formatted": "18:56.265",
+      "total_time_seconds": 1136.265
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 1136.265,
+    "championship": "European Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-14 21:42:06",
+    "finished": true,
+    "race_laps": 1,
+    "round": 5,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_03",
+    "session_duration_formatted": "19:29.795",
+    "session_duration_seconds": 1169.8,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "transfagarasan",
+    "track_config": "hillclimb_race",
+    "track_length_km": 23.588,
+    "track_length_meters": 23587.85,
+    "track_length_miles": 14.657,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 1430.982,
+      "best_lap": 1430.982,
+      "car_name": "exmods_dodge_charg_daytona",
+      "crashes": {
+        "average_crash_g": 21.04,
+        "crash_intensities_g": [
+          17,
+          52,
+          12,
+          19,
+          28,
+          17,
+          21,
+          11,
+          12,
+          17,
+          35,
+          20,
+          13,
+          21,
+          11,
+          28,
+          0,
+          21,
+          13,
+          15,
+          75,
+          12,
+          14,
+          21
+        ],
+        "total_crash_intensity": 505,
+        "total_crashes": 24,
+        "worst_crash_g": 75
+      },
+      "lap_times": [
+        1430.982
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 320.96,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 84.57,
+        "base_score": 28428.49,
+        "crash_count": 24,
+        "crash_factor": 0.481,
+        "crash_penalty_percent": 51.86,
+        "distance_km": 33.616
+      },
+      "times_overtaken": 0,
+      "total_score": 13686,
+      "total_time_formatted": "23:50.981",
+      "total_time_seconds": 1430.982
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 1430.982,
+    "championship": "Asian Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-13 18:50:03",
+    "finished": true,
+    "race_laps": 1,
+    "round": 6,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_02",
+    "session_duration_formatted": "24:22.581",
+    "session_duration_seconds": 1462.58,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "mountainroute",
+    "track_config": "mountainroute_full",
+    "track_length_km": 33.616,
+    "track_length_meters": 33615.75,
+    "track_length_miles": 20.888,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}

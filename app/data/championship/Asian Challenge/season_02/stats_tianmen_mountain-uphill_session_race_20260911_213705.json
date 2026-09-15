@@ -1,0 +1,73 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 907.798,
+      "best_lap": 907.798,
+      "car_name": "exmods_dodge_charg_daytona",
+      "crashes": {
+        "average_crash_g": 17,
+        "crash_intensities_g": [
+          22,
+          15,
+          15,
+          26,
+          11,
+          13,
+          19,
+          13,
+          19
+        ],
+        "total_crash_intensity": 153,
+        "total_crashes": 9,
+        "worst_crash_g": 26
+      },
+      "lap_times": [
+        907.798
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 142.14,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 44.49,
+        "base_score": 4992.07,
+        "crash_count": 9,
+        "crash_factor": 0.76,
+        "crash_penalty_percent": 23.98,
+        "distance_km": 11.22
+      },
+      "times_overtaken": 0,
+      "total_score": 3796,
+      "total_time_formatted": "15:07.797",
+      "total_time_seconds": 907.798
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 907.798,
+    "championship": "Asian Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-11 21:37:05",
+    "finished": true,
+    "race_laps": 1,
+    "round": 2,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_02",
+    "session_duration_formatted": "15:32.721",
+    "session_duration_seconds": 932.72,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "tianmen_mountain",
+    "track_config": "uphill",
+    "track_length_km": 11.22,
+    "track_length_meters": 11219.76,
+    "track_length_miles": 6.972,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}

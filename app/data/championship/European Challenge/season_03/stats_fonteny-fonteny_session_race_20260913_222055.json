@@ -1,0 +1,69 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 804.843,
+      "best_lap": 804.843,
+      "car_name": "rs_testarossa_84",
+      "crashes": {
+        "average_crash_g": 68.8,
+        "crash_intensities_g": [
+          20,
+          23,
+          128,
+          61,
+          112
+        ],
+        "total_crash_intensity": 344,
+        "total_crashes": 5,
+        "worst_crash_g": 128
+      },
+      "lap_times": [
+        804.843
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 237.99,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 115.75,
+        "base_score": 29954.27,
+        "crash_count": 5,
+        "crash_factor": 0.859,
+        "crash_penalty_percent": 14.13,
+        "distance_km": 25.878
+      },
+      "times_overtaken": 0,
+      "total_score": 25723,
+      "total_time_formatted": "13:24.842",
+      "total_time_seconds": 804.843
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 804.843,
+    "championship": "European Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-13 22:20:55",
+    "finished": true,
+    "race_laps": 1,
+    "round": 1,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_03",
+    "session_duration_formatted": "13:45.384",
+    "session_duration_seconds": 825.38,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "fonteny",
+    "track_config": "fonteny",
+    "track_length_km": 25.878,
+    "track_length_meters": 25878.18,
+    "track_length_miles": 16.08,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}
