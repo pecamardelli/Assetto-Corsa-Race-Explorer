@@ -1,0 +1,73 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 722.064,
+      "best_lap": 722.064,
+      "car_name": "ks_lamborghini_countach",
+      "crashes": {
+        "average_crash_g": 15.67,
+        "crash_intensities_g": [
+          13,
+          12,
+          12,
+          31,
+          26,
+          14,
+          10,
+          12,
+          11
+        ],
+        "total_crash_intensity": 141,
+        "total_crashes": 9,
+        "worst_crash_g": 31
+      },
+      "lap_times": [
+        722.064
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 153.89,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 55.94,
+        "base_score": 6276.15,
+        "crash_count": 9,
+        "crash_factor": 0.76,
+        "crash_penalty_percent": 23.98,
+        "distance_km": 11.22
+      },
+      "times_overtaken": 0,
+      "total_score": 4772,
+      "total_time_formatted": "12:02.063",
+      "total_time_seconds": 722.064
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 722.064,
+    "championship": "Asian Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-15 22:48:54",
+    "finished": true,
+    "race_laps": 1,
+    "round": 2,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_03",
+    "session_duration_formatted": "12:29.142",
+    "session_duration_seconds": 749.14,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "tianmen_mountain",
+    "track_config": "uphill",
+    "track_length_km": 11.22,
+    "track_length_meters": 11219.76,
+    "track_length_miles": 6.972,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}

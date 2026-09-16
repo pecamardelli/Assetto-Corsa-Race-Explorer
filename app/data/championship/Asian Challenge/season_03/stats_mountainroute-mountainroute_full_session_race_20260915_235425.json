@@ -1,0 +1,87 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 1334.094,
+      "best_lap": 1334.094,
+      "car_name": "ks_lamborghini_countach",
+      "crashes": {
+        "average_crash_g": 24.77,
+        "crash_intensities_g": [
+          25,
+          25,
+          58,
+          17,
+          21,
+          59,
+          14,
+          22,
+          21,
+          13,
+          13,
+          21,
+          11,
+          22,
+          14,
+          26,
+          16,
+          45,
+          38,
+          13,
+          19,
+          32
+        ],
+        "total_crash_intensity": 545,
+        "total_crashes": 22,
+        "worst_crash_g": 59
+      },
+      "lap_times": [
+        1334.094
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 253.53,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 90.71,
+        "base_score": 30493.1,
+        "crash_count": 22,
+        "crash_factor": 0.512,
+        "crash_penalty_percent": 48.83,
+        "distance_km": 33.616
+      },
+      "times_overtaken": 0,
+      "total_score": 15602,
+      "total_time_formatted": "22:14.094",
+      "total_time_seconds": 1334.094
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 1334.094,
+    "championship": "Asian Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-15 23:54:25",
+    "finished": true,
+    "race_laps": 1,
+    "round": 6,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_03",
+    "session_duration_formatted": "22:46.381",
+    "session_duration_seconds": 1366.38,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "mountainroute",
+    "track_config": "mountainroute_full",
+    "track_length_km": 33.616,
+    "track_length_meters": 33615.75,
+    "track_length_miles": 20.888,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}
