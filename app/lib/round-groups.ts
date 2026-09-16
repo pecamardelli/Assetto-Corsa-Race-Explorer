@@ -248,6 +248,66 @@ export function mergeGroupedRounds(sessions: RaceSession[]): RaceSession[] {
   return output;
 }
 
+/**
+ * Which drivers each session pays out to, once a round has been raced more than once.
+ *
+ * Two people share a championship by taking turns at the wheel, and only one of them
+ * can be on the grid at a time — so a round one has already driven is still a round
+ * the other has not. Racing it again is a second running of the same round, with a
+ * second set of results.
+ *
+ * What must not happen is the AI being paid twice for it. They raced the round once
+ * with each brother, but it is one round of one championship, and twenty-five points
+ * to the winner of each running would make a nonsense of the table. So a driver scores
+ * their first running of a round and nothing after it: the AI keep what they earned
+ * the first time it went out, and the second driver — who was not in that one — scores
+ * their own, from the position they took in their own race.
+ *
+ * Sessions come in oldest first, which is what makes "first" mean the first one raced.
+ * A season where every round went out once is untouched: no round has a second
+ * running, so every session pays out to everybody in it, exactly as it always did.
+ *
+ * Returns null against a session that pays everybody, so the common case allocates
+ * nothing.
+ */
+export function scoringDrivers(sessions: RaceSession[]): Map<RaceSession, Set<string>> {
+  const restricted = new Map<RaceSession, Set<string>>();
+  const paid = new Map<string, Set<string>>();
+
+  for (const session of sessions) {
+    const info = session.data.session_info;
+    const sessionType = session.data.session_type ?? info.session_type;
+    // Qualifying counts too: a weekend raced again by the other brother files a second
+    // one, and pole is no more awardable twice for a round than a win is.
+    if (sessionType !== 'race' && sessionType !== 'qualifying') continue;
+
+    // A round is identified the way the season page identifies one: by number where
+    // the result records it, and by the track it was run on for everything filed
+    // before rounds were stamped. The season folder keeps rounds of different seasons
+    // apart, since the all-time tables walk every championship at once.
+    const season = session.filename.split('/').slice(0, -1).join('/');
+    const round =
+      typeof info.round === 'number'
+        ? String(info.round)
+        : `${info.track}-${info.track_config ?? ''}`;
+    const key = `${season}|${round}|${sessionType}`;
+
+    const already = paid.get(key);
+    const names = Object.keys(session.data.driver_statistics);
+
+    if (!already) {
+      paid.set(key, new Set(names));
+      continue;
+    }
+
+    const owed = new Set(names.filter(name => !already.has(name)));
+    restricted.set(session, owed);
+    for (const name of owed) already.add(name);
+  }
+
+  return restricted;
+}
+
 /** Build the one session that stands for a round from the groups that ran it. */
 function mergeMembers(members: RaceSession[]): RaceSession {
   const ordered = [...members].sort(

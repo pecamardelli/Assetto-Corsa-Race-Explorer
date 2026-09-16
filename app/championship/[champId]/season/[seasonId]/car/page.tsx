@@ -2,8 +2,9 @@ import { notFound } from "next/navigation";
 import BackButton from "../../../../../components/BackButton";
 import CarPicker, { type ChampCar } from "../../../../../components/CarPicker";
 import { getCarDetails } from "../../../../../lib/car-data";
-import { resolvePlayerName } from "../../../../../lib/driver-assets";
 import { readSeasonPlayerCar } from "../../../../../lib/launch/assists";
+import { seasonSeating } from "../../../../../lib/launch/player-seat";
+import { primaryPlayer } from "../../../../../types/player";
 import { readInstalledCars } from "../../../../../lib/launch/car-catalog";
 import { getChampionship } from "../../../../../lib/race-data";
 import { usesTrafficMode } from "../../../../../lib/traffic";
@@ -48,16 +49,25 @@ export default async function SeasonCarPage({
   const seasonFolder = `season_${String(season.seasonNumber).padStart(2, "0")}`;
   const roadSeason = season.data.rounds.some(usesTrafficMode);
 
-  const playerName = await resolvePlayerName();
-  const seasonEntry = season.data.opponents.find(
-    (entry) => entry.name === playerName || entry.name === "PLAYER"
+  // The pick is the driver's, not the season's: two of us down the same coast road
+  // take our own cars. A driver the .champ does not know takes over the seat of
+  // whoever else drives this season, so there is still a car to swap out of.
+  const seating = await seasonSeating(
+    championship.folderName,
+    seasonFolder,
+    season
   );
+  const playerName = seating.driver.name;
+  const seasonEntry = seating.seat?.entry;
 
   // The install is only read for a season that may actually pick from it.
   const [cars, pick] = roadSeason
     ? await Promise.all([
         readInstalledCars(),
-        readSeasonPlayerCar(championship.folderName, seasonFolder),
+        readSeasonPlayerCar(championship.folderName, seasonFolder, {
+          name: playerName,
+          primary: primaryPlayer(seating.players).name === playerName,
+        }),
       ])
     : [[], null];
 
@@ -120,9 +130,10 @@ export default async function SeasonCarPage({
           </p>
         ) : !champCar ? (
           <p className="rounded-xl border border-dashed border-zinc-700 p-8 text-center text-sm text-zinc-500">
-            This season has no entry for &ldquo;{playerName}&rdquo;, so there is no
-            seat to put a car in. Set AC_PLAYER_NAME, or add the driver to the
-            .champ.
+            This season has no entry for &ldquo;{playerName}&rdquo; and no other
+            driver&apos;s seat to take over, so there is nowhere to put a car. Add
+            them to the .champ, or race a round of this season with somebody who is
+            in it first.
           </p>
         ) : (
           <CarPicker

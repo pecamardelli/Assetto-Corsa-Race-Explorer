@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import Image from "next/image";
+import PlayerSwitcher from "./components/PlayerSwitcher";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -30,7 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <header className="bg-zinc-900 border-b border-zinc-800">
-          <div className="w-full px-4 py-6 sm:px-6 lg:px-8 xl:px-12">
+          <div className="flex w-full flex-wrap items-center justify-between gap-4 px-4 py-6 sm:px-6 lg:px-8 xl:px-12">
             <Link href="/" className="flex items-center gap-6 hover:opacity-90 transition-opacity">
               <Image
                 src="/assetto_corsa_logo.png"
@@ -45,6 +46,8 @@ export default function RootLayout({
                 <p className="text-base text-zinc-400">Assetto Corsa Statistics</p>
               </div>
             </Link>
+            {/* Who is at the wheel. Every page below is rendered for whoever this says. */}
+            <PlayerSwitcher />
           </div>
         </header>
         {children}

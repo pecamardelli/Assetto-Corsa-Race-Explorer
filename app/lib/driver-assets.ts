@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import { readActivePlayer } from './players';
 
 export type DriverProfile = {
   name: string;
@@ -199,24 +200,18 @@ export function fallbackAiLevel(name: string): number {
 }
 
 /**
- * The driver seat the user occupies. player.json is the profile the app already
- * keeps for them, so its name doubles as the entry to pull out of the grid.
+ * The driver seat the user occupies: whoever holds the wheel on this install.
+ *
+ * More than one person drives here, so the answer is a setting rather than a fact —
+ * see `lib/players`, which also carries the fallback to the old single-player
+ * `player.json` for an install that has never switched. `AC_PLAYER_NAME` still wins
+ * over both, which is how a session can be driven under a name the app knows nothing
+ * about.
  */
 export async function resolvePlayerName(): Promise<string> {
   if (process.env.AC_PLAYER_NAME) return process.env.AC_PLAYER_NAME;
 
-  try {
-    const contents = await fs.readFile(
-      path.join(process.cwd(), PROFILE_DIR, 'player.json'),
-      'utf8'
-    );
-    const profile = JSON.parse(contents) as { name?: string };
-    if (profile.name) return profile.name;
-  } catch {
-    // fall through
-  }
-
-  return 'PLAYER';
+  return (await readActivePlayer()).name;
 }
 
 /**

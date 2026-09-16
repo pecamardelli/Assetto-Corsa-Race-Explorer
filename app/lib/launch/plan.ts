@@ -1,7 +1,9 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { getChampionship } from '../race-data';
-import { fallbackAiLevel, getDriverProfiles, resolvePlayerName } from '../driver-assets';
+import { fallbackAiLevel, getDriverProfiles } from '../driver-assets';
+import { seasonSeating } from './player-seat';
+import { primaryPlayer } from '../../types/player';
 import {
   ChampionshipData,
   ChampionshipOpponent,
@@ -11,7 +13,12 @@ import {
 } from '../../types/race';
 import { AC_CONTENT_TRACKS } from './paths';
 import { GridEntry, LaunchMode, RaceIniSpec } from './race-ini';
-import { readSeasonLineup, readSeasonPlayerCar, resolveAssists, resolveTraffic } from './assists';
+import {
+  readSeasonLineup,
+  readSeasonPlayerCar,
+  resolvePlayerAssists,
+  resolveTraffic,
+} from './assists';
 import { readTrafficRoad } from './traffic-plan';
 import { fieldOrder } from './field-order';
 import { customModeFor, fieldFor } from '../traffic';
@@ -66,6 +73,12 @@ export interface LaunchPlan {
    * installed model.
    */
   trafficFleet?: TrafficFleetDecision;
+  /**
+   * The player at the keyboard for this launch. Stamped onto everything the session
+   * files, which is how a round raced by two people is told apart afterwards, and
+   * what seats them in the season the first time they drive it.
+   */
+  playerName: string;
   championshipName: string;
   seasonNumber: number;
   seasonFolder: string;
@@ -243,15 +256,27 @@ export async function buildLaunchPlan(
   const round: ChampionshipRound | undefined = data.rounds[roundNumber - 1];
   if (!round) throw new LaunchPlanError(`Round ${roundNumber} is not in this season`);
 
-  const playerName = await resolvePlayerName();
-  const seasonEntry = data.opponents.find(
-    opponent => opponent.name === playerName || opponent.name === 'PLAYER'
+  const seasonFolder = `season_${String(season.seasonNumber).padStart(2, '0')}`;
+
+  // Who is driving, which seat is theirs, and whose cars come off the grid while they
+  // have the wheel: a player is a person at the keyboard, and there is only one
+  // keyboard — see `lib/launch/player-seat`.
+  const seating = await seasonSeating(
+    championship.folderName,
+    seasonFolder,
+    season,
+    process.env.AC_PLAYER_NAME
+      ? { name: process.env.AC_PLAYER_NAME, nation: '' }
+      : undefined
   );
-  if (!seasonEntry) {
+  const playerName = seating.driver.name;
+  if (!seating.seat) {
     throw new LaunchPlanError(
-      `No entry for "${playerName}" in this season — set AC_PLAYER_NAME or add them to the .champ`
+      `No entry for "${playerName}" in this season, and no player's seat to take over — ` +
+        `set AC_PLAYER_NAME or add them to the .champ`
     );
   }
+  const seasonEntry = seating.seat.entry;
 
   // A round whose road carries its own CSP traffic fields no roster traffic: the
   // Fiats would be a second, worse set of it, and they would take pit boxes the
@@ -259,10 +284,9 @@ export async function buildLaunchPlan(
   //
   // And the season's lineup takes out whoever it leaves at home -- never the player's
   // own entry, which a launch cannot do without.
-  const seasonFolder = `season_${String(season.seasonNumber).padStart(2, '0')}`;
   const lineup = await readSeasonLineup(championship.folderName, seasonFolder);
   const excluded = new Set(lineup.excluded);
-  const roster = fieldFor(data.opponents, round).filter(
+  const roster = fieldFor(seating.roster, round).filter(
     entry => entry === seasonEntry || !excluded.has(entry.name)
   );
   const field = group ? restrictToGroup(roster, group) : roster;
@@ -285,7 +309,10 @@ export async function buildLaunchPlan(
    */
   const playerCar = aiSeat
     ? null
-    : await readSeasonPlayerCar(championship.folderName, seasonFolder);
+    : await readSeasonPlayerCar(championship.folderName, seasonFolder, {
+        name: playerName,
+        primary: primaryPlayer(seating.players).name === playerName,
+      });
   const drivenEntry: ChampionshipOpponent = playerCar
     ? { ...playerEntry, car: playerCar.car, skin: playerCar.skin }
     : playerEntry;
@@ -307,9 +334,12 @@ export async function buildLaunchPlan(
 
   const { track, trackConfig } = await resolveTrack(round.track);
 
-  const { assists, source: assistsSource } = await resolveAssists(
+  // The aids are the driver's where they keep their own for this season, the season's
+  // otherwise — so a round raced by one brother is not driven on the other's settings.
+  const { assists, source: assistsSource } = await resolvePlayerAssists(
     championship.folderName,
-    seasonFolder
+    seasonFolder,
+    playerName
   );
 
   // The round's own settings if it has been edited, the championship's otherwise.
@@ -335,7 +365,13 @@ export async function buildLaunchPlan(
       // from there, and the batch takes the slice of that order it is made of. It is
       // the same order the batches were seeded from, so Group A lines up in the order
       // it was drawn up.
-      const { order } = fieldOrder(championship, season, roundNumber);
+      const { order } = fieldOrder(
+        championship,
+        season,
+        roundNumber,
+        new Set(),
+        seating.roster
+      );
       const entered = new Set(field.map(entry => entry.name));
 
       gridOrder = order.filter(entry => entered.has(entry.name)).map(entry => entry.name);
@@ -401,6 +437,7 @@ export async function buildLaunchPlan(
     traffic,
     trafficConfig,
     trafficFleet,
+    playerName,
     championshipName: championship.folderName,
     seasonNumber: season.seasonNumber,
     seasonFolder,

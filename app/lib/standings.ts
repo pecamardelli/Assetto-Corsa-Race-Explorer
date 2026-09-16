@@ -1,7 +1,7 @@
 import { Championship, DriverStanding, ChampionshipOpponent, RaceSession } from '../types/race';
 import { safeNumber } from './format-utils';
 import { getCarDetails } from './car-data';
-import { mergeGroupedRounds } from './round-groups';
+import { mergeGroupedRounds, scoringDrivers } from './round-groups';
 import { classifyScoring, fastestLapDrivers, trafficNames } from './traffic';
 import { classLookup, classNames, orderedClasses } from './racing-classes';
 
@@ -66,6 +66,9 @@ export function calculateAllTimeStats(
 ): AllTimeDriverStats[] {
   // A round run in groups scores once, as the one race it was.
   const sessions = mergeGroupedRounds(allSessions);
+  // And a round two people raced in turn pays each driver only for their first
+  // running of it, so the AI are not paid twice over for the same round.
+  const owed = scoringDrivers(sessions);
 
   const statsMap = new Map<string, AllTimeDriverStats>();
 
@@ -114,6 +117,9 @@ export function calculateAllTimeStats(
     const sessionType = session.data.session_type || sessionInfo.session_type;
     const isQualifying = sessionType === 'qualifying';
     const isRace = sessionType === 'race';
+    // Whose result this session still owes, on a round that has been run more than
+    // once; undefined for every session that pays out to its whole field.
+    const scoring = owed.get(session);
 
     // The fastest lap of each class — one per class, since a class is a race of its
     // own and a slower class could never win a session-wide one.
@@ -122,6 +128,7 @@ export function calculateAllTimeStats(
     // Award pole position for qualifying sessions
     if (isQualifying) {
       fastest.forEach(name => {
+        if (scoring && !scoring.has(name)) return;
         const driverStats = statsMap.get(name);
         if (driverStats) driverStats.poles++;
       });
@@ -131,6 +138,7 @@ export function calculateAllTimeStats(
     // close ranks, so a race won behind a lorry — or behind a class that was never
     // racing this one — is recorded as a win.
     classifyScoring(drivers, traffic, classes).forEach(({ name: driverName, stats, position }) => {
+      if (scoring && !scoring.has(driverName)) return;
       if (!statsMap.has(driverName)) {
         // Get nation from opponent data, default to Argentina for player
         const opponentData = opponentMap.get(driverName);
@@ -241,6 +249,8 @@ export function calculateStandings(championship: Championship): DriverStanding[]
   const { data } = championship;
   // A round run in groups scores once, as the one race it was.
   const sessions = mergeGroupedRounds(championship.sessions);
+  // A round raced by each of us in turn pays each driver once — see `scoringDrivers`.
+  const owed = scoringDrivers(sessions);
   const pointsTable = data.rules.points;
 
   // Initialize standings map - we'll populate it from session data
@@ -303,9 +313,11 @@ export function calculateStandings(championship: Championship): DriverStanding[]
     })
     .forEach((session) => {
       const drivers = session.data.driver_statistics;
+      const scoring = owed.get(session);
 
       // Pole in each class, since each class qualifies for its own race.
       fastestLapDrivers(drivers, traffic, classes).forEach(poleDriver => {
+        if (scoring && !scoring.has(poleDriver)) return;
         const standing = standingsMap.get(poleDriver);
         if (standing) standing.poles++;
       });
@@ -319,9 +331,11 @@ export function calculateStandings(championship: Championship): DriverStanding[]
     })
     .forEach((session) => {
       const drivers = session.data.driver_statistics;
+      const scoring = owed.get(session);
 
       // The fastest lap of each class
       fastestLapDrivers(drivers, traffic, classes).forEach(fastest => {
+        if (scoring && !scoring.has(fastest)) return;
         const standing = standingsMap.get(fastest);
         if (standing) standing.fastestLaps++;
       });
@@ -330,6 +344,7 @@ export function calculateStandings(championship: Championship): DriverStanding[]
       // taken out, so the points go to the driver who actually finished sixth of
       // those racing them.
       classifyScoring(drivers, traffic, classes).forEach(({ name: driverName, stats, position }) => {
+        if (scoring && !scoring.has(driverName)) return;
         const standing = standingsMap.get(driverName);
         if (!standing) return; // Driver not in championship
 
@@ -386,6 +401,8 @@ export function calculateStandings(championship: Championship): DriverStanding[]
 export function calculateConstructorStandings(championship: Championship): ConstructorStanding[] {
   // A round run in groups scores once, as the one race it was.
   const sessions = mergeGroupedRounds(championship.sessions);
+  // A round raced by each of us in turn pays each driver once - see `scoringDrivers`.
+  const owed = scoringDrivers(sessions);
 
   // Map to store constructor standings
   const constructorsMap = new Map<string, ConstructorStanding>();
@@ -416,9 +433,11 @@ export function calculateConstructorStandings(championship: Championship): Const
     })
     .forEach((session) => {
       const drivers = session.data.driver_statistics;
+      const scoring = owed.get(session);
 
       // Pole in each class, one per class that qualified.
       fastestLapDrivers(drivers, traffic, classes).forEach(poleDriver => {
+        if (scoring && !scoring.has(poleDriver)) return;
         const poleDriverStats = drivers[poleDriver];
         const carName = poleDriverStats.car_name;
         if (carName) {
@@ -458,9 +477,11 @@ export function calculateConstructorStandings(championship: Championship): Const
     })
     .forEach((session) => {
       const drivers = session.data.driver_statistics;
+      const scoring = owed.get(session);
 
       // The fastest lap of each class.
       fastestLapDrivers(drivers, traffic, classes).forEach(fastest => {
+        if (scoring && !scoring.has(fastest)) return;
         const fastestDriverStats = drivers[fastest];
         const carName = fastestDriverStats.car_name;
         if (carName) {
@@ -493,6 +514,7 @@ export function calculateConstructorStandings(championship: Championship): Const
 
       // Aggregate points from all drivers per constructor
       classifyScoring(drivers, traffic, classes).forEach(({ name: driverName, stats, position }) => {
+        if (scoring && !scoring.has(driverName)) return;
         const carName = stats.car_name;
         if (!carName) return;
 

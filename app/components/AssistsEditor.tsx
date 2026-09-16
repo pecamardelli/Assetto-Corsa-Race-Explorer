@@ -22,6 +22,11 @@ import { Group, NumberInput, Slider, Toggle } from './SettingControls';
  * Edit form for the game presets AC reads at launch. Without a scope it edits the
  * global config; with one it edits a single season, where saving creates that
  * season's override and "Use global" removes it.
+ *
+ * Driving aids have one more layer than that: a season more than one of us drives lets
+ * each driver keep their own, over the season's, and the picker at the top of the form
+ * says which of the two a save is going to. The traffic never splits that way — how
+ * busy a road is belongs to the round.
  */
 
 interface SeasonScope {
@@ -92,15 +97,21 @@ export default function AssistsEditor({
   initialTraffic,
   initialSource,
   scope,
+  playerName,
 }: {
   initial: AssistsConfig;
   initialTraffic?: TrafficConfig;
   initialSource: AssistsSource;
   scope?: SeasonScope;
+  /** Whoever is driving, when the season is one more than one of us drives. */
+  playerName?: string;
 }) {
   const [assists, setAssists] = useState<AssistsConfig>(initial);
   const [traffic, setTraffic] = useState<TrafficConfig>(initialTraffic ?? DEFAULT_TRAFFIC);
   const [source, setSource] = useState<AssistsSource>(initialSource);
+  // Which layer a save writes to. It opens on the layer the values came from, so
+  // saving without touching it puts them back where they were.
+  const [mine, setMine] = useState(initialSource === 'player');
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -152,17 +163,17 @@ export default function AssistsEditor({
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(
         scope
-          ? { assists, traffic, champ: scope.champId, season: scope.seasonId }
+          ? { assists, traffic, champ: scope.champId, season: scope.seasonId, mine }
           : { assists, traffic }
       ),
     });
 
-  const revertToGlobal = () =>
+  const revert = (own: boolean) =>
     request(
       { method: 'DELETE' },
       `/api/assists?champ=${encodeURIComponent(scope!.champId)}&season=${encodeURIComponent(
         scope!.seasonId
-      )}`
+      )}${own ? '&mine=1' : ''}`
     );
 
   return (
@@ -170,14 +181,52 @@ export default function AssistsEditor({
       {scope && (
         <div
           className={`rounded-lg border px-4 py-3 text-sm ${
-            source === 'season'
-              ? 'border-purple-500/30 bg-purple-500/10 text-purple-300'
-              : 'border-zinc-600 bg-zinc-800/50 text-zinc-400'
+            source === 'global'
+              ? 'border-zinc-600 bg-zinc-800/50 text-zinc-400'
+              : source === 'player'
+                ? 'border-cyan-500/30 bg-cyan-500/10 text-cyan-300'
+                : 'border-purple-500/30 bg-purple-500/10 text-purple-300'
           }`}
         >
-          {source === 'season'
-            ? 'This season has its own presets. Global changes will not touch it.'
-            : 'This season follows the global presets. Saving here gives it its own copy.'}
+          {source === 'global'
+            ? 'This season follows the global presets. Saving here gives it its own copy.'
+            : source === 'player'
+              ? `${playerName ?? 'This driver'} drives this season on their own aids. The season's own are what everybody else gets.`
+              : 'This season has its own presets. Global changes will not touch it.'}
+        </div>
+      )}
+
+      {/* Who a save belongs to. The aids AC is given at launch are the driver's where
+          they keep their own, so two people can share a season without sharing a
+          gearbox — while the traffic, which is the road's and not anybody's, always
+          saves with the season. */}
+      {scope && playerName && (
+        <div className="flex flex-wrap items-center gap-3 rounded-lg border border-zinc-700 bg-zinc-800/40 px-4 py-3">
+          <span className="text-sm text-zinc-400">These aids are</span>
+          <div className="flex overflow-hidden rounded-lg border border-zinc-600">
+            <button
+              type="button"
+              onClick={() => setMine(false)}
+              className={`px-3 py-1 text-xs font-semibold transition-colors ${
+                mine
+                  ? 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white'
+                  : 'bg-purple-500/30 text-purple-200'
+              }`}
+            >
+              The season&apos;s
+            </button>
+            <button
+              type="button"
+              onClick={() => setMine(true)}
+              className={`px-3 py-1 text-xs font-semibold transition-colors ${
+                mine
+                  ? 'bg-cyan-500/30 text-cyan-200'
+                  : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white'
+              }`}
+            >
+              {playerName}&apos;s own
+            </button>
+          </div>
         </div>
       )}
 
@@ -383,18 +432,38 @@ export default function AssistsEditor({
           disabled={saving}
           className="rounded-lg bg-green-500/20 px-6 py-2 text-sm font-semibold text-green-400 transition-all hover:bg-green-500/30 hover:shadow-lg hover:shadow-green-500/20 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          {saving ? 'Saving…' : scope && source === 'global' ? 'Save for this season' : 'Save'}
+          {saving
+            ? 'Saving…'
+            : !scope
+              ? 'Save'
+              : mine
+                ? `Save as ${playerName ?? 'mine'}'s`
+                : source === 'global'
+                  ? 'Save for this season'
+                  : 'Save for this season'}
         </button>
 
         {scope && source === 'season' && (
           <button
             type="button"
-            onClick={revertToGlobal}
+            onClick={() => revert(false)}
             disabled={saving}
             title="Drop this season's presets and follow the global config again"
             className="rounded-lg bg-zinc-700/50 px-4 py-2 text-sm font-semibold text-zinc-300 transition-all hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Use global presets
+          </button>
+        )}
+
+        {scope && source === 'player' && (
+          <button
+            type="button"
+            onClick={() => revert(true)}
+            disabled={saving}
+            title="Drop this driver's own aids and drive the season's"
+            className="rounded-lg bg-zinc-700/50 px-4 py-2 text-sm font-semibold text-zinc-300 transition-all hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            Use the season&apos;s aids
           </button>
         )}
 

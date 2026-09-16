@@ -3,7 +3,10 @@ import {
   clearSeasonPlayerCar,
   readSeasonPlayerCar,
   writeSeasonPlayerCar,
+  type PlayerScope,
 } from '../../lib/launch/assists';
+import { readPlayers } from '../../lib/players';
+import { activePlayer, primaryPlayer } from '../../types/player';
 import { readCarSkins, readInstalledCar } from '../../lib/launch/car-catalog';
 import { importCarAssets } from '../../lib/launch/car-import';
 import { validateSeasonScope } from '../../lib/launch/season-scope';
@@ -13,7 +16,20 @@ import { sanitizePlayerCar } from '../../types/player-car';
  * The car a season puts the player in, over the one its .champ entered them in.
  * Season-scoped only (`champ` + `season`), like the lineup: there is nothing global for
  * a car to fall back to. DELETE drops the pick and the season follows its .champ again.
+ *
+ * The pick belongs to whoever is driving, not to the season — two people sharing a
+ * Challenge each take their own car down the same roads — so every call here is made
+ * for the active player. Switching driver switches the pick with them.
  */
+
+/** Whose pick this call is about: whoever holds the wheel right now. */
+async function currentPlayer(): Promise<PlayerScope> {
+  const players = await readPlayers();
+  return {
+    name: activePlayer(players).name,
+    primary: primaryPlayer(players).name === activePlayer(players).name,
+  };
+}
 
 export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams;
@@ -22,7 +38,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unknown championship season' }, { status: 404 });
   }
 
-  return NextResponse.json({ car: await readSeasonPlayerCar(scope.champ, scope.season) });
+  return NextResponse.json({
+    car: await readSeasonPlayerCar(scope.champ, scope.season, await currentPlayer()),
+  });
 }
 
 export async function PUT(request: NextRequest) {
@@ -64,7 +82,7 @@ export async function PUT(request: NextRequest) {
   }
 
   const car = { car: pick.car, skin: pick.skin || installed.defaultSkin };
-  await writeSeasonPlayerCar(scope.champ, scope.season, car);
+  await writeSeasonPlayerCar(scope.champ, scope.season, await currentPlayer(), car);
 
   // Every page that renders a car reads the repo's own copy of its data, so a car being
   // driven for the first time brings that copy across with it.
@@ -80,6 +98,6 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ error: 'Unknown championship season' }, { status: 404 });
   }
 
-  await clearSeasonPlayerCar(scope.champ, scope.season);
+  await clearSeasonPlayerCar(scope.champ, scope.season, await currentPlayer());
   return NextResponse.json({ car: null });
 }

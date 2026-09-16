@@ -91,5 +91,9 @@ export function sanitizeAssists(input: unknown): AssistsConfig {
   };
 }
 
-/** Where an effective config came from, for labelling in the UI. */
-export type AssistsSource = 'global' | 'season';
+/**
+ * Where an effective config came from, for labelling in the UI. Three layers, each
+ * falling back to the one behind it: the driver's own aids for this season, the
+ * season's, then the global config.
+ */
+export type AssistsSource = 'global' | 'season' | 'player';

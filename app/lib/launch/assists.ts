@@ -16,11 +16,12 @@ import { PlayerCarConfig, sanitizePlayerCar } from '../../types/player-car';
  * folder on its first launch, so the archive keeps a record of the settings a season
  * was driven with even if the global config changes later.
  *
- * Four kinds live here. `assists` is the driving aids and realism settings AC reads from
+ * Five kinds live here. `assists` is the driving aids and realism settings AC reads from
  * cfg/assists.ini. `traffic` is how much traffic a road carries, which only a round run
  * in the Test Drive mode uses. `lineup` is which of the roster stays home, season-only,
  * and `car` is the car the player drives instead of the one the .champ entered them in,
- * season-only for the same reason.
+ * season-only for the same reason. `players` is the same two again — a car and a set of
+ * aids — but per person, for the seasons more than one of us drives.
  */
 
 const DATA_DIR = path.join(process.cwd(), 'app', 'data');
@@ -147,12 +148,20 @@ export async function writeSeasonAssists(
   await writeConfigFile(seasonAssistsPath(champFolder, seasonFolder), { assists });
 }
 
-/** Drop a season's override so it follows the global config again. */
+/**
+ * Drop a season's aids and traffic override so it follows the global config again.
+ *
+ * Only those two keys: the file also carries the season's lineup, its grid caps and
+ * the seats of everyone who has driven it, none of which are settings the global
+ * config has an answer for, and all of which would be lost with the file.
+ */
 export async function deleteSeasonAssists(
   champFolder: string,
   seasonFolder: string
 ): Promise<void> {
-  await fs.rm(seasonAssistsPath(champFolder, seasonFolder), { force: true });
+  const target = seasonAssistsPath(champFolder, seasonFolder);
+  await deleteConfigKey(target, 'assists');
+  await deleteConfigKey(target, 'traffic');
 }
 
 export interface ResolvedAssists {
@@ -309,19 +318,127 @@ export async function writeSeasonLineup(
 /* ------------------------------------------------------------- player car presets */
 
 /**
- * The car this season puts the player in, or null where it leaves them in the one the
+ * Whose presets are being read or written.
+ *
+ * A season's car and its driving aids belong to the person driving it, not to the
+ * season: two brothers going down the same coast road want their own cars and their
+ * own aids, and a table showing one of them in the other's Testarossa would be
+ * recording a race nobody drove. See `types/player.ts`.
+ */
+export interface PlayerScope {
+  name: string;
+  /**
+   * True for the first player on the list. The season's own top-level `car` key
+   * predates player profiles, so it is read as theirs — they were the only person
+   * driving when it was saved — and moves under their name the next time they pick.
+   */
+  primary: boolean;
+}
+
+/** One player's own presets for one season. */
+interface PlayerPresets {
+  car?: PlayerCarConfig | null;
+  assists?: AssistsConfig | null;
+}
+
+/** The whole `players` object of a presets file, as it sits on disk. */
+async function readPlayerPresets(target: string): Promise<Record<string, PlayerPresets>> {
+  try {
+    const raw = await fs.readFile(target, 'utf8');
+    const parsed = JSON.parse(raw.replace(/^﻿/, '')) as { players?: unknown };
+    if (!parsed.players || typeof parsed.players !== 'object') return {};
+    return parsed.players as Record<string, PlayerPresets>;
+  } catch (error) {
+    const code = (error as NodeJS.ErrnoException).code;
+    if (code !== 'ENOENT') console.error(`Could not read presets file ${target}:`, error);
+    return {};
+  }
+}
+
+/** Merge one player's presets into the file, leaving every other player alone. */
+async function writePlayerPresets(
+  target: string,
+  player: string,
+  patch: PlayerPresets
+): Promise<void> {
+  const players = await readPlayerPresets(target);
+  await writeConfigFile(target, {
+    players: { ...players, [player]: { ...(players[player] ?? {}), ...patch } },
+  });
+}
+
+/**
+ * Drop one key from one player's presets.
+ *
+ * The player's own entry stays even when nothing is pinned to it any more: an entry
+ * is what records that they have taken a seat in this season, which is what keeps
+ * them off the grid when somebody else drives a round of it.
+ */
+async function deletePlayerPreset(
+  target: string,
+  player: string,
+  key: keyof PlayerPresets
+): Promise<void> {
+  const players = await readPlayerPresets(target);
+  const entry = players[player];
+  if (!entry || !(key in entry)) return;
+
+  const rest = { ...entry };
+  delete rest[key];
+
+  await writeConfigFile(target, { players: { ...players, [player]: rest } });
+}
+
+/**
+ * Which players this season's presets have a seat for. Seating is also earned by
+ * racing a round of it — `lib/season-players` puts the two together.
+ */
+export async function readSeasonPlayerNames(
+  champFolder: string,
+  seasonFolder: string
+): Promise<string[]> {
+  return Object.keys(await readPlayerPresets(seasonAssistsPath(champFolder, seasonFolder)));
+}
+
+/**
+ * File a seat for a player in a season, so that from now on they are somebody who
+ * drives it rather than a name on its roster. Called on their first launch.
+ */
+export async function seatSeasonPlayer(
+  champFolder: string,
+  seasonFolder: string,
+  player: string
+): Promise<void> {
+  const target = seasonAssistsPath(champFolder, seasonFolder);
+  const players = await readPlayerPresets(target);
+  if (players[player]) return;
+
+  await writeConfigFile(target, { players: { ...players, [player]: {} } });
+}
+
+/**
+ * The car this season puts a player in, or null where it leaves them in the one the
  * .champ entered them in.
  *
  * Season-only, like the lineup: a car is a choice about one road trip, and there is
- * nothing global for it to fall back to. See `types/player-car.ts` for why a season is
- * allowed to override its own .champ at all.
+ * nothing global for it to fall back to. See `types/player-car.ts` for why a season
+ * may override its own .champ at all, and `PlayerScope` for why the pick belongs to
+ * the driver rather than to the season.
  */
 export async function readSeasonPlayerCar(
   champFolder: string,
-  seasonFolder: string
+  seasonFolder: string,
+  player: PlayerScope
 ): Promise<PlayerCarConfig | null> {
+  const target = seasonAssistsPath(champFolder, seasonFolder);
+  const own = sanitizePlayerCar((await readPlayerPresets(target))[player.name]?.car);
+  if (own) return own;
+  if (!player.primary) return null;
+
+  // The pick the seasons already on file were driven with, saved before anyone else
+  // drove here and so belonging to the one person who did.
   try {
-    const raw = await fs.readFile(seasonAssistsPath(champFolder, seasonFolder), 'utf8');
+    const raw = await fs.readFile(target, 'utf8');
     const parsed = JSON.parse(raw.replace(/^﻿/, '')) as { car?: unknown };
     return sanitizePlayerCar(parsed.car);
   } catch (error) {
@@ -334,15 +451,75 @@ export async function readSeasonPlayerCar(
 export async function writeSeasonPlayerCar(
   champFolder: string,
   seasonFolder: string,
+  player: PlayerScope,
   car: PlayerCarConfig
 ): Promise<void> {
-  await writeConfigFile(seasonAssistsPath(champFolder, seasonFolder), { car });
+  const target = seasonAssistsPath(champFolder, seasonFolder);
+  await writePlayerPresets(target, player.name, { car });
+
+  // The primary's next pick carries the old season-wide key under their name, so from
+  // then on there is exactly one place a car can come from.
+  if (player.primary) await deleteConfigKey(target, 'car');
 }
 
-/** Drop the pick so the season follows its .champ again. */
+/** Drop the pick so this player follows the .champ again. */
 export async function clearSeasonPlayerCar(
   champFolder: string,
-  seasonFolder: string
+  seasonFolder: string,
+  player: PlayerScope
 ): Promise<void> {
-  await deleteConfigKey(seasonAssistsPath(champFolder, seasonFolder), 'car');
+  const target = seasonAssistsPath(champFolder, seasonFolder);
+  await deletePlayerPreset(target, player.name, 'car');
+  if (player.primary) await deleteConfigKey(target, 'car');
+}
+
+/**
+ * The aids this player drives the season with, or null where they take the season's.
+ *
+ * Unlike the car, the season-wide `assists` key belongs to nobody in particular: it is
+ * the record of the conditions the season is run under, pinned on its first launch,
+ * and it goes on being the default for everyone who drives it. A player only appears
+ * here once they have asked for something different.
+ */
+export async function readPlayerAssists(
+  champFolder: string,
+  seasonFolder: string,
+  player: string
+): Promise<AssistsConfig | null> {
+  const target = seasonAssistsPath(champFolder, seasonFolder);
+  const own = (await readPlayerPresets(target))[player]?.assists;
+  return own ? sanitizeAssists(own) : null;
+}
+
+export async function writePlayerAssists(
+  champFolder: string,
+  seasonFolder: string,
+  player: string,
+  assists: AssistsConfig
+): Promise<void> {
+  await writePlayerPresets(seasonAssistsPath(champFolder, seasonFolder), player, { assists });
+}
+
+/** Drop this player's own aids so they drive the season's again. */
+export async function clearPlayerAssists(
+  champFolder: string,
+  seasonFolder: string,
+  player: string
+): Promise<void> {
+  await deletePlayerPreset(seasonAssistsPath(champFolder, seasonFolder), player, 'assists');
+}
+
+/**
+ * The aids a launch of this season by this player would use: their own where they have
+ * any, the season's otherwise, and the global config where the season has none either.
+ */
+export async function resolvePlayerAssists(
+  champFolder: string,
+  seasonFolder: string,
+  player: string
+): Promise<ResolvedAssists> {
+  const own = await readPlayerAssists(champFolder, seasonFolder, player);
+  if (own) return { assists: own, source: 'player' };
+
+  return resolveAssists(champFolder, seasonFolder);
 }

@@ -88,6 +88,11 @@ export interface SessionInfo {
   // The round this session was run for, stamped when the result is filed. Absent on
   // results filed before rounds were recorded.
   round?: number;
+  // Which player was at the keyboard, stamped when the result is filed. Absent on
+  // results filed before there was more than one, where it reads as the primary
+  // player — see `lib/season-players`. Never guessed from the classification: a
+  // player's name in the field may well be an AI driving their roster entry.
+  player?: string;
   // Set only when the round was too big for its track and had to be run in batches,
   // in which case this names the batch. Every group of a round shares its `round`,
   // and the standings classify them as one race.

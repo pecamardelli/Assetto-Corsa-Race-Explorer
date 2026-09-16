@@ -3,6 +3,7 @@ import { getChampionship } from '../../lib/race-data';
 import { pitCapacityFor, planGroups } from '../../lib/launch/groups';
 import { fieldOrder } from '../../lib/launch/field-order';
 import { readSeasonGridCaps, readSeasonLineup } from '../../lib/launch/assists';
+import { seasonSeating } from '../../lib/launch/player-seat';
 import { resolveRaceSpec } from '../../lib/launch/race-spec';
 import { takesGridFromStandings } from '../../types/race-spec';
 import { usesTrafficMode } from '../../lib/traffic';
@@ -55,11 +56,21 @@ export async function GET(request: NextRequest) {
   // the batch that gets raced. Traffic comes back separately: it fills boxes in
   // every batch but is not part of the field being split.
   const lineup = await readSeasonLineup(championship.folderName, seasonId.toLowerCase());
+  // The roster as the person at the keyboard sees it: their own seat in it once, and
+  // the seats of whoever else drives this season taken out, since only one of us can
+  // be on the grid. Worked out the same way the launcher works it out, or the menu
+  // would propose batches a car bigger than the ones that get raced.
+  const seating = await seasonSeating(
+    championship.folderName,
+    seasonId.toLowerCase(),
+    season
+  );
   const { order, traffic, seededOn, standings } = fieldOrder(
     championship,
     season,
     round,
-    new Set(lineup.excluded)
+    new Set(lineup.excluded),
+    seating.roster
   );
 
   // A round run from a start to a finish somewhere else is raced without qualifying,

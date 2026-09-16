@@ -7,6 +7,7 @@ A Next.js application for viewing and analyzing Assetto Corsa race results and s
 - **Quick Race Results**: View individual race sessions with detailed driver statistics
 - **Championship Management**: Track multi-race championships with standings
 - **All-Time Driver Standings**: Career statistics across all races including wins, podiums, crashes, and fastest laps
+- **Player Profiles**: More than one person drives here; switch who has the wheel and each scores under their own name
 - **Detailed Statistics**: Lap times, overtakes, crashes with G-force data, and custom scoring
 
 ## Getting Started
@@ -52,6 +53,10 @@ For a session Race Explorer launched, the app reads
 - `session_info.finished` — whether the session reached its natural end. A race
   counts once the leader completes the round's lap count; a qualifying once its
   clock runs out. Close the game before either and the file records `false`.
+- `session_info.player` — which player was at the keyboard, from the launch. Never
+  guessed from the classification: a player's name among the drivers may well be their
+  roster entry in the hands of the AI. Absent on results filed before there was more
+  than one of us, where it reads as the primary player.
 - `driver_statistics[*].retired` — set on any driver in a race whose total time is
   under the winner's, since they stopped before the end. Being lapped does not
   trigger it: AC lets a car finish the lap it is on when the leader takes the flag,
@@ -154,6 +159,58 @@ Only one session can run at a time, and the route refuses requests that did not 
 from this machine. The `race.ini` that was in place beforehand is kept as
 `race.ini.bak` — one rolling copy, overwritten each launch.
 
+### Who is driving
+
+More than one person races on this install, so the header carries a **Driving** control
+naming whoever has the wheel. It is the one setting that changes what "you" means: the
+seat a launch takes out of the roster, the car and the driving aids it goes out with,
+and the name the result comes back under. The list lives in `app/data/players.json`,
+and each name there is a driver like any other — their nationality, portrait and age
+come from `app/lib/driver-profiles` exactly as an AI driver's do.
+
+```json
+{
+  "active": "Pablin",
+  "players": [
+    { "name": "Pablin", "nation": "ARG" },
+    { "name": "Fernando Camardelli", "nation": "ARG" }
+  ]
+}
+```
+
+The first name on the list is the **primary**. Results filed before there was more than
+one player do not record who drove them, and do not need to: there was one person
+driving then, and it was that one. Everything filed since carries
+`session_info.player`.
+
+**One keyboard, one seat.** A player is a person at the wheel, and only one person can
+be at the wheel, so a player profile is never raced by the AI. Whoever is driving takes
+their seat and every other player's seat comes off the grid for that session — the
+lineup shows them as *drives this season*, unchecked and unchecking-proof.
+
+That rule only applies to the seasons a player has actually **taken a seat in**: one
+they have driven a round of, or picked a car or set their aids for. It matters because a
+player and an AI driver are the same kind of thing on a roster. Fernando Camardelli has
+raced nine seasons as an AI — the 1920s and 1930s series, the Supercars Trophy, the
+Campeonato Argentino — and he goes on racing them until the day he drives one himself,
+from which day that seat is his in person and nobody else's to fill.
+
+**A season that has no entry for you** — the European Challenge has only Pablin's — puts
+you in as a **guest**: you take over another player's seat, under your own name and your
+own flag, and they stand down. Cloning a seat rather than inventing one keeps the field
+the size the season was built for, and keeps the `.champ` untouched, which is the rule
+everywhere else here too. The car is your own pick for the season, not theirs.
+
+**Scoring** needs nothing new. Every table in the app — a season's standings, the
+career page, a road series' high-score list — is keyed on the driver's name, so a round
+Fernando drives is filed under his name and scores for him. The standings stay one
+table with both of us in it, each carrying the rounds we actually drove.
+
+**A round can be raced once by each of us.** A round somebody else has already driven
+still offers you **Start Race**, and its card shows your own running, with theirs beside
+it under their name. The AI, though, are paid for a round once: each driver scores their
+first running of it, so the second one pays out only to the person who had not raced it.
+
 ### Your car in a road series
 
 A championship is its cars as much as its drivers, so the `.champ` decides what
@@ -172,17 +229,38 @@ the folder and the tags; beside it are brand, road-or-race, drivetrain, era, a m
 power slider and a sort. Opening a card shows the full specs, the description and every
 livery it ships, and the button there is what saves.
 
-The pick lands in `season_[XX].presets.json` as a `car` key beside the assists, the
-traffic and the lineup:
+The pick belongs to the driver, not to the season — two of us down the same coast road
+take our own cars — so it lands in `season_[XX].presets.json` under the player's name,
+beside the assists, the traffic and the lineup:
 
 ```json
-{ "car": { "car": "ks_lamborghini_countach", "skin": "rosso_siviglia" } }
+{
+  "players": {
+    "Pablin": { "car": { "car": "rs_testarossa_84", "skin": "00_Rosso_Corsa" } },
+    "Fernando Camardelli": {
+      "car": { "car": "ks_lamborghini_countach", "skin": "rosso_siviglia" }
+    }
+  }
+}
 ```
 
 and the launcher writes it into `race.ini` as `[RACE] MODEL` and `SKIN`. The `.champ`
 is never touched, so **Back to the .champ car** drops the key and the season goes back
 to the entry it was imported with. A batch of a split round that you are not entered in
 is unaffected: that seat belongs to one of its own drivers, in their own car.
+
+A season whose pick predates player profiles keeps it as a top-level `car` key, read as
+the primary player's, and the next pick they make moves it under their name.
+
+An entry under `players` also records that its player has taken a seat in the season,
+which is what keeps their car out of the AI's hands — see **Who is driving** above. So
+an entry stays once made, even after the car and the aids in it are dropped.
+
+**Driving aids** work the same way, with one layer more: the season's own `assists` are
+the conditions it is run under and the default for everyone who drives it, and a player
+may keep their own over the top. The picker at the head of the presets form says which
+of the two a save is going to. The traffic never splits that way — how busy a road is
+belongs to the round, not to the person on it.
 
 Picking a car that no championship has raced before copies its `ui_car.json` into
 `app/data/cars` and its badge into `public/badges` on the spot, which is what every
@@ -196,7 +274,7 @@ renders without photos until one is curated.
 | --- | --- |
 | `AC_ROOT` | the first of `C:\GAMES\Assetto Corsa` and `/media/pablin/WIN 11/GAMES/Assetto Corsa` that exists |
 | `AC_DOCUMENTS` | `%USERPROFILE%\Documents\Assetto Corsa` |
-| `AC_PLAYER_NAME` | the `name` in `app/lib/driver-profiles/player.json` |
+| `AC_PLAYER_NAME` | the active player in `app/data/players.json` (see **Who is driving**) |
 
 ## Adding Race Data
 

@@ -11,6 +11,9 @@ import { usesTrafficMode } from "../../../../lib/traffic";
 import { Championship, RaceSession } from "../../../../types/race";
 import { trackConditionLabel, weatherLabel } from "../../../../types/race-spec";
 import { resolveDriverPortrait } from "../../../../lib/driver-assets";
+import { readPlayers } from "../../../../lib/players";
+import { sessionPlayer } from "../../../../lib/season-players";
+import { activePlayer } from "../../../../types/player";
 import BackButton from "../../../../components/BackButton";
 import ChampionBadge from "../../../../components/ChampionBadge";
 import FlagIcon from "../../../../components/FlagIcon";
@@ -137,6 +140,13 @@ export default async function SeasonPage({
   );
 
   // Match rounds with sessions based on track name and session type
+  // Whoever is driving. A round is offered to them or shown as raced on their own
+  // account: two of us share a season by taking turns at it, so a round one has
+  // already driven is still a round the other has not -- see `lib/season-players`.
+  const players = await readPlayers();
+  const driving = activePlayer(players).name;
+  const drivenBy = (session: RaceSession) => sessionPlayer(session, players);
+
   const roundsWithSessions = data.rounds.map((round, index) => {
     // Match by track name (the full round.track includes config, e.g., "ks_brands_hatch-indy")
     const trackWithConfig = round.track; // e.g., "ks_brands_hatch-indy"
@@ -172,17 +182,31 @@ export default async function SeasonPage({
       return filename.includes(trackWithConfig) && sessionType === "race";
     });
 
+    // What the driver at the wheel has done here themselves. The card shows their own
+    // round, and the menu offers them a race the other's running of it does not.
+    const myRaces = raceSessions.filter((session) => drivenBy(session) === driving);
+    const myQualifying = qualifyingSessions.filter(
+      (session) => drivenBy(session) === driving
+    );
+    const theirRaces = raceSessions.filter((session) => drivenBy(session) !== driving);
+
     return {
       round,
       roundNumber: index + 1,
       raceSpec: raceSpecs[index],
       trackDetails,
       practice: practiceSessions.length > 0 ? practiceSessions[0] : null,
-      qualifying: qualifyingSessions.length > 0 ? qualifyingSessions[0] : null,
-      race: raceSessions.length > 0 ? raceSessions[0] : null,
+      qualifying: myQualifying[0] ?? qualifyingSessions[0] ?? null,
+      race: myRaces[0] ?? null,
+      // The other driver's running of this round, if they have had one. Shown beside
+      // the card so a season is legible whoever is looking at it.
+      otherRaces: theirRaces.map((session) => ({
+        session,
+        player: drivenBy(session),
+      })),
       // A round raced in batches is only over once every batch has run: until then
       // the ones still to go out have to be offered as sessions that count.
-      raceCompleted: roundFullyRaced(raceSessions),
+      raceCompleted: roundFullyRaced(myRaces),
       hasAnySessions:
         practiceSessions.length > 0 ||
         qualifyingSessions.length > 0 ||
@@ -440,12 +464,14 @@ export default async function SeasonPage({
                 practice,
                 qualifying,
                 race,
+                otherRaces,
                 raceCompleted,
                 hasAnySessions,
                 inTrafficMode,
               }) => {
                 // Get the race date (prefer race session, fall back to qualifying, then practice)
-                const sessionForDate = race || qualifying || practice;
+                const sessionForDate =
+                  race || otherRaces[0]?.session || qualifying || practice;
                 const raceDate = sessionForDate
                   ? new Date(
                       sessionForDate.data.session_info.date
@@ -670,6 +696,32 @@ export default async function SeasonPage({
                                   </>
                                 );
                               })()}
+                            {/* The same round as somebody else drove it. Their run is
+                                their own result, scored under their own name, and is
+                                here so a season shared between us reads whole. */}
+                            {otherRaces.map(({ session, player }) => (
+                              <Link
+                                key={session.filename}
+                                href={`/race/${encodeURIComponent(session.filename)}`}
+                                className="inline-flex items-center gap-2 px-3 py-1.5 bg-zinc-700/40 hover:bg-zinc-700/70 text-zinc-300 rounded-lg text-sm font-medium transition-all"
+                                title={`${player} raced this round`}
+                              >
+                                <svg
+                                  className="w-4 h-4"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M5 3l14 9-14 9V3z"
+                                  />
+                                </svg>
+                                {player}
+                              </Link>
+                            ))}
                             </div>
                           </>
                         ) : (

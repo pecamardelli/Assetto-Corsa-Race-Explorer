@@ -164,6 +164,10 @@ export async function ingestResults(
         // five. Both are stamped here because the AC app has no idea it is racing
         // a championship at all.
         round: plan.roundNumber,
+        // Who was driving. The classification cannot answer this — a player's name
+        // on the grid may be their roster entry in the hands of the AI — and without
+        // it a season two people share cannot tell whose round is whose.
+        player: plan.playerName,
         ...(plan.group ? { group: plan.group } : {}),
         // Filed with the batch so the standings know how many more to wait for.
         ...(plan.group && plan.groupCount ? { group_count: plan.groupCount } : {}),

@@ -6,13 +6,14 @@ import LineupPicker, {
   type LineupEntry,
 } from "../../../../../components/LineupPicker";
 import { getCarDetails } from "../../../../../lib/car-data";
-import { resolvePlayerName } from "../../../../../lib/driver-assets";
 import {
   readSeasonLineup,
   readSeasonPlayerCar,
-  resolveAssists,
+  resolvePlayerAssists,
   resolveTraffic,
 } from "../../../../../lib/launch/assists";
+import { seasonSeating } from "../../../../../lib/launch/player-seat";
+import { primaryPlayer } from "../../../../../types/player";
 import { getChampionship } from "../../../../../lib/race-data";
 import { usesTrafficMode } from "../../../../../lib/traffic";
 
@@ -46,32 +47,46 @@ export default async function SeasonPresetsPage({
 
   // The folder the season's files live under, which also names its presets file.
   const seasonFolder = `season_${String(season.seasonNumber).padStart(2, "0")}`;
-  const { assists, source } = await resolveAssists(
+  // Who is driving, and whose seats are theirs alone. The aids and the car below are
+  // all read for that person: a season two of us drive has two of each.
+  const seating = await seasonSeating(
     championship.folderName,
-    seasonFolder
+    seasonFolder,
+    season
+  );
+  const playerName = seating.driver.name;
+  const sittingOut = seating.sittingOut;
+
+  const { assists, source } = await resolvePlayerAssists(
+    championship.folderName,
+    seasonFolder,
+    playerName
   );
   const { traffic } = await resolveTraffic(championship.folderName, seasonFolder);
 
   // The lineup: every roster entry, with the player's own marked so the picker keeps it.
   const lineup = await readSeasonLineup(championship.folderName, seasonFolder);
-  const playerName = await resolvePlayerName();
 
   // A road season may put the player in a car of its own choosing; the choosing itself
   // needs a page of its own, so this only reports what it settled on.
   const roadSeason = season.data.rounds.some(usesTrafficMode);
   const playerCar = roadSeason
-    ? await readSeasonPlayerCar(championship.folderName, seasonFolder)
+    ? await readSeasonPlayerCar(championship.folderName, seasonFolder, {
+        name: playerName,
+        primary: primaryPlayer(seating.players).name === playerName,
+      })
     : null;
-  const seasonEntry = season.data.opponents.find(
-    (entry) => entry.name === playerName || entry.name === "PLAYER"
-  );
+  const seasonEntry = seating.seat?.base ?? seating.seat?.entry;
   const drivenCar = playerCar?.car ?? seasonEntry?.car ?? "";
   const roster: LineupEntry[] = season.data.opponents.map((entry) => ({
     name: entry.name,
     car: getCarDetails(entry.car).name,
     nation: entry.nation,
     traffic: entry.traffic === true,
-    player: entry.name === playerName || entry.name === "PLAYER",
+    player: entry === seasonEntry,
+    // The seat a guest is standing in is theirs for now, so it is not also shown as
+    // its owner's, sitting out.
+    sittingOut: entry !== seasonEntry && sittingOut.has(entry.name),
   }));
 
   return (
@@ -121,7 +136,9 @@ export default async function SeasonPresetsPage({
           <div className="rounded-xl border border-zinc-700 bg-zinc-800/50 p-5">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <h2 className="text-lg font-semibold text-white">Your car</h2>
+                <h2 className="text-lg font-semibold text-white">
+                  {playerName}&apos;s car
+                </h2>
                 <p className="text-sm text-zinc-400">
                   {getCarDetails(drivenCar).name}
                   {playerCar ? " — this season's own pick" : " — from the .champ"}.
@@ -148,6 +165,7 @@ export default async function SeasonPresetsPage({
           initialTraffic={traffic}
           initialSource={source}
           scope={{ champId: championship.folderName, seasonId: seasonFolder }}
+          playerName={seating.players.players.length > 1 ? playerName : undefined}
         />
       </div>
     </div>

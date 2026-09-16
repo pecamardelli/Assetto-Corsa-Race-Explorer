@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto';
 import { promises as fs } from 'fs';
 import { promisify } from 'util';
 import { installAiLine } from './ai-line';
-import { buildAssistsIni, pinSeasonAssists, pinSeasonTraffic } from './assists';
+import { buildAssistsIni, pinSeasonAssists, pinSeasonTraffic, seatSeasonPlayer } from './assists';
 import { ingestResults, listResultFiles } from './ingest';
 import { LaunchPlan } from './plan';
 import { buildRaceIni, LaunchMode, MODE_SESSIONS } from './race-ini';
@@ -35,6 +35,8 @@ export interface LaunchState {
   seasonId: string;
   roundNumber: number;
   trackLabel: string;
+  /** Who is driving it, so the launch bar names the right person. */
+  player: string;
   /** The batch of the round this launch is running, when it is running one. */
   group?: string;
   /**
@@ -144,6 +146,7 @@ async function writeLaunchContext(plan: LaunchPlan, id: string): Promise<void> {
     championship: plan.championshipName,
     season: plan.seasonFolder,
     round: plan.roundNumber,
+    player: plan.playerName,
     group: plan.group ?? null,
     track: plan.roundTrack,
     // A Test Drive launch: AC's own lap counter is dead there (every respawn resets a
@@ -240,6 +243,11 @@ export async function launch(
   // A season launching on the global config gets its own copy filed away, so the
   // data folder always records what each season was driven with.
   await pinSeasonAssists(plan.championshipName, plan.seasonFolder, plan.assists);
+  // And the driver takes a seat in it. From here on this season is one they drive,
+  // so nobody else's hands go on their car — see `lib/season-players`.
+  if (plan.record) {
+    await seatSeasonPlayer(plan.championshipName, plan.seasonFolder, plan.playerName);
+  }
   if (plan.trafficConfig) {
     await pinSeasonTraffic(plan.championshipName, plan.seasonFolder, plan.trafficConfig);
   }
@@ -258,6 +266,7 @@ export async function launch(
     seasonId,
     roundNumber: plan.roundNumber,
     trackLabel: plan.trackLabel,
+    player: plan.playerName,
     group: plan.group,
     aiSeat: plan.aiSeat,
     recorded: plan.record,

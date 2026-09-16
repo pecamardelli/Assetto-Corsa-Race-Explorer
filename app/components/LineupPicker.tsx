@@ -9,6 +9,12 @@ import { createPortal } from 'react-dom';
  * the season's presets page. Unchecked drivers stay home on every launch of the
  * season until checked again. The player's own entry is always in and cannot be
  * unchecked -- AC gives CAR_0 to whoever is at the keyboard.
+ *
+ * The other way round too: a roster entry belonging to somebody else who drives this
+ * season is always out, and cannot be checked. There is one keyboard, so only one of us
+ * is on the grid at a time, and their car is not for the AI to drive -- see
+ * `lib/season-players`. That is a fact about who is racing rather than a lineup choice,
+ * so it is shown here but never saved.
  */
 
 export interface LineupEntry {
@@ -20,6 +26,11 @@ export interface LineupEntry {
   traffic: boolean;
   /** The entry the player drives; always fielded. */
   player: boolean;
+  /**
+   * A seat belonging to one of the other people who drive here, which goes out only
+   * when they are the one at the keyboard. Always at home until then.
+   */
+  sittingOut?: boolean;
 }
 
 interface Scope {
@@ -44,7 +55,9 @@ export default function LineupPicker({
 
   const racers = roster.filter(entry => !entry.traffic);
   const traffic = roster.filter(entry => entry.traffic);
-  const fielded = roster.filter(entry => entry.player || !excluded.has(entry.name));
+  const fielded = roster.filter(
+    entry => entry.player || (!entry.sittingOut && !excluded.has(entry.name))
+  );
   const aiRacing = fielded.filter(entry => !entry.traffic && !entry.player).length;
 
   useEffect(() => {
@@ -57,7 +70,7 @@ export default function LineupPicker({
   }, [open]);
 
   const toggle = (entry: LineupEntry) => {
-    if (entry.player) return;
+    if (entry.player || entry.sittingOut) return;
     setExcluded(current => {
       const next = new Set(current);
       if (next.has(entry.name)) next.delete(entry.name);
@@ -70,7 +83,7 @@ export default function LineupPicker({
     setExcluded(current => {
       const next = new Set(current);
       for (const entry of entries) {
-        if (entry.player) continue;
+        if (entry.player || entry.sittingOut) continue;
         if (fielded) next.delete(entry.name);
         else next.add(entry.name);
       }
@@ -112,18 +125,19 @@ export default function LineupPicker({
   };
 
   const row = (entry: LineupEntry) => {
-    const on = entry.player || !excluded.has(entry.name);
+    const on = entry.player || (!entry.sittingOut && !excluded.has(entry.name));
+    const locked = entry.player || entry.sittingOut === true;
     return (
       <label
         key={entry.name}
         className={`flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 transition-colors ${
           on ? 'bg-zinc-800/80 hover:bg-zinc-800' : 'bg-zinc-900/40 text-zinc-500 hover:bg-zinc-800/50'
-        } ${entry.player ? 'cursor-default' : ''}`}
+        } ${locked ? 'cursor-default' : ''}`}
       >
         <input
           type="checkbox"
           checked={on}
-          disabled={entry.player}
+          disabled={locked}
           onChange={() => toggle(entry)}
           className="h-4 w-4 accent-green-500"
         />
@@ -133,6 +147,11 @@ export default function LineupPicker({
             {entry.player && (
               <span className="ml-2 rounded bg-cyan-500/20 px-1.5 py-0.5 text-[10px] font-bold uppercase text-cyan-400">
                 you
+              </span>
+            )}
+            {entry.sittingOut && (
+              <span className="ml-2 rounded bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-bold uppercase text-amber-400">
+                drives this season
               </span>
             )}
           </span>
@@ -148,7 +167,13 @@ export default function LineupPicker({
       <div>
         <div className="mb-2 flex items-center justify-between">
           <h3 className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
-            {title} ({entries.filter(entry => entry.player || !excluded.has(entry.name)).length} of{' '}
+            {title} (
+            {
+              entries.filter(
+                entry => entry.player || (!entry.sittingOut && !excluded.has(entry.name))
+              ).length
+            }{' '}
+            of{' '}
             {entries.length})
           </h3>
           <div className="flex gap-2 text-xs">
@@ -231,7 +256,9 @@ export default function LineupPicker({
     </div>
   );
 
-  const total = roster.filter(entry => !entry.traffic && !entry.player).length;
+  const total = roster.filter(
+    entry => !entry.traffic && !entry.player && !entry.sittingOut
+  ).length;
   const outTraffic = traffic.filter(entry => excluded.has(entry.name)).length;
 
   return (

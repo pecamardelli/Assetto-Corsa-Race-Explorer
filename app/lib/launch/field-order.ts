@@ -108,7 +108,18 @@ export function fieldOrder(
   season: Season,
   roundNumber: number,
   /** Roster names the season leaves at home (its lineup preset); nobody by default. */
-  excluded: ReadonlySet<string> = new Set()
+  excluded: ReadonlySet<string> = new Set(),
+  /**
+   * The roster to order, where it is not simply the season's.
+   *
+   * A season more than one of us drives hands the wheel around: the driver may be a
+   * guest standing in a seat the `.champ` gave somebody else, and the people not
+   * driving come off the grid entirely. `seasonSeating` works that out, and this is
+   * how the answer reaches the running order — which is also the grid on a round
+   * raced without qualifying, so getting it from anywhere else would line up a field
+   * that never went out.
+   */
+  roster: ChampionshipOpponent[] = season.data.opponents
 ): FieldOrder {
   // Standings are a season's business, so ask this season rather than the whole
   // championship — the same season-scoped view the standings page builds.
@@ -123,7 +134,7 @@ export function fieldOrder(
   const standings = calculateStandings(seasonChampionship);
   // The season's lineup applies to racers and roster traffic alike: a Fiat left at home
   // is a pit box freed like any other.
-  const fielded = season.data.opponents.filter(entry => !excluded.has(entry.name));
+  const fielded = roster.filter(entry => !excluded.has(entry.name));
   const { racing, traffic } = partitionRoster(fielded);
   const seededOn = seasonHasForm(standings) ? 'standings' : 'random';
 
