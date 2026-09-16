@@ -1,0 +1,80 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 738.69,
+      "best_lap": 738.69,
+      "car_name": "pb_pontiac_gto_65",
+      "crashes": {
+        "average_crash_g": 27.69,
+        "crash_intensities_g": [
+          16,
+          16,
+          109,
+          15,
+          29,
+          37,
+          44,
+          48,
+          15,
+          21,
+          23,
+          0,
+          0,
+          22,
+          13,
+          35
+        ],
+        "total_crash_intensity": 443,
+        "total_crashes": 16,
+        "worst_crash_g": 109
+      },
+      "lap_times": [
+        738.69
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 196.71,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 85.1,
+        "base_score": 14858.43,
+        "crash_count": 16,
+        "crash_factor": 0.614,
+        "crash_penalty_percent": 38.57,
+        "distance_km": 17.461
+      },
+      "times_overtaken": 0,
+      "total_score": 9127,
+      "total_time_formatted": "12:18.690",
+      "total_time_seconds": 738.69
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 738.69,
+    "championship": "Americas Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-15 21:28:05",
+    "finished": true,
+    "race_laps": 1,
+    "round": 4,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_03",
+    "session_duration_formatted": "14:36.933",
+    "session_duration_seconds": 876.93,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "union_island",
+    "track_config": "scenic",
+    "track_length_km": 17.461,
+    "track_length_meters": 17460.89,
+    "track_length_miles": 10.85,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}

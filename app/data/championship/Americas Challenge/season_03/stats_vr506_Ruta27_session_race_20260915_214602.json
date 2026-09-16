@@ -1,0 +1,72 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 876.465,
+      "best_lap": 876.465,
+      "car_name": "pb_pontiac_gto_65",
+      "crashes": {
+        "average_crash_g": 92.25,
+        "crash_intensities_g": [
+          17,
+          26,
+          16,
+          24,
+          568,
+          42,
+          31,
+          14
+        ],
+        "total_crash_intensity": 738,
+        "total_crashes": 8,
+        "worst_crash_g": 568
+      },
+      "lap_times": [
+        876.465
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 201.21,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 169.98,
+        "base_score": 70347.77,
+        "crash_count": 8,
+        "crash_factor": 0.784,
+        "crash_penalty_percent": 21.63,
+        "distance_km": 41.385
+      },
+      "times_overtaken": 0,
+      "total_score": 55135,
+      "total_time_formatted": "14:36.465",
+      "total_time_seconds": 876.465
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 876.465,
+    "championship": "Americas Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-15 21:46:02",
+    "finished": true,
+    "race_laps": 1,
+    "round": 5,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_03",
+    "session_duration_formatted": "18:59.790",
+    "session_duration_seconds": 1139.79,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "vr506_Ruta27",
+    "track_config": "",
+    "track_length_km": 41.385,
+    "track_length_meters": 41384.83,
+    "track_length_miles": 25.715,
+    "traffic_race": true,
+    "writer": "commendatore"
+  }
+}
