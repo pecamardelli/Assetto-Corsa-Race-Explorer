@@ -1,0 +1,72 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 820.789,
+      "best_lap": 820.789,
+      "car_name": "chevrolet_63vette",
+      "crashes": {
+        "average_crash_g": 14.43,
+        "crash_intensities_g": [
+          11,
+          20,
+          14,
+          14,
+          10,
+          11,
+          21
+        ],
+        "total_crash_intensity": 101,
+        "total_crashes": 7,
+        "worst_crash_g": 21
+      },
+      "lap_times": [
+        820.789
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 192.72,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 108.47,
+        "base_score": 26825.09,
+        "crash_count": 7,
+        "crash_factor": 0.808,
+        "crash_penalty_percent": 19.2,
+        "distance_km": 24.731
+      },
+      "times_overtaken": 0,
+      "total_score": 21675,
+      "total_time_formatted": "13:40.789",
+      "total_time_seconds": 820.789
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 820.789,
+    "championship": "Americas Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-18 18:35:00",
+    "finished": true,
+    "race_laps": 1,
+    "round": 3,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_04",
+    "session_duration_formatted": "14:14.509",
+    "session_duration_seconds": 854.51,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "pacific_coast_hwy",
+    "track_config": "northbound",
+    "track_length_km": 24.731,
+    "track_length_meters": 24730.63,
+    "track_length_miles": 15.367,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

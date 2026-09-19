@@ -1,0 +1,69 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 957.366,
+      "best_lap": 957.366,
+      "car_name": "ruf_yellowbird",
+      "crashes": {
+        "average_crash_g": 50.75,
+        "crash_intensities_g": [
+          45,
+          66,
+          77,
+          15
+        ],
+        "total_crash_intensity": 203,
+        "total_crashes": 4,
+        "worst_crash_g": 77
+      },
+      "lap_times": [
+        957.366
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 224.75,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 88.7,
+        "base_score": 20921.9,
+        "crash_count": 4,
+        "crash_factor": 0.885,
+        "crash_penalty_percent": 11.47,
+        "distance_km": 23.588
+      },
+      "times_overtaken": 0,
+      "total_score": 18523,
+      "total_time_formatted": "15:57.366",
+      "total_time_seconds": 957.366
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 957.366,
+    "championship": "European Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-17 22:52:34",
+    "finished": true,
+    "race_laps": 1,
+    "round": 5,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_04",
+    "session_duration_formatted": "16:33.113",
+    "session_duration_seconds": 993.11,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "transfagarasan",
+    "track_config": "hillclimb_race",
+    "track_length_km": 23.588,
+    "track_length_meters": 23587.85,
+    "track_length_miles": 14.657,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

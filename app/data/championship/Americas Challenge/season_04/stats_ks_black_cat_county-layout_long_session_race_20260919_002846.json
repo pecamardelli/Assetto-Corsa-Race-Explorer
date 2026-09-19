@@ -1,0 +1,70 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 354.112,
+      "best_lap": 352.131,
+      "car_name": "chevrolet_63vette",
+      "crashes": {
+        "average_crash_g": 67.75,
+        "crash_intensities_g": [
+          15,
+          72,
+          143,
+          41
+        ],
+        "total_crash_intensity": 271,
+        "total_crashes": 4,
+        "worst_crash_g": 143
+      },
+      "lap_times": [
+        352.131,
+        356.093
+      ],
+      "laps_completed": 2,
+      "max_speed_kmh": 192.98,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 113.63,
+        "base_score": 25400.34,
+        "crash_count": 4,
+        "crash_factor": 0.885,
+        "crash_penalty_percent": 11.47,
+        "distance_km": 22.354
+      },
+      "times_overtaken": 0,
+      "total_score": 22487,
+      "total_time_formatted": "11:48.223",
+      "total_time_seconds": 708.224
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 352.131,
+    "championship": "Americas Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-19 00:28:46",
+    "finished": true,
+    "race_laps": 2,
+    "round": 6,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_04",
+    "session_duration_formatted": "12:16.260",
+    "session_duration_seconds": 736.26,
+    "session_type": "race",
+    "target_laps": 2,
+    "total_cars": 1,
+    "track": "ks_black_cat_county",
+    "track_config": "layout_long",
+    "track_length_km": 11.177,
+    "track_length_meters": 11176.96,
+    "track_length_miles": 6.945,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

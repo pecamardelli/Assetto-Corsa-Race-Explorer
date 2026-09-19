@@ -1,0 +1,69 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 534.48,
+      "best_lap": 534.48,
+      "car_name": "ruf_yellowbird",
+      "crashes": {
+        "average_crash_g": 28.5,
+        "crash_intensities_g": [
+          16,
+          43,
+          28,
+          27
+        ],
+        "total_crash_intensity": 114,
+        "total_crashes": 4,
+        "worst_crash_g": 43
+      },
+      "lap_times": [
+        534.48
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 147.81,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 72.65,
+        "base_score": 7835.6,
+        "crash_count": 4,
+        "crash_factor": 0.885,
+        "crash_penalty_percent": 11.47,
+        "distance_km": 10.786
+      },
+      "times_overtaken": 0,
+      "total_score": 6937,
+      "total_time_formatted": "08:54.480",
+      "total_time_seconds": 534.48
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 534.48,
+    "championship": "European Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-17 22:41:13",
+    "finished": true,
+    "race_laps": 1,
+    "round": 4,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_04",
+    "session_duration_formatted": "09:34.308",
+    "session_duration_seconds": 574.31,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "amalfidrive",
+    "track_config": "costaditalia_circuit",
+    "track_length_km": 10.786,
+    "track_length_meters": 10785.76,
+    "track_length_miles": 6.702,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

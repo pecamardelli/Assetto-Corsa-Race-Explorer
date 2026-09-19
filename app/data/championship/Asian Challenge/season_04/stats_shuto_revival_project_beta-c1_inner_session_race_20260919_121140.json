@@ -1,0 +1,69 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 425.271,
+      "best_lap": 425.271,
+      "car_name": "ks_toyota_supra_mkiv",
+      "crashes": {
+        "average_crash_g": 17.5,
+        "crash_intensities_g": [
+          12,
+          17,
+          25,
+          16
+        ],
+        "total_crash_intensity": 70,
+        "total_crashes": 4,
+        "worst_crash_g": 25
+      },
+      "lap_times": [
+        425.271
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 204.25,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 124.03,
+        "base_score": 18173.19,
+        "crash_count": 4,
+        "crash_factor": 0.885,
+        "crash_penalty_percent": 11.47,
+        "distance_km": 14.652
+      },
+      "times_overtaken": 0,
+      "total_score": 16089,
+      "total_time_formatted": "07:05.271",
+      "total_time_seconds": 425.271
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 425.271,
+    "championship": "Asian Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-19 12:11:40",
+    "finished": true,
+    "race_laps": 1,
+    "round": 5,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_04",
+    "session_duration_formatted": "07:28.587",
+    "session_duration_seconds": 448.59,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "shuto_revival_project_beta",
+    "track_config": "c1_inner",
+    "track_length_km": 14.652,
+    "track_length_meters": 14652.01,
+    "track_length_miles": 9.104,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}
