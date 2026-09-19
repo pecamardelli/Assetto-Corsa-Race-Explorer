@@ -85,8 +85,9 @@ export async function PUT(request: NextRequest) {
   await writeSeasonPlayerCar(scope.champ, scope.season, await currentPlayer(), car);
 
   // Every page that renders a car reads the repo's own copy of its data, so a car being
-  // driven for the first time brings that copy across with it.
-  const imported = await importCarAssets(car.car);
+  // driven for the first time brings that copy across with it - the picked livery's
+  // preview becomes its card image.
+  const imported = await importCarAssets(car.car, car.skin);
 
   return NextResponse.json({ car, imported });
 }

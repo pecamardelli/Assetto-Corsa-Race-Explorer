@@ -1,7 +1,9 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { carBadgeFile, carUiJsonFile, isSafeSegment } from './car-catalog';
+import { AC_CONTENT_CARS } from './paths';
 import { forgetCarData } from '../car-data';
+import { importCarPreview } from '../../../scripts/lib/car-preview';
 
 /**
  * Pulling one car's data out of the install and into the repo.
@@ -21,10 +23,15 @@ import { forgetCarData } from '../car-data';
  * sharp, which is worth doing on 350 badges at build time and is not worth making a
  * save depend on for one; the next run of the script leaves an already-copied badge
  * alone, so a large one stays large. It is a picture in a 72 px box either way.
+ *
+ * The card image is the third asset, and it is not optional either: every card and
+ * standings row reads `public/car-gallery/<id>/01.webp`. It is made through the same
+ * module `scripts/copy-car-previews.js` uses, so the two cannot drift apart again.
  */
 
 const CARS_DIR = path.join(process.cwd(), 'app', 'data', 'cars');
 const BADGES_DIR = path.join(process.cwd(), 'public', 'badges');
+const GALLERY_DIR = path.join(process.cwd(), 'public', 'car-gallery');
 
 /** What the bulk script strips: curve tables and tags, which nothing here renders. */
 const DROPPED_KEYS = ['power_curve', 'torque_curve', 'powerCurve', 'torqueCurve', 'tags'];
@@ -90,19 +97,44 @@ async function copyBadge(id: string): Promise<boolean> {
   }
 }
 
+/**
+ * The card image, `public/car-gallery/<id>/01.webp`, made from the picked livery's
+ * preview (or the first livery's that has one) the same way the bulk script makes it.
+ * A pick without it left the car with no picture on the season card, the standings
+ * and its own page: the Supra and the 812 Superfast raced whole seasons like that
+ * before this was added (2026-09-19).
+ */
+async function copyPreview(id: string, skin?: string): Promise<boolean> {
+  if (skin !== undefined && !isSafeSegment(skin)) skin = undefined;
+  try {
+    const outcome = await importCarPreview(AC_CONTENT_CARS, GALLERY_DIR, id, skin);
+    return outcome !== 'exists' && outcome !== 'not_found';
+  } catch (error) {
+    // The encoder failing is a car without a picture, not a pick that did not save.
+    console.error(`Could not make a preview for ${id}:`, error);
+    return false;
+  }
+}
+
 export interface CarImport {
   /** Whether this call is what put the car's data in the repo. */
   data: boolean;
   badge: boolean;
+  preview: boolean;
 }
 
 /**
  * Make sure the repo has what it needs to render this car. Safe to call for a car it
  * already has, which is the usual case — nothing is overwritten and nothing is copied.
+ * `skin` is the livery whose preview becomes the card image when the car has none yet.
  */
-export async function importCarAssets(id: string): Promise<CarImport> {
-  if (!isSafeSegment(id)) return { data: false, badge: false };
+export async function importCarAssets(id: string, skin?: string): Promise<CarImport> {
+  if (!isSafeSegment(id)) return { data: false, badge: false, preview: false };
 
-  const [data, badge] = await Promise.all([copyCarData(id), copyBadge(id)]);
-  return { data, badge };
+  const [data, badge, preview] = await Promise.all([
+    copyCarData(id),
+    copyBadge(id),
+    copyPreview(id, skin),
+  ]);
+  return { data, badge, preview };
 }
