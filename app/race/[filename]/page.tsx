@@ -390,8 +390,9 @@ export default async function RacePage({ params }: { params: Promise<{ filename:
           </div>
         )}
 
-        {/* Stats Summary - Only show for race sessions */}
-        {!isPracticeOrQualifying && drivers.length > 0 && (() => {
+        {/* Stats Summary - Only show for race sessions. A Test Drive race has none: its
+            fastest lap and overtakes are whatever the traffic allowed. */}
+        {!isPracticeOrQualifying && !isTestDrive && drivers.length > 0 && (() => {
           const validLaps = drivers
             .map(d => safeNumber(d.best_lap))
             .filter(lap => lap > 0);

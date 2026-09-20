@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getChampionship } from "../../lib/race-data";
 import { getTrackDetails } from "../../lib/track-data";
 import { getCarName } from "../../lib/car-data";
+import { racesInTraffic } from "../../lib/traffic";
 import BackButton from "../../components/BackButton";
 import FlagIcon from "../../components/FlagIcon";
 
@@ -102,6 +103,11 @@ export default async function ChampionshipPage({
             <span className="text-xs font-semibold px-2 py-1 rounded bg-amber-500/20 text-amber-400 uppercase">
               Championship
             </span>
+            {racesInTraffic(data, sessions) && (
+              <span className="text-xs font-semibold px-2 py-1 rounded bg-orange-500/20 text-orange-400 uppercase">
+                Traffic
+              </span>
+            )}
           </div>
           <h1 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">{data.name}</h1>
 

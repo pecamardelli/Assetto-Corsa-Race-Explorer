@@ -3,6 +3,9 @@ import path from 'path';
 import { Championship } from '../types/race';
 import { resolveDriverPortrait } from './driver-assets';
 import { calculateStandings, calculateConstructorStandings } from './standings';
+import { racesInTraffic } from './traffic';
+import { completedSeasonRanking } from './road-series-ranking';
+import { getCarDetails, getCarPreviewUrl } from './car-data';
 
 /**
  * Who currently holds a championship, for the card that advertises it.
@@ -17,6 +20,25 @@ export interface ChampionshipStats {
   currentChampionPortrait: string | null;
   currentConstructorChampion: string;
   currentConstructorBadge: string | null;
+  /** A road series raced in traffic: the card says so, and shows `bestScore` instead. */
+  traffic: boolean;
+  /** Null for a circuit series, and for a road series with no completed season yet. */
+  bestScore: BestScore | null;
+}
+
+/**
+ * What a road series has in place of a champion: the top of its all-time table. There
+ * is no title to hold on a coast road and no constructors' cup among the traffic, so
+ * the card shows the best season score ever posted, who posted it, and in what.
+ */
+export interface BestScore {
+  score: number;
+  driver: string;
+  driverPortrait: string | null;
+  seasonName: string;
+  carBrand: string;
+  carModel: string;
+  carPreview: string | null;
 }
 
 export const NO_STATS: ChampionshipStats = {
@@ -24,6 +46,8 @@ export const NO_STATS: ChampionshipStats = {
   currentChampionPortrait: null,
   currentConstructorChampion: '-',
   currentConstructorBadge: null,
+  traffic: false,
+  bestScore: null,
 };
 
 /** The brand badge a car races under, or null when we don't have that badge. */
@@ -42,6 +66,27 @@ export async function getChampionshipStats(
   const stats = new Map<string, ChampionshipStats>();
 
   for (const championship of championships) {
+    if (racesInTraffic(championship.data, championship.sessions)) {
+      const best = completedSeasonRanking(championship)[0];
+      const car = best ? getCarDetails(best.car) : null;
+      stats.set(championship.id, {
+        ...NO_STATS,
+        traffic: true,
+        bestScore: best && car
+          ? {
+              score: best.score,
+              driver: best.name,
+              driverPortrait: await resolveDriverPortrait(best.name, championship.id),
+              seasonName: best.seasonName,
+              carBrand: car.brand,
+              carModel: car.model,
+              carPreview: getCarPreviewUrl(best.car),
+            }
+          : null,
+      });
+      continue;
+    }
+
     let currentChampion = '-';
     let currentConstructorChampion = '-';
     let currentChampionPortrait: string | null = null;
@@ -86,6 +131,8 @@ export async function getChampionshipStats(
       currentChampionPortrait,
       currentConstructorChampion,
       currentConstructorBadge,
+      traffic: false,
+      bestScore: null,
     });
   }
 

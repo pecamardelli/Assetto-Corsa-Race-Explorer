@@ -47,35 +47,31 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
   const raceWinners = new Set(driverStats.filter(d => d.firstPlaces > 0).map(d => d.name));
   const champions = new Set(driverStats.filter(d => d.championshipsWon > 0).map(d => d.name));
 
-  // A road series shows eight cards in one row, so they are drawn tighter there.
-  const cardClass = trafficSeries
-    ? 'bg-zinc-800/50 border border-zinc-700 rounded-lg p-4'
-    : 'bg-zinc-800/50 border border-zinc-700 rounded-lg p-6';
-  const bigNumber = trafficSeries ? 'text-2xl' : 'text-3xl';
+  const cardClass = 'bg-zinc-800/50 border border-zinc-700 rounded-lg p-6';
 
   const summaryCards = (
     <>
       <div className={cardClass}>
         <h3 className="text-zinc-400 text-sm font-medium mb-2">Total Drivers</h3>
-        <div className={`${bigNumber} font-bold text-white`}>
+        <div className="text-3xl font-bold text-white">
           {driverStats.length}
         </div>
       </div>
       <div className={cardClass}>
         <h3 className="text-zinc-400 text-sm font-medium mb-2">Total Races</h3>
-        <div className={`${bigNumber} font-bold text-white`}>
+        <div className="text-3xl font-bold text-white">
           {totalRaces}
         </div>
       </div>
       <div className={cardClass}>
         <h3 className="text-zinc-400 text-sm font-medium mb-2">Total Race Winners</h3>
-        <div className={`${bigNumber} font-bold text-amber-400`}>
+        <div className="text-3xl font-bold text-amber-400">
           {raceWinners.size}
         </div>
       </div>
       <div className={cardClass}>
         <h3 className="text-zinc-400 text-sm font-medium mb-2">Total Champions</h3>
-        <div className={`${bigNumber} font-bold text-amber-500`}>
+        <div className="text-3xl font-bold text-amber-500">
           {champions.size}
         </div>
       </div>
@@ -126,8 +122,7 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
       </section>
 
       <div className="w-full px-4 py-8 sm:px-6 lg:px-8 xl:px-12">
-        {/* Statistics Summary: above the table for a circuit series; a road series
-            keeps the ranking first and shows these in the bottom row instead. */}
+        {/* Statistics Summary. A road series has none: its page is the high-score table. */}
         {!trafficSeries && driverStats.length > 0 && (
           <div className="mb-8 grid grid-cols-2 md:grid-cols-4 gap-4">
             {summaryCards}
@@ -498,17 +493,13 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
           </div>
         )}
 
-        {/* Top Performers */}
-        {driverStats.length > 0 && (() => {
+        {/* Top Performers: circuit series only */}
+        {!trafficSeries && driverStats.length > 0 && (() => {
           const mostWins = driverStats.reduce((max, d) => Math.max(max, d.firstPlaces), 0);
           const mostWinsDriver = driverStats.find(d => d.firstPlaces === mostWins);
 
           const mostFastestLaps = driverStats.reduce((max, d) => Math.max(max, d.fastestLaps), 0);
           const fastestLapsDriver = driverStats.find(d => d.fastestLaps === mostFastestLaps);
-
-          // The road series' card in its place: who has the most road behind them.
-          const mostTime = driverStats.reduce((max, d) => Math.max(max, d.totalTime), 0);
-          const mostTimeDriver = driverStats.find(d => d.totalTime === mostTime);
 
           // Find cleanest driver: best points/crashes ratio
           // Drivers with 0 crashes get special handling (infinite ratio)
@@ -526,13 +517,7 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
           const championDriver = driverStats.find(d => d.championshipsWon === mostChampionships);
 
           return (
-            <div className={`mt-8 grid gap-4 ${
-              trafficSeries
-                ? 'grid-cols-2 md:grid-cols-4 xl:grid-cols-8'
-                : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
-            }`}>
-              {trafficSeries && summaryCards}
-
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className={cardClass}>
                 <h3 className="text-zinc-400 text-sm font-medium mb-2">Most Wins</h3>
                 <div className="text-2xl font-bold text-amber-400 mb-1">
@@ -543,27 +528,15 @@ export default async function AllTimeStandingsPage({ params }: { params: Promise
                 </div>
               </div>
 
-              {trafficSeries ? (
-                <div className={cardClass}>
-                  <h3 className="text-zinc-400 text-sm font-medium mb-2">Most Time on the Road</h3>
-                  <div className="text-2xl font-bold text-zinc-300 mb-1 font-mono">
-                    {formatDuration(mostTime)}
-                  </div>
-                  <div className="text-zinc-500 text-sm">
-                    {mostTimeDriver?.name || 'N/A'}
-                  </div>
+              <div className={cardClass}>
+                <h3 className="text-zinc-400 text-sm font-medium mb-2">Most Fastest Laps</h3>
+                <div className="text-2xl font-bold text-purple-400 mb-1">
+                  {mostFastestLaps}
                 </div>
-              ) : (
-                <div className={cardClass}>
-                  <h3 className="text-zinc-400 text-sm font-medium mb-2">Most Fastest Laps</h3>
-                  <div className="text-2xl font-bold text-purple-400 mb-1">
-                    {mostFastestLaps}
-                  </div>
-                  <div className="text-zinc-500 text-sm">
-                    {fastestLapsDriver?.name || 'N/A'}
-                  </div>
+                <div className="text-zinc-500 text-sm">
+                  {fastestLapsDriver?.name || 'N/A'}
                 </div>
-              )}
+              </div>
 
               <div className={cardClass}>
                 <h3 className="text-zinc-400 text-sm font-medium mb-2">Cleanest Driver</h3>
