@@ -1,0 +1,76 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 1211.721,
+      "best_lap": 1211.721,
+      "car_name": "ad_TD_ferrari_f50",
+      "crashes": {
+        "average_crash_g": 31,
+        "crash_intensities_g": [
+          16,
+          17,
+          52,
+          25,
+          14,
+          34,
+          39,
+          48,
+          57,
+          16,
+          23
+        ],
+        "total_crash_intensity": 341,
+        "total_crashes": 11,
+        "worst_crash_g": 57
+      },
+      "lap_times": [
+        1211.721
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 263.64,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 99.87,
+        "base_score": 33572.63,
+        "crash_count": 11,
+        "crash_factor": 0.715,
+        "crash_penalty_percent": 28.47,
+        "distance_km": 33.616
+      },
+      "times_overtaken": 0,
+      "total_score": 24015,
+      "total_time_formatted": "20:11.721",
+      "total_time_seconds": 1211.721
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 1211.721,
+    "championship": "Asian Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-20 13:52:55",
+    "finished": true,
+    "race_laps": 1,
+    "round": 6,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_05",
+    "session_duration_formatted": "20:44.597",
+    "session_duration_seconds": 1244.6,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "mountainroute",
+    "track_config": "mountainroute_full",
+    "track_length_km": 33.616,
+    "track_length_meters": 33615.75,
+    "track_length_miles": 20.888,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

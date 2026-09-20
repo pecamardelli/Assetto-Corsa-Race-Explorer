@@ -1,0 +1,68 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 372.625,
+      "best_lap": 360.293,
+      "car_name": "delorean_dmc_12",
+      "crashes": {
+        "average_crash_g": 32,
+        "crash_intensities_g": [
+          44,
+          20
+        ],
+        "total_crash_intensity": 64,
+        "total_crashes": 2,
+        "worst_crash_g": 44
+      },
+      "lap_times": [
+        384.957,
+        360.293
+      ],
+      "laps_completed": 2,
+      "max_speed_kmh": 190.27,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 107.98,
+        "base_score": 24138.38,
+        "crash_count": 2,
+        "crash_factor": 0.941,
+        "crash_penalty_percent": 5.91,
+        "distance_km": 22.354
+      },
+      "times_overtaken": 0,
+      "total_score": 22712,
+      "total_time_formatted": "12:25.249",
+      "total_time_seconds": 745.25
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 360.293,
+    "championship": "Americas Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-20 01:18:54",
+    "finished": true,
+    "race_laps": 2,
+    "round": 6,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_05",
+    "session_duration_formatted": "12:47.800",
+    "session_duration_seconds": 767.8,
+    "session_type": "race",
+    "target_laps": 2,
+    "total_cars": 1,
+    "track": "ks_black_cat_county",
+    "track_config": "layout_long",
+    "track_length_km": 11.177,
+    "track_length_meters": 11176.96,
+    "track_length_miles": 6.945,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

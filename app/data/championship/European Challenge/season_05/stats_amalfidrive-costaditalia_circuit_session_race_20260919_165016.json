@@ -1,0 +1,70 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 533.316,
+      "best_lap": 533.316,
+      "car_name": "ks_ferrari_812_superfast",
+      "crashes": {
+        "average_crash_g": 17,
+        "crash_intensities_g": [
+          11,
+          28,
+          12,
+          20,
+          14
+        ],
+        "total_crash_intensity": 85,
+        "total_crashes": 5,
+        "worst_crash_g": 28
+      },
+      "lap_times": [
+        533.316
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 156.78,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 72.81,
+        "base_score": 7852.71,
+        "crash_count": 5,
+        "crash_factor": 0.859,
+        "crash_penalty_percent": 14.13,
+        "distance_km": 10.786
+      },
+      "times_overtaken": 0,
+      "total_score": 6744,
+      "total_time_formatted": "08:53.316",
+      "total_time_seconds": 533.316
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 533.316,
+    "championship": "European Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-19 16:50:16",
+    "finished": true,
+    "race_laps": 1,
+    "round": 4,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_05",
+    "session_duration_formatted": "09:14.823",
+    "session_duration_seconds": 554.82,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "amalfidrive",
+    "track_config": "costaditalia_circuit",
+    "track_length_km": 10.786,
+    "track_length_meters": 10785.76,
+    "track_length_miles": 6.702,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 1566.747,
+      "best_lap": 1566.747,
+      "car_name": "delorean_dmc_12",
+      "crashes": {
+        "average_crash_g": 68.36,
+        "crash_intensities_g": [
+          32,
+          23,
+          36,
+          110,
+          57,
+          14,
+          10,
+          461,
+          18,
+          95,
+          12,
+          13,
+          16,
+          60
+        ],
+        "total_crash_intensity": 957,
+        "total_crashes": 14,
+        "worst_crash_g": 461
+      },
+      "lap_times": [
+        1566.747
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 168.77,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 98.49,
+        "base_score": 42218.24,
+        "crash_count": 14,
+        "crash_factor": 0.653,
+        "crash_penalty_percent": 34.72,
+        "distance_km": 42.865
+      },
+      "times_overtaken": 0,
+      "total_score": 27562,
+      "total_time_formatted": "26:06.747",
+      "total_time_seconds": 1566.747
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 1566.747,
+    "championship": "Americas Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-19 20:01:29",
+    "finished": true,
+    "race_laps": 1,
+    "round": 2,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_05",
+    "session_duration_formatted": "26:26.944",
+    "session_duration_seconds": 1586.94,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "la_canyons",
+    "track_config": "normal",
+    "track_length_km": 42.865,
+    "track_length_meters": 42864.55,
+    "track_length_miles": 26.635,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}
