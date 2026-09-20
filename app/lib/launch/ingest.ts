@@ -137,6 +137,12 @@ export async function ingestResults(
   const filed: string[] = [];
   let skipped = 0;
 
+  // The roster's spelling of each car that was sent out, keyed by AC's lowercase one.
+  const rosterCars = new Map<string, string>();
+  for (const entry of [plan.spec.player, ...plan.spec.opponents]) {
+    rosterCars.set(entry.car.toLowerCase(), entry.car);
+  }
+
   for (const [index, { source, mtime }] of candidates.entries()) {
     try {
       const data = JSON.parse(await fs.readFile(source, 'utf8')) as RaceData;
@@ -155,6 +161,14 @@ export async function ingestResults(
         knownSessionType(data.session_info.session_type) ??
         expectedSessions[index] ??
         expectedSessions[expectedSessions.length - 1];
+
+      // AC was given every car id lowercased (see `acModelId`) and reports them that
+      // way. The season's data, badges and previews key on the roster's spelling, so
+      // that is the one filed; a car the roster does not know is left as it came.
+      for (const stats of Object.values(data.driver_statistics ?? {})) {
+        const rostered = stats.car_name ? rosterCars.get(stats.car_name.toLowerCase()) : undefined;
+        if (rostered) stats.car_name = rostered;
+      }
 
       data.session_info = {
         ...data.session_info,

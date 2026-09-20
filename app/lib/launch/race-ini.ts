@@ -71,6 +71,21 @@ const SESSION_NAMES: Record<SessionType, string> = {
   race: 'Race',
 };
 
+/**
+ * A car id as Assetto Corsa is handed it: lowercased, which is what Content Manager
+ * writes and so the only spelling the game is ever really run with.
+ *
+ * The folder's own casing (`ad_TD_ferrari_f50`) loads the car just the same - Windows
+ * does not care - and on most tracks nobody could tell. But AC builds its sound event
+ * paths from this string, and on a track that brings a sound bank of its own (Shutoko
+ * Revival Project) the true-case id left the Ferrari F50 with no engine sound at all,
+ * 2026-09-20, while Content Manager's lowercase id on the same car and track had it.
+ * The results come back in the spelling sent, so `ingest.ts` puts the roster's back.
+ */
+export function acModelId(car: string): string {
+  return car.toLowerCase();
+}
+
 function section(name: string, entries: Array<[string, string | number]>): string {
   return [`[${name}]`, ...entries.map(([k, v]) => `${k}=${v}`), ''].join('\n');
 }
@@ -78,7 +93,7 @@ function section(name: string, entries: Array<[string, string | number]>): strin
 function carSection(index: number, entry: GridEntry, isPlayer: boolean): string {
   const rows: Array<[string, string | number]> = [
     // "-" tells AC this slot is the player, taking its model from [RACE].
-    ['MODEL', isPlayer ? '-' : entry.car],
+    ['MODEL', isPlayer ? '-' : acModelId(entry.car)],
     ['MODEL_CONFIG', ''],
   ];
 
@@ -214,7 +229,7 @@ export function buildRaceIni(spec: RaceIniSpec): string {
       ['DRIFT_MODE', 0],
       ['FIXED_SETUP', 0],
       ['JUMP_START_PENALTY', race.jumpStartPenalty],
-      ['MODEL', spec.player.car],
+      ['MODEL', acModelId(spec.player.car)],
       ['MODEL_CONFIG', ''],
       ['PENALTIES', race.penalties ? 1 : 0],
       ['RACE_LAPS', sessions.includes('race') ? race.laps : 0],
