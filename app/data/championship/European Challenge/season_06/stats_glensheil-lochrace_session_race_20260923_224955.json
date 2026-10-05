@@ -1,0 +1,92 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 1175.192,
+      "best_lap": 1175.192,
+      "car_name": "jaguar_xj220",
+      "crashes": {
+        "average_crash_g": 56.89,
+        "crash_intensities_g": [
+          35,
+          29,
+          14,
+          45,
+          31,
+          63,
+          14,
+          13,
+          11,
+          10,
+          18,
+          16,
+          12,
+          10,
+          175,
+          341,
+          119,
+          16,
+          127,
+          106,
+          75,
+          23,
+          53,
+          17,
+          119,
+          34,
+          10
+        ],
+        "total_crash_intensity": 1536,
+        "total_crashes": 27,
+        "worst_crash_g": 341
+      },
+      "lap_times": [
+        1175.192
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 252.24,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 96.39,
+        "base_score": 30327.99,
+        "crash_count": 27,
+        "crash_factor": 0.439,
+        "crash_penalty_percent": 56.06,
+        "distance_km": 31.465
+      },
+      "times_overtaken": 0,
+      "total_score": 13326,
+      "total_time_formatted": "19:35.192",
+      "total_time_seconds": 1175.192
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 1175.192,
+    "championship": "European Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-23 22:49:55",
+    "finished": true,
+    "race_laps": 1,
+    "round": 2,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_06",
+    "session_duration_formatted": "20:00.435",
+    "session_duration_seconds": 1200.44,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "glensheil",
+    "track_config": "lochrace",
+    "track_length_km": 31.465,
+    "track_length_meters": 31464.81,
+    "track_length_miles": 19.551,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

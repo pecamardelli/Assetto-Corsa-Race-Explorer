@@ -1,0 +1,72 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 579.354,
+      "best_lap": 579.354,
+      "car_name": "jaguar_xj220",
+      "crashes": {
+        "average_crash_g": 27.71,
+        "crash_intensities_g": [
+          42,
+          34,
+          17,
+          12,
+          13,
+          17,
+          59
+        ],
+        "total_crash_intensity": 194,
+        "total_crashes": 7,
+        "worst_crash_g": 59
+      },
+      "lap_times": [
+        579.354
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 140.82,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 67.02,
+        "base_score": 7228.69,
+        "crash_count": 7,
+        "crash_factor": 0.808,
+        "crash_penalty_percent": 19.2,
+        "distance_km": 10.786
+      },
+      "times_overtaken": 0,
+      "total_score": 5841,
+      "total_time_formatted": "09:39.354",
+      "total_time_seconds": 579.354
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 579.354,
+    "championship": "European Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-24 21:56:23",
+    "finished": true,
+    "race_laps": 1,
+    "round": 4,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_06",
+    "session_duration_formatted": "12:03.955",
+    "session_duration_seconds": 723.96,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "amalfidrive",
+    "track_config": "costaditalia_circuit",
+    "track_length_km": 10.786,
+    "track_length_meters": 10785.76,
+    "track_length_miles": 6.702,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 794.581,
+      "best_lap": 794.581,
+      "car_name": "gd_dodge_viper_gts",
+      "crashes": {
+        "average_crash_g": 37,
+        "crash_intensities_g": [
+          12,
+          12,
+          16,
+          102,
+          12,
+          25,
+          78,
+          39
+        ],
+        "total_crash_intensity": 296,
+        "total_crashes": 8,
+        "worst_crash_g": 102
+      },
+      "lap_times": [
+        794.581
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 228.4,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 112.05,
+        "base_score": 27709.88,
+        "crash_count": 8,
+        "crash_factor": 0.784,
+        "crash_penalty_percent": 21.63,
+        "distance_km": 24.731
+      },
+      "times_overtaken": 0,
+      "total_score": 21718,
+      "total_time_formatted": "13:14.580",
+      "total_time_seconds": 794.581
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 794.581,
+    "championship": "Americas Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-26 22:57:42",
+    "finished": true,
+    "race_laps": 1,
+    "round": 3,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_06",
+    "session_duration_formatted": "13:35.439",
+    "session_duration_seconds": 815.44,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "pacific_coast_hwy",
+    "track_config": "northbound",
+    "track_length_km": 24.731,
+    "track_length_meters": 24730.63,
+    "track_length_miles": 15.367,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

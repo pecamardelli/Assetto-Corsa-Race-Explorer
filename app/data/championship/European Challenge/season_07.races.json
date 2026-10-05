@@ -1,0 +1,42 @@
+{
+  "rounds": {
+    "1": {
+      "gridFromStandings": true
+    },
+    "2": {
+      "gridFromStandings": true,
+      "pointToPoint": true
+    },
+    "3": {
+      "laps": 2,
+      "pointToPoint": false,
+      "gridFromStandings": true,
+      "weather": "__random__",
+      "grip": -1,
+      "ambientTempFrom": 20,
+      "ambientTempTo": 20,
+      "roadTempFrom": 26,
+      "roadTempTo": 26,
+      "timeOfDayFrom": 720,
+      "timeOfDayTo": 720,
+      "windSpeedMin": 0,
+      "windSpeedMax": 10,
+      "windDirection": -1,
+      "practiceMinutes": 0,
+      "qualifyingMinutes": 15,
+      "penalties": false,
+      "jumpStartPenalty": 1,
+      "tyresOut": -1
+    },
+    "4": {
+      "gridFromStandings": true
+    },
+    "5": {
+      "gridFromStandings": true,
+      "pointToPoint": true
+    },
+    "6": {
+      "gridFromStandings": true
+    }
+  }
+}

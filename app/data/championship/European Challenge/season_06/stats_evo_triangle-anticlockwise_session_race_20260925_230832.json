@@ -1,0 +1,83 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 929.409,
+      "best_lap": 929.409,
+      "car_name": "jaguar_xj220",
+      "crashes": {
+        "average_crash_g": 142.61,
+        "crash_intensities_g": [
+          17,
+          10,
+          16,
+          12,
+          10,
+          25,
+          22,
+          11,
+          27,
+          47,
+          22,
+          20,
+          13,
+          262,
+          566,
+          723,
+          731,
+          33
+        ],
+        "total_crash_intensity": 2567,
+        "total_crashes": 18,
+        "worst_crash_g": 731
+      },
+      "lap_times": [
+        929.409
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 279.84,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 128.71,
+        "base_score": 42768.3,
+        "crash_count": 18,
+        "crash_factor": 0.578,
+        "crash_penalty_percent": 42.2,
+        "distance_km": 33.229
+      },
+      "times_overtaken": 0,
+      "total_score": 24718,
+      "total_time_formatted": "15:29.408",
+      "total_time_seconds": 929.409
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 929.409,
+    "championship": "European Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-09-25 23:08:32",
+    "finished": true,
+    "race_laps": 1,
+    "round": 6,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_06",
+    "session_duration_formatted": "15:49.591",
+    "session_duration_seconds": 949.59,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "evo_triangle",
+    "track_config": "anticlockwise",
+    "track_length_km": 33.229,
+    "track_length_meters": 33228.69,
+    "track_length_miles": 20.647,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}
