@@ -1,0 +1,68 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 394.227,
+      "best_lap": 394.227,
+      "car_name": "jk_chevrolet_camaro_zl1_2021",
+      "crashes": {
+        "average_crash_g": 20,
+        "crash_intensities_g": [
+          13,
+          22,
+          25
+        ],
+        "total_crash_intensity": 60,
+        "total_crashes": 3,
+        "worst_crash_g": 25
+      },
+      "lap_times": [
+        394.227
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 190.66,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 82.15,
+        "base_score": 7390.82,
+        "crash_count": 3,
+        "crash_factor": 0.913,
+        "crash_penalty_percent": 8.73,
+        "distance_km": 8.996
+      },
+      "times_overtaken": 0,
+      "total_score": 6746,
+      "total_time_formatted": "06:34.226",
+      "total_time_seconds": 394.227
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 394.227,
+    "championship": "Asian Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-10-18 17:45:52",
+    "finished": true,
+    "race_laps": 1,
+    "round": 3,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_07",
+    "session_duration_formatted": "06:57.458",
+    "session_duration_seconds": 417.46,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "mount_akina_2017",
+    "track_config": "layout_downhill",
+    "track_length_km": 8.996,
+    "track_length_meters": 8996.39,
+    "track_length_miles": 5.59,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

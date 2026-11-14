@@ -1,0 +1,79 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 833.883,
+      "best_lap": 833.883,
+      "car_name": "jk_chevrolet_camaro_zl1_2021",
+      "crashes": {
+        "average_crash_g": 93.71,
+        "crash_intensities_g": [
+          16,
+          14,
+          11,
+          10,
+          212,
+          12,
+          64,
+          12,
+          50,
+          11,
+          105,
+          329,
+          401,
+          65
+        ],
+        "total_crash_intensity": 1312,
+        "total_crashes": 14,
+        "worst_crash_g": 401
+      },
+      "lap_times": [
+        833.883
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 277.47,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 178.66,
+        "base_score": 73940.06,
+        "crash_count": 14,
+        "crash_factor": 0.653,
+        "crash_penalty_percent": 34.72,
+        "distance_km": 41.385
+      },
+      "times_overtaken": 0,
+      "total_score": 48271,
+      "total_time_formatted": "13:53.883",
+      "total_time_seconds": 833.883
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 833.883,
+    "championship": "Americas Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-10-17 20:37:54",
+    "finished": true,
+    "race_laps": 1,
+    "round": 5,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_07",
+    "session_duration_formatted": "14:13.602",
+    "session_duration_seconds": 853.6,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "vr506_Ruta27",
+    "track_config": "",
+    "track_length_km": 41.385,
+    "track_length_meters": 41384.83,
+    "track_length_miles": 25.715,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

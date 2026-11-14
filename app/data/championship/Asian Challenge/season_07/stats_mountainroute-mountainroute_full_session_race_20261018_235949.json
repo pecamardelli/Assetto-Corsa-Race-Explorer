@@ -1,0 +1,79 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 1220.682,
+      "best_lap": 1220.682,
+      "car_name": "jk_chevrolet_camaro_zl1_2021",
+      "crashes": {
+        "average_crash_g": 27.21,
+        "crash_intensities_g": [
+          66,
+          59,
+          24,
+          18,
+          18,
+          14,
+          17,
+          11,
+          20,
+          20,
+          17,
+          11,
+          47,
+          39
+        ],
+        "total_crash_intensity": 381,
+        "total_crashes": 14,
+        "worst_crash_g": 66
+      },
+      "lap_times": [
+        1220.682
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 279.15,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 99.14,
+        "base_score": 33326.17,
+        "crash_count": 14,
+        "crash_factor": 0.653,
+        "crash_penalty_percent": 34.72,
+        "distance_km": 33.616
+      },
+      "times_overtaken": 0,
+      "total_score": 21757,
+      "total_time_formatted": "20:20.682",
+      "total_time_seconds": 1220.682
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 1220.682,
+    "championship": "Asian Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-10-18 23:59:49",
+    "finished": true,
+    "race_laps": 1,
+    "round": 6,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_07",
+    "session_duration_formatted": "20:43.089",
+    "session_duration_seconds": 1243.09,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "mountainroute",
+    "track_config": "mountainroute_full",
+    "track_length_km": 33.616,
+    "track_length_meters": 33615.75,
+    "track_length_miles": 20.888,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

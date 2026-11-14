@@ -1,0 +1,73 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 809.511,
+      "best_lap": 809.511,
+      "car_name": "jk_chevrolet_camaro_zl1_2021",
+      "crashes": {
+        "average_crash_g": 28.63,
+        "crash_intensities_g": [
+          13,
+          14,
+          21,
+          40,
+          10,
+          21,
+          35,
+          75
+        ],
+        "total_crash_intensity": 229,
+        "total_crashes": 8,
+        "worst_crash_g": 75
+      },
+      "lap_times": [
+        809.511
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 184.48,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 89.62,
+        "base_score": 18061.92,
+        "crash_count": 8,
+        "crash_factor": 0.784,
+        "crash_penalty_percent": 21.63,
+        "distance_km": 20.153
+      },
+      "times_overtaken": 0,
+      "total_score": 14156,
+      "total_time_formatted": "13:29.510",
+      "total_time_seconds": 809.511
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 809.511,
+    "championship": "Americas Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-10-17 11:47:21",
+    "finished": true,
+    "race_laps": 1,
+    "round": 1,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_07",
+    "session_duration_formatted": "13:52.941",
+    "session_duration_seconds": 832.94,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "pk_tail_of_the_dragon",
+    "track_config": "pk_tail_of_the_dragon_4nc_1lane",
+    "track_length_km": 20.153,
+    "track_length_meters": 20153.11,
+    "track_length_miles": 12.523,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

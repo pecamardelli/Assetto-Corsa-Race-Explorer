@@ -1,0 +1,94 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 1346.735,
+      "best_lap": 1346.735,
+      "car_name": "jk_chevrolet_camaro_zl1_2021",
+      "crashes": {
+        "average_crash_g": 41.55,
+        "crash_intensities_g": [
+          94,
+          11,
+          37,
+          124,
+          63,
+          16,
+          23,
+          13,
+          24,
+          18,
+          59,
+          158,
+          68,
+          31,
+          13,
+          10,
+          24,
+          16,
+          30,
+          41,
+          16,
+          31,
+          12,
+          20,
+          24,
+          155,
+          38,
+          24,
+          12
+        ],
+        "total_crash_intensity": 1205,
+        "total_crashes": 29,
+        "worst_crash_g": 158
+      },
+      "lap_times": [
+        1346.735
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 233.77,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 97.83,
+        "base_score": 35800.87,
+        "crash_count": 29,
+        "crash_factor": 0.413,
+        "crash_penalty_percent": 58.66,
+        "distance_km": 36.596
+      },
+      "times_overtaken": 0,
+      "total_score": 14801,
+      "total_time_formatted": "22:26.735",
+      "total_time_seconds": 1346.735
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 1346.735,
+    "championship": "Oceania Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-10-05 00:23:56",
+    "finished": true,
+    "race_laps": 1,
+    "round": 5,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_01",
+    "session_duration_formatted": "22:48.269",
+    "session_duration_seconds": 1368.27,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "targa_tas_21_s21_riana",
+    "track_config": "",
+    "track_length_km": 36.596,
+    "track_length_meters": 36596.26,
+    "track_length_miles": 22.74,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}

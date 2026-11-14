@@ -1,0 +1,71 @@
+{
+  "driver_statistics": {
+    "Pablin": {
+      "average_lap": 774.474,
+      "best_lap": 774.474,
+      "car_name": "jk_chevrolet_camaro_zl1_2021",
+      "crashes": {
+        "average_crash_g": 35.5,
+        "crash_intensities_g": [
+          26,
+          48,
+          11,
+          45,
+          63,
+          20
+        ],
+        "total_crash_intensity": 213,
+        "total_crashes": 6,
+        "worst_crash_g": 63
+      },
+      "lap_times": [
+        774.474
+      ],
+      "laps_completed": 1,
+      "max_speed_kmh": 268.49,
+      "net_positions_gained": 0,
+      "overtakes_made": 0,
+      "position": 1,
+      "retired": false,
+      "score_breakdown": {
+        "average_speed_kmh": 118.3,
+        "base_score": 30107.76,
+        "crash_count": 6,
+        "crash_factor": 0.833,
+        "crash_penalty_percent": 16.7,
+        "distance_km": 25.45
+      },
+      "times_overtaken": 0,
+      "total_score": 25079,
+      "total_time_formatted": "12:54.474",
+      "total_time_seconds": 774.474
+    }
+  },
+  "session_info": {
+    "best_lap_time_seconds": 774.474,
+    "championship": "Oceania Challenge",
+    "crash_penalty_config": {
+      "penalty_percent_per_crash": 3
+    },
+    "date": "2026-10-05 00:10:08",
+    "finished": true,
+    "race_laps": 1,
+    "round": 4,
+    "save_reason": "release",
+    "scoring_formula": "score = distance_km × average_speed_kmh × 10 × (1 − 0.03) ^ crashes",
+    "season": "season_01",
+    "session_duration_formatted": "13:16.767",
+    "session_duration_seconds": 796.77,
+    "session_type": "race",
+    "target_laps": 1,
+    "total_cars": 1,
+    "track": "targa_tas_21_s18_pieman",
+    "track_config": "",
+    "track_length_km": 25.45,
+    "track_length_meters": 25450.21,
+    "track_length_miles": 15.814,
+    "traffic_race": true,
+    "writer": "commendatore",
+    "player": "Pablin"
+  }
+}
