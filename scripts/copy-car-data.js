@@ -3,7 +3,7 @@ const path = require("path");
 const sharp = require("sharp");
 
 // Path to Assetto Corsa installation
-const AC_PATH = "C:\\GAMES\\Assetto Corsa";
+const AC_PATH = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\assettocorsa";
 const carsSourceDir = path.join(AC_PATH, "content", "cars");
 const carsDestDir = path.join(__dirname, "..", "app", "data", "cars");
 const badgesDir = path.join(__dirname, "..", "public", "badges");

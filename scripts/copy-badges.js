@@ -3,7 +3,7 @@ const path = require('path');
 const sharp = require('sharp');
 
 // Path to Assetto Corsa installation
-const AC_PATH = 'C:\\GAMES\\Assetto Corsa';
+const AC_PATH = 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\assettocorsa';
 
 // Maximum width for resizing badges
 const MAX_WIDTH = 1024;

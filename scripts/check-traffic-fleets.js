@@ -16,7 +16,7 @@ const path = require('path');
 const ROOT = path.join(__dirname, '..');
 const FLEETS = path.join(ROOT, 'app', 'data', 'traffic-fleets.json');
 const CHAMPS = path.join(ROOT, 'app', 'data', 'championship');
-const GAME = process.env.AC_ROOT || 'C:\\GAMES\\Assetto Corsa';
+const GAME = process.env.AC_ROOT || 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\assettocorsa';
 const TRAFFIC_DATA = path.join(GAME, 'extension', 'lua', 'tools', 'csp-traffic-tool', 'data');
 
 function readJson(file) {

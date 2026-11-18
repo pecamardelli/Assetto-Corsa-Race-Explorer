@@ -19,7 +19,7 @@ import path from 'path';
  * constant. AC_ROOT overrides the search outright, and when nothing is reachable the
  * Windows path stands, which is what this always was.
  */
-const AC_ROOT_CANDIDATES = ['C:\\GAMES\\Assetto Corsa', '/media/pablin/WIN 11/GAMES/Assetto Corsa'];
+const AC_ROOT_CANDIDATES = ['C:\\Program Files (x86)\\Steam\\steamapps\\common\\assettocorsa', '/media/pablin/WIN 11/Program Files (x86)/Steam/steamapps/common/assettocorsa'];
 
 function findAcRoot(): string {
   if (process.env.AC_ROOT) return process.env.AC_ROOT;

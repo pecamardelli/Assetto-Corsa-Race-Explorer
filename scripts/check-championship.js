@@ -16,7 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const AC_PATH = 'C:\\GAMES\\Assetto Corsa';
+const AC_PATH = 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\assettocorsa';
 const TRACKS_DIR = path.join(AC_PATH, 'content', 'tracks');
 const CARS_DIR = path.join(AC_PATH, 'content', 'cars');
 const CHAMP_DIR = path.join(__dirname, '..', 'app', 'data', 'championship');

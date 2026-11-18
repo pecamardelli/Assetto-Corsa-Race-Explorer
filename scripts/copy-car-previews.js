@@ -19,7 +19,7 @@ const path = require("path");
 const { importCarPreview } = require("./lib/car-preview");
 
 // Configuration
-const AC_CARS_DIR = "C:\\GAMES\\Assetto Corsa\\content\\cars";
+const AC_CARS_DIR = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\assettocorsa\\content\\cars";
 const OUTPUT_DIR = path.join(__dirname, "..", "public", "car-gallery");
 const CAR_DATA_DIR = path.join(__dirname, "..", "app", "data", "cars");
 

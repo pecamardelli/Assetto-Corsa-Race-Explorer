@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Path to Assetto Corsa installation
-const AC_PATH = 'C:\\GAMES\\Assetto Corsa';
+const AC_PATH = 'C:\\Program Files (x86)\\Steam\\steamapps\\common\\assettocorsa';
 const tracksSourceDir = path.join(AC_PATH, 'content', 'tracks');
 const tracksDestDir = path.join(__dirname, '..', 'app', 'data', 'tracks');
 const trackPreviewsDir = path.join(__dirname, '..', 'public', 'track-previews');
