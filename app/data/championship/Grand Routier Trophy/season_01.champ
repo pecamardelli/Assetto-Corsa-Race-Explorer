@@ -1,0 +1,308 @@
+{
+  "name": "Grand Routier Trophy",
+  "rules": {
+    "practice": 0,
+    "qualifying": 20,
+    "points": [
+      25,
+      18,
+      15,
+      12,
+      10,
+      8,
+      6,
+      4,
+      2,
+      1
+    ],
+    "penalties": false,
+    "jumpstart": 1
+  },
+  "opponents": [
+    {
+      "name": "Pablin",
+      "skin": "04_vermilion",
+      "car": "auburn_851_speedster_1935",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "ARG"
+    },
+    {
+      "name": "Billy Lampazzo",
+      "skin": "07_rich_maroon",
+      "car": "auburn_851_speedster_1935",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "USA"
+    },
+    {
+      "name": "Matt LaPallita",
+      "skin": "08_neptune_blue",
+      "car": "auburn_851_speedster_1935",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "USA"
+    },
+    {
+      "name": "Chuck Tornado",
+      "skin": "03_black_ivory",
+      "car": "cadillac_v16_roadster_1930",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "USA"
+    },
+    {
+      "name": "Dick Palumbo",
+      "skin": "01_longfellow_green",
+      "car": "cadillac_v16_roadster_1930",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "USA"
+    },
+    {
+      "name": "Danny Paletto",
+      "skin": "05_two_tone_red",
+      "car": "cadillac_v16_roadster_1930",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "USA"
+    },
+    {
+      "name": "Dave Gargiulo",
+      "skin": "02_gunmetal_black",
+      "car": "chrysler_imperial_cl_1932",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "USA"
+    },
+    {
+      "name": "Ricky Piston",
+      "skin": "05_moon_glow_blue",
+      "car": "chrysler_imperial_cl_1932",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "USA"
+    },
+    {
+      "name": "Vince Crossline",
+      "skin": "01_everglades_red",
+      "car": "chrysler_imperial_cl_1932",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "USA"
+    },
+    {
+      "name": "Rick Pegasus",
+      "skin": "05_geneva_blue",
+      "car": "cord_812_phaeton_1937",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "USA"
+    },
+    {
+      "name": "Mitch Bazooka",
+      "skin": "03_black",
+      "car": "cord_812_phaeton_1937",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "USA"
+    },
+    {
+      "name": "Sandy Darrea",
+      "skin": "10_cigarette_cream",
+      "car": "cord_812_phaeton_1937",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "USA"
+    },
+    {
+      "name": "Pierre Du Mans",
+      "skin": "Bleu_Electrique",
+      "car": "talbot_lago_t23_coupe",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "Pierre Blitzkrieg",
+      "skin": "Noir",
+      "car": "talbot_lago_t23_coupe",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "Jaques Leca",
+      "skin": "Ivoire",
+      "car": "talbot_lago_t23_coupe",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "CAN"
+    },
+    {
+      "name": "Holly Sikorsky",
+      "skin": "White",
+      "car": "Delage_D8_1936",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "POL"
+    },
+    {
+      "name": "Tete Pepin",
+      "skin": "Blue",
+      "car": "Delage_D8_1936",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "Pino Silvestre",
+      "skin": "Green",
+      "car": "Delage_D8_1936",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "Rigo Leau",
+      "skin": "02_bordeaux",
+      "car": "voisin_c14_1929",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "CZE"
+    },
+    {
+      "name": "Virgil Pechacaq",
+      "skin": "01_museum_blue",
+      "car": "voisin_c14_1929",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "FRA"
+    },
+    {
+      "name": "Cash Dubois",
+      "skin": "03_creme_marron",
+      "car": "voisin_c14_1929",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "USA"
+    },
+    {
+      "name": "Pete Slipstream",
+      "skin": "03_bentley_green",
+      "car": "bentley_speed_six_blue_train_1930",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "GBR"
+    },
+    {
+      "name": "Percy Goodpace",
+      "skin": "06_dove_grey",
+      "car": "bentley_speed_six_blue_train_1930",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "GBR"
+    },
+    {
+      "name": "Dex Winrace",
+      "skin": "01_black",
+      "car": "bentley_speed_six_blue_train_1930",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "SCT"
+    },
+    {
+      "name": "Dieter Von Heil",
+      "skin": "02_black_white",
+      "car": "mercedes_benz_ss_er_1930",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "DEU"
+    },
+    {
+      "name": "Hugo Fast",
+      "skin": "03_white_red",
+      "car": "mercedes_benz_ss_er_1930",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "DEU"
+    },
+    {
+      "name": "Hans Footdown",
+      "skin": "01_black_red",
+      "car": "mercedes_benz_ss_er_1930",
+      "ballast": 0,
+      "restrictor": 0,
+      "nation": "DEU"
+    }
+  ],
+  "rounds": [
+    {
+      "track": "miramas-1932",
+      "laps": 9,
+      "weather": 3,
+      "surface": 3
+    },
+    {
+      "track": "brooklands-layout_long",
+      "laps": 10,
+      "weather": 4,
+      "surface": 3
+    },
+    {
+      "track": "autodrome_de_linas-montlhery-full",
+      "laps": 4,
+      "weather": 3,
+      "surface": 3
+    },
+    {
+      "track": "nepliget_1936",
+      "laps": 8,
+      "weather": 2,
+      "surface": 3
+    },
+    {
+      "track": "lemans_1923",
+      "laps": 3,
+      "weather": 2,
+      "surface": 3
+    },
+    {
+      "track": "gpsc_reims_1938",
+      "laps": 6,
+      "weather": 2,
+      "surface": 3
+    },
+    {
+      "track": "rj_spa_34_66-34",
+      "laps": 3,
+      "weather": 4,
+      "surface": 3
+    },
+    {
+      "track": "nordschleife_67",
+      "laps": 2,
+      "weather": 4,
+      "surface": 3
+    },
+    {
+      "track": "bremgarten_faux_pre_war",
+      "laps": 6,
+      "weather": 3,
+      "surface": 3
+    },
+    {
+      "track": "monza1930s-gp",
+      "laps": 7,
+      "weather": 2,
+      "surface": 3
+    },
+    {
+      "track": "donington1938",
+      "laps": 9,
+      "weather": 4,
+      "surface": 3
+    }
+  ],
+  "maxCars": 27
+}
